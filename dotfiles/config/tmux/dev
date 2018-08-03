@@ -1,0 +1,7 @@
+selectp -t 1 # select the first (0) pane
+splitw -h -p 50 # split it into two halves 35 to have the main one bigger
+send-keys "asciiquarium -s" C-m
+selectp -t 2 # select the new, second (1) pane
+splitw -v -p 50 # split it into two halves
+send-keys "cmatrix" C-m
+selectp -t 1 # go back to the first pane

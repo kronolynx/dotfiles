@@ -1,0 +1,303 @@
+# i3 config file (v4)
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+set $term termite
+#set $term  urxvtc
+#exec --no-startup-id urxvtd --quiet --opendisplay --fork &
+
+set $fm pcmanfm
+set $browser vivaldi-snapshot
+
+# Default modkey
+set $mod Mod4
+
+# Hide titlebar
+new_window pixel
+
+# i3-gaps
+gaps inner 6
+
+# Font for window titles.
+font pango: SauceCodePro Nerd Font Black 11
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# Start a terminal
+bindsym $mod+Return exec $term
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+#### Start applications {{{
+# Start rofi
+bindsym $mod+d exec rofi -show drun
+bindsym $mod+F2 exec $browser
+bindsym $mod+F3 exec $fm
+bindsym $mod+F4 exec ranger
+bindsym $mod+Shift+F3 exec gksu $fm
+bindsym $mod+F5 exec $term -e 'mocp'
+bindsym Print exec --no-startup-id i3-scrot
+bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
+bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
+bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+bindsym $mod+n exec --no-startup-id boostnote
+bindsym $mod+Shift+m exec --no-startup-id ~/.scripts/monitor.sh
+### }}}
+
+### extra XF86 keys {{{
+# requires xorg-xbacklight from aur
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 2; notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 2; notify-send 'brightness down'"
+bindsym XF86Search		exec $browser https://google.com/nr
+bindsym XF86TouchpadOn		exec --no-startup-id exec synclient TouchpadOff=0
+bindsym XF86TouchpadOff		exec --no-startup-id exec synclient TouchpadOff=1
+bindsym XF86Suspend		exec --no-startup-id ~/.i3/lock.sh
+bindsym XF86Explorer            exec --no-startup-id $fm
+### }}}
+
+### workspaces  {{{
+set $intern eDP1
+set $extern HDMI1
+workspace $ws1 output $intern
+workspace $ws2 output $extern
+workspace $ws3 output $intern
+workspace $ws4 output $extern
+workspace $ws5 output $intern
+workspace $ws6 output $extern
+workspace $ws7 output $intern
+workspace $ws8 output $extern
+workspace $ws9 output $intern
+workspace $ws0 output $extern
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+#move workspace to the next output
+bindsym $mod+shift+n move workspace to output right
+
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth yes
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+# split orientation
+#bindsym $mod+h split h
+#bindsym $mod+v split v
+bindsym $mod+q split toggle
+
+# toggle fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# toggle sticky
+
+#bindsym $mod+Shift+o sticky toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+#navigate workspaces next / previous
+bindsym $mod+Ctrl+Right workspace next
+bindsym $mod+Ctrl+Left workspace prev
+
+# Workspace names
+# to display names or symbols instead of plain workspace numbers you can use
+# something like: set $ws1 1:mail
+#                 set $ws2 2:
+set $ws1 
+set $ws2 
+set $ws3 
+set $ws4 
+set $ws5 
+set $ws6 
+set $ws7 λ
+set $ws8 
+set $ws9 
+set $ws0 
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws0
+
+# Move focused container to workspace
+bindsym $mod+Ctrl+1 move container to workspace $ws1
+bindsym $mod+Ctrl+2 move container to workspace $ws2
+bindsym $mod+Ctrl+3 move container to workspace $ws3
+bindsym $mod+Ctrl+4 move container to workspace $ws4
+bindsym $mod+Ctrl+5 move container to workspace $ws5
+bindsym $mod+Ctrl+6 move container to workspace $ws6
+bindsym $mod+Ctrl+7 move container to workspace $ws7
+bindsym $mod+Ctrl+8 move container to workspace $ws8
+bindsym $mod+Ctrl+9 move container to workspace $ws9
+bindsym $mod+Ctrl+0 move container to workspace $ws0
+
+# Move to workspace with focused container
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws0; workspace $ws0
+
+# Always open some programs on specified workspace
+assign [class="VirtualBox"]	$ws7
+
+### }}}
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Lock screen
+bindsym $mod+Shift+z exec --no-startup-id blurlock
+
+### Resize window (you can also use the mouse for that) {{{
+mode "resize"
+{
+        # Resize with the arrow keys
+        bindsym Left resize shrink width 2 px or 2 ppt
+        bindsym Down resize grow height 2 px or 2 ppt
+        bindsym Up resize shrink height 2 px or 2 ppt
+        bindsym Right resize grow width 2 px or 2 ppt
+
+        # Back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+### }}}
+
+### Defining colors {{{
+
+# RGB
+set $cyan0	 #4ec2f7
+set $silver0 #e4e4e4
+set $orange  #ff8700
+
+# RGBA
+set $cyan	   #4ec2f799
+set $acqua	 #00708999
+set $wine 	 #72003e99
+set $magenta #af005f99
+set $silver  #e4e4e499
+set $toxic   #8EC00099
+set $elegant #00002c99
+
+# Set some nice colors      border   background text	 indicator
+client.focused              $cyan    $cyan      $elegant $cyan
+client.unfocused            $elegant $elegant   $cyan    $elegant
+client.focused_inactive     $acqua   $acqua     $silver  $acqua
+client.urgent               $magenta $magenta   $silver  $magenta
+client.placeholder          $magenta $magenta   $silver  $magenta
+
+### }}}
+
+# Start i3blocks to display a workspace bar
+bar
+{
+	position top
+	status_command i3blocks
+        i3bar_command i3bar -t
+	font pango: SauceCodePro Nerd Font Black 10	
+	colors
+	{
+                                    # Border  # Background # Text
+		focused_workspace   $elegant  $elegant  $silver0
+		active_workspace    $elegant  $elegant  $orange
+		inactive_workspace  $elegant  $elegant 	$cyan0
+		urgent_workspace    $acqua    $acqua    $silver0
+		background          $elegant
+    	}
+}
+
+### Startup programs {{{
+exec_always --no-startup-id feh --bg-scale ~/.wallpapers/cyberpunk.jpg # Wallpaper
+exec_always --no-startup-id ~/.scripts/monitor.sh # Automatically switch within monitors
+#exec --no-startup-id xbindkeys # Load keyboard shortcuts
+exec --no-startup-id compton -f # Compositor for window transparency
+#exec --no-startup-id emacs --daemon=instance1 # Daemonize Emacs
+#exec --no-startup-id pulseaudio --start
+#exec --no-startup-id pa-applet
+exec --no-startup-id xfce4-power-manager # To monitor batttery
+exec --no-startup-id "setxkbmap -model pc105 -layout dvorak,es -option grp:alt_shift_toggle,caps:backspace"
+exec --no-startup-id notify-send "Welcome back Johann!" -i ~/.happy.png # Greeting on startup
+exec --no-startup-id "sh -c 'sleep 180; exec dropbox'"
+exec --no-startup-id "sh -c 'sleep 30; exec keepassxc'"
+exec --no-startup-id xautolock -time 10 -locker blurlock
+exec --no-startup-id clipit
+
+### }}}
+
+
+# Set shut down, restart and locking features
+bindsym $mod+Shift+e mode "$mode_system"
+set $mode_system (l)ock, (e)xit, switch_(u)ser, (s)uspend, (h)ibernate, (r)eboot, (Shift+s)hutdown
+mode "$mode_system" {
+    bindsym l exec --no-startup-id i3exit lock, mode "default"
+    bindsym s exec --no-startup-id i3exit suspend, mode "default"
+    bindsym u exec --no-startup-id i3exit switch_user, mode "default"
+    bindsym e exec --no-startup-id i3exit logout, mode "default"
+    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
+    bindsym r exec --no-startup-id i3exit reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
+
+    # exit system mode: "Enter" or "Escape"
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+

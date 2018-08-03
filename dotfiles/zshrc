@@ -1,0 +1,276 @@
+# Path to your oh-my-zsh installation.
+export ZSH=/home/krono/.oh-my-zsh
+# Syntax highlighting and tab completion
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+autoload -Uz compinit
+
+## Options section
+setopt correct                                                  # Auto correct mistakes
+setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
+setopt nocaseglob                                               # Case insensitive globbing
+setopt rcexpandparam                                            # Array expension with parameters
+setopt nocheckjobs                                              # Don't warn about running processes when exiting
+setopt numericglobsort                                          # Sort filenames numerically when it makes sense
+setopt nobeep                                                   # No beep
+setopt appendhistory                                            # Immediately append history instead of overwriting
+setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
+setopt autocd                                                   # if only directory path is entered, cd there.
+
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
+zstyle ':completion:*' rehash true                              # automatically find new executables in path 
+# Speed up completions
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+HISTFILE=~/.zhistory
+HISTSIZE=1000
+SAVEHIST=500
+
+WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
+
+
+
+# Coloured man pages using less as pager
+man_color() {
+    env \
+	      LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+	      LESS_TERMCAP_md=$(printf "\e[1;31m") \
+	      LESS_TERMCAP_me=$(printf "\e[0m") \
+	      LESS_TERMCAP_se=$(printf "\e[0m") \
+	      LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+	      LESS_TERMCAP_ue=$(printf "\e[0m") \
+	      LESS_TERMCAP_us=$(printf "\e[1;36m") \
+	      man "$@"
+}
+
+## Plugins section: Enable fish style features
+# Use syntax highlighting
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# Use history substring search
+source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+# bind UP and DOWN arrow keys to history substring search
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^[[A' history-substring-search-up			
+bindkey '^[[B' history-substring-search-down
+
+case $(basename "$(cat "/proc/$PPID/comm")") in
+  login)
+    	RPROMPT="%{$fg[red]%} %(?..[%?])" 
+    	alias x='startx ~/.xinitrc'      # Type name of desired desktop after x, xinitrc is configured for it
+    ;;
+  urxvt)
+    	RPROMPT='$(git_prompt_string)'
+    	# Use autosuggestion
+    	source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+    	ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+    	ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+    ;;
+  konsole|qterminal)
+    	RPROMPT='$(git_prompt_string)'
+    ;;   
+  'tmux: server')
+  	if $(ps -p$PPID| grep -q -e konsole -e qterminal); then
+    	RPROMPT='$(git_prompt_string)'
+    else
+        RPROMPT='$(git_prompt_string)'
+		## Base16 Shell color themes.
+		#possible themes: 3024, apathy, ashes, atelierdune, atelierforest, atelierhearth,
+		#atelierseaside, bespin, brewer, chalk, codeschool, colors, default, eighties, 
+		#embers, flat, google, grayscale, greenscreen, harmonic16, isotope, londontube,
+		#marrakesh, mocha, monokai, ocean, paraiso, pop (dark only), railscasts, shapesifter,
+		#solarized, summerfruit, tomorrow, twilight
+		#theme="eighties"
+		#Possible variants: dark and light
+		#shade="dark"
+		#BASE16_SHELL="/usr/share/zsh/scripts/base16-shell/base16-$theme.$shade.sh"
+		#[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+		# Use autosuggestion
+		source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+  		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+  	fi
+    ;;
+  *)
+  	if $(ps -p$PPID| grep -q -e konsole -e qterminal); then
+    	RPROMPT='$(git_prompt_string)'
+    else
+        RPROMPT='$(git_prompt_string)'
+		# Use autosuggestion
+		source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+		ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+  		ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+  	fi
+    ;;
+esac
+
+
+# Font mode for powerlevel9k
+POWERLEVEL9K_MODE="nerdfont-complete"
+
+# Set name of the theme to load.
+ZSH_THEME="powerlevel9k/powerlevel9k"
+
+# Prompt settings
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%K{white}%k"
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%K{black}%F{green} \uf155%f%F{black} %k\ue0b0%f "
+
+# Separators
+POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR=$'\ue0b0'
+POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR=$'\ue231'
+POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR=$'\ue0b2'
+POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR=$'\ue0b7'
+
+# Context
+DEFAULT_USER=$USER
+POWERLEVEL9K_ALWAYS_SHOW_CONTEXT=true
+POWERLEVEL9K_CONTEXT_DEFAULT_FOREGROUND='green'
+POWERLEVEL9K_CONTEXT_TEMPLATE="%F{cyan}%n%f"
+POWERLEVEL9K_CONTEXT_DEFAULT_BACKGROUND='black'
+
+# Dirs
+POWERLEVEL9K_DIR_HOME_BACKGROUND='green'
+POWERLEVEL9K_DIR_HOME_FOREGROUND='black'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND='green'
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='black'
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND='yellow'
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND='black'
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+# OS segment
+POWERLEVEL9K_OS_ICON_BACKGROUND='black'
+POWERLEVEL9K_LINUX_ICON='%F{cyan}\uf300 %F{white}arch%F{cyan}linux%f'
+
+# VCS icons
+POWERLEVEL9K_VCS_GIT_ICON=$''
+POWERLEVEL9K_VCS_GIT_GITHUB_ICON=$''
+POWERLEVEL9K_VCS_STAGED_ICON=$'\uf055'
+POWERLEVEL9K_VCS_UNSTAGED_ICON=$'\uf421'
+POWERLEVEL9K_VCS_UNTRACKED_ICON=$'\uf00d'
+POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON=$'\uf0ab '
+POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON=$'\uf0aa '
+
+# VCS colours
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='red'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='black'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='yellow'
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='black'
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='green'
+
+# VCS CONFIG
+POWERLEVEL9K_SHOW_CHANGESET=false
+
+# Status
+POWERLEVEL9K_OK_ICON=$'\uf164'
+POWERLEVEL9K_FAIL_ICON=$'\uf165'
+POWERLEVEL9K_CARRIAGE_RETURN_ICON=$'\uf165'
+
+# Battery
+POWERLEVEL9K_BATTERY_LOW_FOREGROUND='red'
+POWERLEVEL9K_BATTERY_CHARGING_FOREGROUND='yellow'
+POWERLEVEL9K_BATTERY_CHARGED_FOREGROUND='green'
+POWERLEVEL9K_BATTERY_DISCONNECTED_FOREGROUND='blue'
+
+# Time
+POWERLEVEL9K_TIME_FORMAT="%F{black}\uf017 %D{%I:%M}%f"
+POWERLEVEL9K_TIME_BACKGROUND='green'
+
+# Command auto-correction.
+ENABLE_CORRECTION="true"
+
+# Command execution time stamp shown in the history command output.
+HIST_STAMPS="dd/mm/yyyy"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
+
+# Prompt elements
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon context dir vcs)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(background_jobs time battery)
+
+
+# User configuration
+
+# vim style {{{
+bindkey -v
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^r' history-incremental-search-backward
+# {{{
+
+# my functions 
+
+function mp3download {
+	if [ "$#" -eq 1 ]
+	then
+		youtube-dl -xi --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $1
+	elif [ "$#" -eq 2 ]
+	then 
+		youtube-dl -xi -u $1 --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $2
+	else
+		echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
+	fi
+}
+function videodownload {
+	if [ "$#" -eq 1 ]
+	then
+		youtube-dl -i -o "%(title)s.%(ext)s" $1
+	elif [ "$#" -eq 2 ]
+	then 
+		youtube-dl -iu $1 -o "%(title)s.%(ext)s" $2
+	else
+		echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
+	fi
+}
+
+# Aliases for a few useful commands
+alias mirrorUpdate="sudo reflector --latest 250 --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
+alias yaourt="yaourt --pager --color"
+alias pacmanGhost="~/.pacman.sh"
+alias shivita="toilet -f mono12 -F rainbow 'krono' | ponythink -f winona"
+#alias ls="colorls"
+alias ip="ip -c"
+alias rm="rm -i"
+alias x="ranger"
+alias c="cmus"
+alias h="htop"
+alias man="man_color"
+alias m=mp3download
+alias v=videodownload
+alias zshrc='$EDITOR ~/.zshrc'
+alias G='| grep'
+alias H='| head'
+alias L='| less'
+alias M='| most'
+alias P='2>&1| pygmentize -l pytb'
+alias T='| tail'
+alias S="yay -Ss"
+alias I="yay -Syu"
+
+
+# jump around 
+. ~/Workspace/linux/dotfiles/z.sh
+
+# node version manager
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+# asdf
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash

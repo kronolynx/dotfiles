@@ -1,0 +1,120 @@
+[commit]
+  gpgsign = true
+[core]
+  editor = vim
+[alias]
+  amend = commit --amend --no-edit 
+  # quick amend: Amend my staged changes to the last commit, keeping the same commit message
+  amend-stage = commit --amend -C HEAD
+  amendAdd = commit --amend --no-edit -a
+# Get the current branch name (not so useful in itself, but used in
+# other aliases)
+  branch-name = "!git rev-parse --abbrev-ref HEAD"
+  c = commit
+  co = checkout 
+  cob = checkout -b
+  cobu = "!f() { git checkout -b $1 upstream/master; }; f"
+  count = "!git ls-files | xargs wc -l"
+  clonerec = "!f() { git clone --recursive $1; }; f"
+  del = branch -D
+  delor = "!git push origin:$(git branch-name)"
+  diffc = diff --cached
+  fu = fetch upstream
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  # stop tracking file for changes
+  ignore = "!f() { git update-index --assume-unchanged $1; }; f"
+  initc = "!git init && git add -A && git commit -m 'Initial commit'"
+  # join last head and previous commit
+  join = "!git reset --soft HEAD~1 && git commit --amend -a"
+  # list aliases
+  la = "!git config -l | grep alias | cut -c 7-"
+  #meup ="!f() {git branch | grep \* | cut -d ' ' -f2 | xargs git push upstream $1:master; }; f"
+  # merge to upstream current branch
+  meup ="!git push upstream $(git branch-name):master && git delor"
+  p = push
+  pdiff = diff @~..@
+  pf = push -f
+  # push to origin
+  po = "!git push -u origin $(git branch-name)"
+  # delete origin
+  pod = "!git push origin :$(git branch-name)"
+  #pu = push upstream
+  pullall = submodule update --recursive --remote
+  pullsub = submodule update --recursive
+  rc = rebase --continue
+  # ours in this case means the changes that are not in the curren branch (inverse)
+  reb = rebase -s recursive -X ours
+  reset-origin = reset --hard origin/master
+  rim = rebase -i upstream/master
+  ru = rebase upstream/master
+  # add all changes including untracked files and creates commit
+  save = !git add -A && git commit -m 'SAVEPOINT'
+  set-remote = remote set-url origin 
+  spull = !git pull && git submodule foreach git pull origin master
+  spush = push --recurse-submodules=on-demand
+  # undo previous commit but keep all the changes in the working directory	
+  undo = reset HEAD~1 --mixed 
+  undo-commit = reset --soft HEAD~1
+  # resume tracking file  for changes
+  unignore = "!f() { git update-index --no-assume-unchanged $1; }; f"
+  unstage = reset HEAD
+  # commits tracked changes
+  wip = commit -am "WIP"
+[status]
+  submoduleSummary = true
+[diff]
+  submodule = log
+[pager]
+    # insanely beautiful diffs ==> npm install -g diff-so-fancy
+  #diff = diff-so-fancy | less --tabs=4 -RFX
+  #show = diff-so-fancy | less --tabs=4 -RFX
+
+#so much color
+[color]
+  ui = always
+[color "diff"]
+  meta = yellow bold
+  commit = green bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+# git mergetool
+[merge]
+  tool = opendiff
+  renameLimit = 0
+# use separate file for username / github token
+[include]
+  path = ~/.gitconfig.local
+
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+
+[fetch]
+  prune = true
+[diff]
+  compactionHeuristic = true
+[remote "origin"]
+  fetch = +refs/heads/*:refs/remotes/origin/*
+[stash]
+  showPatch = true
+[push]
+  default = current
+[github]
+  user = kronolynx

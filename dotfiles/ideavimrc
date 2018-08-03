@@ -1,0 +1,54 @@
+"actions
+let mapleader=" "
+source ~/.vimrc
+nnoremap <leader>w :action SaveAll<cr>
+nnoremap <leader>rfi :action RecentFiles<cr>
+" remove extra whitespace
+nmap <leader>cc :%s/\s\+$<CR><Paste>
+nnoremap <leader>rff :action ReformatCode<CR>
+nnoremap <leader>sf :action GotoFile<cr>
+nnoremap <leader>tc :action CloseActiveTab<cr>
+nnoremap <leader>to :action CloseAllEditorsButActive<cr>
+nnoremap <leader>tu :action CloseAllUnmodifiedEditors<cr>
+nnoremap <leader>sw :action ActivateProjectToolWindow<cr>
+nnoremap <leader>fp :action FindInPath<cr>
+nnoremap <leader>fu :action FindUsages<cr>
+nnoremap <leader>se :action SearchEverywhere<cr>
+nnoremap <leader>sr :action Replace<cr>
+nnoremap <leader>sa :action Switcher<cr>
+nnoremap <leader>T :action FileStructurePopup<cr>
+nnoremap <leader>Q :action ReopenClosedTab<cr>
+nnoremap <leader>\ :action VimFilePrevious<cr>
+"nnoremap <leader>T :action GotoSymbol<cr>
+"nnoremap <leader>a :action GotoAction<cr>
+nnoremap <leader>b :action ToggleLineBreakpoint<cr>
+nnoremap <leader>ll :action CompileProject<cr>
+nnoremap <leader>hb :action HippieBackwardCompletion<CR>
+nnoremap <leader>hf :action HippieCompletion<CR>
+noremap <leader>k :action NextTab<CR>
+noremap <leader>j :action PreviousTab<CR>
+noremap <leader>a :action AceAction<CR>
+
+nnoremap <leader>ee :action GotoNextError<CR>
+nnoremap <leader>EE :action GotoPreviousError<CR>
+" code navigation
+nnoremap <leader>gi :action GotoImplementation<cr>
+nnoremap <leader>gs :action GotoSuperMethod<cr>
+nnoremap <leader>fu :action FindUsages<cr>
+" code refactoring
+nnoremap <leader>rr :action RenameElement<cr>
+
+" easy window navigation
+nnoremap <C-w>q :action CloseContent<cr>
+nnoremap <C-w>m :action MoveEditorToOppositeTabGroup<cr>
+
+" windows {{{
+" Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+" }}}
+map <C-`> :action ActivateTerminalToolWindow<cr>
+map <C-p> :action ActivateProjectToolWindow<cr>
+set surround
