@@ -1,15 +1,14 @@
 #!/bin/bash
 
 ## this script makes a backup of the specified dot files
-backup=backup
+backup="backup-$(now +'%Y%m%d')$(now +'%H%M%S')"
 mkdir -p $backup
 
-# any dotfile or dir in this array will be backed up if it exist in home
+# any dotfile or dir in this array will be backedup if it exist in home
 dotfiles=(
 Xresources
 bashrc
 bash_profile
-config/Code/Preferences
 config/cmus/autosave
 config/cmus/lib.pl
 config/compton.conf
@@ -45,7 +44,7 @@ xinitrc
 z.sh
 zshrc 
 )
-# use console parameters and if none are provided use dotfiles array
+# if no console argumen is provided the dotfiles array is used
 files=${@:-${dotfiles[*]}}
 
 for f in ${files[*]} ; do
