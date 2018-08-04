@@ -40,4 +40,4 @@ p7zip
 xarchiver
 )
 
-./install-app.sh $app
+./install-app.sh ${apps[*]}
