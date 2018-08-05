@@ -1,11 +1,11 @@
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
-set $term termite
-#set $term  urxvtc
-#exec --no-startup-id urxvtd --quiet --opendisplay --fork &
+#set $term termite
+set $term  urxvtc
+exec --no-startup-id urxvtd --quiet --opendisplay --fork &
 
 set $fm pcmanfm
-set $browser vivaldi-snapshot
+set $browser google-chrome-stable
 
 # Default modkey
 set $mod Mod4
@@ -43,6 +43,16 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 bindsym $mod+n exec --no-startup-id boostnote
 bindsym $mod+Shift+m exec --no-startup-id ~/.scripts/monitor.sh
 ### }}}
+
+################################################################################################
+## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
+################################################################################################
+
+exec --no-startup-id volumeicon
+bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
+#exec --no-startup-id pulseaudio
+#exec --no-startup-id pa-applet
+#bindsym $mod+Ctrl+m exec pavucontrol
 
 ### extra XF86 keys {{{
 # requires xorg-xbacklight from aur
@@ -265,6 +275,7 @@ bar
 }
 
 ### Startup programs {{{
+
 exec_always --no-startup-id feh --bg-scale ~/.wallpapers/cyberpunk.jpg # Wallpaper
 exec_always --no-startup-id ~/.scripts/monitor.sh # Automatically switch within monitors
 #exec --no-startup-id xbindkeys # Load keyboard shortcuts
@@ -272,6 +283,7 @@ exec --no-startup-id compton -f # Compositor for window transparency
 #exec --no-startup-id emacs --daemon=instance1 # Daemonize Emacs
 #exec --no-startup-id pulseaudio --start
 #exec --no-startup-id pa-applet
+exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager # To monitor batttery
 exec --no-startup-id "setxkbmap -model pc105 -layout dvorak,es -option grp:alt_shift_toggle,caps:backspace"
 exec --no-startup-id notify-send "Welcome back Johann!" -i ~/.happy.png # Greeting on startup
