@@ -18,7 +18,7 @@ jetbrains-toolbox
 set_vim() {
     ./install-app.sh vim
 
-    if [ ! -d "$HOME/.vim" ]; then
+    if [ ! -d "$HOME/.vim/plugged" ]; then
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     fi
