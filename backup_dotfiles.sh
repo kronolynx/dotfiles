@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ## this script makes a backup of the specified dot files
-backup="backup-$(now +'%Y%m%d')$(now +'%H%M%S')"
+backup="backup-$(date +'%Y%m%d')$(date +'%H%M%S')"
 mkdir -p $backup
 
 # any dotfile or dir in this array will be backedup if it exist in home
@@ -50,7 +50,7 @@ files=${@:-${dotfiles[*]}}
 for f in ${files[*]} ; do
     file_or_dir=$HOME/.$f
     if [ -f $file_or_dir ]; then
-        mkdir -p backup/$(dirname $f)
+        mkdir -p $backup/$(dirname $f)
         cp --remove-destination $file_or_dir $backup/$f
     elif [ -d $file_or_dir ]; then
         mkdir -p $backup/$f
