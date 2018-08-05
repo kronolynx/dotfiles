@@ -16,23 +16,23 @@ jetbrains-toolbox
 ./install-app.sh ${apps[*]}
 
 set_vim() {
-    ./install-app.sh gvim
+    ./install-app.sh vim
 
     if [ ! -d "$HOME/.vim" ]; then
         curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
             https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-                fi
-            }
-        set_vim
+    fi
+    mkdir -p $HOME/.vim/backup
+    mkdir -p $HOME/.vim/undo
+}
 
-        set_tmux() {
-            ./install-app.sh tmux
+set_tmux() {
+    ./install-app.sh tmux
 
-            if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-                git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-            fi
-        }
-    set_tmux
+    if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
+}
 
 # spacemacs editor
 spacemacs () {
@@ -43,7 +43,6 @@ spacemacs () {
         echo "Can't install spacemacs: .emacs.d already exist"
     fi
 }
-spacemacs
 
 
 
@@ -58,4 +57,7 @@ code --install-extension be5invis.toml # TOML language support
 code --install-extension webfreak.debug # GDB, LLDB & Mago-MI Debugger support for VSCode
 code --install-extension vadimcn.vscode-lldb # Debug your native code with LLDB
 }
+set_vim
+spacemacs
+set_tmux
 vs-code-ext
