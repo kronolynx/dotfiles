@@ -7,20 +7,22 @@ fi
 SHELL_FILE="${HOME}/.${SHELL_NAME}"
 
 add_node() {
-	# install node version manager
-	if [ ! -d "$HOME/.nvm" ]; then
-		echo "Installing nvm"
-		curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
-		source $HOME/.nvm/nvm.sh
-		nvm install --lts
-		npm install -g yarn
-	fi
+        if ! pacman -Qi nvm &> /dev/null; then
+            ./install-app.sh nvm
+            ./install-app.sh yarn
+        fi
 
 	if ! command grep -qc '/nvm.sh' "$SHELL_FILE"; then
 		echo "Appending nvm source string to zsh"
-		command printf "\\n# node version manager\\nexport NVM_DIR=\"\$HOME/.nvm\"\\n[ -s \"\$NVM_DIR/nvm.sh\" ] && \\. \"\$NVM_DIR/nvm.sh\"  # This loads nvm\\n[ -s \"\$NVM_DIR/bash_completion\" ] && \\. \"\$NVM_DIR/bash_completion\"  # This loads nvm bash_completion"  >> "$SHELL_FILE"
+
+                command printf "\\n# Set up Node Version Manager
+\\nexport NVM_DIR=\"\$HOME/.nvm\"                            # You can change this if you want.
+\\nexport NVM_SOURCE=\"/usr/share/nvm\"                     # The AUR package installs it to here.
+\\n[ -s \"\$NVM_SOURCE/nvm.sh\" ] && \\. \"\$NVM_SOURCE/nvm.sh\"  # Load NVM" >> "$SHELL_FILE"
 		
 	fi
+        source $SHELL_FILE
+        nvm install --lts
 }
 add_rust() {
 	if [ ! -d "$HOME/.cargo" ]; then
@@ -56,11 +58,10 @@ add_asdf() {
 
 asdf_plugins() {
     echo -e "asdf plugins"
-    asdf plugin-add sbt https://github.com/lerencao/asdf-sbt
     #asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
     asdf plugin-add mongodb https://github.com/sylph01/asdf-mongodb.git
     #asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
-    asdf plugin-add lua https://github.com/Stratus3D/asdf-lua.git
+    #asdf plugin-add lua https://github.com/Stratus3D/asdf-lua.git
     #asdf plugin-add R https://github.com/iroddis/asdf-R.git
     #asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
     #asdf plugin-add redis https://github.com/smashedtoatoms/asdf-redis.git
@@ -78,5 +79,5 @@ add_node
 add_rust
 add_rustup
 add_asdf
-#asdf_plugins
+asdf_plugins
 add_scala
