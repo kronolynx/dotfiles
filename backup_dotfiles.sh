@@ -24,6 +24,7 @@ config/systemd
 config/terminator
 config/termite
 config/tmux
+config/yay
 dir_colors
 gitconfig
 gtkrc-2.0
