@@ -19,12 +19,7 @@ alias I="yay -Syu "
 #alias swapk="setxkbmap -modiel pc105 -layout dvorak,es -option grp:alt_shift_toggle,caps:swapescape"
 alias swapk="setxkbmap -model pc105 -layout dvorak,es -option grp:alt_shift_toggle,caps:backspace"
 
-alias man="man_color"
-alias M=yo-mp3
-alias V=yo-vid
 alias mirrorupdate="sudo pacman-mirrors -gm rank"
-
-alias crop='k2pdfopt -mode fw -c -ls- '
 
 alias v='f -e vim' 
 alias o='a -e xdg-open'
