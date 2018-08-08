@@ -9,7 +9,6 @@ dotfiles=(
 Xresources
 bash_profile
 bashrc
-config/cmus/autosave
 config/cmus/lib.pl
 config/compton.conf
 config/dunst
