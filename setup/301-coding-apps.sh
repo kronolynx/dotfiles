@@ -56,6 +56,21 @@ code --install-extension rust-lang.rust
 code --install-extension be5invis.toml # TOML language support
 code --install-extension webfreak.debug # GDB, LLDB & Mago-MI Debugger support for VSCode
 code --install-extension vadimcn.vscode-lldb # Debug your native code with LLDB
+code --install-extension eamodio.gitlens # Git supercharged
+code --install-extension christian-kohler.path-intellisense
+code --install-extension EditorConfig.editorconfig
+code --install-extension eg2.tslint
+code --install-extension formulahendry.code-runner
+code --install-extension hookyqr.beautify
+code --install-extension joelday.docthis
+code --install-extension mgmcdermott.vscode-language-babel
+code --install-extension milkmidi.vs-code-quick-require
+code --install-extension msjsdiag.debugger-for-chrome
+code --install-extension robertohuertasm.vscode-icons
+code --install-extension robinbentley.sass-indented
+code --install-extension shinnn.stylelint
+code --install-extension steoates.autoimport
+code --install-extension wix.vscode-import-cost
 }
 set_vim
 spacemacs
