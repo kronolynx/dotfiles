@@ -25,6 +25,8 @@ xorg-xbacklight
 cmus
 # Terminal based YouTube jukebox with playlist management
 mps-youtube
+# Ergodox flashing
+teensy-loader-cli
 )
 
 ./install-app.sh ${apps[*]}
