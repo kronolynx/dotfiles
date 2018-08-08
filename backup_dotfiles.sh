@@ -7,13 +7,15 @@ mkdir -p $backup
 # any dotfile or dir in this array will be backedup if it exist in home
 dotfiles=(
 Xresources
-bashrc
 bash_profile
+bashrc
 config/cmus/autosave
 config/cmus/lib.pl
 config/compton.conf
 config/dunst
-config/fish
+config/fish/config.fish
+config/fish/fishfile
+config/gtk-3.0/gtk.css
 config/gtk-3.0/settings.ini
 config/neofetch 
 config/ranger/rc.conf
