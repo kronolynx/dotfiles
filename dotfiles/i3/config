@@ -1,8 +1,8 @@
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
-#set $term termite
-set $term  urxvtc
-exec --no-startup-id urxvtd --quiet --opendisplay --fork &
+set $term termite -e tmux
+#set $term  "urxvtc -e fish"
+#exec --no-startup-id urxvtd --quiet --opendisplay --fork &
 
 set $fm pcmanfm
 set $browser google-chrome-stable
@@ -67,7 +67,7 @@ bindsym XF86Explorer            exec --no-startup-id $fm
 
 ### workspaces  {{{
 set $intern eDP1
-set $extern HDMI1
+set $extern HDMI2
 workspace $ws1 output $intern
 workspace $ws2 output $extern
 workspace $ws3 output $intern
