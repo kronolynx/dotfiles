@@ -72,6 +72,10 @@ code --install-extension shinnn.stylelint
 code --install-extension steoates.autoimport
 code --install-extension wix.vscode-import-cost
 }
+
+atom-ext() {
+apm install vim-mode-plus
+}
 set_vim
 spacemacs
 set_tmux
