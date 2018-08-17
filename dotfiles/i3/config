@@ -17,7 +17,7 @@ new_window pixel
 gaps inner 6
 
 # Font for window titles.
-font pango: SauceCodePro Nerd Font Black 11
+font pango:SauceCodePro Nerd Font Black 11
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -154,16 +154,17 @@ bindsym $mod+Ctrl+Left workspace prev
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-set $ws1 
-set $ws2 
-set $ws3 
-set $ws4 
-set $ws5 
-set $ws6 
-set $ws7 λ
-set $ws8 
-set $ws9 
-set $ws0 
+set $ws1 "1:<span color='#78da59'></span>"
+set $ws2 "2:<span color='#ffff33'></span>"
+set $ws3 "3:<span color='#cc00ff'></span>"
+set $ws4 "4:<span color='#00a1f1'></span>"
+set $ws5 "5:<span color='#f65314'></span>"
+set $ws6 "6:<span color='#f7786b'></span>"
+set $ws7 "7:<span color='#fbbc05'>λ</span>"
+set $ws8 "8:<span color='#00ffff'></span>"
+set $ws9 "9:<span color='#33bdf5'></span>"
+set $ws0 "10:<span color='#ff66ff'>ﮊ</span>"
+
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -203,6 +204,7 @@ bindsym $mod+Shift+0 move container to workspace $ws0; workspace $ws0
 
 # Always open some programs on specified workspace
 assign [class="VirtualBox"]	$ws7
+assign [class="telegram-desktop"]	$ws5
 
 ### }}}
 
@@ -248,7 +250,7 @@ set $toxic   #8EC00099
 set $elegant #00002c99
 
 # Set some nice colors      border   background text	 indicator
-client.focused              $cyan    $cyan      $elegant $cyan
+client.focused              $cyan    $cyan      $elegant $acqua
 client.unfocused            $elegant $elegant   $cyan    $elegant
 client.focused_inactive     $acqua   $acqua     $silver  $acqua
 client.urgent               $magenta $magenta   $silver  $magenta
@@ -256,27 +258,30 @@ client.placeholder          $magenta $magenta   $silver  $magenta
 
 ### }}}
 
-# Start i3blocks to display a workspace bar
-bar
-{
-	position top
-	status_command i3blocks
-        i3bar_command i3bar -t
-	font pango: SauceCodePro Nerd Font Black 10	
-	colors
-	{
-                                    # Border  # Background # Text
-		focused_workspace   $elegant  $elegant  $silver0
-		active_workspace    $elegant  $elegant  $orange
-		inactive_workspace  $elegant  $elegant 	$cyan0
-		urgent_workspace    $acqua    $acqua    $silver0
-		background          $elegant
-    	}
+bar {
+      font  pango: SauceCodePro Nerd Font Black 10
+      position top
+      status_command i3status
+      i3bar_command i3bar -t
+      separator_symbol ""
+      strip_workspace_numbers yes
+      colors {
+            separator #666666
+            background #222222
+            statusline #dddddd
+                                #border   #bg       #txt
+            focused_workspace   $cyan  $elegant  $silver0
+            active_workspace    $elegant  $elegant  $orange
+            inactive_workspace  $elegant  $elegant  $cyan0
+            urgent_workspace    $acqua    $acqua    $silver0
+            background          $elegant
+      }
 }
-
+#hide/unhide i3status bar
+bindsym $mod+m bar mode toggle
 ### Startup programs {{{
 
-exec_always --no-startup-id feh --bg-scale ~/.wallpapers/cyberpunk.jpg # Wallpaper
+exec_always --no-startup-id nitrogen --restore ~/.wallpapers
 exec_always --no-startup-id ~/.scripts/monitor.sh # Automatically switch within monitors
 #exec --no-startup-id xbindkeys # Load keyboard shortcuts
 exec --no-startup-id compton -f # Compositor for window transparency
@@ -291,6 +296,7 @@ exec --no-startup-id "sh -c 'sleep 180; exec dropbox'"
 exec --no-startup-id "sh -c 'sleep 30; exec keepassxc'"
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec --no-startup-id clipit
+exec --no-startup-id "redshift -c ~/.config/redshift/redshift.conf"
 
 ### }}}
 
