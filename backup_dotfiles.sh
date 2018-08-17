@@ -16,6 +16,7 @@ config/fish/config.fish
 config/fish/fishfile
 config/gtk-3.0/gtk.css
 config/gtk-3.0/settings.ini
+config/i3status/config
 config/neofetch 
 config/ranger/rc.conf
 config/ranger/scope.sh
@@ -31,7 +32,6 @@ gitconfig
 gtkrc-2.0
 gvimrc
 i3
-i3blocks.conf
 ideavimrc
 images
 nanorc 
@@ -59,3 +59,5 @@ for f in ${files[*]} ; do
         cp --remove-destination -r $file_or_dir/* $backup/$f
     fi
 done
+
+echo "Backup created '$backup'"

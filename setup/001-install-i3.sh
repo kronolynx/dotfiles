@@ -6,15 +6,19 @@ i3-scripts
 i3-scrot
 i3exit
 i3lock
+i3status
 # a replacement for the default i3status with more features.
-i3blocks
+#i3blocks
+# Very resourcefriendly and feature-rich replacement for i3status to use with bar programs (like i3bar and swaybar), written in pure Rust
+alsa-utils
+lm_sensors
 # autolock e.g xautolock -time 10 -locker xscreensaver 
 xautolock 
 
 # menu for launching applications (replacement for dmenu)
 rofi
 # wallpaper
-feh
+nitrogen
 # X compositor that may fix tearing issues
 compton
 # to display current song
