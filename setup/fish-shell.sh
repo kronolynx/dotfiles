@@ -8,4 +8,4 @@ fisherman
 ./install-app.sh ${apps[*]}
 
 # run fisherman to install plugins
-fisherman
+fisher
