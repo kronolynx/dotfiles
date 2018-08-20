@@ -7,6 +7,7 @@ i3-scrot
 i3exit
 i3lock
 i3status
+xss-lock
 # a replacement for the default i3status with more features.
 #i3blocks
 # Very resourcefriendly and feature-rich replacement for i3status to use with bar programs (like i3bar and swaybar), written in pure Rust
