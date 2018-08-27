@@ -29,6 +29,8 @@ config/tmux
 config/xmobar
 config/yay
 dir_colors
+emacs.d/init.el
+emacs.d/lisp
 gitconfig
 gtkrc-2.0
 gvimrc
