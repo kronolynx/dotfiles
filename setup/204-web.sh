@@ -6,8 +6,8 @@ google-chrome
 chromium
 # firefox
 firefox
-# dropbox
-dropbox
+# mega sync
+megasync
 # keepassxc
 keepassxc
 # note taking
