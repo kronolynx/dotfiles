@@ -19,6 +19,15 @@
 	<other-files/>
 </action>
 <action>
+	<icon>terminus</icon>
+	<name>Open in ranger</name>
+	<unique-id>1535392296744854-1</unique-id>
+	<command>termite -e ranger %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
 	<icon>search</icon>
 	<name>Search</name>
 	<unique-id>1535383681671743-1</unique-id>
