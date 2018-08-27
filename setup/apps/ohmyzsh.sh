@@ -12,7 +12,7 @@ zsh-completions
 zsh-history-substring-search
 )
 
-./install-app.sh ${apps[*]}
+../install-app.sh ${apps[*]}
 
 # oh-my-zsh
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
