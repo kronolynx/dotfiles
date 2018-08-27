@@ -1,0 +1,169 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open in terminal</name>
+	<unique-id>1535384059688648-4</unique-id>
+	<command>termite -e fish -d %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>application-running</icon>
+	<name>Run in terminal</name>
+	<unique-id>1535389841976389-2</unique-id>
+	<command>termite -e %f --hold</command>
+	<description></description>
+	<patterns>*</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon>search</icon>
+	<name>Search</name>
+	<unique-id>1535383681671743-1</unique-id>
+	<command>catfish --path=%f</command>
+	<description>search for files and folders</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>vim</icon>
+	<name>Edit as root</name>
+	<unique-id>1535384118985572-5</unique-id>
+	<command>gksu gvim %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>vim</icon>
+	<name>Vim edit</name>
+	<unique-id>1535384541427139-8</unique-id>
+	<command>gvim %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>vim</icon>
+	<name>Vim diff files</name>
+	<unique-id>1535384650396195-9</unique-id>
+	<command>gvim -d %F</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>clipboard</icon>
+	<name>Copy Pathname to Clipboard</name>
+	<unique-id>1535384248103164-6</unique-id>
+	<command>echo -n %f | clipit</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>disk-usage-analyzer</icon>
+	<name>Disk usage</name>
+	<unique-id>1535384391460858-7</unique-id>
+	<command>termite -e ncdu %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>gpdftext</icon>
+	<name>Export to PDF</name>
+	<unique-id>1535384801016300-10</unique-id>
+	<command>unoconv -f pdf %F</command>
+	<description></description>
+	<patterns>*.doc;*.docx;*.odt;*.odp;*.pps;*.ppt;*.xls;*.xlsx;*.ods;*.pptx</patterns>
+	<other-files/>
+</action>
+<action>
+	<icon>folder-move</icon>
+	<name>Move into new folder</name>
+	<unique-id>1535385323401023-12</unique-id>
+	<command>NEW_FOLDER=$(zenity --entry --title &quot;Move into new folder&quot; --text &quot;Please enter a name for the new folder&quot;); mkdir $NEW_FOLDER; mv %F $NEW_FOLDER</command>
+	<description>Select any number of file/folders. A dialog will popup in which you can write the name of a new folder to create. Selected Files will be moved there.</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>selection-move-to-layer-below</icon>
+	<name>Flatten folder</name>
+	<unique-id>1535385419583214-13</unique-id>
+	<command>find . -mindepth 2 -type f -exec mv &quot;{}&quot; . \; &amp;&amp; find . -type d -empty -delete</command>
+	<description>Moves all files from sub-folders to parent (current) folder, then removes all empty folders inside the current folder.</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>format-text-lowercase</icon>
+	<name>Rename to lower case</name>
+	<unique-id>1535385481159801-14</unique-id>
+	<command>for file in %N; do mv &quot;$file&quot; &quot;$(echo &quot;$file&quot; | tr &apos;[:upper:]&apos; &apos;[:lower:]&apos;)&quot;; done</command>
+	<description>Rename the currently selected files, making the filenames lower-case.</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>format-text-direction-horizontal</icon>
+	<name>Slugify filename</name>
+	<unique-id>1535385539971952-15</unique-id>
+	<command>for file in %N; do mv &quot;$file&quot; &quot;$(echo &quot;$file&quot; | tr -s &apos; &apos; | tr &apos; A-Z&apos; &apos;-a-z&apos; | tr -s &apos;-&apos; | tr -c &apos;[:alnum:][:cntrl:].&apos; &apos;-&apos;)&quot;; done</command>
+	<description>Rename the currently selected files, making the filenames lower-case &amp; replacing spaces with dashes.</description>
+	<patterns>*</patterns>
+	<directories/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+<action>
+	<icon>clipboard</icon>
+	<name>Copy contents to clipboard</name>
+	<unique-id>1535385602583712-16</unique-id>
+	<command>cat &quot;%F&quot; | clipit</command>
+	<description>Copies the contents of the selected file to the clipboard.</description>
+	<patterns>*</patterns>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>accessories-character-map</icon>
+	<name>Download subtitles</name>
+	<unique-id>1535385198515150-11</unique-id>
+	<command>periscope -l de -l fr -l nl -l ro %F &amp;&amp; zenity –info –title “Done” –text “Subtitles downloaded successfully” || zenity –error –title “Error” –text “Subtitles not downloaded successfully”</command>
+	<description></description>
+	<patterns>*</patterns>
+	<video-files/>
+</action>
+</actions>
