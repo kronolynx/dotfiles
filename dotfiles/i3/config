@@ -4,7 +4,8 @@ set $term termite -e tmux
 #set $term  "urxvtc -e fish"
 #exec --no-startup-id urxvtd --quiet --opendisplay --fork &
 
-set $fm pcmanfm
+exec --no-startup-id thunar --daemon
+set $fm thunar
 set $browser google-chrome-stable
 
 # Default modkey
@@ -292,7 +293,8 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager # To monitor batttery
 exec --no-startup-id "setxkbmap -model pc105 -layout dvorak,es -option grp:alt_shift_toggle,caps:backspace"
 exec --no-startup-id notify-send "Welcome back Johann!" -i ~/.happy.png # Greeting on startup
-exec --no-startup-id "sh -c 'sleep 180; exec dropbox'"
+exec --no-startup-id "sh -c 'sleep 180; exec megasync'"
+exec --no-startup-id "sh -c 'sleep 200; exec telegram'"
 exec --no-startup-id "sh -c 'sleep 30; exec keepassxc'"
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec --no-startup-id clipit

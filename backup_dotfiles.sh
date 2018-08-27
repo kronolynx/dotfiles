@@ -6,7 +6,6 @@ mkdir -p $backup
 
 # any dotfile or dir in this array will be backedup if it exist in home
 dotfiles=(
-Xresources
 bash_profile
 bashrc
 config/cmus/lib.pl
@@ -25,7 +24,9 @@ config/systemd
 config/systemd
 config/terminator
 config/termite
+config/Thunar
 config/tmux
+config/xmobar
 config/yay
 dir_colors
 gitconfig
@@ -43,6 +44,8 @@ vim/colors
 vimrc 
 wallpapers
 xinitrc
+xmonad
+Xresources
 z.sh
 zshrc 
 )
