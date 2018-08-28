@@ -36,6 +36,7 @@ gvimrc
 i3
 ideavimrc
 images
+local/share/applications/emacsclient.desktop
 nanorc
 profile
 scripts

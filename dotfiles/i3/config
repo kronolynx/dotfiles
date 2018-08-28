@@ -4,6 +4,7 @@ set $term termite -e tmux
 #set $term  "urxvtc -e fish"
 #exec --no-startup-id urxvtd --quiet --opendisplay --fork &
 
+exec --no-startup-id emacs --daemon
 exec --no-startup-id thunar --daemon
 set $fm thunar
 set $browser google-chrome-stable
@@ -228,11 +229,7 @@ mode "resize"
         bindsym Right resize grow width 2 px or 2 ppt
 
         # Back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-bindsym $mod+r mode "resize"
-### }}}
+
 
 ### Defining colors {{{
 

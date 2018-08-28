@@ -38,22 +38,33 @@
 </action>
 <action>
 	<icon>vim</icon>
-	<name>Edit as root</name>
-	<unique-id>1535384118985572-5</unique-id>
-	<command>gksu gvim %f</command>
-	<description></description>
-	<patterns>*</patterns>
-	<other-files/>
-	<text-files/>
-</action>
-<action>
-	<icon>vim</icon>
 	<name>Vim edit</name>
 	<unique-id>1535384541427139-8</unique-id>
 	<command>gvim %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>emacs</icon>
+	<name>Emacs edit</name>
+	<unique-id>1535470709756152-3</unique-id>
+	<command>emacsclient -c -a &quot;emacs&quot; %f</command>
+	<description></description>
+	<patterns>*</patterns>
+	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>vim</icon>
+	<name>Edit as root (Vim)</name>
+	<unique-id>1535384118985572-5</unique-id>
+	<command>gksu gvim %f</command>
+	<description></description>
+	<patterns>*</patterns>
 	<other-files/>
 	<text-files/>
 </action>
@@ -65,6 +76,16 @@
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
+	<other-files/>
+	<text-files/>
+</action>
+<action>
+	<icon>emacs</icon>
+	<name>Edit as root (Emacs)</name>
+	<unique-id>1535470489445407-2</unique-id>
+	<command>gksu emacsclient -c -a &quot;emacs&quot; %f</command>
+	<description></description>
+	<patterns>*</patterns>
 	<other-files/>
 	<text-files/>
 </action>
