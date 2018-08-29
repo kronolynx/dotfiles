@@ -139,6 +139,40 @@
   ;; example how to map a command in normal mode (called 'normal state' in evil)
   (define-key evil-normal-state-map (kbd ", w") 'evil-window-vsplit))
 
+;;; C-c as general purpose escape key sequence.
+   ;;;
+(defun my-esc (prompt)
+  "Functionality for escaping generally.  Includes exiting Evil insert state and C-g binding. "
+  (cond
+   ;; If we're in one of the Evil states that defines [escape] key, return [escape] so as
+   ;; Key Lookup will use it.
+   ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p) (evil-visual-state-p)) [escape])
+   ;; This is the best way I could infer for now to have C-c work during evil-read-key.
+   ;; Note: As long as I return [escape] in normal-state, I don't need this.
+   ;;((eq overriding-terminal-local-map evil-read-key-map) (keyboard-quit) (kbd ""))
+   (t (kbd "C-g"))))
+(define-key key-translation-map (kbd "C-c") 'my-esc)
+;; Works around the fact that Evil uses read-event directly when in operator state, which
+;; doesn't use the key-translation-map.
+(define-key evil-operator-state-map (kbd "C-c") 'keyboard-quit)
+;; Not sure what behavior this changes, but might as well set it, seeing the Elisp manual's
+;; documentation of it.
+(set-quit-char "C-c")
+
+;; ;; change mode-line color by evil state
+;; (lexical-let ((default-color (cons (face-background 'mode-line)
+;;                                    (face-foreground 'mode-line))))
+;;   (add-hook 'post-command-hook
+;;             (lambda ()
+;;               (let ((color (cond ((minibufferp) default-color)
+;;                                  ((evil-insert-state-p) '("#e80000" . "#ffffff"))
+;;                                  ((evil-emacs-state-p)  '("#444488" . "#ffffff"))
+;;                                  ((buffer-modified-p)   '("#006fa0" . "#ffffff"))
+;;                                  (t default-color))))
+;;                 (set-face-background 'mode-line (car color))
+;;                 (set-face-foreground 'mode-line (cdr color))))))
+
+
 (use-package evil-surround
   :ensure t
   :config
@@ -154,6 +188,11 @@
   :config
   (evil-snipe-mode)
   (evil-snipe-override-mode))
+
+(use-package powerline
+  :ensure t
+  :config
+  (powerline-center-evil-theme))
 
 (use-package linum-relative
   :ensure t
@@ -186,11 +225,6 @@
   (progn
     (evil-leader/set-key "SPC" 'evil-ace-jump-char-mode)))
 
-;; (use-package powerline
-;;   :ensure t
-;;   :init
-;;   (progn
-;;     (powerline-center-evil-theme)))
 
 ;; save current buffer on focus lost
 (add-hook 'focus-out-hook 'save-buffer)
@@ -264,11 +298,17 @@
 (use-package toc-org
   :ensure t)
 
+;; Install fonts for icons
+;; M-x all-the-icons-install-fonts
+;; https://github.com/domtronn/all-the-icons.el
+(use-package all-the-icons)
+
+;; https://github.com/jaypei/emacs-neotree
 (use-package neotree
   :ensure t
   :bind (("<f8>" . neotree-toggle))
   :config
-  (setq neo-theme 'arrow
+  (setq neo-theme (if (display-graphic-p) 'icons 'arrow)
         neo-smart-open t))
 
 (use-package discover-my-major
