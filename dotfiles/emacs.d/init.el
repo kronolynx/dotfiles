@@ -133,6 +133,7 @@
   (setq evil-split-window-below t)
   (setq evil-shift-round nil)
   (setq evil-want-C-u-scroll t)
+  (setq evil-want-fine-undo t)
   :config ;; tweak evil after loading it
   (evil-mode)
 
@@ -225,7 +226,7 @@
   (progn
     (evil-leader/set-key "SPC" 'evil-ace-jump-char-mode)))
 
-
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;; save current buffer on focus lost
 (add-hook 'focus-out-hook 'save-buffer)
 ;; save all buffers
