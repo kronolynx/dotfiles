@@ -46,7 +46,7 @@ vim/colors
 vimrc
 wallpapers
 xinitrc
-xmonad
+xmonad/xmonad.hs
 Xresources
 z.sh
 zshrc
