@@ -127,18 +127,25 @@
 (use-package evil
   :ensure t ;; install the evil package if not installed
   :init ;; tweak evil's configuration before loading it
-  (setq evil-search-module 'evil-search)
   (setq evil-ex-complete-emacs-commands nil)
-  (setq evil-vsplit-window-right t)
-  (setq evil-split-window-below t)
+  (setq evil-search-module 'evil-search)
   (setq evil-shift-round nil)
+  (setq evil-split-window-below t)
+  (setq evil-vsplit-window-right t)
   (setq evil-want-C-u-scroll t)
   (setq evil-want-fine-undo t)
+  (setq evil-want-integration nil)
   :config ;; tweak evil after loading it
   (evil-mode)
 
   ;; example how to map a command in normal mode (called 'normal state' in evil)
   (define-key evil-normal-state-map (kbd ", w") 'evil-window-vsplit))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
 
 ;;; C-c as general purpose escape key sequence.
    ;;;
@@ -227,10 +234,12 @@
     (evil-leader/set-key "SPC" 'evil-ace-jump-char-mode)))
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-;; save current buffer on focus lost
-(add-hook 'focus-out-hook 'save-buffer)
-;; save all buffers
-;; (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
+;; save buffers on focus lost
+(defun save-all ()
+  (interactive)
+  (save-some-buffers t))
+
+(add-hook 'focus-out-hook 'save-all)
 
 (global-set-key [(meta ctrl j)] 'transpose-lines)
 
@@ -377,9 +386,11 @@
 (use-package flycheck
   :ensure t
   :if (display-graphic-p)
-  :config
-  (add-hook 'typescript-mode-hook 'flycheck-mode)
-  (add-hook 'rust-mode-hook 'flycheck-mode))
+  :init
+  (global-flycheck-mode))
+  ;; :config
+  ;; (add-hook 'typescript-mode-hook 'flycheck-mode)
+  ;; (add-hook 'rust-mode-hook 'flycheck-mode))
 
 (use-package flycheck-rust
   :ensure t
@@ -1013,4 +1024,3 @@
 (use-package tao-theme :ensure t :defer t)
 (use-package white-theme :ensure t :defer t)
 (use-package zenburn-theme :ensure t :defer t)
-
