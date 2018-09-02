@@ -60,9 +60,9 @@ myConsoleFileManager = "termite -e ranger"
 -- Border Styling
 myBorderWidth = 1
 
-myNormalBorderColor = "#BFBFBF"
+myNormalBorderColor = "#00002c"
 
-myFocusedBorderColor = "#CAA9FA"
+myFocusedBorderColor = "#4ec2f7"
 
 defaults = docks $ desktopConfig
   {
