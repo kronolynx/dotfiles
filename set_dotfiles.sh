@@ -22,8 +22,8 @@ do
         # check that the file exist in home
         if [ -f $home_file ]; then
             destination_dir=$backup_dir/$(dirname $f)
-            mkdir -p $destination_dir
-            cp --remove-destination -r $home_file $backup_dir/$f
+            # mkdir -p $destination_dir
+            # cp --remove-destination -r $home_file $backup_dir/$f
         fi
     fi
 done
@@ -39,9 +39,20 @@ for f in ${files[*]}; do
         cp --remove-destination $dotfiles_origin/$file $HOME/.$file
     fi
 done
+# make xinit executable
+xinit=~/.xinitrc
+if [ -f $xinit]; then
+  if [ ! -x $xinit ]; then
+     chmod +x $xinit
+  fi
+  # for ligthdm to run xinitrc
+  if [ ! -f ~/.xsession ]; then
+    ln -s $xinit ~/.xsession
+  fi
+fi
 
 echo "dotfiles copied"
 
 
 # reload xresources
-#xrdb ~/.Xresources
+xrdb ~/.Xresources
