@@ -1,52 +1,61 @@
-import           System.IO
-import           System.Exit
+import XMonad
+import XMonad.Config.Desktop
+import System.Exit
 
-import           XMonad
-import           XMonad.Actions.DynamicWorkspaces
-import           XMonad.Actions.CycleWS
-import           XMonad.Actions.FloatKeys
-import           XMonad.Config.Desktop
-import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.FloatNext
-import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers
-import           XMonad.Util.NamedScratchpad
-import           XMonad.Layout
-import           XMonad.Layout.Fullscreen
-import           XMonad.Layout.NoBorders
-import           XMonad.Layout.Spiral
-import           XMonad.Layout.Tabbed
-import           XMonad.Layout.ThreeColumns
-import           XMonad.Layout.Spacing
-import           XMonad.Util.Loggers
-import           XMonad.Util.Font
-import           XMonad.Util.Run
-import           Graphics.X11.ExtraTypes.XF86
+-- hooks
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.FloatNext
 
-import           XMonad.Util.SpawnOnce
-import           Data.Char
-import           Data.Bits ((.|.))
+-- layouts
+import XMonad.Layout.Tabbed
+import XMonad.Layout.NoBorders
+import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Spacing
+import XMonad.Layout.Spiral
+
+-- utils
+import XMonad.Util.Run(spawnPipe)
+import XMonad.Util.SpawnOnce
+import XMonad.Util.NamedScratchpad
+
+import Graphics.X11.ExtraTypes.XF86
+import System.IO
+import Data.Bits ((.|.))
+import Control.Monad (liftM2)
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
 
--- import qualified Data.Text as T
 
--- DefaultTerminal: Set to succless terminal (Alacritty, Termite)
-myTerminal = "termite"
--- myTerminal = "xterm"
+main = do
+  xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
+  xmonad $ defaults {
+    manageHook = manageDocks <+> manageHook defaultConfig,
+    -- layoutHook = avoidStruts $ layoutHook defaultConfig,
+    logHook = dynamicLogWithPP $ xmobarPP
+                        { ppOutput = hPutStrLn xmproc,
+                          ppTitle = xmobarColor "green" "" . shorten 50
+                        }
+  }
 
--- Launcher: Set to Rofi (x: 380)
+-- DefaultTerminal
+myTerminal = "termite -e tmux"
+
+-- Launcher
 myLauncher = "rofi -show drun"
+
+-- Editor
+myTextEditor = "emacsclient -c -a emacs"
 
 -- Browser
 myBrowser = "google-chrome-stable"
 
 -- File Manager
-myFileManager = "pcmanfm"
+myFileManager = "thunar"
 
 -- Console File Manager
 myConsoleFileManager = "termite -e ranger"
-
 
 -- Border Styling
 myBorderWidth = 1
@@ -55,47 +64,26 @@ myNormalBorderColor = "#BFBFBF"
 
 myFocusedBorderColor = "#CAA9FA"
 
-myXmobar = "xmobar ~/.config/xmobar/xmobarrc.hs"
+defaults = docks $ desktopConfig
+  {
+    borderWidth        = myBorderWidth
+  , normalBorderColor  = myNormalBorderColor
+  , focusedBorderColor = myFocusedBorderColor
+  , focusFollowsMouse  = myFocusFollowsMouse
+  , modMask            = myModMask
+  , terminal           = myTerminal
+  -- , workspaces         = myWorkspaces
 
--- Xmobar dyn colors
-xmobarCurrFG = "#282A36"
+  -- key bindings
+  , keys               = myKeys
+  , mouseBindings      = myMouseBindings
 
-xmobarCurrBG = "#FF79C6"
+  -- hooks
+  , manageHook         = myNewManageHook
+  , layoutHook = avoidStruts $ smartBorders $ smartSpacingWithEdge 8 $ myLayout
+  -- , startupHook        = myStartupHook
+  }
 
-xmobarHiddenFG = "#747C84"
-
-workspaceIcons =
-  [ "\xe17e"
-  , "\xe17f"
-  , "\xe180"
-  , "\xe181"
-  , "\xe182"
-  , "\xe183"
-  , "\xe184"
-  , "\xe185"
-  , "\xe186"
-  ]
-
-------------------------------------------------------------------------
--- Workspaces
--- The default number of workspaces (virtual screens) and their names.
---
-workspaceNames =
-  [ "Main"
-  , "Qutebrowser"
-  , "Code"
-  , "Firefox"
-  , "Chrome"
-  , "Media"
-  , "Misc7"
-  , "Misc8"
-  , "Misc9"
-  ]
-
-myWorkspaces = wrapWorkspaces workspaceIcons $ workspaceNames
- where
-  wrapWorkspaces icons workspaces =
-    [ "<fn=1>" ++ i ++ "</fn> " ++ ws | (i, ws) <- zip icons workspaces ]
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -107,16 +95,21 @@ myWorkspaces = wrapWorkspaces workspaceIcons $ workspaceNames
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts (
-    ThreeColMid 1 (3/100) (1/2) |||
-    Tall 1 (3/100) (1/2) |||
-    Mirror (Tall 1 (3/100) (1/2)) |||
-    tabbed shrinkText tabConfig |||
-    Full |||
-    spiral (6/7)) |||
-    noBorders (fullscreenFull Full)
+myLayout = avoidStruts $
+  mySpiral |||
+  myTile |||
+  myFull |||
+  my3cmi |||
+  myMirror |||
+  myTabbed
+  where
+    myTile = Tall 1 (3/100) (1/2)
+    myFull = spacing 0 $ noBorders Full
+    myMirror = Mirror (Tall 1 (3/100) (1/2))
+    my3cmi =  ThreeColMid 1 (3/100) (1/2)
+    myTabbed = tabbed shrinkText tabConfig
+    mySpiral = spiral (6/7)
 
--- Colors for text and backgrounds of each tab when in "Tabbed" layout.
 tabConfig = defaultTheme {
     activeBorderColor = "#7C7C7C",
     activeTextColor = "#CEFFAC",
@@ -126,13 +119,17 @@ tabConfig = defaultTheme {
     inactiveColor = "#000000"
 }
 
+
 -- myManageHook
 myManageHook = composeAll
-  [ className =? "qutebrowser" --> doShift " Qutebrowser"
-  , className =? "Spotify" --> doShift " Media"
-  , className =? "Firefox" --> doShift " Firefox"
-  , className =? "Chromium" --> doShift " Chrome"
+  [ className =? "qutebrowser"    --> doShift " Qutebrowser"
+  , className =? "Spotify"        --> doShift " Media"
+  , className =? "Firefox"        --> doShift " Firefox"
+  , className =? "Chromium"       --> doShift " Chrome"
+  , className =? "VirtualBox"     --> doShift " Misc7"
+  , className =? "FocusMeNow" --> viewShift "doc"
   ]
+  where viewShift = doF . liftM2 (.) W.greedyView W.shift
 
 scratchpads =
   [ NS "htop" "termite -t process -e htop" (title =? "process")  defaultFloating
@@ -145,29 +142,6 @@ myNewManageHook = composeAll
   , manageHook desktopConfig
   , namedScratchpadManageHook scratchpads
   ]
-
-
-myStartupHook = do
-  --spawnOnce " /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1"
-  --spawnOnce "pulseaudio --start"
-  --spawnOnce "pa-applet"
-  -- spawnOnce "urxvtd --quiet --opendisplay --fork &"
-  spawn "xfce4-power-manager"
-  spawn "emacs --daemon"
-  spawn "thunar --daemon"
-  spawn "nitrogen --restore ~/.wallpapers"
-  spawn "nm-applet"
-  spawn "compton -f"
-  spawn "clipit"
-  spawn "~/.scripts/keyboard.sh"
-  spawn "~/.scripts/monitor.sh"
-  -- spawn "stalonetray"
-  spawn "xautolock -time 10 -locker blurlock"
-  spawn "sh -c 'sleep 10; exec redshift -c ~/.config/redshift/redshift.conf'"
-  spawn "sh -c 'sleep 40; exec keepassxc'"
-  spawn "sh -c 'sleep 60; exec telegram'"
-  spawn "sh -c 'sleep 180; exec megasync'"
-
 ------------------------------------------------------------------------
 -- Key bindings
 --
@@ -190,7 +164,7 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) = M.fromList $
 
   -- Spawn the launcher.
   -- Use this to launch programs without a key binding.
-  , ((modMask, xK_p),
+  , ((modMask, xK_b),
      spawn myLauncher)
 
   -- Start browser.
@@ -205,12 +179,16 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) = M.fromList $
   , ((modMask, xK_F4),
      spawn myConsoleFileManager)
 
+  -- Start editor
+  , ((modMask, xK_p),
+     spawn myTextEditor)
+
   -- Kill window
   , ((modMask .|. controlMask, xK_x),
      spawn "xkill")
 
   -- Close focused window
-  , ((modMask .|. shiftMask, xK_c),
+  , ((modMask .|. shiftMask, xK_q),
      kill)
 
   -- Cycle through the available layout algorithms.
@@ -273,13 +251,9 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) = M.fromList $
   , ((modMask, xK_period),
      sendMessage (IncMasterN (-1)))
 
-  -- Quit xmonad.
-  , ((modMask .|. shiftMask, xK_q),
+  -- Quit xmonad
+  , ((modMask .|. shiftMask, xK_e),
      io (exitWith ExitSuccess))
-
-  -- Restart xmonad.
-  , ((modMask, xK_q),
-     restart "xmonad" True)
 
   -- Mute volume.
   , ((0, xF86XK_AudioMute),
@@ -303,12 +277,12 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) = M.fromList $
   , ((0, xF86XK_AudioStop),
      spawn "playerctl stop")
 
-
   -- Scratchpads
   , ((modMask .|. controlMask .|. shiftMask, xK_t),
       namedScratchpadAction scratchpads "htop")
   , ((modMask .|. controlMask .|. shiftMask, xK_c),
       namedScratchpadAction scratchpads "cmus")
+
   ]
 
   ++
@@ -326,46 +300,27 @@ myKeys conf@(XConfig { XMonad.modMask = modMask }) = M.fromList $
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
--- my TEXT manipulation functions ... no longer of use, but might
---    come in handy later, so leaving here ....
--- splitH s = T.splitOn (T.pack " ") (T.pack s)
--- splitAndDropFst = tail . splitH
--- splitAndTakeFst = take 1 . splitH
--- splitMapJoin fn s = unwords (fmap T.unpack (fn s))
+------------------------------------------------------------------------
+-- Mouse bindings
+--
+-- Focus rules
+-- True if your focus should follow your mouse cursor.
+myFocusFollowsMouse :: Bool
+myFocusFollowsMouse = True
 
-splitTakeFst = head . words
+myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
+  [
+    -- mod-button1, Set the window to floating mode and move by dragging
+    ((modMask, button1),
+     (\w -> focus w >> mouseMoveWindow w))
 
-splitTakeLst = last . words
+    -- mod-button2, Raise the window to the top of the stack
+    , ((modMask, button2),
+       (\w -> focus w >> windows W.swapMaster))
 
-prependIcon = (++) "<fn=1>\xe194</fn> " . splitTakeLst
+    -- mod-button3, Set the window to floating mode and resize by dragging
+    , ((modMask, button3),
+       (\w -> focus w >> mouseResizeWindow w))
 
-prependWSLogger = fmap prependIcon <$> logCurrent
-
--- getShortenedLayout = fmap splitTakeLst <$> logLayout
-
-myXmobarPP = def { ppCurrent = xmobarColor xmobarCurrBG "" . splitTakeFst
-                 , ppHidden  = xmobarColor xmobarHiddenFG "" . splitTakeFst
-                 , ppSep     = " "
-                 , ppWsSep   = " "
-                 , ppExtras  = [prependWSLogger]
-                 , ppTitle   = const ""
-                 , ppLayout  = const ""
-                 }
-
-main :: IO ()
-main = do
-  spawn myXmobar
-  xmonad $ defaults { logHook = dynamicLogString myXmobarPP >>= xmonadPropLog }
-
-defaults = docks $ desktopConfig
-  { borderWidth        = myBorderWidth
-  , normalBorderColor  = myNormalBorderColor
-  , focusedBorderColor = myFocusedBorderColor
-  , modMask            = myModMask
-  , terminal           = myTerminal
-  , workspaces         = myWorkspaces
-  , keys               = myKeys
-  , manageHook         = myNewManageHook
-  , layoutHook = avoidStruts $ smartBorders $ smartSpacingWithEdge 8 $ myLayout
-  , startupHook        = myStartupHook
-  }
+    -- you may also bind events to the mouse scroll wheel (button4 and button5)
+  ]
