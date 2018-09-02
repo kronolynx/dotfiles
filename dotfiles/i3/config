@@ -2,10 +2,7 @@
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 set $term termite -e tmux
 #set $term  "urxvtc -e fish"
-#exec --no-startup-id urxvtd --quiet --opendisplay --fork &
 
-exec --no-startup-id emacs --daemon
-exec --no-startup-id thunar --daemon
 set $fm thunar
 set $browser google-chrome-stable
 
@@ -229,10 +226,10 @@ mode "resize"
         bindsym Right resize grow width 2 px or 2 ppt
 
         # Back to normal: Enter or Escape
-        bindsym Return mode "default"	
-        bindsym Escape mode "default"	
-}	
-bindsym $mod+r mode "resize"	
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
 ### }}}
 
 ### Defining colors {{{
@@ -283,23 +280,9 @@ bar {
 bindsym $mod+m bar mode toggle
 ### Startup programs {{{
 
-exec_always --no-startup-id nitrogen --restore ~/.wallpapers
-#exec --no-startup-id xbindkeys # Load keyboard shortcuts
-exec --no-startup-id compton -f # Compositor for window transparency
-#exec --no-startup-id emacs --daemon=instance1 # Daemonize Emacs
-#exec --no-startup-id pulseaudio --start
-#exec --no-startup-id pa-applet
-exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager # To monitor batttery
-exec --no-startup-id ~/.scripts/keyboard.sh
-exec_always --no-startup-id ~/.scripts/monitor.sh # Automatically switch within monitors
-exec --no-startup-id notify-send "Welcome back Johann!" -i ~/.happy.png # Greeting on startup
 exec --no-startup-id "sh -c 'sleep 180; exec megasync'"
 exec --no-startup-id "sh -c 'sleep 200; exec telegram'"
 exec --no-startup-id "sh -c 'sleep 30; exec keepassxc'"
-exec --no-startup-id xautolock -time 10 -locker blurlock
-exec --no-startup-id clipit
-exec --no-startup-id "redshift -c ~/.config/redshift/redshift.conf"
 
 ### }}}
 
@@ -320,5 +303,3 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-
-
