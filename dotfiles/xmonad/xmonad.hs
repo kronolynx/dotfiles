@@ -109,9 +109,9 @@ main = do
        , ("M-S-j"  , windows W.swapDown)
        , ("M-S-k"  , windows W.swapUp)
        -- Shift the focused window to the master window
-       , ("M-S-m"  , windows W.shiftMaster)
+       , ("M-m"  , windows W.shiftMaster)
        -- Focus master
-       , ("M-m"    , windows W.focusMaster)
+       , ("M-S-m"    , windows W.focusMaster)
        -- Search a window and focus into the window
        , ("M-g"    , windowPromptGoto myXPConfig)
        -- Search a window and bring to the current workspace
@@ -295,17 +295,21 @@ scratchpads =
   ]
 
 myManageHookFloat :: [String]
-myManageHookFloat = ["keepassxc"]
+myManageHookFloat = [""]
 
 -- myManageHook
-myManageHook = composeAll
-  (
-    [className =? x --> doFloat | x <- myManageHookFloat] ++
-    [
-      className =? "zenity"            --> doCenterFloat
-    , className =? "telegram-desktop"  --> doShift "\xe62b"
-    ]
-  )
+myManageHook = composeAll . concat $
+  [
+    [className =? c --> doFloat                     | c <- myClassFloats]
+  , [title     =? t --> doFloat                     | t <- myTitleFloats]
+  , [className =? c --> doCenterFloat               | c <- myCenterFloats]
+  , [className =? c --> doShift (myWorkspaces !! w) | (c, w) <- myShifts]
+  ] where
+       myCenterFloats = ["zenity"]
+       myClassFloats = []
+       myTitleFloats = []
+       myShifts = [("keepassxc", 7), ("telegram-desktop", 5)]
+
 
 myNewManageHook = composeAll
   [ myManageHook
