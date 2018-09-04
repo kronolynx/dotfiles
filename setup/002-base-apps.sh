@@ -33,6 +33,9 @@ pulseaudio
 # e.g. tldr cups
 tldr
 
+# touchpad
+xf86-input-synaptics
+
 # calculator for the terminal  command (qalc)
 libqalculate
 # zip
