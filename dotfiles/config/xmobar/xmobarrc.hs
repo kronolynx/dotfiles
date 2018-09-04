@@ -3,7 +3,7 @@ Config {
     , bgColor            = "#222222"
     , alpha              = 0
     , fgColor            = "grey"
-    , position           = TopW L 100
+    , position           = TopW L 92
     , hideOnStart        = False
     , allDesktops        = True
     , overrideRedirect   = True
@@ -20,8 +20,8 @@ Config {
             , "--high"    , "darkgreen"
             , "-f"        , "AC/online"
             , "--"
-                , "-o"  , "<left> (<timeleft>)"
-                , "-O"  , "<fc=#00e64d> (<left>)</fc>"
+                , "-o"  , " (<left>)"
+                , "-O"  , "<fc=#00e64d> (<left>)</fc>"
                 , "-i"  , "<fc=#66FF99></fc>"
             ] 60
         , Run Com "sh" ["-c", "awk '{print $1, $2, $3 }' /proc/loadavg"] "loadavg" 10
