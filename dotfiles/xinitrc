@@ -12,7 +12,6 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 DEFAULT_SESSION='i3 --shmlog-size 0'
 
 nitrogen --restore ~/.wallpapers &
-stalonetray &
 compton -f &
 ~/.scripts/keyboard.sh
 ~/.scripts/monitor.sh
@@ -68,9 +67,7 @@ get_session(){
     enlightenment) dbus_args+=(enlightenment_start) ;;
     fluxbox) dbus_args+=(startfluxbox) ;;
     gnome) dbus_args+=(gnome-session) ;;
-    i3|i3wm)
-      echo "case i3 == $1" >> /home/krono/lll
-      dbus_args+=(i3 --shmlog-size 0) ;;
+    i3|i3wm) dbus_args+=(i3 --shmlog-size 0) ;;
     jwm) dbus_args+=(jwm) ;;
     kde) dbus_args+=(startkde) ;;
     lxde) dbus_args+=(startlxde) ;;
@@ -78,11 +75,8 @@ get_session(){
     mate) dbus_args+=(mate-session) ;;
     xfce) dbus_args+=(xfce4-session) ;;
     openbox) dbus_args+=(openbox-session) ;;
-    xmonad)
-      echo "case xmonad == $1" >> /home/krono/lll
-      dbus_args+=(xmonad) ;;
+    xmonad) dbus_args+=(xmonad) ;;
     *)
-      echo "case default == $1" >> /home/krono/lll
       dbus_args+=($DEFAULT_SESSION) ;;
   esac
 
