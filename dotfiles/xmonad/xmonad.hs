@@ -1,3 +1,4 @@
+{-# LANGUAGE UnicodeSyntax #-}
 import XMonad
 import XMonad.Config.Desktop
 import System.Exit
@@ -56,10 +57,9 @@ main = do
        `removeKeysP`
        [
        -- Unused gmrun binding
-       "M-S-p",
+          "M-S-p"
        -- Unused close window binding
-       "M-S-c",
-       "M-S-<Return>"
+       ,  "M-S-c"
        ]
 
        -------------------------------------------------------------------- }}}
@@ -71,8 +71,6 @@ main = do
        -- Shrink / Expand the focused window
          ("M-,"    , sendMessage Shrink)
        , ("M-."    , sendMessage Expand)
-       -- , ("M-z"    , sendMessage MirrorShrink)
-       -- , ("M-a"    , sendMessage MirrorExpand)
        -- Close the focused window
        , ("M-S-q"    , kill)
        -- Toggle layout (Fullscreen mode)
@@ -158,7 +156,8 @@ main = do
        -- Exit
        , ("M-S-e", spawn "i3exit logout")
        -- Restart xmonad
-       , ("M-r", spawn "xmonad --restart" )
+       , ("M-r",
+          spawn "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'" )
        -- Launch web browser
        , ("M-<F2>", spawn myBrowser)
        -- Launch file manager
@@ -221,7 +220,18 @@ myConsoleFileManager = "termite -e ranger"
 -- Capture Screen
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
-myWorkspaces = ["1", "2", "3", "4", "5"]
+myWorkspaces = [
+  "<fc=#78da59>\xf1d0</fc>" -- 
+  , "<fc=#ffff33>\xe737</fc>" -- 
+  , "<fc=#cc00ff>\xf1d1</fc>" -- 
+  , "<fc=#00a1f1>\xf09b</fc>" -- 
+  , "<fc=#f65314>\xe62b</fc>" -- 
+  , "<fc=#f7786b>\xf79f</fc>" -- 
+  , "<fc=#fbbc05>\xf197</fc>" -- 
+  , "<fc=#00ffff>\xf21b</fc>" -- 
+  , "<fc=#33bdf5>\xf259</fc>" -- 
+  ]
+
 modm = mod4Mask
 
 -- border width
@@ -230,25 +240,6 @@ myBorderWidth = 1
 moveWD = 3
 resizeWD = 3
 
--- Color Setting
-colorBlue      = "#868bae"
-colorGreen     = "#00d700"
-colorRed       = "#ff005f"
-colorGray      = "#666666"
-colorWhite     = "#bdbdbd"
-colorNormalbg  = "#1c1c1c"
-colorfg        = "#a8b6b8"
-
--- Border Styling
-myNormalBorderColor = "#00002c"
-
-myFocusedBorderColor = "#4ec2f7"
-
--- Color of current window title in xmobar.
-xmobarTitleColor = "#FFB6B0"
-
--- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = "#CEFFAC"
 
 defaults = docks $ desktopConfig
   {
@@ -258,7 +249,7 @@ defaults = docks $ desktopConfig
   , focusFollowsMouse  = myFocusFollowsMouse
   , modMask            = myModMask
   , terminal           = myTerminal
-  -- , workspaces         = myWorkspaces
+  , workspaces         = myWorkspaces
 
   -- key bindings
   -- , keys               = myKeys
@@ -296,14 +287,6 @@ myLayout = avoidStruts $
     myTabbed = tabbed shrinkText tabConfig
     mySpiral = spiral (6/7)
 
-tabConfig = defaultTheme {
-    activeBorderColor = "#7C7C7C",
-    activeTextColor = "#CEFFAC",
-    activeColor = "#000000",
-    inactiveBorderColor = "#7C7C7C",
-    inactiveTextColor = "#EEEEEE",
-    inactiveColor = "#000000"
-}
 
 -- Scratchpads
 scratchpads =
@@ -320,7 +303,7 @@ myManageHook = composeAll
     [className =? x --> doFloat | x <- myManageHookFloat] ++
     [
       className =? "zenity"            --> doCenterFloat
-    , className =? "telegram-desktop"  --> doShift "5"
+    , className =? "telegram-desktop"  --> doShift "\xe62b"
     ]
   )
 
@@ -374,6 +357,26 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
 
+-- Color Setting
+colorBlue      = "#868bae"
+colorGreen     = "#00d700"
+colorRed       = "#ff005f"
+colorGray      = "#666666"
+colorWhite     = "#bdbdbd"
+colorNormalbg  = "#1c1c1c"
+colorfg        = "#a8b6b8"
+
+-- Border Styling
+myNormalBorderColor = "#00002c"
+
+myFocusedBorderColor = "#4ec2f7"
+
+-- Color of current window title in xmobar.
+xmobarTitleColor = "#FFB6B0"
+
+-- Color of current workspace in xmobar.
+xmobarCurrentWorkspaceColor = "#CEFFAC"
+
 -- Prompt configuration
 myXPConfig = defaultXPConfig
                 { font              = "xft:SauceCodePro Nerd Font:size=14:antialias=true"
@@ -387,3 +390,12 @@ myXPConfig = defaultXPConfig
                 , fgHLight          = "#00152b"
                 , position          = Top
                 }
+
+tabConfig = defaultTheme {
+    activeBorderColor = "#7C7C7C",
+    activeTextColor = "#CEFFAC",
+    activeColor = "#000000",
+    inactiveBorderColor = "#7C7C7C",
+    inactiveTextColor = "#EEEEEE",
+    inactiveColor = "#000000"
+}
