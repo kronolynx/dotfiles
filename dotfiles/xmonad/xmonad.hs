@@ -16,6 +16,7 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
 import XMonad.Layout.ToggleLayouts     -- Full window at any time
+import XMonad.Layout.Fullscreen
 
 -- utils
 import XMonad.Util.Run(spawnPipe)
@@ -71,14 +72,16 @@ main = do
        -- Shrink / Expand the focused window
          ("M-,"    , sendMessage Shrink)
        , ("M-."    , sendMessage Expand)
+       -- Toggle struts
+       , ("M-b"    , sendMessage ToggleStruts)
        -- Close the focused window
-       , ("M-S-q"    , kill)
+       , ("M-S-q"  , kill)
        -- Toggle layout (Fullscreen mode)
        , ("M-f"    , sendMessage (Toggle "Full"))
        -- Float window
        , ("M-S-f"  , withFocused (keysMoveWindow (-myBorderWidth,-myBorderWidth)))
        -- Push window back into tilling
-       , ("M-S-t"    , withFocused $ windows . W.sink)
+       , ("M-S-t"  , withFocused $ windows . W.sink)
        -- Move the floating focused window
        , ("M-C-<R>", withFocused (keysMoveWindow (moveWD, 0)))
        , ("M-C-<L>", withFocused (keysMoveWindow (-moveWD, 0)))
@@ -88,7 +91,7 @@ main = do
        , ("M-s"    , withFocused (keysResizeWindow (-resizeWD, resizeWD) (0.5, 0.5)))
        , ("M-i"    , withFocused (keysResizeWindow (resizeWD, resizeWD) (0.5, 0.5)))
        -- Increase / Decrese the number of master pane
-       , ("M-S-,"    , sendMessage $ IncMasterN (-1))
+       , ("M-S-,"  , sendMessage $ IncMasterN (-1))
        , ("M-S-."  , sendMessage $ IncMasterN 1)
        -- Go to the next / previous workspace
        , ("M-<R>"  , nextWS )
@@ -109,18 +112,18 @@ main = do
        , ("M-S-j"  , windows W.swapDown)
        , ("M-S-k"  , windows W.swapUp)
        -- Shift the focused window to the master window
-       , ("M-m"  , windows W.shiftMaster)
+       , ("M-m"    , windows W.shiftMaster)
        -- Focus master
-       , ("M-S-m"    , windows W.focusMaster)
+       , ("M-S-m"  , windows W.focusMaster)
        -- Search a window and focus into the window
        , ("M-g"    , windowPromptGoto myXPConfig)
        -- Search a window and bring to the current workspace
        , ("M-b"    , windowPromptBring myXPConfig)
        -- Move the focus to next screen (multi screen)
        , ("M-<Tab>", nextScreen)
-       -- Now we have more than one screen by dividing a single screen
-       -- , ("M-C-<Space>", layoutScreens 2 (TwoPane 0.5 0.5))
-       -- , ("M-C-S-<Space>", rescreen)
+       -- screen
+       , ("M-o"    , swapNextScreen)
+       , ("M-S-o"  , shiftNextScreen)
        ]
 
        -------------------------------------------------------------------- }}}
@@ -130,7 +133,7 @@ main = do
        -- mod-shift-[1..9]    Move window to workspace N
 
        `additionalKeys`
-       [ ((m .|. modm, k), windows $ f i)
+       [ ((m .|. myModMask, k), windows $ f i)
          | (i, k) <- zip myWorkspaces [xK_1 ..]
          , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
        ]
@@ -142,33 +145,33 @@ main = do
        `additionalKeysP`
        [
        -- Launch terminal
-       ("M-<Return>", spawn myTerminal)
+       ("M-<Return>"     , spawn myTerminal)
        -- Launch text editor
-       , ("M-S-<Return>", spawn myTextEditor)
+       , ("M-S-<Return>" , spawn myTextEditor)
        -- Kill window
-       , ("M-C-x", spawn "xkill")
+       , ("M-C-x"        , spawn "xkill")
        -- Lock screen
-       , ("M-S-z", spawn "blurlock")
+       , ("M-z"          , spawn "blurlock")
        -- Reboot
-       , ("M-S-r", spawn "i3exit reboot")
+       , ("M-0"          , spawn "i3exit reboot")
        -- Shutdown
-       , ("M-S-s", spawn "i3exit shutdown")
+       , ("M-S-0"        , spawn "i3exit shutdown")
        -- Exit
-       , ("M-S-e", spawn "i3exit logout")
+       , ("M-S-z"        , io (exitWith ExitSuccess))
        -- Restart xmonad
-       , ("M-r",
+       , ("M-S-r",
           spawn "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'" )
        -- Launch web browser
-       , ("M-<F2>", spawn myBrowser)
+       , ("M-<F2>"       , spawn myBrowser)
        -- Launch file manager
-       , ("M-<F3>", spawn myFileManager)
+       , ("M-<F3>"       , spawn myFileManager)
        -- Launch Console File Manager
-       , ("M-<F4>", spawn myConsoleFileManager)
+       , ("M-<F4>"       , spawn myConsoleFileManager)
        -- Launch dmenu for launching applicatiton
-       , ("M-b", spawn myLauncher)
+       , ("M-d"          , spawn myLauncher)
        -- Scratchpads
-       , ("M-C-t", namedScratchpadAction scratchpads "htop")
-       , ("M-C-c", namedScratchpadAction scratchpads "cmus")
+       , ("M-C-t"        , namedScratchpadAction scratchpads "htop")
+       , ("M-C-c"        , namedScratchpadAction scratchpads "cmus")
        -- Play / Pause media keys
        , ("<XF86AudioPlay>"  , spawn "mpc toggle")
        , ("<XF86HomePage>"   , spawn "mpc toggle")
@@ -199,6 +202,9 @@ main = do
        , ("C-<Print>", spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
        ]
 
+-- Capture Screen
+myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
+
 -- DefaultTerminal
 myTerminal = "termite -e tmux"
 
@@ -217,25 +223,8 @@ myFileManager = "thunar"
 -- Console File Manager
 myConsoleFileManager = "termite -e ranger"
 
--- Capture Screen
-myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
-
-myWorkspaces = [
-  "<fc=#78da59>\xf1d0</fc>" -- 
-  , "<fc=#ffff33>\xe737</fc>" -- 
-  , "<fc=#cc00ff>\xf1d1</fc>" -- 
-  , "<fc=#00a1f1>\xf09b</fc>" -- 
-  , "<fc=#f65314>\xe62b</fc>" -- 
-  , "<fc=#f7786b>\xf79f</fc>" -- 
-  , "<fc=#fbbc05>\xf197</fc>" -- 
-  , "<fc=#00ffff>\xf21b</fc>" -- 
-  , "<fc=#33bdf5>\xf259</fc>" -- 
-  ]
-
-modm = mod4Mask
-
 -- border width
-myBorderWidth = 1
+myBorderWidth = 3
 -- Float window control width
 moveWD = 3
 resizeWD = 3
@@ -252,31 +241,42 @@ defaults = docks $ desktopConfig
   , workspaces         = myWorkspaces
 
   -- key bindings
-  -- , keys               = myKeys
   , mouseBindings      = myMouseBindings
 
   -- hooks
   , manageHook         = myNewManageHook
-  , layoutHook = avoidStruts $ smartBorders $ smartSpacingWithEdge 8 $ myLayout
+  , layoutHook         = avoidStruts $ smartBorders $ smartSpacingWithEdge 8 $ myLayout
   , startupHook        = myStartupHook
+  , handleEventHook    = myHandleEventHook
   }
 
+myWorkspaces = [
+  "<fc=#78da59>\xf1d0</fc>" -- 
+  , "<fc=#ffff33>\xe737</fc>" -- 
+  , "<fc=#cc00ff>\xf1d1</fc>" -- 
+  , "<fc=#00a1f1>\xf09b</fc>" -- 
+  , "<fc=#f65314>\xe62b</fc>" -- 
+  , "<fc=#f7786b>\xf79f</fc>" -- 
+  , "<fc=#fbbc05>\xf197</fc>" -- 
+  , "<fc=#00ffff>\xf21b</fc>" -- 
+  , "<fc=#33bdf5>\xf259</fc>" -- 
+  ]
 
 ------------------------------------------------------------------------
 -- Layouts
 -- You can specify and transform your layouts by modifying these values.
 -- If you change layout bindings be sure to use 'mod-shift-space' after
--- restarting (with 'mod-q') to reset your layout state to the new
+-- restarting (with 'M-S-r') to reset your layout state to the new
 -- defaults, as xmonad preserves your old layout settings by default.
 --
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $
-  myTile |||
-  myFull |||
+  myTile   |||
+  myFull   |||
   mySpiral |||
-  my3cmi |||
+  my3cmi   |||
   myMirror |||
   myTabbed
   where
@@ -293,9 +293,6 @@ scratchpads =
   [ NS "htop" "termite -t process -e htop" (title =? "process")  defaultFloating
   , NS "cmus" "termite -c cmus -e cmus"    (className =? "cmus") defaultFloating
   ]
-
-myManageHookFloat :: [String]
-myManageHookFloat = [""]
 
 -- myManageHook
 myManageHook = composeAll . concat $
@@ -326,6 +323,10 @@ myStartupHook = do
   spawnOnce "sh -c 'sleep 40; exec keepassxc'"
   spawnOnce "sh -c 'sleep 50; exec megasync'"
   spawnOnce "sh -c 'sleep 60; exec telegram-desktop'"
+
+
+myHandleEventHook = docksEventHook <+> fullscreenEventHook
+
 ------------------------------------------------------------------------
 -- Key bindings
 --
