@@ -10,15 +10,17 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.FloatNext
 
 -- layouts
-import XMonad.Layout.Tabbed
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
-import XMonad.Layout.ThreeColumns
+import XMonad.Layout.Reflect
+import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
-import XMonad.Layout.ToggleLayouts     -- Full window at any time
-import XMonad.Layout.Fullscreen
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.Named
+import XMonad.Layout.Tabbed
+import XMonad.Layout.ThreeColumns
 
 -- utils
 import XMonad.Util.Run(spawnPipe)
@@ -75,14 +77,17 @@ main = do
        -- Shrink / Expand the focused window
          ("M-,"    , sendMessage Shrink)
        , ("M-."    , sendMessage Expand)
-       , ("M-S-,"  , sendMessage MirrorShrink)
-       , ("M-S-."  , sendMessage MirrorExpand)
+       , ("M-S-."  , sendMessage MirrorShrink)
+       , ("M-S-,"  , sendMessage MirrorExpand)
        -- Toggle struts
        , ("M-b"    , sendMessage ToggleStruts)
        -- Close the focused window
        , ("M-S-q"  , kill)
        -- Toggle layout (Fullscreen mode)
-       , ("M-f"    , sendMessage (Toggle "Full"))
+       , ("M-f"    , sendMessage $ Toggle NBFULL)
+       , ("M-C-x"  , sendMessage $ Toggle REFLECTX)
+       , ("M-C-y"  , sendMessage $ Toggle REFLECTY)
+       , ("M-C-m"  , sendMessage $ Toggle MIRROR)
        -- Float window
        , ("M-S-f"  , withFocused (keysMoveWindow (-myBorderWidth,-myBorderWidth)))
        -- Push window back into tilling
@@ -156,7 +161,7 @@ main = do
        -- Launch text editor
        , ("M-S-<Return>" , spawn myTextEditor)
        -- Kill window
-       , ("M-C-x"        , spawn "xkill")
+       , ("M-C-k"        , spawn "xkill")
        -- Lock screen
        , ("M-z"          , spawn "blurlock")
        -- Reboot
@@ -280,16 +285,16 @@ myWorkspaces = [
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $
+  mkToggle1 NBFULL $
+  mkToggle1 REFLECTX $
+  mkToggle1 REFLECTY $
+  mkToggle1 MIRROR $
   myTile   |||
-  myFull   |||
   mySpiral |||
   my3cmi   |||
-  myMirror |||
   myTabbed
   where
     myTile = named "Tall" $ ResizableTall 1 (3/100) (4/7) []
-    myFull = named "Full" $ spacing 0 $ noBorders Full
-    myMirror = Mirror (Tall 1 (3/100) (1/2))
     my3cmi =  ThreeColMid 1 (3/100) (1/2)
     myTabbed = named "Tabbed" $ tabbed shrinkText tabConfig
     mySpiral = spiral (6/7)
