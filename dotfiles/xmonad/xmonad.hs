@@ -17,6 +17,8 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
 import XMonad.Layout.ToggleLayouts     -- Full window at any time
 import XMonad.Layout.Fullscreen
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Named
 
 -- utils
 import XMonad.Util.Run(spawnPipe)
@@ -29,6 +31,7 @@ import XMonad.Prompt.Window            -- pops up a prompt with window names
 
 -- actions
 import XMonad.Actions.CycleWS
+import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.FloatKeys
 
 -- Keys
@@ -72,6 +75,8 @@ main = do
        -- Shrink / Expand the focused window
          ("M-,"    , sendMessage Shrink)
        , ("M-."    , sendMessage Expand)
+       , ("M-S-,"  , sendMessage MirrorShrink)
+       , ("M-S-."  , sendMessage MirrorExpand)
        -- Toggle struts
        , ("M-b"    , sendMessage ToggleStruts)
        -- Close the focused window
@@ -91,8 +96,8 @@ main = do
        , ("M-s"    , withFocused (keysResizeWindow (-resizeWD, resizeWD) (0.5, 0.5)))
        , ("M-i"    , withFocused (keysResizeWindow (resizeWD, resizeWD) (0.5, 0.5)))
        -- Increase / Decrese the number of master pane
-       , ("M-S-,"  , sendMessage $ IncMasterN (-1))
-       , ("M-S-."  , sendMessage $ IncMasterN 1)
+       , ("M-C-,"  , sendMessage $ IncMasterN (-1))
+       , ("M-C-."  , sendMessage $ IncMasterN 1)
        -- Go to the next / previous workspace
        , ("M-<R>"  , nextWS )
        , ("M-<L>"  , prevWS )
@@ -103,6 +108,8 @@ main = do
        , ("M-S-<L>", shiftToPrev)
        , ("M-S-l"  , shiftToNext)
        , ("M-S-h"  , shiftToPrev)
+       -- Previous workspace
+       , ("M-p"    , toggleWS)
        -- Move the focus down / up
        , ("M-<D>"  , windows W.focusDown)
        , ("M-<U>"  , windows W.focusUp)
@@ -280,11 +287,11 @@ myLayout = avoidStruts $
   myMirror |||
   myTabbed
   where
-    myTile = Tall 1 (3/100) (4/7)
-    myFull = spacing 0 $ noBorders Full
+    myTile = named "Tall" $ ResizableTall 1 (3/100) (4/7) []
+    myFull = named "Full" $ spacing 0 $ noBorders Full
     myMirror = Mirror (Tall 1 (3/100) (1/2))
     my3cmi =  ThreeColMid 1 (3/100) (1/2)
-    myTabbed = tabbed shrinkText tabConfig
+    myTabbed = named "Tabbed" $ tabbed shrinkText tabConfig
     mySpiral = spiral (6/7)
 
 
@@ -300,7 +307,7 @@ myManageHook = composeAll . concat $
     [className =? c --> doFloat                     | c <- myClassFloats]
   , [title     =? t --> doFloat                     | t <- myTitleFloats]
   , [className =? c --> doCenterFloat               | c <- myCenterFloats]
-  , [className =? c --> doShift (myWorkspaces !! w) | (c, w) <- myShifts]
+  , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
   ] where
        myCenterFloats = ["zenity"]
        myClassFloats = []
@@ -310,6 +317,7 @@ myManageHook = composeAll . concat $
 
 myNewManageHook = composeAll
   [ myManageHook
+  , manageDocks
   , floatNextHook
   , manageHook desktopConfig
   , namedScratchpadManageHook scratchpads
