@@ -21,6 +21,7 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
+import XMonad.Layout.WindowNavigation
 
 -- utils
 import XMonad.Util.Run(spawnPipe)
@@ -104,25 +105,35 @@ main = do
        , ("M-C-,"  , sendMessage $ IncMasterN (-1))
        , ("M-C-."  , sendMessage $ IncMasterN 1)
        -- Go to the next / previous workspace
-       , ("M-<R>"  , nextWS )
-       , ("M-<L>"  , prevWS )
-       , ("M-l"    , nextWS )
-       , ("M-h"    , prevWS )
+       , ("M-C-<R>"  , nextWS )
+       , ("M-C-<L>"  , prevWS )
+       , ("M-C-l"    , nextWS )
+       , ("M-C-h"    , prevWS )
        -- Shift the focused window to the next / previous workspace
        , ("M-S-<R>", shiftToNext)
        , ("M-S-<L>", shiftToPrev)
-       , ("M-S-l"  , shiftToNext)
-       , ("M-S-h"  , shiftToPrev)
+       , ("M-C-S-l"  , shiftToNext)
+       , ("M-C-S-h"  , shiftToPrev)
        -- Previous workspace
        , ("M-p"    , toggleWS)
-       -- Move the focus down / up
-       , ("M-<D>"  , windows W.focusDown)
-       , ("M-<U>"  , windows W.focusUp)
-       , ("M-j"    , windows W.focusDown)
-       , ("M-k"    , windows W.focusUp)
-       -- Swap the focused window down / up
-       , ("M-S-j"  , windows W.swapDown)
-       , ("M-S-k"  , windows W.swapUp)
+       -- Window navigation
+       , ("M-<D>"  , sendMessage $ Go D)
+       , ("M-<U>"  , sendMessage $ Go U)
+       , ("M-<L>"  , sendMessage $ Go L)
+       , ("M-<R>"  , sendMessage $ Go R)
+       , ("M-j"    , sendMessage $ Go D)
+       , ("M-k"    , sendMessage $ Go U)
+       , ("M-h"    , sendMessage $ Go L)
+       , ("M-l"    , sendMessage $ Go R)
+       -- Swap windows
+       , ("M-S-<D>"  , sendMessage $ Swap D)
+       , ("M-S-<U>"  , sendMessage $ Swap U)
+       , ("M-S-<L>"  , sendMessage $ Swap L)
+       , ("M-S-<R>"  , sendMessage $ Swap R)
+       , ("M-S-j"  , sendMessage $ Swap D)
+       , ("M-S-k"  , sendMessage $ Swap U)
+       , ("M-S-h"  , sendMessage $ Swap L)
+       , ("M-S-l"  , sendMessage $ Swap R)
        -- Shift the focused window to the master window
        , ("M-m"    , windows W.shiftMaster)
        -- Focus master
@@ -236,10 +247,10 @@ myFileManager = "thunar"
 myConsoleFileManager = "termite -e ranger"
 
 -- border width
-myBorderWidth = 3
+myBorderWidth = 4
 -- Float window control width
-moveWD = 3
-resizeWD = 3
+moveWD = 4
+resizeWD = 4
 
 
 defaults = docks $ desktopConfig
@@ -289,6 +300,7 @@ myLayout = avoidStruts $
   mkToggle1 REFLECTX $
   mkToggle1 REFLECTY $
   mkToggle1 MIRROR $
+  configurableNavigation (navigateColor myNormalBorderColor) $
   myTile   |||
   mySpiral |||
   my3cmi   |||
