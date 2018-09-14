@@ -10,9 +10,8 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.FloatNext
 
 -- layouts
-import XMonad.Layout.Fullscreen
 import XMonad.Layout.MultiToggle
-import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.MultiToggle.Instances -- NBFULL, MIRROR
 import XMonad.Layout.Named
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
@@ -36,6 +35,7 @@ import XMonad.Prompt.Window            -- pops up a prompt with window names
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.FloatKeys
+import XMonad.Actions.UpdatePointer
 
 -- Keys
 import XMonad.Util.EZConfig            -- removeKeys, additionalKeys
@@ -48,14 +48,12 @@ import qualified Data.Map as M
 main = do
   xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
   xmonad $ defaults {
-    manageHook = manageDocks <+> manageHook defaultConfig,
-    -- layoutHook = avoidStruts $ layoutHook defaultConfig,
-    logHook = dynamicLogWithPP $ xmobarPP
+    logHook =   (dynamicLogWithPP $ xmobarPP
                         {
                           ppOutput = hPutStrLn xmproc,
                           ppTitle = xmobarColor "green" "" . shorten 50,
                           ppSep = " "
-                        }
+                        }) >> updatePointer (0.5, 0.5) (1, 1)
   }
        -------------------------------------------------------------------- }}}
        -- Define keys to remove                                             {{{
@@ -81,7 +79,7 @@ main = do
        , ("M-S-."  , sendMessage MirrorShrink)
        , ("M-S-,"  , sendMessage MirrorExpand)
        -- Toggle struts
-       , ("M-b"    , sendMessage ToggleStruts)
+       , ("M-C-f"    , sendMessage ToggleStruts)
        -- Close the focused window
        , ("M-S-q"  , kill)
        -- Toggle layout (Fullscreen mode)
@@ -158,7 +156,8 @@ main = do
        `additionalKeys`
        [ ((m .|. myModMask, k), windows $ f i)
          | (i, k) <- zip myWorkspaces [xK_1 ..]
-         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+         , (f, m) <- [(W.greedyView, 0), (W.shift, controlMask)
+                     , (\i -> W.greedyView i . W.shift i, shiftMask)]
        ]
 
        -------------------------------------------------------------------- }}}
@@ -246,6 +245,8 @@ myFileManager = "thunar"
 -- Console File Manager
 myConsoleFileManager = "termite -e ranger"
 
+myTray = "trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1"
+
 -- border width
 myBorderWidth = 4
 -- Float window control width
@@ -268,7 +269,7 @@ defaults = docks $ desktopConfig
 
   -- hooks
   , manageHook         = myNewManageHook
-  , layoutHook         = avoidStruts $ smartBorders $ smartSpacingWithEdge 8 $ myLayout
+  , layoutHook         = myLayout
   , startupHook        = myStartupHook
   , handleEventHook    = myHandleEventHook
   }
@@ -296,14 +297,18 @@ myWorkspaces = [
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $
+  smartBorders $
+  smartSpacingWithEdge 6 $
+  -- Toggles
   mkToggle1 NBFULL $
   mkToggle1 REFLECTX $
   mkToggle1 REFLECTY $
   mkToggle1 MIRROR $
   configurableNavigation (navigateColor myNormalBorderColor) $
+  -- Layouts
   myTile   |||
-  mySpiral |||
   my3cmi   |||
+  mySpiral |||
   myTabbed
   where
     myTile = named "Tall" $ ResizableTall 1 (3/100) (4/7) []
@@ -321,9 +326,9 @@ scratchpads =
 -- myManageHook
 myManageHook = composeAll . concat $
   [
-    [className =? c --> doFloat                     | c <- myClassFloats]
-  , [title     =? t --> doFloat                     | t <- myTitleFloats]
-  , [className =? c --> doCenterFloat               | c <- myCenterFloats]
+    [className =? c --> doFloat                      | c <- myClassFloats]
+  , [title     =? t --> doFloat                      | t <- myTitleFloats]
+  , [className =? c --> doCenterFloat                | c <- myCenterFloats]
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
   ] where
        myCenterFloats = ["zenity"]
@@ -333,24 +338,25 @@ myManageHook = composeAll . concat $
 
 
 myNewManageHook = composeAll
-  [ myManageHook
-  , manageDocks
+  [ manageDocks
   , floatNextHook
   , manageHook desktopConfig
   , namedScratchpadManageHook scratchpads
+  , myManageHook
   ]
 
 
 
 myStartupHook = do
-  spawnOnce "stalonetray"
+  -- startupHook desktopConfig
+  spawnOnce myTray
   spawnOnce "volumeicon"
   spawnOnce "sh -c 'sleep 40; exec keepassxc'"
   spawnOnce "sh -c 'sleep 50; exec megasync'"
   spawnOnce "sh -c 'sleep 60; exec telegram-desktop'"
 
 
-myHandleEventHook = docksEventHook <+> fullscreenEventHook
+myHandleEventHook = docksEventHook <+>  handleEventHook desktopConfig
 
 ------------------------------------------------------------------------
 -- Key bindings
