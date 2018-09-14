@@ -12,7 +12,7 @@ import XMonad.Hooks.FloatNext
 -- layouts
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances -- NBFULL, MIRROR
-import XMonad.Layout.Named
+import XMonad.Layout.Renamed
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
 import XMonad.Layout.ResizableTile
@@ -49,11 +49,11 @@ main = do
   xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
   xmonad $ defaults {
     logHook =   (dynamicLogWithPP $ xmobarPP
-                        {
-                          ppOutput = hPutStrLn xmproc,
-                          ppTitle = xmobarColor "green" "" . shorten 50,
-                          ppSep = " "
-                        }) >> updatePointer (0.5, 0.5) (1, 1)
+                        { ppOutput = hPutStrLn xmproc
+                          , ppTitle = xmobarColor "green" "" . shorten 50
+                          , ppSep = " "
+                          , ppUrgent  = xmobarColor "red" "yellow"
+                        }) >> updatePointer (0.5, 0.5) (0.99, 0.99)
   }
        -------------------------------------------------------------------- }}}
        -- Define keys to remove                                             {{{
@@ -297,23 +297,22 @@ myWorkspaces = [
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $
-  smartBorders $
-  smartSpacingWithEdge 6 $
   -- Toggles
-  mkToggle1 NBFULL $
+  mkToggle1 NBFULL   $
   mkToggle1 REFLECTX $
   mkToggle1 REFLECTY $
-  mkToggle1 MIRROR $
+  mkToggle1 MIRROR   $
   configurableNavigation (navigateColor myNormalBorderColor) $
   -- Layouts
-  myTile   |||
-  my3cmi   |||
-  mySpiral |||
-  myTabbed
+  name "Tall"     myTile   |||
+  name "ThreeCol" my3cmi   |||
+  name "Spiral"   mySpiral |||
+  name "Tabbed"   myTabbed
   where
-    myTile = named "Tall" $ ResizableTall 1 (3/100) (4/7) []
-    my3cmi =  ThreeColMid 1 (3/100) (1/2)
-    myTabbed = named "Tabbed" $ tabbed shrinkText tabConfig
+    name n   = renamed [Replace n] . spacing 5
+    myTile   = ResizableTall 1 (3/100) (4/7) []
+    my3cmi   = ThreeColMid 1 (3/100) (1/2)
+    myTabbed = tabbed shrinkText tabConfig
     mySpiral = spiral (6/7)
 
 
