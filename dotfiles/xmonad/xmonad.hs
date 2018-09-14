@@ -21,6 +21,7 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.Hidden
 
 -- utils
 import XMonad.Util.Run(spawnPipe)
@@ -87,6 +88,9 @@ main = do
        , ("M-C-x"    , sendMessage $ Toggle REFLECTX)
        , ("M-C-y"    , sendMessage $ Toggle REFLECTY)
        , ("M-C-m"    , sendMessage $ Toggle MIRROR)
+       -- Hide window
+       , ("M--"      , withFocused hideWindow)
+       , ("M-S--"      , popOldestHiddenWindow)
        -- Float window
        , ("M-t"    , withFocused $ \w -> floatLocation w >>= windows . W.float w . snd)
        , ("M-C-t"    , toggleFloatNext)
@@ -298,6 +302,7 @@ myWorkspaces = [
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $
+  hiddenWindows      $
   -- Toggles
   mkToggle1 NBFULL   $
   mkToggle1 REFLECTX $
