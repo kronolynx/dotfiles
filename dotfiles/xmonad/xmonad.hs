@@ -320,7 +320,7 @@ myLayout = avoidStruts $
 -- Scratchpads
 scratchpads =
   [ NS "htop" "termite -t process -e htop" (title =? "process")  defaultFloating
-  , NS "cmus" "termite -c cmus -e cmus"    (className =? "cmus") defaultFloating
+  , NS "cmus" "termite -t process -e cmus" (className =? "cmus") defaultFloating
   ] where role = stringProperty "WM_WINDOW_ROLE"
 
 -- myManageHook
