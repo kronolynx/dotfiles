@@ -74,77 +74,78 @@ main = do
        `additionalKeysP`
        [
        -- Shrink / Expand the focused window
-         ("M-,"    , sendMessage Shrink)
-       , ("M-."    , sendMessage Expand)
-       , ("M-S-."  , sendMessage MirrorShrink)
-       , ("M-S-,"  , sendMessage MirrorExpand)
+         ("M-,"      , sendMessage Shrink)
+       , ("M-."      , sendMessage Expand)
+       , ("M-S-."    , sendMessage MirrorShrink)
+       , ("M-S-,"    , sendMessage MirrorExpand)
        -- Toggle struts
-       , ("M-C-f"    , sendMessage ToggleStruts)
+       , ("M-b"      , sendMessage ToggleStruts)
        -- Close the focused window
-       , ("M-S-q"  , kill)
+       , ("M-S-q"    , kill)
        -- Toggle layout (Fullscreen mode)
-       , ("M-f"    , sendMessage $ Toggle NBFULL)
-       , ("M-C-x"  , sendMessage $ Toggle REFLECTX)
-       , ("M-C-y"  , sendMessage $ Toggle REFLECTY)
-       , ("M-C-m"  , sendMessage $ Toggle MIRROR)
+       , ("M-f"      , sendMessage $ Toggle NBFULL)
+       , ("M-C-x"    , sendMessage $ Toggle REFLECTX)
+       , ("M-C-y"    , sendMessage $ Toggle REFLECTY)
+       , ("M-C-m"    , sendMessage $ Toggle MIRROR)
        -- Float window
-       , ("M-S-f"  , withFocused (keysMoveWindow (-myBorderWidth,-myBorderWidth)))
+       , ("M-t"    , withFocused $ \w -> floatLocation w >>= windows . W.float w . snd)
+       , ("M-C-t"    , toggleFloatNext)
        -- Push window back into tilling
-       , ("M-S-t"  , withFocused $ windows . W.sink)
+       , ("M-S-t"    , withFocused $ windows . W.sink)
        -- Move the floating focused window
-       , ("M-C-<R>", withFocused (keysMoveWindow (moveWD, 0)))
-       , ("M-C-<L>", withFocused (keysMoveWindow (-moveWD, 0)))
-       , ("M-C-<U>", withFocused (keysMoveWindow (0, -moveWD)))
-       , ("M-C-<D>", withFocused (keysMoveWindow (0, moveWD)))
+       , ("M-C-<R>"  , withFocused (keysMoveWindow (moveWD, 0)))
+       , ("M-C-<L>"  , withFocused (keysMoveWindow (-moveWD, 0)))
+       , ("M-C-<U>"  , withFocused (keysMoveWindow (0, -moveWD)))
+       , ("M-C-<D>"  , withFocused (keysMoveWindow (0, moveWD)))
        -- Resize the floating focused window
-       , ("M-s"    , withFocused (keysResizeWindow (-resizeWD, resizeWD) (0.5, 0.5)))
-       , ("M-i"    , withFocused (keysResizeWindow (resizeWD, resizeWD) (0.5, 0.5)))
+       , ("M-s"      , withFocused (keysResizeWindow (-resizeWD, resizeWD) (0.5, 0.5)))
+       , ("M-i"      , withFocused (keysResizeWindow (resizeWD, resizeWD) (0.5, 0.5)))
        -- Increase / Decrese the number of master pane
-       , ("M-C-,"  , sendMessage $ IncMasterN (-1))
-       , ("M-C-."  , sendMessage $ IncMasterN 1)
+       , ("M-C-,"    , sendMessage $ IncMasterN (-1))
+       , ("M-C-."    , sendMessage $ IncMasterN 1)
        -- Go to the next / previous workspace
        , ("M-C-<R>"  , nextWS )
        , ("M-C-<L>"  , prevWS )
        , ("M-C-l"    , nextWS )
        , ("M-C-h"    , prevWS )
        -- Shift the focused window to the next / previous workspace
-       , ("M-S-<R>", shiftToNext)
-       , ("M-S-<L>", shiftToPrev)
+       , ("M-S-<R>"  , shiftToNext)
+       , ("M-S-<L>"  , shiftToPrev)
        , ("M-C-S-l"  , shiftToNext)
        , ("M-C-S-h"  , shiftToPrev)
        -- Previous workspace
-       , ("M-p"    , toggleWS)
+       , ("M-p"      , toggleWS)
        -- Window navigation
-       , ("M-<D>"  , sendMessage $ Go D)
-       , ("M-<U>"  , sendMessage $ Go U)
-       , ("M-<L>"  , sendMessage $ Go L)
-       , ("M-<R>"  , sendMessage $ Go R)
-       , ("M-j"    , sendMessage $ Go D)
-       , ("M-k"    , sendMessage $ Go U)
-       , ("M-h"    , sendMessage $ Go L)
-       , ("M-l"    , sendMessage $ Go R)
+       , ("M-<D>"    , sendMessage $ Go D)
+       , ("M-<U>"    , sendMessage $ Go U)
+       , ("M-<L>"    , sendMessage $ Go L)
+       , ("M-<R>"    , sendMessage $ Go R)
+       , ("M-j"      , sendMessage $ Go D)
+       , ("M-k"      , sendMessage $ Go U)
+       , ("M-h"      , sendMessage $ Go L)
+       , ("M-l"      , sendMessage $ Go R)
        -- Swap windows
        , ("M-S-<D>"  , sendMessage $ Swap D)
        , ("M-S-<U>"  , sendMessage $ Swap U)
        , ("M-S-<L>"  , sendMessage $ Swap L)
        , ("M-S-<R>"  , sendMessage $ Swap R)
-       , ("M-S-j"  , sendMessage $ Swap D)
-       , ("M-S-k"  , sendMessage $ Swap U)
-       , ("M-S-h"  , sendMessage $ Swap L)
-       , ("M-S-l"  , sendMessage $ Swap R)
+       , ("M-S-j"    , sendMessage $ Swap D)
+       , ("M-S-k"    , sendMessage $ Swap U)
+       , ("M-S-h"    , sendMessage $ Swap L)
+       , ("M-S-l"    , sendMessage $ Swap R)
        -- Shift the focused window to the master window
-       , ("M-m"    , windows W.shiftMaster)
+       , ("M-m"      , windows W.shiftMaster)
        -- Focus master
-       , ("M-S-m"  , windows W.focusMaster)
+       , ("M-S-m"    , windows W.focusMaster)
        -- Search a window and focus into the window
-       , ("M-g"    , windowPromptGoto myXPConfig)
+       , ("M-g"      , windowPromptGoto myXPConfig)
        -- Search a window and bring to the current workspace
-       , ("M-b"    , windowPromptBring myXPConfig)
+       , ("M-S-g"    , windowPromptBring myXPConfig)
        -- Move the focus to next screen (multi screen)
-       , ("M-<Tab>", nextScreen)
+       , ("M-<Tab>"  , nextScreen)
        -- screen
-       , ("M-o"    , swapNextScreen)
-       , ("M-S-o"  , shiftNextScreen)
+       , ("M-o"      , swapNextScreen)
+       , ("M-S-o"    , shiftNextScreen)
        ]
 
        -------------------------------------------------------------------- }}}
@@ -192,8 +193,8 @@ main = do
        -- Launch dmenu for launching applicatiton
        , ("M-d"          , spawn myLauncher)
        -- Scratchpads
-       , ("M-C-t"        , namedScratchpadAction scratchpads "htop")
-       , ("M-C-c"        , namedScratchpadAction scratchpads "cmus")
+       , ("M-S-C-t"        , namedScratchpadAction scratchpads "htop")
+       , ("M-S-C-c"        , namedScratchpadAction scratchpads "cmus")
        -- Play / Pause media keys
        , ("<XF86AudioPlay>"  , spawn "mpc toggle")
        , ("<XF86HomePage>"   , spawn "mpc toggle")
@@ -218,8 +219,8 @@ main = do
        , ("<XF86Suspend", spawn "i3exit suspend")
        -- Take a screenshot (whole desktop)
        , ("<Print>", spawn (myScreenCapture ++ "; notify-send 'Desktop captured'"))
-       -- Take a screenshot (selected area) -- TODO fix capture area
-       , ("S-<Print>", spawn (myScreenCapture ++ " -s ; notify-send 'Area captured'"))
+       -- Take a screenshot (selected area)
+       , ("S-<Print>", spawn ("notify-send 'Select Area';sleep 0.2;" ++ myScreenCapture ++ " -s && notify-send 'Area captured'"))
        -- Take a screenshot (focused window)
        , ("C-<Print>", spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
        ]
@@ -231,7 +232,7 @@ myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 myTerminal = "termite -e tmux"
 
 -- Launcher
-myLauncher = "rofi -show drun"
+myLauncher = "rofi -matching fuzzy -modi 'drun,run' -show drun"
 
 -- Editor
 myTextEditor = "emacsclient -c -a emacs"
@@ -320,7 +321,7 @@ myLayout = avoidStruts $
 scratchpads =
   [ NS "htop" "termite -t process -e htop" (title =? "process")  defaultFloating
   , NS "cmus" "termite -c cmus -e cmus"    (className =? "cmus") defaultFloating
-  ]
+  ] where role = stringProperty "WM_WINDOW_ROLE"
 
 -- myManageHook
 myManageHook = composeAll . concat $
@@ -333,7 +334,8 @@ myManageHook = composeAll . concat $
        myCenterFloats = ["zenity"]
        myClassFloats = []
        myTitleFloats = []
-       myShifts = [("keepassxc", 7), ("telegram-desktop", 5)]
+       -- workspace numbers start at 0
+       myShifts = [("keepassxc", 6), ("telegram-desktop", 4)]
 
 
 myNewManageHook = composeAll
