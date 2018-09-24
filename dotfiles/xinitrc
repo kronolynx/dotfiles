@@ -11,6 +11,8 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 
 DEFAULT_SESSION='i3 --shmlog-size 0'
 
+export BROWSER=google-chrome-stable
+
 nitrogen --restore ~/.wallpapers &
 compton -f &
 ~/.scripts/keyboard.sh
