@@ -11,7 +11,7 @@ Config {
     , persistent         = True
     , alignSep           = "}{"
     , commands =
-        [ Run BatteryP ["BAT0"]
+        [ Run Battery
             [ "--template", "<acstatus>"
             , "--Low"     , "10"
             , "--High"    , "80"
