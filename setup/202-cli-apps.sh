@@ -7,6 +7,8 @@ htop
 calcurse
 # vim like file manager
 ranger
+w3m
+ffmpegthumbnailer
 # command like trashcan
 trash-cli
 # dish usage analizer
@@ -15,8 +17,8 @@ ncdu
 fdupes
 # quick access to files and directories
 fasd
-# interactively kill process 
-fkill 
+# interactively kill process
+fkill
 # terminal info
 neofetch
 # RandR-based backlight control application
@@ -30,4 +32,3 @@ teensy-loader-cli
 )
 
 ./install-app.sh ${apps[*]}
-
