@@ -11,6 +11,8 @@ visual-studio-code-bin
 atom
 # Manage all your JetBrains Projects and Tools
 jetbrains-toolbox
+# Latex
+texlive-most
 )
 
 ./install-app.sh ${apps[*]}
