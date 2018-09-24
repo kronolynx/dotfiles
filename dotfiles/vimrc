@@ -1,5 +1,5 @@
-" Begin .vimrc 
-color molokai 
+" Begin .vimrc
+color molokai
 set nocompatible              " be iMproved, required
 filetype plugin on                  " required
 set encoding=utf8
@@ -30,9 +30,9 @@ call plug#begin('~/.vim/plugged')
 " All plugins must be below this line
 " Note: for neovim must run 'pip install neovim'
 " Track the engine.
-" requires nerd font 
+" requires nerd font
 " requires pip install websocket-client sexpdata
-", { 'on':  'NERDTreeToggle' } 
+", { 'on':  'NERDTreeToggle' }
 "Plug 'SirVer/ultisnips'
 "Plug 'Townk/vim-autoclose'
 "Plug 'benmills/vimux'
@@ -106,7 +106,7 @@ map <leader>nt :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
-" undotree 
+" undotree
 nnoremap <F5> :UndotreeToggle<cr>
 
 " Turn tags
@@ -124,11 +124,11 @@ au Syntax * RainbowParenthesesLoadBraces
 nnoremap <leader>ii i<space><esc>
 " apend space
 nnoremap <leader>aa a<space><esc>
-" preprend new line 
+" preprend new line
 nmap <S-Enter> O<esc>j
 " append new line
 nmap <CR> o<esc>k
-" Clear last search (,qs) 
+" Clear last search (,qs)
 map <silent> <BS> :nohlsearch<CR>
 " save on escape not working  :(
 inoremap <CAPSLOCK> <CAPSLOCK>:w<CR>
@@ -151,8 +151,10 @@ vmap <C-v> c<esc>"+p
 imap <C-v> <esc>"+pa
 " select all
 "map <C-S-A> <esc>ggVG<CR>
-" save 
+" save
 map <C-s> <esc>:w!<cr>
+" escape
+:imap yy <Esc>
 " Change selected text from NameLikeThis to name_like_this.
 "vnoremap <leader>sc :s/\<\@!\([A-Z]\)/\_\l\1/g<CR>gul
 " }}}
@@ -169,8 +171,8 @@ map <C-l> <C-W>l
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>tr :tabnext 
+map <leader>tm :tabmove
+map <leader>tr :tabnext
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
@@ -194,7 +196,7 @@ map <leader>q :e ~/buffer<cr>
 map <leader>x :e ~/buffer.md<cr>
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -280,7 +282,7 @@ set spellfile=$HOME/Mega/vim/spell/es.utf-8.add
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
-" 
+"
 " let g:syntastic_always_populate_loc_list = 1
 " let g:syntastic_auto_loc_list = 1
 " let g:syntastic_check_on_open = 1
@@ -288,7 +290,7 @@ set spellfile=$HOME/Mega/vim/spell/es.utf-8.add
 " }}}
 
 " Rust {{{
-"let g:rustfmt_autosave = 1 
+"let g:rustfmt_autosave = 1
 "set hidden
 "let g:racer_cmd = "~/.cargo/bin"
 "let g:racer_experimental_completer = 1
@@ -342,7 +344,7 @@ augroup autosourcing
   autocmd BufWritePost .vimrc source %
 augroup end
 " }}}
-" :W sudo saves the file 
+" :W sudo saves the file
 " (useful for handling the permission-denied error)
 "command W w !sudo tee % > /dev/null
 
