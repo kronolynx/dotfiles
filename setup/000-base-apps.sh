@@ -11,14 +11,7 @@ openssl
 # front end for Xrandr (screen related)
 arandr
 # terminal emulator
-termite
-
-# urxvt terminal
-rxvt-unicode
-# Terminfo files for urxvt
-rxvt-unicode-terminfo
-# URL and Mouseless text selection for rxvt-unicode
-urxvt-perls
+kitty
 
 #./install-app.sh rxvt-unicode
 # yubico U2F (2 factor authentication)
