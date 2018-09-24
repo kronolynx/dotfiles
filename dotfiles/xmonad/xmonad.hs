@@ -8,6 +8,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.FloatNext
+import XMonad.Hooks.SetWMName
 
 -- layouts
 import XMonad.Layout.MultiToggle
@@ -233,10 +234,11 @@ main = do
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
-myTerminal = "termite -e tmux"
+myTerminal = "kitty"
+-- myTerminal = "termite -e tmux"
 
 -- Launcher
-myLauncher = "rofi -matching fuzzy -modi 'drun,run' -show drun"
+myLauncher = "rofi -modi 'drun,run' -show drun"
 
 -- Editor
 myTextEditor = "emacsclient -c -a emacs"
@@ -248,7 +250,7 @@ myBrowser = "google-chrome-stable"
 myFileManager = "thunar"
 
 -- Console File Manager
-myConsoleFileManager = "termite -e ranger"
+myConsoleFileManager = myTerminal ++ " -e ranger"
 
 myTray = "trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1"
 
@@ -324,8 +326,8 @@ myLayout = avoidStruts $
 
 -- Scratchpads
 scratchpads =
-  [ NS "htop" "termite -t process -e htop" (title =? "process")  defaultFloating
-  , NS "cmus" "termite -t process -e cmus" (className =? "cmus") defaultFloating
+  [ NS "htop" (myTerminal ++ " -t process -e htop") (title =? "process")  defaultFloating
+  , NS "cmus" (myTerminal ++ " -t process -e cmus") (className =? "cmus") defaultFloating
   ] where role = stringProperty "WM_WINDOW_ROLE"
 
 -- myManageHook
@@ -334,13 +336,15 @@ myManageHook = composeAll . concat $
     [className =? c --> doFloat                      | c <- myClassFloats]
   , [title     =? t --> doFloat                      | t <- myTitleFloats]
   , [className =? c --> doCenterFloat                | c <- myCenterFloats]
+  , [title     =? t --> doCenterFloat                | t <- myTitleCenterFloats]
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
   ] where
        myCenterFloats = ["zenity"]
+       myTitleCenterFloats = []
        myClassFloats = []
-       myTitleFloats = []
+       myTitleFloats = ["Media viewer"]
        -- workspace numbers start at 0
-       myShifts = [("keepassxc", 6), ("telegram-desktop", 4)]
+       myShifts = [("keepassxc", 6), ("telegram-desktop", 4), ("TelegramDesktop", 4)]
 
 
 myNewManageHook = composeAll
@@ -355,10 +359,12 @@ myNewManageHook = composeAll
 
 myStartupHook = do
   -- startupHook desktopConfig
+  setWMName "LG3D" -- Solves problems with Java GUI programs
   spawnOnce myTray
   spawnOnce "volumeicon"
   spawnOnce "sh -c 'sleep 40; exec keepassxc'"
   spawnOnce "sh -c 'sleep 50; exec megasync'"
+  spawnOnce "sh -c 'sleep 50; exec dropbox'"
   spawnOnce "sh -c 'sleep 60; exec telegram-desktop'"
 
 
