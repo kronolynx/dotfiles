@@ -16,6 +16,7 @@ config/fish/fishfile
 config/gtk-3.0/gtk.css
 config/gtk-3.0/settings.ini
 config/i3status/config
+config/kitty/kitty.conf
 config/neofetch
 config/ranger/rc.conf
 config/ranger/scope.sh
