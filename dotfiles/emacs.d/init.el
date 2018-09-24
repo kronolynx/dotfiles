@@ -147,26 +147,6 @@
   :config
   (evil-collection-init))
 
-;;; C-c as general purpose escape key sequence.
-   ;;;
-(defun my-esc (prompt)
-  "Functionality for escaping generally.  Includes exiting Evil insert state and C-g binding. "
-  (cond
-   ;; If we're in one of the Evil states that defines [escape] key, return [escape] so as
-   ;; Key Lookup will use it.
-   ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p) (evil-visual-state-p)) [escape])
-   ;; This is the best way I could infer for now to have C-c work during evil-read-key.
-   ;; Note: As long as I return [escape] in normal-state, I don't need this.
-   ;;((eq overriding-terminal-local-map evil-read-key-map) (keyboard-quit) (kbd ""))
-   (t (kbd "C-g"))))
-(define-key key-translation-map (kbd "C-c") 'my-esc)
-;; Works around the fact that Evil uses read-event directly when in operator state, which
-;; doesn't use the key-translation-map.
-(define-key evil-operator-state-map (kbd "C-c") 'keyboard-quit)
-;; Not sure what behavior this changes, but might as well set it, seeing the Elisp manual's
-;; documentation of it.
-(set-quit-char "C-c")
-
 ;; ;; change mode-line color by evil state
 ;; (lexical-let ((default-color (cons (face-background 'mode-line)
 ;;                                    (face-foreground 'mode-line))))
@@ -180,6 +160,14 @@
 ;;                 (set-face-background 'mode-line (car color))
 ;;                 (set-face-foreground 'mode-line (cdr color))))))
 
+(use-package evil-escape
+  :ensure t
+  ;; :load-path "vendor"
+  :config
+  (setq evil-escape-lighter '())
+  (evil-escape-mode)
+  (setq-default evil-escape-key-sequence "yy"
+                evil-escape-delay 0.2))
 
 (use-package evil-surround
   :ensure t
@@ -227,6 +215,17 @@
     (global-evil-leader-mode 1)
     (evil-leader/set-leader "SPC")))
 
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
 (use-package ace-jump-mode
   :ensure t
   :init
@@ -238,6 +237,31 @@
 (defun save-all ()
   (interactive)
   (save-some-buffers t))
+
+;; Latex
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+(setq-default TeX-master nil)
+(add-hook 'LaTeX-mode-hook 'visual-line-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+(add-hook 'LaTeX-mode-hook 'turn-on-reftex)
+(setq reftex-plug-into-AUCTeX t)
+
+(use-package company-auctex
+  :ensure t
+  :config
+  (company-auctex-init)
+  (setq-default TeX-engine 'xetex)
+  (setq-default TeX-PDF-mode t)
+  )
+
+;; Set to the location of your Org files on your local system
+(setq org-directory "~/Dropbox/org")
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/Dropbox/org/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
 
 (add-hook 'focus-out-hook 'save-all)
 
@@ -614,8 +638,11 @@
 
 (use-package markdown-mode
   :ensure t
-  :mode (("\\.md" . gfm-mode)
-         ("\\.markdown" . gfm-mode)))
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md" . gfm-mode)
+         ("\\.markdown" . gfm-mode))
+  :init (setq markdown-command "multimarkdown"))
 
 (use-package python-mode
   :mode "\\.py\\'"
@@ -682,7 +709,7 @@
 
 (use-package untitled-new-buffer
   :ensure t
-  :bind (("M-N" . untitled-new-buffer-with-select-major-mode)))
+  :bind (("M-n" . untitled-new-buffer-with-select-major-mode)))
 
 (use-package helm
   :ensure t
