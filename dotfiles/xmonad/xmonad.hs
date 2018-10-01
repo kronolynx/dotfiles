@@ -179,11 +179,11 @@ main = do
        -- Kill window
        , ("M-C-k"        , spawn "xkill")
        -- Lock screen
-       , ("M-z"          , spawn "blurlock")
+       , ("M-z"          , spawn "~/.scripts/i3lock.sh lock")
        -- Reboot
-       , ("M-0"          , spawn "i3exit reboot")
+       , ("M-S-0"          , spawn "~/.scripts/i3lock.sh reboot")
        -- Shutdown
-       , ("M-S-0"        , spawn "i3exit shutdown")
+       , ("M-C-S-0"        , spawn "~/.scripts/i3lock.sh shutdown")
        -- Exit
        , ("M-S-z"        , io (exitWith ExitSuccess))
        -- Restart xmonad
@@ -221,7 +221,7 @@ main = do
        -- Search
        , ("<XF86Search", spawn (myBrowser ++ " https://duckduckgo.com"))
        -- Suspendre
-       , ("<XF86Suspend", spawn "i3exit suspend")
+       , ("<XF86Suspend", spawn "i~/.scripts/i3lock.sh suspend")
        -- Take a screenshot (whole desktop)
        , ("<Print>", spawn (myScreenCapture ++ "; notify-send 'Desktop captured'"))
        -- Take a screenshot (selected area)
