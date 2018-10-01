@@ -1,4 +1,4 @@
-"actions
+"actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 let mapleader=" "
 source ~/.vimrc
 nnoremap <leader>w :action SaveAll<cr>
@@ -7,7 +7,6 @@ nnoremap <leader>rfi :action RecentFiles<cr>
 nmap <leader>cc :%s/\s\+$<CR><Paste>
 nnoremap <leader>rff :action ReformatCode<CR>
 nnoremap <leader>sf :action GotoFile<cr>
-nnoremap <leader>tc :action CloseActiveTab<cr>
 nnoremap <leader>to :action CloseAllEditorsButActive<cr>
 nnoremap <leader>tu :action CloseAllUnmodifiedEditors<cr>
 nnoremap <leader>sw :action ActivateProjectToolWindow<cr>
@@ -26,8 +25,10 @@ nnoremap <leader>ll :action CompileProject<cr>
 nnoremap <leader>hb :action HippieBackwardCompletion<CR>
 nnoremap <leader>hf :action HippieCompletion<CR>
 noremap <leader>k :action NextTab<CR>
+" tabs {{{
 noremap <leader>j :action PreviousTab<CR>
 noremap <leader>a :action AceAction<CR>
+" }}}
 
 nnoremap <leader>ee :action GotoNextError<CR>
 nnoremap <leader>EE :action GotoPreviousError<CR>
@@ -39,7 +40,7 @@ nnoremap <leader>fu :action FindUsages<cr>
 nnoremap <leader>rr :action RenameElement<cr>
 
 " easy window navigation
-nnoremap <C-w>q :action CloseContent<cr>
+nnoremap <C-w>c :action CloseContent<cr>
 nnoremap <C-w>m :action MoveEditorToOppositeTabGroup<cr>
 
 " windows {{{
