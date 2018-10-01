@@ -45,7 +45,6 @@
 (setq-default indent-tabs-mode nil
               tab-width 2
               indicate-empty-lines nil)
-
 (add-hook
  'after-init-hook
  (defun my/set-faces ()
@@ -123,120 +122,6 @@
 (delete-selection-mode)
 (column-number-mode)
 
-;; load evil
-(use-package evil
-  :ensure t ;; install the evil package if not installed
-  :init ;; tweak evil's configuration before loading it
-  (setq evil-ex-complete-emacs-commands nil)
-  (setq evil-search-module 'evil-search)
-  (setq evil-shift-round nil)
-  (setq evil-split-window-below t)
-  (setq evil-vsplit-window-right t)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-fine-undo t)
-  (setq evil-want-integration nil)
-  :config ;; tweak evil after loading it
-  (evil-mode)
-
-  ;; example how to map a command in normal mode (called 'normal state' in evil)
-  (define-key evil-normal-state-map (kbd ", w") 'evil-window-vsplit))
-
-(use-package evil-collection
-  :after evil
-  :ensure t
-  :config
-  (evil-collection-init))
-
-;; ;; change mode-line color by evil state
-;; (lexical-let ((default-color (cons (face-background 'mode-line)
-;;                                    (face-foreground 'mode-line))))
-;;   (add-hook 'post-command-hook
-;;             (lambda ()
-;;               (let ((color (cond ((minibufferp) default-color)
-;;                                  ((evil-insert-state-p) '("#e80000" . "#ffffff"))
-;;                                  ((evil-emacs-state-p)  '("#444488" . "#ffffff"))
-;;                                  ((buffer-modified-p)   '("#006fa0" . "#ffffff"))
-;;                                  (t default-color))))
-;;                 (set-face-background 'mode-line (car color))
-;;                 (set-face-foreground 'mode-line (cdr color))))))
-
-(use-package evil-escape
-  :ensure t
-  ;; :load-path "vendor"
-  :config
-  (setq evil-escape-lighter '())
-  (evil-escape-mode)
-  (setq-default evil-escape-key-sequence "yy"
-                evil-escape-delay 0.2))
-
-(use-package evil-surround
-  :ensure t
-  :config
-  (global-evil-surround-mode))
-
-(use-package evil-matchit
-  :ensure t
-  :config
-  (global-evil-matchit-mode))
-
-(use-package evil-snipe
-  :ensure t
-  :config
-  (evil-snipe-mode)
-  (evil-snipe-override-mode))
-
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-center-evil-theme))
-
-(use-package linum-relative
-  :ensure t
-  :hook (prog-mode . linum-relative-mode)
-  :init
-  ;; TODO linum progn is not working
-  (progn
-    (setq linum-relative-format "%3s ")
-    ;; display current line instead of 0
-    (setq linum-relative-curren-symbol "")))
-
-(use-package evil-nerd-commenter
-  :ensure t
-  :init
-  (progn
-    (evilnc-default-hotkeys)
-    ;; default binding is M-;
-    (global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)))
-
-(use-package evil-leader
-  :ensure t
-  :init
-  (progn
-    (global-evil-leader-mode 1)
-    (evil-leader/set-leader "SPC")))
-
-(use-package evil-org
-  :ensure t
-  :after org
-  :config
-  (add-hook 'org-mode-hook 'evil-org-mode)
-  (add-hook 'evil-org-mode-hook
-            (lambda ()
-              (evil-org-set-key-theme)))
-  (require 'evil-org-agenda)
-  (evil-org-agenda-set-keys))
-
-(use-package ace-jump-mode
-  :ensure t
-  :init
-  (progn
-    (evil-leader/set-key "SPC" 'evil-ace-jump-char-mode)))
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-;; save buffers on focus lost
-(defun save-all ()
-  (interactive)
-  (save-some-buffers t))
 
 ;; Latex
 (setq TeX-auto-save t)
@@ -256,12 +141,6 @@
   (setq-default TeX-PDF-mode t)
   )
 
-;; Set to the location of your Org files on your local system
-(setq org-directory "~/Dropbox/org")
-;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/Dropbox/org/flagged.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
 
 (add-hook 'focus-out-hook 'save-all)
 
@@ -323,6 +202,17 @@
   :pin org
   :config (setq org-src-fontify-natively t))
 
+;; Set to the location of your Org files on your local system
+(setq org-directory "~/Dropbox/org")
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/Dropbox/org/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+;; make org source smaller
+(set-face-attribute 'org-meta-line nil :height 0.5 :slant
+'normal :foreground "#C0C0C0" )
+(setq org-startup-with-inline-images t)
+(setq org-image-actual-width (/ (display-pixel-width) 3))
 ;(use-package rainbow-mode
   ;:load-path "vendor")
 
@@ -411,10 +301,8 @@
   :ensure t
   :if (display-graphic-p)
   :init
-  (global-flycheck-mode))
-  ;; :config
-  ;; (add-hook 'typescript-mode-hook 'flycheck-mode)
-  ;; (add-hook 'rust-mode-hook 'flycheck-mode))
+  (global-flycheck-mode)
+  :hook ((rust-mode) . flycheck-mode))
 
 (use-package flycheck-rust
   :ensure t
@@ -560,6 +448,10 @@
       (haskell-mode-stylish-buffer)
       (haskell-sort-imports)))
   )
+
+(use-package nand2tetris
+  :ensure t
+  :mode ("\\.hdl\\'" . nand2tetris-mode))
 
 (use-package gitignore-mode
   :ensure t
@@ -996,6 +888,125 @@
 
 (use-package sicp :ensure t)
 
+;; load evil
+(use-package evil
+  :ensure t ;; install the evil package if not installed
+  :init ;; tweak evil's configuration before loading it
+  (setq evil-ex-complete-emacs-commands nil)
+  (setq evil-search-module 'evil-search)
+  (setq evil-shift-round nil)
+  (setq evil-split-window-below t)
+  (setq evil-vsplit-window-right t)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-fine-undo t)
+  (setq evil-want-integration nil)
+  :config ;; tweak evil after loading it
+  (evil-mode)
+
+  ;; example how to map a command in normal mode (called 'normal state' in evil)
+  (define-key evil-normal-state-map (kbd ", w") 'evil-window-vsplit))
+
+(use-package evil-collection
+  :after evil
+  :ensure t
+  :config
+  (evil-collection-init))
+
+;; ;; change mode-line color by evil state
+;; (lexical-let ((default-color (cons (face-background 'mode-line)
+;;                                    (face-foreground 'mode-line))))
+;;   (add-hook 'post-command-hook
+;;             (lambda ()
+;;               (let ((color (cond ((minibufferp) default-color)
+;;                                  ((evil-insert-state-p) '("#e80000" . "#ffffff"))
+;;                                  ((evil-emacs-state-p)  '("#444488" . "#ffffff"))
+;;                                  ((buffer-modified-p)   '("#006fa0" . "#ffffff"))
+;;                                  (t default-color))))
+;;                 (set-face-background 'mode-line (car color))
+;;                 (set-face-foreground 'mode-line (cdr color))))))
+
+(use-package evil-escape
+  :ensure t
+  ;; :load-path "vendor"
+  :config
+  (setq evil-escape-lighter '())
+  (evil-escape-mode)
+  (setq-default evil-escape-key-sequence "yy"
+                evil-escape-delay 0.2))
+
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode))
+
+(use-package evil-matchit
+  :ensure t
+  :config
+  (global-evil-matchit-mode))
+
+(use-package evil-snipe
+  :ensure t
+  :config
+  (evil-snipe-mode)
+  (evil-snipe-override-mode))
+
+(use-package powerline
+  :ensure t
+  :config
+  (powerline-center-evil-theme))
+
+(use-package linum-relative
+  :ensure t
+  :hook (prog-mode . linum-relative-mode)
+  :init
+  ;; TODO linum progn is not working
+  (progn
+    (setq linum-relative-format "%3s ")
+    ;; display current line instead of 0
+    (setq linum-relative-curren-symbol "")))
+
+(use-package evil-nerd-commenter
+  :ensure t
+  :init
+  (progn
+    (evilnc-default-hotkeys)
+    ;; default binding is M-;
+    (global-set-key (kbd "M-/") 'evilnc-comment-or-uncomment-lines)))
+
+(use-package evil-leader
+  :ensure t
+  :init
+  (progn
+    (global-evil-leader-mode 1)
+    (evil-leader/set-leader "SPC")))
+
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+(use-package ace-jump-mode
+  :ensure t
+  :init
+  (progn
+    (evil-leader/set-key "SPC" 'evil-ace-jump-char-mode)))
+
+(define-key evil-normal-state-map "gB" 'evil-next-buffer);next buffer
+(define-key evil-normal-state-map "gb" 'evil-prev-buffer);previous buffer
+
+;; delete trailing whitespace on save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; save buffers on focus lost
+(defun save-all ()
+  (interactive)
+  (save-some-buffers t))
+
 (use-package afternoon-theme :ensure t :defer t)
 (use-package atom-one-dark-theme :ensure t :defer t)
 (use-package avk-emacs-themes :ensure t :defer t)
@@ -1023,11 +1034,12 @@
 (use-package ir-black-theme :ensure t :defer t)
 (use-package jazz-theme :ensure t :defer t)
 (use-package kosmos-theme :ensure t :defer t)
+(use-package leuven-theme :ensure t :defer t)
 (use-package madhat2r-theme :ensure t :defer t)
 (use-package minimal-theme :ensure t :defer t)
+(use-package molokai-theme :ensure t :defer t)
 (use-package monotropic-theme :ensure t :defer t)
 (use-package night-owl-theme :ensure t :defer t)
-(use-package molokai-theme :ensure t :defer t)
 (use-package noctilux-theme :ensure t :defer t)
 (use-package nord-theme :ensure t :defer t)
 (use-package nordless-theme :ensure t :defer t)
@@ -1038,6 +1050,7 @@
 (use-package plain-theme :ensure t :defer t)
 (use-package plan9-theme :ensure t :defer t)
 (use-package poet-theme :ensure t :defer t)
+(use-package purple-haze-theme :ensure t :defer t)
 (use-package railscasts-theme :ensure t :defer t)
 (use-package rebecca-theme :ensure t :defer t)
 (use-package soft-morning-theme :ensure t :defer t)
