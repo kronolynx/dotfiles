@@ -17,17 +17,18 @@
   (require 'use-package))
 
 (bind-keys*
- ;("M-%" . query-replace-regexp)
- ;("M-`" . other-frame)
- ;("M-z" . just-one-space)
+                                        ;("M-%" . query-replace-regexp)
+                                        ;("M-`" . other-frame)
+                                        ;("M-z" . just-one-space)
  ("C-M-;" . comment-or-uncomment-region)
- ;("M-M" . man)
- ;("C-M-k" . kill-sexp)
- ;("C-<tab>" . mode-line-other-buffer)
- ;("C-<tab>" . mode-line-other-buffer)
- ;("C-S-<tab>" . next-buffer)
+                                        ;("M-M" . man)
+                                        ;("C-M-k" . kill-sexp)
+                                        ;("C-<tab>" . mode-line-other-buffer)
+                                        ;("C-<tab>" . mode-line-other-buffer)
+                                        ;("C-S-<tab>" . next-buffer)
  ("C-;" . comment-line)
- ;("C-c q" . delete-other-windows)
+ ("C-/" . comment-line)
+                                        ;("C-c q" . delete-other-windows)
  )
 
 (add-to-list
@@ -270,7 +271,6 @@
 
 (use-package smooth-scrolling
   :ensure t
-  :if (display-graphic-p)
   :config (smooth-scrolling-mode))
 
 (use-package elisp-mode
@@ -299,7 +299,6 @@
 
 (use-package flycheck
   :ensure t
-  :if (display-graphic-p)
   :init
   (global-flycheck-mode)
   :hook ((rust-mode) . flycheck-mode))
@@ -314,7 +313,6 @@
 
 (use-package company
   :ensure t
-  :if (display-graphic-p)
   :hook ((typescript-mode . company-mode)
          (racer-mode . company-mode)))
 
@@ -333,7 +331,6 @@
 
 (use-package rainbow-delimiters
   :ensure t
-  :if (display-graphic-p)
   :hook ((emacs-lisp-mode clojure-mode) . rainbow-delimiters-mode))
 
 (use-package eldoc
@@ -370,7 +367,6 @@
 
 (use-package avy
   :ensure t
-  :if (display-graphic-p)
   :bind (("M-g M-g" . avy-goto-line)
          ("M-g w" . avy-goto-word-1)
          ("M-g e" . avy-goto-word-0)
@@ -387,7 +383,6 @@
 
 (use-package ace-window
   :ensure t
-  :if (display-graphic-p)
   :init (defun other-window-backwards ()
           (interactive)
           (other-window -1))
@@ -396,7 +391,6 @@
 
 (use-package multiple-cursors
   :ensure t
-  :if (display-graphic-p)
   :bind (("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
          ("C-M->" . mc/skip-to-next-like-this)
@@ -410,12 +404,10 @@
 
 (use-package expand-region
   :ensure t
-  :if (display-graphic-p)
   :bind ("C-@" . er/expand-region))
 
 (use-package subword
   :diminish subword-mode
-  :if (display-graphic-p)
   :hook ((haskell-mode
           clojure-mode
           scala-mode
@@ -459,12 +451,10 @@
 
 (use-package git-messenger
   :ensure t
-  :if (display-graphic-p)
   :bind ("C-x g p" . git-messenger:popup-message))
 
 (use-package git-timemachine
   :ensure t
-  :if (display-graphic-p)
   :bind ("C-x g t" . git-timemachine-toggle))
 
 (use-package what-the-commit
@@ -486,16 +476,15 @@
 (use-package magit
   :ensure t
   :pin melpa-stable
-  :if (display-graphic-p)
   :hook (magit-mode . hl-line-mode)
   :config
   (use-package magit-popup :ensure t :pin melpa)
   (when (functionp 'ivy-completing-read)
     (setq magit-completing-read-function 'ivy-completing-read)))
 
-;; (use-package magit-todos
-;;   :ensure t
-;;   :hook (magit-mode . magit-todos-mode))
+(use-package magit-todos
+  :ensure t
+  :hook (magit-mode . magit-todos-mode))
 
 (use-package gist
   :ensure t)
@@ -544,7 +533,6 @@
   :ensure t
   :defer 2
   :diminish (yas-minor-mode yas-global-mode)
-  :if (display-graphic-p)
   :init (setq yas-indent-line t)
   :config (yas-global-mode))
 
@@ -576,7 +564,6 @@
 (use-package fancy-narrow
   :ensure t
   :diminish fancy-narrow-mode
-  :if (display-graphic-p)
   :config (fancy-narrow-mode))
 
 (use-package dired-explorer
@@ -606,7 +593,6 @@
 (use-package helm
   :ensure t
   :pin melpa-stable
-  :if (display-graphic-p)
   :diminish helm-mode
   :bind (("M-x" . helm-M-x)
          ("C-h SPC" . helm-all-mark-rings)
@@ -642,34 +628,28 @@
 
 (use-package helm-descbinds
   :ensure t
-  :if (display-graphic-p)
   :bind (("C-h b" . helm-descbinds)))
 
 (use-package helm-ag
   :ensure t
-  :if (display-graphic-p)
   :defer t)
 
 (use-package helm-tramp
   :ensure t
-  :if (display-graphic-p)
   :defer t)
 
 (use-package helm-themes
   :ensure t
-  :if (display-graphic-p)
   :bind ("C-c h t" . helm-themes))
 
 (use-package helm-swoop
   :ensure t
   :pin melpa-stable
-  :if (display-graphic-p)
   :bind (("M-i" . helm-swoop)
          ("M-I" . helm-multi-swoop)))
 
 (use-package helm-projectile
   :ensure t
-  :if (display-graphic-p)
   :bind* (("C-c p D" . projectile-dired)
           ("C-c p v" . projectile-vc)
           ("C-c p k" . projectile-kill-buffers)
@@ -701,7 +681,6 @@
 
 (use-package fullframe
   :ensure t
-  :if (display-graphic-p)
   :config
   (fullframe magit-status magit-mode-quit-window nil)
   (fullframe projectile-vc magit-mode-quit-window nil))
@@ -863,7 +842,6 @@
 
 (use-package remember-last-theme
   :ensure t
-  :if (display-graphic-p)
   :config (remember-last-theme-with-file-enable (expand-file-name "last-theme.el" user-emacs-directory)))
 
 (use-package rtags :ensure t)
@@ -955,15 +933,15 @@
   :config
   (powerline-center-evil-theme))
 
-(use-package linum-relative
-  :ensure t
-  :hook (prog-mode . linum-relative-mode)
-  :init
-  ;; TODO linum progn is not working
-  (progn
-    (setq linum-relative-format "%3s ")
-    ;; display current line instead of 0
-    (setq linum-relative-curren-symbol "")))
+;; (use-package linum-relative
+;;   :ensure t
+;;   :hook (prog-mode . linum-relative-mode)
+;;   :init
+;;   ;; TODO linum progn is not working
+;;   (progn
+;;     (setq linum-relative-format "%3s ")
+;;     ;; display current line instead of 0
+;;     (setq linum-relative-curren-symbol "")))
 
 (use-package evil-nerd-commenter
   :ensure t
