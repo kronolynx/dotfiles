@@ -24,6 +24,10 @@ alias swapk="setxkbmap -model pc105 -layout dvorak,es -option grp:alt_shift_togg
 
 alias v='f -e vim'
 alias o='a -e xdg-open'
+alias cat=bat
+alias untar='tar -sxvf '
+alias wget='wget -c '
+alias ipe='curl ipinfo.io/ip'
 
 # powerline config
 set -g theme_color_scheme terminal-dark
