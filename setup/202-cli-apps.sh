@@ -29,6 +29,8 @@ cmus
 mps-youtube
 # Ergodox flashing
 teensy-loader-cli
+# cat replacement with color syntax
+bat
 )
 
 ./install-app.sh ${apps[*]}
