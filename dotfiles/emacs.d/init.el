@@ -7,6 +7,7 @@
                          )
       )
 
+(package-refresh-contents)
 (package-initialize)
 
 (unless (package-installed-p 'use-package)
@@ -329,10 +330,6 @@
   :ensure t
   :hook (((typescript-mode web-mode rjsx-mode) . emmet-mode)))
 
-(use-package rainbow-delimiters
-  :ensure t
-  :hook ((emacs-lisp-mode clojure-mode) . rainbow-delimiters-mode))
-
 (use-package eldoc
   :diminish eldoc-mode
   :hook ((racer-mode . eldoc-mode)))
@@ -461,11 +458,10 @@
   :ensure t
   :bind ("C-x g c" . what-the-commit-insert))
 
-;; (use-package browse-at-remote
-;; :ensure t
-;; :bind ("C-x g b" . github-browse-file)
-;; :config (setq github-browse-file-show-line-at-point t)
-;; )
+(use-package rainbow-delimiters
+  :ensure t
+  :hook
+  ('prog-mode-hook #'rainbow-delimiters-mode))
 
 (use-package edit-server
   :ensure t
