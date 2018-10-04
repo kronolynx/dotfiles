@@ -180,12 +180,14 @@ main = do
        , ("M-C-k"        , spawn "xkill")
        -- Lock screen
        , ("M-z"          , spawn "~/.scripts/i3lock.sh lock")
+       -- suspend
+       , ("M-S-z"        , spawn "~/.scripts/i3lock.sh suspend")
        -- Reboot
-       , ("M-S-0"          , spawn "~/.scripts/i3lock.sh reboot")
+       , ("M-S-0"        , spawn "~/.scripts/i3lock.sh reboot")
        -- Shutdown
-       , ("M-C-S-0"        , spawn "~/.scripts/i3lock.sh shutdown")
+       , ("M-C-S-0"      , spawn "~/.scripts/i3lock.sh shutdown")
        -- Exit
-       , ("M-S-z"        , io (exitWith ExitSuccess))
+       , ("M-C-0"        , io (exitWith ExitSuccess))
        -- Restart xmonad
        , ("M-S-r",
           spawn "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'" )
