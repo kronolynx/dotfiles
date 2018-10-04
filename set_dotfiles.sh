@@ -22,8 +22,8 @@ do
         # check that the file exist in home
         if [ -f $home_file ]; then
             destination_dir=$backup_dir/$(dirname $f)
-            # mkdir -p $destination_dir
-            # cp --remove-destination -r $home_file $backup_dir/$f
+            mkdir -p $destination_dir
+            cp --remove-destination -r $home_file $backup_dir/$f
         fi
     fi
 done
@@ -41,7 +41,7 @@ for f in ${files[*]}; do
 done
 # make xinit executable
 xinit=~/.xinitrc
-if [ -f $xinit]; then
+if [ -f $xinit ]; then
   if [ ! -x $xinit ]; then
      chmod +x $xinit
   fi
