@@ -1,9 +1,9 @@
 [commit]
   gpgsign = true
 [core]
-  editor = vim
+  editor = emacsclient -c -a emacs
 [alias]
-  amend = commit --amend --no-edit 
+  amend = commit --amend --no-edit
   # quick amend: Amend my staged changes to the last commit, keeping the same commit message
   amend-stage = commit --amend -C HEAD
   amendAdd = commit --amend --no-edit -a
@@ -11,9 +11,9 @@
 # other aliases)
   branch-name = "!git rev-parse --abbrev-ref HEAD"
   c = commit
-  ck = checkout 
+  ck = checkout
   ckb = checkout -b
-  ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f" 
+  ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f"
   # checkout remote branch e.g. git ckre new-branch-name remote-name remote-branch-name
   ckre = "!f() { git fetch $2 && git ckb $1 $2/$3; }; f"
   # checkout new branch from upstream master e.g. git ckup new-branch-name
@@ -59,11 +59,11 @@
   ru = rebase upstream/master
   # add all changes including untracked files and creates commit
   save = !git add -A && git commit -m 'SAVEPOINT'
-  set-remote = remote set-url origin 
+  set-remote = remote set-url origin
   spull = !git pull && git submodule foreach git pull origin master
   spush = push --recurse-submodules=on-demand
-  # undo previous commit but keep all the changes in the working directory	
-  undo = reset HEAD~1 --mixed 
+  # undo previous commit but keep all the changes in the working directory
+  undo = reset HEAD~1 --mixed
   undo-commit = reset --soft HEAD~1
   # resume tracking file  for changes
   unignore = "!f() { git update-index --no-assume-unchanged $1; }; f"
