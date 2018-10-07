@@ -246,7 +246,7 @@ myLauncher = "rofi -modi 'drun,run' -show drun"
 myTextEditor = "emacsclient -c -a emacs"
 
 -- Browser
-myBrowser = "google-chrome-stable"
+myBrowser = "vivaldi-stable"
 
 -- File Manager
 myFileManager = "thunar"
