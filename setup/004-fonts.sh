@@ -8,7 +8,6 @@ nerd-fonts-complete
 # to select emojis
 emojione-picker-git
 # patched fonts
-nerd-fonts-complete
 nerd-fonts-source-code-pro
 otf-fira-code
 )

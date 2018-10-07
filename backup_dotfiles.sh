@@ -17,6 +17,7 @@ config/gtk-3.0/gtk.css
 config/gtk-3.0/settings.ini
 config/i3status/config
 config/kitty/kitty.conf
+config/nano
 config/neofetch
 config/ranger/rc.conf
 config/ranger/scope.sh
@@ -38,6 +39,7 @@ i3
 ideavimrc
 images
 local/share/applications/emacsclient.desktop
+local/share/fonts
 nanorc
 profile
 scripts
