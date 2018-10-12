@@ -63,3 +63,4 @@ add_toolbox() {
 add_java
 add_sbt
 add_ammonite
+add_asdf
