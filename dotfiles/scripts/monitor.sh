@@ -14,4 +14,3 @@ case $hdmi in
         xrandr --output HDMI1 --off --output HDMI2 --off --output eDP1 --auto
         xbacklight = 30
 esac
-
