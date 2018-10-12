@@ -280,7 +280,16 @@ bar {
 bindsym $mod+m bar mode toggle
 ### Startup programs {{{
 
+exec --no-startup-id "nitrogen --restore ~/.wallpapers"
+exec --no-startup-id "compton"
+exec --no-startup-id "nm-applet"
+exec --no-startup-id "xfce4-power-manager"
+exec --no-startup-id "clipit"
+exec --no-startup-id "thunar --daemon"
+exec --no-startup-id "xss-lock -- i3lock -n -i ~/.wallpapers/no-mans-sky-lock.png"
+exec --no-startup-id "xautolock -time 10 -locker blurlock"
 exec --no-startup-id "sh -c 'sleep 180; exec megasync'"
+exec --no-startup-id "sh -c 'sleep 160; exec dropbox'"
 exec --no-startup-id "sh -c 'sleep 200; exec telegram'"
 exec --no-startup-id "sh -c 'sleep 30; exec keepassxc'"
 
