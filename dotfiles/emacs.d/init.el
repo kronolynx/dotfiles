@@ -211,12 +211,12 @@
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 ;; make org source smaller
-(set-face-attribute 'org-meta-line nil :height 0.5 :slant
-'normal :foreground "#C0C0C0" )
+(set-face-attribute 'org-meta-line nil :height 0.7 :slant
+                    'normal :foreground "#C0C0C0" )
 (setq org-startup-with-inline-images t)
 (setq org-image-actual-width (/ (display-pixel-width) 3))
-;(use-package rainbow-mode
-  ;:load-path "vendor")
+                                        ;(use-package rainbow-mode
+                                        ;:load-path "vendor")
 
 (use-package gitconfig-mode
   :ensure t)

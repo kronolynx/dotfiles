@@ -24,7 +24,6 @@ http://br-brklassik-live.cast.addradio.de/br/brklassik/live/mp3/128/stream.mp3
 http://bytefm.cast.addradio.de/bytefm/main/mid/stream
 http://stream1.evasionfm.com:80/Chante_France
 http://streams.greenhost.nl:8080/pop
-http://streaming.radionomy.com/Coolradio-Jazz
 http://swr-swr-raka10.cast.addradio.de/swr/swr/raka10/mp3/128/stream.mp3
 http://swr-swr-raka12.cast.addradio.de/swr/swr/raka12/mp3/128/stream.mp3
 http://81.23.249.40:8004/
@@ -43,9 +42,9 @@ http://icepe3.infomaniak.ch:80/impactfm-128.mp3
 http://addrad.io/4WRKp5
 http://stream02.sublimefm.nl:80/SublimeFM_mp3
 http://184.75.223.178:8087/listen.pls?sid=1
-http://live.m2stream.fr/m290-128.mp3
 http://us2.internet-radio.com:8443/stream
 http://live.atalantafm.nl:6074/
+http://streaming.radionomy.com/Coolradio-Jazz
 http://ndr-ndr903-hamburg.cast.addradio.de/ndr/ndr903/hamburg/mp3/128/stream.mp3
 http://ndr-ndrinfo-niedersachsen.cast.addradio.de/ndr/ndrinfo/niedersachsen/mp3/128/stream.mp3
 http://ndr-ndrkultur-live.cast.addradio.de/ndr/ndrkultur/live/mp3/128/stream.mp3
