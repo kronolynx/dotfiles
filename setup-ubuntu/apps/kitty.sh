@@ -1,6 +1,8 @@
 #!/bin/bash
 mkdir -p ~/.local/bin
-curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+mkdir -p ~/.local/share/applications 
+
+curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin 
 # Create a symbolic ink to add kitty to PATH (assuming ~/.local/bin is in
 # your PATH)
 ln -s ~/.local/kitty.app/bin/kitty ~/.local/bin/

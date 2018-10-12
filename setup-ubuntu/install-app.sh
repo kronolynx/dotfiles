@@ -3,14 +3,18 @@
 install_app() {
     package=$1
 
-if dpkg -l $package &> /dev/null; then
-
+if dpkg -s $package &> /dev/null; then
+echo ""
 echo "################################################################"
-echo "################## "$package" is already installed"
+echo "################## $package is already installed "
 echo "################################################################"
 
 else
-sudo apt update && sudo apt install -y $package
+sudo apt update && sudo apt install -y $package &&
+echo "" &&
+echo "################################################################" &&
+echo "################## Installed $package " &&
+echo "################################################################"
 fi
 }
 
