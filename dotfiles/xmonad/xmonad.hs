@@ -362,7 +362,15 @@ myNewManageHook = composeAll
 myStartupHook = do
   -- startupHook desktopConfig
   setWMName "LG3D" -- Solves problems with Java GUI programs
+  spawnOnce "nitrogen --restore ~/.wallpapers"
+  spawnOnce "compton"
   spawnOnce myTray
+  spawnOnce "nm-applet"
+  spawnOnce "xfce4-power-manager"
+  spawnOnce "clipit"
+  spawnOnce "thunar --daemon"
+  spawnOnce "xss-lock -- i3lock -n -i ~/.wallpapers/no-mans-sky-lock.png"
+  spawnOnce "xautolock -time 10 -locker blurlock"
   spawnOnce "volumeicon"
   spawnOnce "sh -c 'sleep 40; exec keepassxc'"
   spawnOnce "sh -c 'sleep 50; exec megasync'"
