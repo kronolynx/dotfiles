@@ -5,15 +5,16 @@ add_ppas() {
 }
 
 apps=(
+# URL retrieval utility
+wget
+curl
 # base devel
-build-essentials
+build-essential
 # version control system
 git
+# code editors
 emacs
 vim
-# URL retrieval utility
-curl
-wget
 # secure sockets layer (security)
 openssl
 # front end for Xrandr (screen related)
@@ -33,6 +34,8 @@ tldr
 
 # touchpad
 xserver-xorg-input-synaptics
+# terminal emulator
+rxvt-unicode
 
 # calculator for the terminal  command (qalc)
 qalc
@@ -60,11 +63,12 @@ keepassxc
 
 debs=(
   https://downloads.vivaldi.com/stable/vivaldi-stable_2.0.1309.37-2_amd64.deb
-  https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
+  # https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
 
 )
 
-
+add_ppas
 ./install-app.sh ${apps[*]}
 ./install-deb.sh ${debs[*]}
 apps/fish-shell.sh
+apps/kitty.sh

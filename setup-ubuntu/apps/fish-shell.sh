@@ -1,6 +1,10 @@
 #!/bin/bash
 
-sudo apt install fish
+apps=(
+fish
+)
+
+./install-app.sh ${apps[*]}
 
 # install fisherman
 curl -Lo ~/.config/fish/functions/fisher.fish --create-dirs https://git.io/fisher
