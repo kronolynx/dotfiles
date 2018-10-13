@@ -23,7 +23,7 @@ xautolock
 lxappearance
 # Customizable and lightweight notification-daemon
 dunst
-
+volumeicon-alsa
 thunar
 # gtk notifications
 xfce4-notifyd
