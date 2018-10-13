@@ -2,6 +2,7 @@
 add_ppas() {
   # ppas
   sudo add-apt-repository ppa:phoerious/keepassxc -y
+  sudo apt update
 }
 
 apps=(
