@@ -10,7 +10,7 @@ echo "################## $package is already installed "
 echo "################################################################"
 
 else
-sudo apt update && sudo apt install -y $package &&
+sudo apt install -y $package &&
 echo "" &&
 echo "################################################################" &&
 echo "################## Installed $package " &&
