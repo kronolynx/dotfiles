@@ -63,7 +63,7 @@ keepassxc
 
 debs=(
   https://downloads.vivaldi.com/stable/vivaldi-stable_2.0.1309.37-2_amd64.deb
-  # https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
+  https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
 
 )
 
@@ -72,3 +72,4 @@ add_ppas
 ./install-deb.sh ${debs[*]}
 apps/fish-shell.sh
 apps/kitty.sh
+apps/ohmyszs.sh
