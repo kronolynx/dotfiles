@@ -5,11 +5,6 @@ apps=(
 zsh
 # fish like syntax highlight
 zsh-syntax-highlighting
-# terminal info
-neofetch
-zsh-autosuggestions
-zsh-completions
-zsh-history-substring-search
 )
 
 ./install-app.sh ${apps[*]}

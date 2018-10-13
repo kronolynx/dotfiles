@@ -54,3 +54,4 @@ install_themes() {
 
 ./install-app.sh ${apps[*]}
 install_themes
+apps/thunar.sh

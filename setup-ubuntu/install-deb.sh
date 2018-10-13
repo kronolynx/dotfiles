@@ -1,10 +1,10 @@
 #!/bin/bash
 
 install_deb() {
-    TEMP="$(mktemp)" &&
-    wget -O "$TEMP" "$1" &&
-    sudo dpkg -i "$TEMP" &&
-    sudo apt install -f &&
+    TEMP="$(mktemp)"
+    wget -O "$TEMP" "$1"
+    sudo dpkg -i "$TEMP"
+    sudo apt install -fy
     rm -f "TEMP"
 }
 
