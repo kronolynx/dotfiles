@@ -8,28 +8,40 @@ fi
 SHELL_FILE="${HOME}/.${SHELL_NAME}"
 
 add_asdf() {
-    if [ ! -d "$HOME/.asdf" ]; then
-      echo "asdf"
-      git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.0
-    fi
-    if ! command grep -qc '/asdf.sh' "$SHELL_FILE"; then
-      echo "Appending asdf source string to zsh"
-      echo -e '\n# asdf' >> "$SHELL_FILE"
-      echo -e '. $HOME/.asdf/asdf.sh' >> "$SHELL_FILE"
-      echo -e '. $HOME/.asdf/completions/asdf.bash' >> "$SHELL_FILE"
-      source "$SHELL_FILE"
-    fi
+  if [ ! -d "$HOME/.asdf" ]; then
+    echo "asdf"
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.6.0
+  fi
+  if ! command grep -qc '/asdf.sh' "$SHELL_FILE"; then
+    echo "Appending asdf source string to zsh"
+    echo -e '\n# asdf' >> "$SHELL_FILE"
+    echo -e '. $HOME/.asdf/asdf.sh' >> "$SHELL_FILE"
+    echo -e '. $HOME/.asdf/completions/asdf.bash' >> "$SHELL_FILE"
+    source "$SHELL_FILE"
+  fi
+}
+add_docker() {
+  sudo apt-get install \
+       apt-transport-https \
+       ca-certificates \
+       curl \
+       software-properties-common
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+  sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+  sudo apt update
+  sudo apt install docker-ce
 }
 
 asdf_plugins() {
-    echo -e "asdf plugins"
-    #asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
-    asdf plugin-add mongodb https://github.com/sylph01/asdf-mongodb.git
-    #asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
-    #asdf plugin-add lua https://github.com/Stratus3D/asdf-lua.git
-    #asdf plugin-add R https://github.com/iroddis/asdf-R.git
-    #asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
-    #asdf plugin-add redis https://github.com/smashedtoatoms/asdf-redis.git
+  echo -e "asdf plugins"
+  #asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
+  asdf plugin-add mongodb https://github.com/sylph01/asdf-mongodb.git
+  #asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
+  #asdf plugin-add lua https://github.com/Stratus3D/asdf-lua.git
+  #asdf plugin-add R https://github.com/iroddis/asdf-R.git
+  #asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
+  #asdf plugin-add redis https://github.com/smashedtoatoms/asdf-redis.git
 }
 
 add_java() {
@@ -56,7 +68,7 @@ add_ammonite() {
 }
 
 add_toolbox() {
-    wget -O "toolbox.tar.gz" "https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.11.4269.tar.gz" &&
+  wget -O "toolbox.tar.gz" "https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.11.4269.tar.gz" &&
     rm -f "toolbox.tar.gz"
 }
 
@@ -64,3 +76,4 @@ add_java
 add_sbt
 add_ammonite
 add_asdf
+add_docker
