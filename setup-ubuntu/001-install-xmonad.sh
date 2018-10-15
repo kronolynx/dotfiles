@@ -44,7 +44,6 @@ install_themes() {
   obsidian-1-icons
   shadow-icon-theme
   dalisha-icons
-  numix-icon-theme-circle
   papirus-icon-theme
   breeze-cursor-theme
   )

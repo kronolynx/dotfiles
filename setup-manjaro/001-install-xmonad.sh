@@ -33,6 +33,13 @@ nitrogen
 xfce4-notifyd
 # power manager
 xfce4-power-manager
+
+# themes
+adapta-gtk-theme
+xcursor-breeze
+papirus-icon-theme
+obsidian-icon-theme
+shadow-icon-theme
 )
 
 ./install-app.sh ${apps[*]}
