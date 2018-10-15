@@ -29,5 +29,7 @@ alias untar='tar -sxvf '
 alias wget='wget -c '
 alias ipe='curl ipinfo.io/ip'
 
-# powerline config
-set -g theme_color_scheme terminal-dark
+# bobthefish theme
+set -g theme_nerd_fonts yes
+set -g theme_display_vi yes
+set -g theme_color_scheme dracula
