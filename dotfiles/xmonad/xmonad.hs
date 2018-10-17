@@ -236,7 +236,7 @@ main = do
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
-myTerminal = "kitty"
+myTerminal = "termite -e tmux"
 -- myTerminal = "termite -e tmux"
 
 -- Launcher
