@@ -344,6 +344,12 @@ scratchpads =
   ] where role = stringProperty "WM_WINDOW_ROLE"
 
 -- myManageHook
+--------------------------------------------------------------
+-- https://wiki.haskell.org/Xmonad/Frequently_asked_questions
+-- xprop fields used in manage hook:
+-- resource (also known as appName) is the first element in WM_CLASS(STRING)
+-- className is the second element in WM_CLASS(STRING)
+-- title is WM_NAME(STRING)
 myManageHook = composeAll . concat $
   [
     [className =? c --> doFloat                      | c <- myClassFloats]
@@ -353,7 +359,7 @@ myManageHook = composeAll . concat $
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
   ] where
        myCenterFloats = ["zenity"]
-       myTitleCenterFloats = []
+       myTitleCenterFloats = ["File Operation Progress"]
        myClassFloats = []
        myTitleFloats = ["Media viewer"]
        -- workspace numbers start at 0
