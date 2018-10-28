@@ -165,6 +165,14 @@ main = do
          , (f, m) <- [(W.greedyView, 0), (W.shift, controlMask)
                      , (\i -> W.greedyView i . W.shift i, shiftMask)]
        ]
+       -------------------------------------------------------------------- }}}
+       -- Keymap: Keyboard Layouts                                          {{{
+       ------------------------------------------------------------------------
+       -- M-S-C-[1..]       Set to the layout N of myKbLayouts
+       `additionalKeys`
+       [((myModMask .|. shiftMask .|. controlMask, k), spawn l)
+         | (k, l) <- zip [xK_1 ..] myKbLayouts]
+         -- | (k, l) <- zip (map show [1 ..]) myKbLayouts]
 
        -------------------------------------------------------------------- }}}
        -- Keymap: custom commands                                           {{{
@@ -261,6 +269,9 @@ myBorderWidth = 4
 -- Float window control width
 moveWD = 4
 resizeWD = 4
+
+-- keyboard layouts
+myKbLayouts = map ("setxkbmap -option caps:backspace -layout " ++)["dvorak", "us", "es"]
 
 
 defaults = docks $ desktopConfig
