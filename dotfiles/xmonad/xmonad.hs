@@ -9,6 +9,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.FloatNext
 import XMonad.Hooks.SetWMName
+import XMonad.Hooks.UrgencyHook    -- window alert bells
 
 -- layouts
 import XMonad.Layout.MultiToggle
@@ -22,7 +23,6 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
-import XMonad.Layout.Hidden
 
 -- utils
 import XMonad.Util.Run(spawnPipe)
@@ -32,9 +32,11 @@ import XMonad.Util.NamedScratchpad
 -- prompt
 import XMonad.Prompt
 import XMonad.Prompt.Window            -- pops up a prompt with window names
+import XMonad.Prompt.Shell
 
 -- actions
-import XMonad.Actions.CycleWS
+import XMonad.Actions.CycleWindows     -- classic alt-tab
+import XMonad.Actions.CycleWS          -- cycle thru WS', toggle last WS
 import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.FloatKeys
 import XMonad.Actions.UpdatePointer
@@ -89,9 +91,6 @@ main = do
        , ("M-C-x"    , sendMessage $ Toggle REFLECTX)
        , ("M-C-y"    , sendMessage $ Toggle REFLECTY)
        , ("M-C-m"    , sendMessage $ Toggle MIRROR)
-       -- Hide window
-       , ("M--"      , withFocused hideWindow)
-       , ("M-S--"      , popOldestHiddenWindow)
        -- Float window
        , ("M-t"    , withFocused $ \w -> floatLocation w >>= windows . W.float w . snd)
        , ("M-C-t"    , toggleFloatNext)
@@ -119,7 +118,7 @@ main = do
        , ("M-C-S-l"  , shiftToNext)
        , ("M-C-S-h"  , shiftToPrev)
        -- Previous workspace
-       , ("M-p"      , toggleWS)
+       , ("M-<Tab>"  , toggleWS)-- toggle last workspace (super-tab)
        -- Window navigation
        , ("M-<D>"    , sendMessage $ Go D)
        , ("M-<U>"    , sendMessage $ Go U)
@@ -147,10 +146,14 @@ main = do
        -- Search a window and bring to the current workspace
        , ("M-S-g"    , windowPromptBring myXPConfig)
        -- Move the focus to next screen (multi screen)
-       , ("M-<Tab>"  , nextScreen)
+       , ("M-S-<Tab>", nextScreen)
        -- screen
        , ("M-o"      , swapNextScreen)
        , ("M-S-o"    , shiftNextScreen)
+       -- classic alt-tab behaviour
+       , ("M1-<Tab>" , cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab )
+       -- Resize viewed windows to the correct size
+       , ("M-n",     refresh)
        ]
 
        -------------------------------------------------------------------- }}}
@@ -199,6 +202,8 @@ main = do
        -- Restart xmonad
        , ("M-S-r",
           spawn "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'" )
+       -- restart xmonad w/o recompiling
+       , ("M-r"          , spawn "xmonad --restart")
        -- Launch web browser
        , ("M-<F2>"       , spawn myBrowser)
        -- Launch file manager
@@ -317,7 +322,6 @@ myWorkspaces = [
 -- which denotes layout choice.
 --
 myLayout = avoidStruts $
-  hiddenWindows      $
   -- Toggles
   mkToggle1 NBFULL   $
   mkToggle1 REFLECTX $
