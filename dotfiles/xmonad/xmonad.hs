@@ -62,16 +62,16 @@ main = do
              { ppLayout =
                  (\x ->
                     case x of
-                      "Tall" -> "[T]"
-                      "ThreeCol" -> "[3C]"
-                      "Spiral" -> "[S]"
-                      "Mosaic" -> "[M]"
-                      "Full" -> "[F]"
+                      "Tall"        -> "[T]"
+                      "ThreeCol"    -> "[3C]"
+                      "Spiral"      -> "[S]"
+                      "Mosaic"      -> "[M]"
+                      "Full"        -> "[F]"
                       "Mirror Tall" -> "[MT]"
-                      _ -> x)
+                      _             -> x)
              , ppOutput = hPutStrLn xmproc
-             , ppTitle = xmobarColor "green" "" . shorten 50
-             , ppSep = " "
+             , ppTitle  = xmobarColor "green" "" . shorten 50
+             , ppSep    = " "
              , ppUrgent = xmobarColor "red" "yellow"
              }) >>
           updatePointer (0.5, 0.5) (0.99, 0.99)
@@ -161,19 +161,22 @@ main = do
        -- classic alt-tab behaviour
     , ("M1-<Tab>", cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab)
        -- Resize viewed windows to the correct size
-    , ("M-n", refresh)
-    ] `additionalKeys`
+    , ("M-n", refresh)]
+
+    `additionalKeys`
     [ ((m .|. myModMask, k), windows $ f i)
     | (i, k) <- zip myWorkspaces [xK_1 ..]
     , (f, m) <-
         [ (W.greedyView, 0)
         , (W.shift, controlMask)
         , (\i -> W.greedyView i . W.shift i, shiftMask)
-        ]
-    ] `additionalKeys`
+        ]]
+
+    `additionalKeys`
     [ ((myModMask .|. shiftMask .|. controlMask, k), spawn l)
-    | (k, l) <- zip [xK_1 ..] myKbLayouts
-    ] `additionalKeysP`
+    | (k, l) <- zip [xK_1 ..] myKbLayouts]
+
+    `additionalKeysP`
        -- Launch terminal
     [ ("M-<Return>", spawn myTerminal)
        -- Launch text editor
@@ -334,9 +337,11 @@ myLayout =
   mkToggle1 MIRROR $
   configurableNavigation (navigateColor myNormalBorderColor) $
   -- Layouts
-  name "Tall" myTile |||
-  name "Mosaic" myMosaic |||
-  name "ThreeCol" my3cmi ||| name "Spiral" mySpiral ||| name "Tabbed" myTabbed
+  name "Tall"     myTile   |||
+  name "Mosaic"   myMosaic |||
+  name "ThreeCol" my3cmi   |||
+  name "Spiral"   mySpiral |||
+  name "Tabbed"   myTabbed
   where
     name n = renamed [Replace n] . spacing 5
     myTile = ResizableTall 1 (3 / 100) (4 / 7) []
@@ -370,10 +375,10 @@ scratchpads =
 -- title is WM_NAME(STRING)
 myManageHook =
   composeAll . concat $
-  [ [className =? c --> doFloat | c <- myClassFloats]
-  , [title =? t --> doFloat | t <- myTitleFloats]
-  , [className =? c --> doCenterFloat | c <- myCenterFloats]
-  , [title =? t --> doCenterFloat | t <- myTitleCenterFloats]
+  [ [className =? c --> doFloat                      | c       <- myClassFloats]
+  , [title     =? t --> doFloat                      | t       <- myTitleFloats]
+  , [className =? c --> doCenterFloat                | c       <- myCenterFloats]
+  , [title     =? t --> doCenterFloat                | t       <- myTitleCenterFloats]
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
   ]
   where

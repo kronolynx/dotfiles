@@ -72,8 +72,14 @@ add_toolbox() {
     rm -f "toolbox.tar.gz"
 }
 
+add_haskell_tools() {
+  curl -sSL https://get.haskellstack.org/ | sh
+  stack install hfmt
+}
+
 add_java
 add_sbt
 add_ammonite
 add_asdf
 add_docker
+add_haskell_tools
