@@ -1,258 +1,259 @@
 {-# LANGUAGE UnicodeSyntax #-}
+
+import System.Exit
 import XMonad
 import XMonad.Config.Desktop
-import System.Exit
 
 -- hooks
 import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.FloatNext
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.FloatNext
 import XMonad.Hooks.SetWMName
-import XMonad.Hooks.UrgencyHook    -- window alert bells
+import XMonad.Hooks.UrgencyHook -- window alert bells
 
+import XMonad.Layout.LayoutHints
+import XMonad.Layout.Mosaic
 -- layouts
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances -- NBFULL, MIRROR
-import XMonad.Layout.Renamed
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
+import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
-import XMonad.Layout.Mosaic
 
--- utils
-import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.SpawnOnce
 import XMonad.Util.NamedScratchpad
+-- utils
+import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.SpawnOnce
 
 -- prompt
 import XMonad.Prompt
-import XMonad.Prompt.Window            -- pops up a prompt with window names
 import XMonad.Prompt.Shell
+import XMonad.Prompt.Window -- pops up a prompt with window names
 
--- actions
-import XMonad.Actions.CycleWindows     -- classic alt-tab
-import XMonad.Actions.CycleWS          -- cycle thru WS', toggle last WS
 import XMonad.Actions.CycleRecentWS
+import XMonad.Actions.CycleWS -- cycle thru WS', toggle last WS
+-- actions
+import XMonad.Actions.CycleWindows -- classic alt-tab
 import XMonad.Actions.FloatKeys
 import XMonad.Actions.UpdatePointer
 
--- Keys
-import XMonad.Util.EZConfig            -- removeKeys, additionalKeys
 import Graphics.X11.ExtraTypes.XF86
+-- Keys
+import XMonad.Util.EZConfig -- removeKeys, additionalKeys
 
+import qualified Data.Map as M
 import System.IO
 import qualified XMonad.StackSet as W
-import qualified Data.Map as M
 
 main = do
   xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
-  xmonad $ defaults {
-    logHook =   (dynamicLogWithPP $ xmobarPP
-                        { ppOutput = hPutStrLn xmproc
-                          , ppTitle = xmobarColor "green" "" . shorten 50
-                          , ppSep = " "
-                          , ppUrgent  = xmobarColor "red" "yellow"
-                        }) >> updatePointer (0.5, 0.5) (0.99, 0.99)
-  }
+  xmonad $
+    defaults
+      { logHook =
+          (dynamicLogWithPP $
+           xmobarPP
+             { ppLayout =
+                 (\x ->
+                    case x of
+                      "Tall" -> "[T]"
+                      "ThreeCol" -> "[3C]"
+                      "Spiral" -> "[S]"
+                      "Mosaic" -> "[M]"
+                      "Full" -> "[F]"
+                      "Mirror Tall" -> "[MT]"
+                      _ -> x)
+             , ppOutput = hPutStrLn xmproc
+             , ppTitle = xmobarColor "green" "" . shorten 50
+             , ppSep = " "
+             , ppUrgent = xmobarColor "red" "yellow"
+             }) >>
+          updatePointer (0.5, 0.5) (0.99, 0.99)
+      }
        -------------------------------------------------------------------- }}}
        -- Define keys to remove                                             {{{
        ------------------------------------------------------------------------
-
-       `removeKeysP`
-       [
+     `removeKeysP`
        -- Unused gmrun binding
-          "M-S-p"
+    [ "M-S-p"
        -- Unused close window binding
-       ,  "M-S-c"
-       ]
-
-       -------------------------------------------------------------------- }}}
-       -- Keymap: window operations                                         {{{
-       ------------------------------------------------------------------------
-
-       `additionalKeysP`
-       [
+    , "M-S-c"
+    ] `additionalKeysP`
        -- Shrink / Expand the focused window
-         ("M-,"      , sendMessage Shrink)
-       , ("M-."      , sendMessage Expand)
-       , ("M-S-."    , sendMessage MirrorShrink)
-       , ("M-S-,"    , sendMessage MirrorExpand)
+    [ ("M-,", sendMessage Shrink)
+    , ("M-.", sendMessage Expand)
+    , ("M-S-.", sendMessage MirrorShrink)
+    , ("M-S-,", sendMessage MirrorExpand)
        -- Toggle struts
-       , ("M-b"      , sendMessage ToggleStruts)
+    , ("M-b", sendMessage ToggleStruts)
        -- Close the focused window
-       , ("M-S-q"    , kill)
+    , ("M-S-q", kill)
        -- Toggle layout (Fullscreen mode)
-       , ("M-f"      , sendMessage $ Toggle NBFULL)
-       , ("M-C-x"    , sendMessage $ Toggle REFLECTX)
-       , ("M-C-y"    , sendMessage $ Toggle REFLECTY)
-       , ("M-C-m"    , sendMessage $ Toggle MIRROR)
+    , ("M-f", sendMessage $ Toggle NBFULL)
+    , ("M-C-x", sendMessage $ Toggle REFLECTX)
+    , ("M-C-y", sendMessage $ Toggle REFLECTY)
+    , ("M-C-m", sendMessage $ Toggle MIRROR)
        -- Float window
-       , ("M-t"    , withFocused $ \w -> floatLocation w >>= windows . W.float w . snd)
-       , ("M-C-t"    , toggleFloatNext)
+    , ("M-t", withFocused $ \w -> floatLocation w >>= windows . W.float w . snd)
+    , ("M-C-t", toggleFloatNext)
        -- Push window back into tilling
-       , ("M-S-t"    , withFocused $ windows . W.sink)
+    , ("M-S-t", withFocused $ windows . W.sink)
        -- Move the floating focused window
-       , ("M-C-<R>"  , withFocused (keysMoveWindow (moveWD, 0)))
-       , ("M-C-<L>"  , withFocused (keysMoveWindow (-moveWD, 0)))
-       , ("M-C-<U>"  , withFocused (keysMoveWindow (0, -moveWD)))
-       , ("M-C-<D>"  , withFocused (keysMoveWindow (0, moveWD)))
+    , ("M-C-<R>", withFocused (keysMoveWindow (moveWD, 0)))
+    , ("M-C-<L>", withFocused (keysMoveWindow (-moveWD, 0)))
+    , ("M-C-<U>", withFocused (keysMoveWindow (0, -moveWD)))
+    , ("M-C-<D>", withFocused (keysMoveWindow (0, moveWD)))
        -- Resize the floating focused window
-       , ("M-s"      , withFocused (keysResizeWindow (-resizeWD, resizeWD) (0.5, 0.5)))
-       , ("M-i"      , withFocused (keysResizeWindow (resizeWD, resizeWD) (0.5, 0.5)))
+    , ("M-s", withFocused (keysResizeWindow (-resizeWD, resizeWD) (0.5, 0.5)))
+    , ("M-i", withFocused (keysResizeWindow (resizeWD, resizeWD) (0.5, 0.5)))
        -- Increase / Decrese the number of master pane
-       , ("M-C-,"    , sendMessage $ IncMasterN (-1))
-       , ("M-C-."    , sendMessage $ IncMasterN 1)
+    , ("M-C-,", sendMessage $ IncMasterN (-1))
+    , ("M-C-.", sendMessage $ IncMasterN 1)
        -- Go to the next / previous workspace
-       , ("M-C-<R>"  , nextWS )
-       , ("M-C-<L>"  , prevWS )
-       , ("M-C-l"    , nextWS )
-       , ("M-C-h"    , prevWS )
+    , ("M-C-<R>", nextWS)
+    , ("M-C-<L>", prevWS)
+    , ("M-C-l", nextWS)
+    , ("M-C-h", prevWS)
        -- Shift the focused window to the next / previous workspace
-       , ("M-S-<R>"  , shiftToNext)
-       , ("M-S-<L>"  , shiftToPrev)
-       , ("M-C-S-l"  , shiftToNext)
-       , ("M-C-S-h"  , shiftToPrev)
+    , ("M-S-<R>", shiftToNext)
+    , ("M-S-<L>", shiftToPrev)
+    , ("M-C-S-l", shiftToNext)
+    , ("M-C-S-h", shiftToPrev)
        -- Previous workspace
-       , ("M-<Tab>"  , toggleWS)-- toggle last workspace (super-tab)
+    , ("M-<Tab>", toggleWS) -- toggle last workspace (super-tab)
        -- Window navigation
-       , ("M-<D>"    , sendMessage $ Go D)
-       , ("M-<U>"    , sendMessage $ Go U)
-       , ("M-<L>"    , sendMessage $ Go L)
-       , ("M-<R>"    , sendMessage $ Go R)
-       , ("M-j"      , sendMessage $ Go D)
-       , ("M-k"      , sendMessage $ Go U)
-       , ("M-h"      , sendMessage $ Go L)
-       , ("M-l"      , sendMessage $ Go R)
+    , ("M-<D>", sendMessage $ Go D)
+    , ("M-<U>", sendMessage $ Go U)
+    , ("M-<L>", sendMessage $ Go L)
+    , ("M-<R>", sendMessage $ Go R)
+    , ("M-j", sendMessage $ Go D)
+    , ("M-k", sendMessage $ Go U)
+    , ("M-h", sendMessage $ Go L)
+    , ("M-l", sendMessage $ Go R)
        -- Swap windows
-       , ("M-S-<D>"  , sendMessage $ Swap D)
-       , ("M-S-<U>"  , sendMessage $ Swap U)
-       , ("M-S-<L>"  , sendMessage $ Swap L)
-       , ("M-S-<R>"  , sendMessage $ Swap R)
-       , ("M-S-j"    , sendMessage $ Swap D)
-       , ("M-S-k"    , sendMessage $ Swap U)
-       , ("M-S-h"    , sendMessage $ Swap L)
-       , ("M-S-l"    , sendMessage $ Swap R)
+    , ("M-S-<D>", sendMessage $ Swap D)
+    , ("M-S-<U>", sendMessage $ Swap U)
+    , ("M-S-<L>", sendMessage $ Swap L)
+    , ("M-S-<R>", sendMessage $ Swap R)
+    , ("M-S-j", sendMessage $ Swap D)
+    , ("M-S-k", sendMessage $ Swap U)
+    , ("M-S-h", sendMessage $ Swap L)
+    , ("M-S-l", sendMessage $ Swap R)
        -- Shift the focused window to the master window
-       , ("M-m"      , windows W.shiftMaster)
+    , ("M-m", windows W.shiftMaster)
        -- Focus master
-       , ("M-S-m"    , windows W.focusMaster)
+    , ("M-S-m", windows W.focusMaster)
        -- Search a window and focus into the window
-       , ("M-g"      , windowPromptGoto myXPConfig)
+    , ("M-g", windowPromptGoto myXPConfig)
        -- Search a window and bring to the current workspace
-       , ("M-S-g"    , windowPromptBring myXPConfig)
+    , ("M-S-g", windowPromptBring myXPConfig)
        -- Move the focus to next screen (multi screen)
-       , ("M-S-<Tab>", nextScreen)
+    , ("M-S-<Tab>", nextScreen)
        -- screen
-       , ("M-o"      , swapNextScreen)
-       , ("M-S-o"    , shiftNextScreen)
+    , ("M-o", swapNextScreen)
+    , ("M-S-o", shiftNextScreen)
        -- classic alt-tab behaviour
-       , ("M1-<Tab>" , cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab )
+    , ("M1-<Tab>", cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab)
        -- Resize viewed windows to the correct size
-       , ("M-n",     refresh)
-       ]
-
-       -------------------------------------------------------------------- }}}
-       -- Keymap: Manage workspace                                          {{{
-       ------------------------------------------------------------------------
-       -- mod-[1..9]          Switch to workspace N
-       -- mod-shift-[1..9]    Move window to workspace N
-
-       `additionalKeys`
-       [ ((m .|. myModMask, k), windows $ f i)
-         | (i, k) <- zip myWorkspaces [xK_1 ..]
-         , (f, m) <- [(W.greedyView, 0), (W.shift, controlMask)
-                     , (\i -> W.greedyView i . W.shift i, shiftMask)]
-       ]
-       -------------------------------------------------------------------- }}}
-       -- Keymap: Keyboard Layouts                                          {{{
-       ------------------------------------------------------------------------
-       -- M-S-C-[1..]       Set to the layout N of myKbLayouts
-       `additionalKeys`
-       [((myModMask .|. shiftMask .|. controlMask, k), spawn l)
-         | (k, l) <- zip [xK_1 ..] myKbLayouts]
-         -- | (k, l) <- zip (map show [1 ..]) myKbLayouts]
-
-       -------------------------------------------------------------------- }}}
-       -- Keymap: custom commands                                           {{{
-       ------------------------------------------------------------------------
-
-       `additionalKeysP`
-       [
+    , ("M-n", refresh)
+    ] `additionalKeys`
+    [ ((m .|. myModMask, k), windows $ f i)
+    | (i, k) <- zip myWorkspaces [xK_1 ..]
+    , (f, m) <-
+        [ (W.greedyView, 0)
+        , (W.shift, controlMask)
+        , (\i -> W.greedyView i . W.shift i, shiftMask)
+        ]
+    ] `additionalKeys`
+    [ ((myModMask .|. shiftMask .|. controlMask, k), spawn l)
+    | (k, l) <- zip [xK_1 ..] myKbLayouts
+    ] `additionalKeysP`
        -- Launch terminal
-       ("M-<Return>"     , spawn myTerminal)
+    [ ("M-<Return>", spawn myTerminal)
        -- Launch text editor
-       , ("M-S-<Return>" , spawn myTextEditor)
+    , ("M-S-<Return>", spawn myTextEditor)
        -- Kill window
-       , ("M-C-k"        , spawn "xkill")
+    , ("M-C-k", spawn "xkill")
        -- Lock screen
-       , ("M-z"          , spawn "~/.scripts/i3lock.sh lock")
+    , ("M-z", spawn "~/.scripts/i3lock.sh lock")
        -- suspend
-       , ("M-S-z"        , spawn "~/.scripts/i3lock.sh suspend")
+    , ("M-S-z", spawn "~/.scripts/i3lock.sh suspend")
        -- Reboot
-       , ("M-S-0"        , spawn "~/.scripts/i3lock.sh reboot")
+    , ("M-S-0", spawn "~/.scripts/i3lock.sh reboot")
        -- Shutdown
-       , ("M-C-S-0"      , spawn "~/.scripts/i3lock.sh shutdown")
+    , ("M-C-S-0", spawn "~/.scripts/i3lock.sh shutdown")
        -- Exit
-       , ("M-C-0"        , io (exitWith ExitSuccess))
+    , ("M-C-0", io (exitWith ExitSuccess))
        -- Restart xmonad
-       , ("M-S-r",
-          spawn "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'" )
+    , ( "M-S-r"
+      , spawn
+          "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'")
        -- restart xmonad w/o recompiling
-       , ("M-r"          , spawn "xmonad --restart")
+    , ("M-r", spawn "xmonad --restart")
        -- Launch web browser
-       , ("M-<F2>"       , spawn myBrowser)
+    , ("M-<F2>", spawn myBrowser)
        -- Launch file manager
-       , ("M-<F3>"       , spawn myFileManager)
+    , ("M-<F3>", spawn myFileManager)
        -- Launch Console File Manager
-       , ("M-<F4>"       , spawn myConsoleFileManager)
+    , ("M-<F4>", spawn myConsoleFileManager)
        -- Launch dmenu for launching applicatiton
-       , ("M-d"          , spawn myLauncher)
+    , ("M-d", spawn myLauncher)
        -- Scratchpads
-       , ("M-S-C-t"        , namedScratchpadAction scratchpads "htop")
-       , ("M-S-C-c"        , namedScratchpadAction scratchpads "cmus")
+    , ("M-S-C-t", namedScratchpadAction scratchpads "htop")
+    , ("M-S-C-c", namedScratchpadAction scratchpads "cmus")
        -- Play / Pause media keys
-       , ("<XF86AudioPlay>"  , spawn "mpc toggle")
-       , ("<XF86HomePage>"   , spawn "mpc toggle")
-       , ("S-<F6>"           , spawn "mpc toggle")
-       , ("S-<XF86AudioPlay>", spawn "streamradio pause")
-       , ("S-<XF86HomePage>" , spawn "streamradio pause")
+    , ("<XF86AudioPlay>", spawn "mpc toggle")
+    , ("<XF86HomePage>", spawn "mpc toggle")
+    , ("S-<F6>", spawn "mpc toggle")
+    , ("S-<XF86AudioPlay>", spawn "streamradio pause")
+    , ("S-<XF86HomePage>", spawn "streamradio pause")
        -- Volume setting media keys
-       , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
-       , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
-       , ("<XF86AudioMute>"       , spawn "amixer -q set Master toggle")
+    , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
+    , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
+    , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
         -- Brightness Keys
-       , ("<XF86MonBrightnessUp>"  , spawn "xbacklight + 5 -time 100 -steps 1; notify-send 'brightness up $(xbacklight -get)")
-       , ("<XF86MonBrightnessDown>", spawn "xbacklight - 5 -time 100 -steps 1; notify-send 'brightness down $(xbacklight -get)")
+    , ( "<XF86MonBrightnessUp>"
+      , spawn
+          "xbacklight + 5 -time 100 -steps 1; notify-send 'brightness up $(xbacklight -get)")
+    , ( "<XF86MonBrightnessDown>"
+      , spawn
+          "xbacklight - 5 -time 100 -steps 1; notify-send 'brightness down $(xbacklight -get)")
        -- Touch pad
-       , ("<XF86TouchpanOn", spawn "synclient TouchpadOff=0 && notify-send 'Touchpad On")
-       , ("<XF86TouchpanOff", spawn "synclient TouchpadOff=1 && notify-send 'Touchpad Off")
+    , ( "<XF86TouchpanOn"
+      , spawn "synclient TouchpadOff=0 && notify-send 'Touchpad On")
+    , ( "<XF86TouchpanOff"
+      , spawn "synclient TouchpadOff=1 && notify-send 'Touchpad Off")
        -- Explorer
-       , ("<XF86Explorer", spawn myBrowser)
+    , ("<XF86Explorer", spawn myBrowser)
        -- Search
-       , ("<XF86Search", spawn (myBrowser ++ " https://duckduckgo.com"))
+    , ("<XF86Search", spawn (myBrowser ++ " https://duckduckgo.com"))
        -- Suspendre
-       , ("<XF86Suspend", spawn "i~/.scripts/i3lock.sh suspend")
+    , ("<XF86Suspend", spawn "i~/.scripts/i3lock.sh suspend")
        -- Take a screenshot (whole desktop)
-       , ("<Print>", spawn (myScreenCapture ++ "; notify-send 'Desktop captured'"))
+    , ("<Print>", spawn (myScreenCapture ++ "; notify-send 'Desktop captured'"))
        -- Take a screenshot (selected area)
-       , ("S-<Print>", spawn ("notify-send 'Select Area';sleep 0.2;" ++ myScreenCapture ++ " -s && notify-send 'Area captured'"))
+    , ( "S-<Print>"
+      , spawn
+          ("notify-send 'Select Area';sleep 0.2;" ++
+           myScreenCapture ++ " -s && notify-send 'Area captured'"))
        -- Take a screenshot (focused window)
-       , ("C-<Print>", spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
-       ]
+    , ( "C-<Print>"
+      , spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
+    ]
 
 -- Capture Screen
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
 myTerminal = "termite -e tmux"
--- myTerminal = "termite -e tmux"
 
+-- myTerminal = "termite -e tmux"
 -- Launcher
 myLauncher = "rofi -modi 'drun,run' -show drun"
 
@@ -268,40 +269,42 @@ myFileManager = "thunar"
 -- Console File Manager
 myConsoleFileManager = myTerminal ++ " -e ranger"
 
-myTray = "trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1"
+myTray =
+  "trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1"
 
 -- border width
 myBorderWidth = 4
+
 -- Float window control width
 moveWD = 4
+
 resizeWD = 4
 
 -- keyboard layouts
-myKbLayouts = map ("setxkbmap -option caps:backspace -layout " ++)["dvorak", "us", "es"]
+myKbLayouts =
+  map ("setxkbmap -option caps:backspace -layout " ++) ["dvorak", "us", "es"]
 
-
-defaults = docks $ desktopConfig
-  {
-    borderWidth        = myBorderWidth
-  , normalBorderColor  = myNormalBorderColor
-  , focusedBorderColor = myFocusedBorderColor
-  , focusFollowsMouse  = myFocusFollowsMouse
-  , modMask            = myModMask
-  , terminal           = myTerminal
-  , workspaces         = myWorkspaces
-
+defaults =
+  docks $
+  desktopConfig
+    { borderWidth = myBorderWidth
+    , normalBorderColor = myNormalBorderColor
+    , focusedBorderColor = myFocusedBorderColor
+    , focusFollowsMouse = myFocusFollowsMouse
+    , modMask = myModMask
+    , terminal = myTerminal
+    , workspaces = myWorkspaces
   -- key bindings
-  , mouseBindings      = myMouseBindings
-
+    , mouseBindings = myMouseBindings
   -- hooks
-  , manageHook         = myNewManageHook
-  , layoutHook         = myLayout
-  , startupHook        = myStartupHook
-  , handleEventHook    = myHandleEventHook
-  }
+    , manageHook = myNewManageHook
+    , layoutHook = myLayout
+    , startupHook = myStartupHook
+    , handleEventHook = myHandleEventHook
+    }
 
-myWorkspaces = [
-  "<fc=#78da59>\xf1d0</fc>" -- 
+myWorkspaces =
+  [ "<fc=#78da59>\xf1d0</fc>" -- 
   , "<fc=#ffff33>\xe737</fc>" -- 
   , "<fc=#cc00ff>\xf1d1</fc>" -- 
   , "<fc=#00a1f1>\xf09b</fc>" -- 
@@ -322,33 +325,41 @@ myWorkspaces = [
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts $
+myLayout =
+  avoidStruts $
   -- Toggles
-  mkToggle1 NBFULL   $
+  mkToggle1 NBFULL $
   mkToggle1 REFLECTX $
   mkToggle1 REFLECTY $
-  mkToggle1 MIRROR   $
+  mkToggle1 MIRROR $
   configurableNavigation (navigateColor myNormalBorderColor) $
   -- Layouts
-  name "Tall"     myTile   |||
-  name "Mosaic"   myMosaic |||
-  name "ThreeCol" my3cmi   |||
-  name "Spiral"   mySpiral |||
-  name "Tabbed"   myTabbed
+  name "Tall" myTile |||
+  name "Mosaic" myMosaic |||
+  name "ThreeCol" my3cmi ||| name "Spiral" mySpiral ||| name "Tabbed" myTabbed
   where
-    name n   = renamed [Replace n] . spacing 5
-    myTile   = ResizableTall 1 (3/100) (4/7) []
-    my3cmi   = ThreeColMid 1 (3/100) (1/2)
-    myTabbed = tabbed shrinkText tabConfig
-    mySpiral = spiral (6/7)
-    myMosaic = mosaic 2 [3,2]
-
+    name n = renamed [Replace n] . spacing 5
+    myTile = ResizableTall 1 (3 / 100) (4 / 7) []
+    my3cmi = ThreeColMid 1 (3 / 100) (1 / 2)
+    myTabbed = layoutHints (tabbed shrinkText tabConfig)
+    mySpiral = spiral (6 / 7)
+    myMosaic = mosaic 2 [3, 2]
 
 -- Scratchpads
 scratchpads =
-  [ NS "htop" (myTerminal ++ " -t process -e htop") (title =? "process")  defaultFloating
-  , NS "cmus" (myTerminal ++ " -t process -e cmus") (className =? "cmus") defaultFloating
-  ] where role = stringProperty "WM_WINDOW_ROLE"
+  [ NS
+      "htop"
+      (myTerminal ++ " -t process -e htop")
+      (title =? "process")
+      defaultFloating
+  , NS
+      "cmus"
+      (myTerminal ++ " -t process -e cmus")
+      (className =? "cmus")
+      defaultFloating
+  ]
+  where
+    role = stringProperty "WM_WINDOW_ROLE"
 
 -- myManageHook
 --------------------------------------------------------------
@@ -357,42 +368,42 @@ scratchpads =
 -- resource (also known as appName) is the first element in WM_CLASS(STRING)
 -- className is the second element in WM_CLASS(STRING)
 -- title is WM_NAME(STRING)
-myManageHook = composeAll . concat $
-  [
-    [className =? c --> doFloat                      | c <- myClassFloats]
-  , [title     =? t --> doFloat                      | t <- myTitleFloats]
-  , [className =? c --> doCenterFloat                | c <- myCenterFloats]
-  , [title     =? t --> doCenterFloat                | t <- myTitleCenterFloats]
+myManageHook =
+  composeAll . concat $
+  [ [className =? c --> doFloat | c <- myClassFloats]
+  , [title =? t --> doFloat | t <- myTitleFloats]
+  , [className =? c --> doCenterFloat | c <- myCenterFloats]
+  , [title =? t --> doCenterFloat | t <- myTitleCenterFloats]
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
-  ] where
-       myCenterFloats = ["zenity"]
-       myTitleCenterFloats = ["File Operation Progress"]
-       myClassFloats = []
-       myTitleFloats = ["Media viewer"]
-       -- workspace numbers start at 0
-       myShifts = [("keepassxc", 6), ("telegram-desktop", 4), ("TelegramDesktop", 4)]
-
-
-myNewManageHook = composeAll
-  [ manageDocks
-  , floatNextHook
-  , manageHook desktopConfig
-  , namedScratchpadManageHook scratchpads
-  , myManageHook
   ]
+  where
+    myCenterFloats = ["zenity"]
+    myTitleCenterFloats = ["File Operation Progress"]
+    myClassFloats = []
+    myTitleFloats = ["Media viewer"]
+       -- workspace numbers start at 0
+    myShifts =
+      [("keepassxc", 6), ("telegram-desktop", 4), ("TelegramDesktop", 4)]
 
+myNewManageHook =
+  composeAll
+    [ manageDocks
+    , floatNextHook
+    , manageHook desktopConfig
+    , namedScratchpadManageHook scratchpads
+    , myManageHook
+    ]
 
-
-myStartupHook = do
+myStartupHook
   -- startupHook desktopConfig
+ = do
   setWMName "LG3D" -- Solves problems with Java GUI programs
   spawnOnce "sh -c 'sleep 40; exec keepassxc'"
   spawnOnce "sh -c 'sleep 50; exec megasync'"
   spawnOnce "sh -c 'sleep 50; exec dropbox'"
   spawnOnce "sh -c 'sleep 60; exec telegram-desktop'"
 
-
-myHandleEventHook = docksEventHook <+>  handleEventHook desktopConfig
+myHandleEventHook = docksEventHook <+> handleEventHook desktopConfig
 
 ------------------------------------------------------------------------
 -- Key bindings
@@ -412,31 +423,31 @@ myModMask = mod4Mask
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
-myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-  [
+myMouseBindings (XConfig {XMonad.modMask = modMask}) =
+  M.fromList $
     -- mod-button1, Set the window to floating mode and move by dragging
-    ((modMask, button1),
-     (\w -> focus w >> mouseMoveWindow w))
-
+  [ ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
     -- mod-button2, Raise the window to the top of the stack
-    , ((modMask, button2),
-       (\w -> focus w >> windows W.swapMaster))
-
+  , ((modMask, button2), (\w -> focus w >> windows W.swapMaster))
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modMask, button3),
-       (\w -> focus w >> mouseResizeWindow w))
-
+  , ((modMask, button3), (\w -> focus w >> mouseResizeWindow w))
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
 
 -- Color Setting
-colorBlue      = "#868bae"
-colorGreen     = "#00d700"
-colorRed       = "#ff005f"
-colorGray      = "#666666"
-colorWhite     = "#bdbdbd"
-colorNormalbg  = "#1c1c1c"
-colorfg        = "#a8b6b8"
+colorBlue = "#868bae"
+
+colorGreen = "#00d700"
+
+colorRed = "#ff005f"
+
+colorGray = "#666666"
+
+colorWhite = "#bdbdbd"
+
+colorNormalbg = "#1c1c1c"
+
+colorfg = "#a8b6b8"
 
 -- Border Styling
 myNormalBorderColor = "#00002c"
@@ -450,24 +461,30 @@ xmobarTitleColor = "#FFB6B0"
 xmobarCurrentWorkspaceColor = "#CEFFAC"
 
 -- Prompt configuration
-myXPConfig = defaultXPConfig
-                { font              = "xft:SauceCodePro Nerd Font:size=14:antialias=true"
-                , fgColor           = "#ffffff"
-                , bgColor           = "#00002A"
-                , borderColor       = colorNormalbg
-                , height            = 30
-                , promptBorderWidth = 0
-                , autoComplete      = Just 100000
-                , bgHLight          = "#4ec2f7"
-                , fgHLight          = "#00152b"
-                , position          = Top
-                }
+myXPConfig =
+  defaultXPConfig
+    { font = "xft:SauceCodePro Nerd Font:size=14:antialias=true"
+    , fgColor = "#ffffff"
+    , bgColor = "#00002A"
+    , borderColor = colorNormalbg
+    , height = 30
+    , promptBorderWidth = 0
+    , autoComplete = Just 100000
+    , bgHLight = "#4ec2f7"
+    , fgHLight = "#00152b"
+    , position = Top
+    }
 
-tabConfig = defaultTheme {
-    activeBorderColor = "#7C7C7C",
-    activeTextColor = "#CEFFAC",
-    activeColor = "#000000",
-    inactiveBorderColor = "#7C7C7C",
-    inactiveTextColor = "#EEEEEE",
-    inactiveColor = "#000000"
-}
+-- tab theme
+tabConfig =
+  defaultTheme
+    { activeBorderColor = "#7C7C7C"
+    , activeTextColor = "#CEFFAC"
+    , activeColor = "#000000"
+    , inactiveBorderColor = "#7C7C7C"
+    , inactiveTextColor = "#EEEEEE"
+    , inactiveColor = "#000000"
+    , urgentColor = "yellow"
+    , urgentBorderColor = "black"
+    , urgentTextColor = "yellow"
+    }
