@@ -23,6 +23,7 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
+import XMonad.Layout.Mosaic
 
 -- utils
 import XMonad.Util.Run(spawnPipe)
@@ -330,6 +331,7 @@ myLayout = avoidStruts $
   configurableNavigation (navigateColor myNormalBorderColor) $
   -- Layouts
   name "Tall"     myTile   |||
+  name "Mosaic"   myMosaic |||
   name "ThreeCol" my3cmi   |||
   name "Spiral"   mySpiral |||
   name "Tabbed"   myTabbed
@@ -339,6 +341,7 @@ myLayout = avoidStruts $
     my3cmi   = ThreeColMid 1 (3/100) (1/2)
     myTabbed = tabbed shrinkText tabConfig
     mySpiral = spiral (6/7)
+    myMosaic = mosaic 2 [3,2]
 
 
 -- Scratchpads
