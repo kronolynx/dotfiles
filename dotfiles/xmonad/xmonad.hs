@@ -12,9 +12,9 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook -- window alert bells
 
+-- layouts
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.Mosaic
--- layouts
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances -- NBFULL, MIRROR
 import XMonad.Layout.NoBorders
@@ -26,9 +26,10 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
+import XMonad.Actions.GridSelect
 
-import XMonad.Util.NamedScratchpad
 -- utils
+import XMonad.Util.NamedScratchpad
 import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.SpawnOnce
 
@@ -149,10 +150,12 @@ main = do
     , ("M-m", windows W.shiftMaster)
        -- Focus master
     , ("M-S-m", windows W.focusMaster)
+       -- grid selection
+    , ("M-g", goToSelected myGridSelectConfig)
        -- Search a window and focus into the window
-    , ("M-g", windowPromptGoto myXPConfig)
+    , ("M-S-g", windowPromptGoto myXPConfig)
        -- Search a window and bring to the current workspace
-    , ("M-S-g", windowPromptBring myXPConfig)
+    , ("M-C-g", windowPromptBring myXPConfig)
        -- Move the focus to next screen (multi screen)
     , ("M-S-<Tab>", nextScreen)
        -- screen
@@ -493,3 +496,27 @@ tabConfig =
     , urgentBorderColor = "black"
     , urgentTextColor = "yellow"
     }
+
+
+-- GridSelect configuration
+myGridSelectConfig :: GSConfig Window
+myGridSelectConfig = def { gs_navigate = myNavigation
+                         , gs_colorizer = fromClassName
+                         }
+  where
+    myNavigation = makeXEventhandler $ shadowWithKeymap navKeymap $
+      const defaultNavigation
+    navKeymap =
+      M.fromList [ ((0, xK_Escape), cancel)
+                 , ((0, xK_Return), select)
+                 , ((0, xK_slash), substringSearch myNavigation)
+                 , ((0, xK_h), move (-1, 0) >> myNavigation)
+                 , ((0, xK_l), move (1, 0) >> myNavigation)
+                 , ((0, xK_j), move (0, 1) >> myNavigation)
+                 , ((0, xK_k), move (0, -1) >> myNavigation)
+                 , ((0, xK_y), move (-1, -1) >> myNavigation)
+                 , ((0, xK_u), move (1, -1) >> myNavigation)
+                 , ((0, xK_b), move (-1, 1) >> myNavigation)
+                 , ((0, xK_n), move (1, 1) >> myNavigation)
+                 , ((0, xK_Tab), moveNext >> myNavigation)
+                 ]
