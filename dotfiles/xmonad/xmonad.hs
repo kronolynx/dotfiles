@@ -63,14 +63,18 @@ main = do
              { ppLayout =
                  (\x ->
                     case x of
-                      "Tall"        -> "[T]"
-                      "ThreeCol"    -> "[3C]"
-                      "Spiral"      -> "[S]"
-                      "Mosaic"      -> "[M]"
-                      "Full"        -> "[F]"
-                      "Mirror Tall" -> "[MT]"
-                      _             -> x)
-             , ppOutput = hPutStrLn xmproc
+                      "Tall"            -> "\xf005" -- 
+                      "ThreeCol"        -> "\xfa6a" -- 頻
+                      "Mirror ThreeCol" -> "\xfa6e" -- 﩮
+                      "Spiral"          -> "\xf306" -- 
+                      "Mosaic"          -> "\xfa6d" -- 舘
+                      "Full"            -> "\xf5b5" -- 
+                      "Mirror Tall"     -> "\xf006" -- 
+                      "Mirror Mosaic"   -> "\xfa73" -- 侀
+                      "Tabbed"          -> "\xfd35" -- ﴵ
+                      "Mirror Spiral"   -> "\xfc06" -- ﰆ
+                      _                 -> x)
+             , ppOutput = hPutStrLn xmproc . \s -> " " ++ s
              , ppTitle  = xmobarColor "green" "" . shorten 50
              , ppSep    = " "
              , ppUrgent = xmobarColor "red" "yellow"
