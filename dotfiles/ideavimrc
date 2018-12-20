@@ -1,14 +1,17 @@
 "actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 let mapleader=" "
 source ~/.vimrc
+
+set showmode
+set history=1000
+
+
 nnoremap <leader>w :action SaveAll<cr>
 nnoremap <leader>rfi :action RecentFiles<cr>
 " remove extra whitespace
 nmap <leader>cc :%s/\s\+$<CR><Paste>
-nnoremap <leader>rff :action ReformatCode<CR>
+nnoremap <leader>ff :action ReformatCode<CR>
 nnoremap <leader>sf :action GotoFile<cr>
-nnoremap <leader>to :action CloseAllEditorsButActive<cr>
-nnoremap <leader>tu :action CloseAllUnmodifiedEditors<cr>
 nnoremap <leader>sw :action ActivateProjectToolWindow<cr>
 nnoremap <leader>fp :action FindInPath<cr>
 nnoremap <leader>fu :action FindUsages<cr>
@@ -42,14 +45,31 @@ nnoremap <leader>rr :action RenameElement<cr>
 " easy window navigation
 nnoremap <C-w>c :action CloseContent<cr>
 nnoremap <C-w>m :action MoveEditorToOppositeTabGroup<cr>
+nnoremap <C-w>o :action CloseAllEditorsButActive<cr>
+nnoremap <C-w>a :action CloseAllEditors<cr>
+nnoremap <C-w>g :action CloseEditorsGroup<cr>
+nnoremap <C-w>r :action ReopenClosedTab<cr>
+nnoremap <C-w>- :action SplitHorizontally<cr>
+nnoremap <C-w>| :action SplitVertically<cr>
+
+nnoremap <A-C-d> :action Back<cr>
+nnoremap <A-C-s> :action Forward<cr>
 
 " windows {{{
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" easy window navigation
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-h> <c-w>h
+nnoremap <c-k> <c-w>k
+nnoremap <a-h> gT
+nnoremap <a-l> gt
+nnoremap <c-s-tab> gT
+nnoremap <c-tab> gt
 " }}}
 map <C-`> :action ActivateTerminalToolWindow<cr>
 map <C-p> :action ActivateProjectToolWindow<cr>
+
+" Plugins {{{
 set surround
+set multiple-cursors
+" }}}

@@ -218,15 +218,19 @@ main = do
     , ("M-S-C-t", namedScratchpadAction scratchpads "htop")
     , ("M-S-C-c", namedScratchpadAction scratchpads "cmus")
        -- Play / Pause media keys
-    , ("<XF86AudioPlay>", spawn "mpc toggle")
+    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+    , ("<XF86AudioStop>", spawn "playerctl pause")
+    , ("<XF86AudioPrev>", spawn "playerctl previous")
+    , ("<XF86AudioNext>", spawn "playerctl next")
     , ("<XF86HomePage>", spawn "mpc toggle")
-    , ("S-<F6>", spawn "mpc toggle")
-    , ("S-<XF86AudioPlay>", spawn "streamradio pause")
-    , ("S-<XF86HomePage>", spawn "streamradio pause")
        -- Volume setting media keys
     , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
     , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
     , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
+    , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
+    , ("S-<XF86AudioRaiseVolume>", spawn "playerctl + 5")
+    , ("S-<XF86AudioLowerVolume>", spawn "playerctl - 5")
+    , ("S-<XF86AudioMute>", spawn "playerctl 0")
         -- Brightness Keys
     , ( "<XF86MonBrightnessUp>"
       , spawn
@@ -261,7 +265,7 @@ main = do
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
-myTerminal = "termite -e tmux"
+myTerminal = "kitty"
 
 -- myTerminal = "termite -e tmux"
 -- Launcher
@@ -395,7 +399,13 @@ myManageHook =
     myTitleFloats = ["Media viewer"]
        -- workspace numbers start at 0
     myShifts =
-      [("keepassxc", 6), ("telegram-desktop", 4), ("TelegramDesktop", 4)]
+      [("keepassxc", 6)
+      , ("telegram-desktop", 4)
+      , ("TelegramDesktop", 4)
+      , ("Thunderbird", 4)
+      , ("Slack", 5)
+      , ("Spotify", 6)
+      , ("vivaldi-stable", 0)]
 
 myNewManageHook =
   composeAll
@@ -410,7 +420,6 @@ myStartupHook
   -- startupHook desktopConfig
  = do
   setWMName "LG3D" -- Solves problems with Java GUI programs
-  spawnOnce "sh -c 'sleep 40; exec keepassxc'"
   spawnOnce "sh -c 'sleep 50; exec megasync'"
   spawnOnce "sh -c 'sleep 50; exec dropbox'"
   spawnOnce "sh -c 'sleep 60; exec telegram-desktop'"
