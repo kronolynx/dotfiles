@@ -27,6 +27,7 @@ Config {
         -- , Run Com "sh" ["-c", "awk '{print $1, $2, $3 }' /proc/loadavg"] "loadavg" 10
         -- , Run Com "sh" ["-c", "mpc | head -n -2 | sed 's,.*/,,' | cut -c-40"] "mpd" 50
         , Run Date "<fc=#00ff00> %a %b %d </fc><fc=#ee9a00> %H:%M:%S</fc>" "date" 10
+        , Run Mpris2 "spotify" ["-t", "<artist> - <title>"] 10
         -- keyboard layout indicator
         , Run Kbd            [ ("us(dvorak)" , "<fc=#cc00ff>DV</fc>")
                              , ("us"         , "<fc=#cc00ff>US</fc>")
@@ -34,5 +35,5 @@ Config {
                              ]
         , Run StdinReader
         ]
-    , template = "%StdinReader%}{  %battery% %kbd% %date% "
+    , template = "%StdinReader%}{ %mpris2% %battery% %kbd% %date% "
 }
