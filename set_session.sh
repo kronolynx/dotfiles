@@ -17,15 +17,42 @@ EOF
 read -r  -d '' START <<'EOF'
 #!/bin/bash
 
+userresources=$HOME/.Xresources
+usermodmap=$HOME/.Xmodmap
+sysresources=/etc/X11/xinit/.Xresources
+sysmodmap=/etc/X11/xinit/.Xmodmap
+
+export BROWSER=firefox
+emacs --daemon &
+$HOME/.scripts/keyboard.sh &
+$HOME/.scripts/monitor.sh &
+
+if [ -f $sysresources ]; then
+    xrdb -merge $sysresources
+fi
+
+if [ -f $sysmodmap ]; then
+    xmodmap $sysmodmap
+fi
+
+if [ -f "$userresources" ]; then
+    xrdb -merge "$userresources"
+fi
+
+if [ -f "$usermodmap" ]; then
+    xmodmap "$usermodmap"
+fi
+
+
+nitrogen --restore ~/.wallpapers &
 compton &
 trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1 &
-nitrogen --restore ~/.wallpapers &
 nm-applet &
 xfce4-power-manager &
 clipit &
 thunar --daemon &
-xss-lock -- i3lock -n -i ~/.wallpapers/no-mans-sky-lock.png &
-xautolock -time 10 -locker blurlock &
+#xss-lock -- i3lock -n -i ~/.wallpapers/no-mans-sky-lock.png &
+xautolock -time 7 -locker lock &
 volumeicon &
 
 exec xmonad
