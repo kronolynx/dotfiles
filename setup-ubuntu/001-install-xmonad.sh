@@ -51,6 +51,11 @@ install_themes() {
   ./install-app.sh ${themes[*]}
 }
 
+
 ./install-app.sh ${apps[*]}
 install_themes
 apps/thunar.sh
+
+# lock screen
+sudo cp apps/lock /bin/
+sudo chmod +x /bin/lock

@@ -1,7 +1,7 @@
 #!/bin/sh
-lock() {
-    blurlock
-}
+#lock() {
+#  i3lock -i ~/.wallpapers/no-mans-sky-lock.png -p default -n &
+#}
 
 case "$1" in
     lock)
