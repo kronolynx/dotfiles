@@ -188,6 +188,8 @@ main = do
     [ ("M-<Return>", spawn myTerminal)
        -- Launch text editor
     , ("M-S-<Return>", spawn myTextEditor)
+       -- Launch tmux terminal
+    , ("M-C-<Return>", spawn myTmuxTerminal)
        -- Kill window
     , ("M-C-k", spawn "xkill")
        -- Lock screen
@@ -265,7 +267,9 @@ main = do
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
-myTerminal = "kitty"
+myDefaultTerminal = "urxvt"
+myTerminal = myDefaultTerminal ++ " -e fish"
+myTmuxTerminal = myDefaultTerminal ++ " -e tmux attach"
 
 -- myTerminal = "termite -e tmux"
 -- Launcher
