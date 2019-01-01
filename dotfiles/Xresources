@@ -1,3 +1,7 @@
+!!!!!!!!!!!!!!!!
+!! Xft settings
+!!!!!!!!!!!!!!!!
+
 Xft.dpi:       96
 Xft.antialias: true
 Xft.hinting:   true
@@ -6,6 +10,10 @@ Xft.autohint:  false
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 
+!!!!!!!!!!!!!!!!!! 
+!! XTerm settings
+!!!!!!!!!!!!!!!!!! 
+
 XTerm*background:        #222D31
 XTerm*foreground:        #d8d8d8
 XTerm*pointerColor:      #1ABB9B
@@ -13,6 +21,20 @@ XTerm*faceName:          Fixed
 XTerm*faceSize:          11
 XTerm*reverseVideo:      on
 XTerm*selectToClipboard: true
+XTerm.termName: xterm-256color
+XTerm.vt100.locale: true
+XTerm.vt100.metaSendsEscape: true
+XTerm.vt100.backarrowKey: false
+XTerm.ttyModes: erase ^?
+XTerm.vt100.saveLines: 4096
+XTerm.vt100.scrollBar: true
+XTerm.vt100.scrollbar.width: 8
+XTerm.vt100.faceName: FantasqueSansMono Nerd Font:size=12:antialias=false
+XTerm.vt100.font: 7x13
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! Color settings (Molokai)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 *background:                      #222D31
 *foreground:                      #d8d8d8
@@ -54,10 +76,15 @@ XTerm*selectToClipboard: true
 *color7:                          #d8d8d8
 *color15:                         #f8f8f8
 
+
 Xcursor.theme: xcursor-breeze
 Xcursor.size:                     0
 
-URxvt.font:                       9x15,xft:TerminessTTFNerdFontMono
+!!!!!!!!!!!!!!!!!!
+!! URXVT settings
+!!!!!!!!!!!!!!!!!!
+
+URxvt.font:                       xft:FantasqueSansMono Nerd Font Mono:size=12
 
 ! alternative font settings with 'terminus':
 ! URxvt.font:      -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1
@@ -65,13 +92,13 @@ URxvt.font:                       9x15,xft:TerminessTTFNerdFontMono
 !! terminus names see end of file!
 
 URxvt.depth:                      32
-URxvt.background:                 [100]#222D31
+URxvt.background:                 [80]#000000
 URxvt*scrollBar:                  false
 URxvt*mouseWheelScrollPage:       false
 URxvt*cursorBlink:                true
 URxvt*background:                 black
 URxvt*foreground:                 grey
-URxvt*saveLines:                  5000
+URxvt*saveLines:                  12000
 
 ! for 'fake' transparency (without Compton) uncomment the following three lines
 ! URxvt*inheritPixmap:            true
@@ -91,7 +118,7 @@ URxvt.keysym.Control-Up:          \033[1;5A
 URxvt.keysym.Shift-Control-Up:    \033[1;6A
 URxvt.keysym.Control-Down:        \033[1;5B
 URxvt.keysym.Shift-Control-Down:  \033[1;6B
-! Rxvt.perl-ext-common:             ...,clipboard
+URxvt.perl-extcommon:             tabbed
 ! URxvt.keysym.M-C-c:               perl:clipboard:copy
 ! URxvt.keysym.M-v:                 perl:clipboard:paste
 ! URxvt.keysym.M-C-v:               perl:clipboard:paste_escaped

@@ -3,8 +3,8 @@
 <action>
 	<icon>utilities-terminal</icon>
 	<name>Open in terminal</name>
-	<unique-id>1535384059688648-4</unique-id>
-	<command>termite -e fish -d %f</command>
+	<unique-id>1546342368585267-4</unique-id>
+	<command>sh -c &apos;cd  %f;urxvt -e fish&apos;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -12,8 +12,8 @@
 <action>
 	<icon>application-running</icon>
 	<name>Run in terminal</name>
-	<unique-id>1535389841976389-2</unique-id>
-	<command>termite -e %f --hold</command>
+	<unique-id>1546343694771926-14</unique-id>
+	<command>urxvt -e %f --hold</command>
 	<description></description>
 	<patterns>*</patterns>
 	<other-files/>
@@ -21,8 +21,8 @@
 <action>
 	<icon>terminus</icon>
 	<name>Open in ranger</name>
-	<unique-id>1535392296744854-1</unique-id>
-	<command>termite -e ranger %f</command>
+	<unique-id>1546342636246662-6</unique-id>
+	<command>sh -c &apos;cd %f;urxvt -e ranger&apos;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -39,8 +39,8 @@
 <action>
 	<icon>vim</icon>
 	<name>Vim edit</name>
-	<unique-id>1535384541427139-8</unique-id>
-	<command>gvim %f</command>
+	<unique-id>1546345110665097-23</unique-id>
+	<command>urxvt -e vim %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -61,31 +61,22 @@
 <action>
 	<icon>vim</icon>
 	<name>Edit as root (Vim)</name>
-	<unique-id>1535384118985572-5</unique-id>
-	<command>gksu gvim %f</command>
+	<unique-id>1546345136260384-24</unique-id>
+	<command>urxvt -e sudo vim %f</command>
 	<description></description>
 	<patterns>*</patterns>
+	<startup-notify/>
 	<other-files/>
 	<text-files/>
 </action>
 <action>
 	<icon>vim</icon>
 	<name>Vim diff files</name>
-	<unique-id>1535384650396195-9</unique-id>
-	<command>gvim -d %F</command>
+	<unique-id>1546345387864888-29</unique-id>
+	<command>urxvt -e vim -d %F</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
-	<other-files/>
-	<text-files/>
-</action>
-<action>
-	<icon>emacs</icon>
-	<name>Edit as root (Emacs)</name>
-	<unique-id>1535470489445407-2</unique-id>
-	<command>gksu emacsclient -c -a &quot;emacs&quot; %f</command>
-	<description></description>
-	<patterns>*</patterns>
 	<other-files/>
 	<text-files/>
 </action>
@@ -106,8 +97,8 @@
 <action>
 	<icon>disk-usage-analyzer</icon>
 	<name>Disk usage</name>
-	<unique-id>1535384391460858-7</unique-id>
-	<command>termite -e ncdu %f</command>
+	<unique-id>1546345308024122-27</unique-id>
+	<command>urxvt -e ncdu %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -129,7 +120,7 @@
 <action>
 	<icon>folder-move</icon>
 	<name>Move into new folder</name>
-	<unique-id>1535385323401023-12</unique-id>
+	<unique-id>1546345320816285-28</unique-id>
 	<command>NEW_FOLDER=$(zenity --entry --title &quot;Move into new folder&quot; --text &quot;Please enter a name for the new folder&quot;); mkdir $NEW_FOLDER; mv %F $NEW_FOLDER</command>
 	<description>Select any number of file/folders. A dialog will popup in which you can write the name of a new folder to create. Selected Files will be moved there.</description>
 	<patterns>*</patterns>
