@@ -57,20 +57,16 @@ smplayer
 youtube-dl
 # Cast Audio/Video to your Google Cast and Sonos Devices
 mkchromecast
-
-### requires ppa
-keepassxc
 )
 
 debs=(
-  https://downloads.vivaldi.com/stable/vivaldi-stable_2.0.1309.37-2_amd64.deb
-  https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb
-
+  https://downloads.vivaldi.com/stable/vivaldi-stable_2.3.1440.60-1_amd64.deb
+  https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.01.31_amd64.deb
 )
 
 add_ppas
 ./install-app.sh ${apps[*]}
 ./install-deb.sh ${debs[*]}
 apps/fish-shell.sh
-apps/kitty.sh
-apps/ohmyszs.sh
+#apps/kitty.sh
+#apps/ohmyszs.sh
