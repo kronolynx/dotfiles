@@ -2,6 +2,10 @@
 
 apps=(
 fish
+#for theme https://github.com/oh-my-fish/theme-budspencer
+xsel
+wmctrl
+taskwarrior
 )
 
 ./install-app.sh ${apps[*]}

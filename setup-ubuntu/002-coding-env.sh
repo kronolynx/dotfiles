@@ -21,7 +21,7 @@ add_asdf() {
   fi
 }
 add_docker() {
-  sudo apt-get install \
+  sudo apt install \
        apt-transport-https \
        ca-certificates \
        curl \
@@ -77,9 +77,14 @@ add_haskell_tools() {
   stack install hfmt
 }
 
+add_tools() {
+  sudo apt install zeal
+}
+
 add_java
 add_sbt
 add_ammonite
 add_asdf
 add_docker
 add_haskell_tools
+add_tools
