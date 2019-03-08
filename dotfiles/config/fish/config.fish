@@ -21,6 +21,7 @@ function g --wraps git
 end
 alias LF="cat ~/.config/fish/config.fish | grep 'alias'"
 alias SF="source ~/.config/fish/config.fish"
+alias EF="vim ~/.config/fish/config.fish"
 function get_port
     lsof -i ":$argv"
 end
@@ -35,6 +36,9 @@ alias swapk="setxkbmap -model pc105 -layout dvorak,es -option grp:alt_shift_togg
 function kp
   kill -9 (lsof -t -i:$argv) 2>/dev/null; and echo "Process on port $argv killed" ;or echo "Nothing listening on port $argv"
 end
+## exit ranger to currently viewed directory
+#alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"' # zsh
+alias r='ranger --choosedir="$HOME/.rangerdir"; cd (cat $HOME/.rangerdir)' # fish
 alias v='f -e vim'
 alias o='a -e xdg-open'
 alias cat=bat
@@ -51,5 +55,7 @@ function md
     mkdir -p "$argv"; and cd "$argv"
 end
 
+# theme
 set -U fish_key_bindings fish_vi_key_bindings
 set -U budspencer_nogreeting
+set budspencer_colors 000000 333333 666666 ffffff 00ff00 ff6600 ff0000 ff0033 3300ff 0000ff 00ffff 00ff00
