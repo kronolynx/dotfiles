@@ -32,10 +32,5 @@ ansiweather
 # decorations
 cmatrix
 )
-debs=(
-# bat a cat replacement
-https://github.com/sharkdp/bat/releases/download/v0.7.1/bat_0.7.1_amd64.deb
-)
 
 ./install-app.sh ${apps[*]}
-./install-deb.sh ${debs[*]}

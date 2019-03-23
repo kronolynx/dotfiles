@@ -1,7 +1,6 @@
 #!/bin/bash
 add_ppas() {
   # ppas
-  sudo add-apt-repository ppa:phoerious/keepassxc -y
   sudo apt update
 }
 
@@ -15,7 +14,6 @@ build-essential
 git
 # code editors
 emacs
-vim
 # secure sockets layer (security)
 openssl
 # front end for Xrandr (screen related)
@@ -57,16 +55,12 @@ smplayer
 youtube-dl
 # Cast Audio/Video to your Google Cast and Sonos Devices
 mkchromecast
+# fix keyboard not working
+xserver-xorg-input-all
 )
 
-debs=(
-  https://downloads.vivaldi.com/stable/vivaldi-stable_2.3.1440.60-1_amd64.deb
-  https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.01.31_amd64.deb
-)
 
 add_ppas
 ./install-app.sh ${apps[*]}
-./install-deb.sh ${debs[*]}
 apps/fish-shell.sh
-#apps/kitty.sh
 #apps/ohmyszs.sh
