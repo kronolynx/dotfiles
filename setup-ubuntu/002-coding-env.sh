@@ -20,6 +20,17 @@ add_asdf() {
     source "$SHELL_FILE"
   fi
 }
+asdf_plugins() {
+  echo -e "asdf plugins"
+  #asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
+  asdf plugin-add mongodb https://github.com/sylph01/asdf-mongodb.git
+  #asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
+  #asdf plugin-add lua https://github.com/Stratus3D/asdf-lua.git
+  #asdf plugin-add R https://github.com/iroddis/asdf-R.git
+  #asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
+  #asdf plugin-add redis https://github.com/smashedtoatoms/asdf-redis.git
+}
+
 add_docker() {
   sudo apt install \
        apt-transport-https \
@@ -31,17 +42,6 @@ add_docker() {
 
   sudo apt update
   sudo apt install docker-ce
-}
-
-asdf_plugins() {
-  echo -e "asdf plugins"
-  #asdf plugin-add python https://github.com/tuvistavie/asdf-python.git
-  asdf plugin-add mongodb https://github.com/sylph01/asdf-mongodb.git
-  #asdf plugin-add postgres https://github.com/smashedtoatoms/asdf-postgres.git
-  #asdf plugin-add lua https://github.com/Stratus3D/asdf-lua.git
-  #asdf plugin-add R https://github.com/iroddis/asdf-R.git
-  #asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git
-  #asdf plugin-add redis https://github.com/smashedtoatoms/asdf-redis.git
 }
 
 add_java() {
@@ -63,13 +63,8 @@ add_sbt() {
 add_ammonite() {
   if [ ! -f "/usr/local/bin/amm" ]; then
     echo -e "Installing ammonite"
-    sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/lihaoyi/Ammonite/releases/download/1.2.1/2.12-1.2.1) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm'
+    sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/lihaoyi/Ammonite/releases/download/1.6.5/2.12-1.6.5) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm'
   fi
-}
-
-add_toolbox() {
-  wget -O "toolbox.tar.gz" "https://download.jetbrains.com/toolbox/jetbrains-toolbox-1.11.4269.tar.gz" &&
-    rm -f "toolbox.tar.gz"
 }
 
 add_haskell_tools() {
@@ -77,14 +72,13 @@ add_haskell_tools() {
   stack install hfmt
 }
 
-add_tools() {
+extras() {
   sudo apt install zeal
 }
 
 add_java
 add_sbt
 add_ammonite
-add_asdf
-add_docker
-add_haskell_tools
-add_tools
+#add_asdf
+#add_docker
+#extras

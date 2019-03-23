@@ -2,6 +2,9 @@
 apps=(
 xmonad
 xmobar
+libghc-xmonad-contrib-dev 
+libghc-xmonad-dev
+libghc-xmonad-extras-dev
 # systray
 trayer
 # Simple command-line screenshot utility for X
