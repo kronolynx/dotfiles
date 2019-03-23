@@ -46,7 +46,7 @@ add_docker() {
 
 add_java() {
   sudo add-apt-repository ppa:webupd8team/java -y
-  suda apt update
+  sudo apt update
   ./install-app.sh oracle-java8-installer
   ./install-app.sh oracle-java8-set-default
   # ./install-app.sh openjdk-8-jdk
