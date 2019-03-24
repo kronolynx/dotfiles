@@ -6,8 +6,11 @@ mkdir -p $backup
 
 # any dotfile or dir in this array will be backedup if it exist in home
 dotfiles=(
+Xclients
+Xresources
 bash_profile
 bashrc
+config/Thunar
 config/cmus/lib.pl
 config/compton.conf
 config/dunst
@@ -18,9 +21,10 @@ config/gtk-3.0/settings.ini
 config/i3status/config
 config/kitty/kitty.conf
 config/mimeapps.list
-config/pavucontrol.ini
 config/nano
 config/neofetch
+config/nvim
+config/pavucontrol.ini
 config/pcmanfm
 config/qt5ct
 config/ranger/rc.conf
@@ -28,14 +32,12 @@ config/ranger/scope.sh
 config/redshift
 config/rofi
 config/systemd
-config/systemd
 config/terminator
 config/termite
-config/Thunar
 config/tmux
-confip/volumeicon
 config/xmobar
 config/yay
+confip/volumeicon
 dir_colors
 emacs.d/init.el
 gitconfig
@@ -54,10 +56,8 @@ tmux.conf
 vim/colors
 vimrc
 wallpapers
-Xclients
 xinitrc
 xmonad/xmonad.hs
-Xresources
 z.sh
 zshrc
 )
