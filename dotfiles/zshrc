@@ -1,7 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 # Syntax highlighting and tab completion
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 autoload -Uz compinit
 
 ## Options section
@@ -9,12 +8,19 @@ setopt correct                                                  # Auto correct m
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
 setopt nocaseglob                                               # Case insensitive globbing
 setopt rcexpandparam                                            # Array expension with parameters
-setopt nocheckjobs                                              # Don't warn about running processes when exiting
 setopt numericglobsort                                          # Sort filenames numerically when it makes sense
 setopt nobeep                                                   # No beep
 setopt appendhistory                                            # Immediately append history instead of overwriting
 setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
 setopt autocd                                                   # if only directory path is entered, cd there.
+setopt share_history  # Share history between multiple shells
+
+setopt nocheckjobs                                              # Dont warn about running processes when exiting
+
+setopt auto_list
+setopt auto_menu
+setopt auto_pushd
+
 
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
@@ -23,11 +29,12 @@ zstyle ':completion:*' rehash true                              # automatically 
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
+
 HISTFILE=~/.zhistory
 HISTSIZE=1000
 SAVEHIST=500
 
-WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
+WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Dont consider certain characters part of the word
 
 
 
@@ -44,14 +51,9 @@ man_color() {
 	      man "$@"
 }
 
-ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 
 ## Plugins section: Enable fish style features
-# Use syntax highlighting
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# Use history substring search
-source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
-# bind UP and DOWN arrow keys to history substring search
 zmodload zsh/terminfo
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
@@ -60,10 +62,8 @@ bindkey '^[[B' history-substring-search-down
 
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git up vi-mode extract zsh-history-substring-search zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,45 +104,157 @@ function videodownload {
 	fi
 }
 
-# Aliases for a few useful commands
-alias mirrorUpdate="sudo reflector --latest 250 --protocol https --sort rate --save /etc/pacman.d/mirrorlist"
-alias yaourt="yaourt --pager --color"
-alias pacmanGhost="~/.pacman.sh"
-alias shivita="toilet -f mono12 -F rainbow 'krono' | ponythink -f winona"
-#alias ls="colorls"
-alias ip="ip -c"
-alias rm="rm -i"
-alias x="ranger"
-alias c="cmus"
-alias h="htop"
-alias man="man_color"
-alias m=mp3download
-alias v=videodownload
-alias zshrc='$EDITOR ~/.zshrc'
+# alias {{{
+alias v=nvim
+alias vi=nvim
+alias vim=nvim
 alias G='| grep'
 alias H='| head'
 alias L='| less'
 alias M='| most'
+alias P="lsof -i :" #add port e.g. 8080
 alias P='2>&1| pygmentize -l pytb'
 alias T='| tail'
-alias S="yay -Ss"
-alias I="yay -Syu"
+alias c="cmus"
+alias cat=bat
+alias h="htop"
+alias ip="ip -c"
+alias ipe='curl ipinfo.io/ip'
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+alias m=mp3download
+alias man="man_color"
+alias o='a -e xdg-open'
+alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias rm="rm -i"
+alias tk="tmux kill-session -t "
+alias tkd="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
+alias untar='tar -sxvf '
+alias v='f -e vim'
+alias v=videodownload
+alias wget='wget -c '
+
+# Ubuntu
+alias S="apt search "
+alias U="sudo apt update; and sudo apt upgrade"
+alias I="sudo apt install "
+alias R="sudo apt remove "
+
+#zsh
+alias LZ="cat ~/.zshrc | grep -v '^#' | greg 'alias'"
+alias SZ="source ~/.zshrc"
+alias EZ="vim ~/.zshrc"
+# }}}
+
 
 
 # jump around 
 . ~/.z.sh
 
+# theme {{{
+#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=grey'
 
-# asdf
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
+ZSH_HIGHLIGHT_STYLES[default]='none'
+ZSH_HIGHLIGHT_STYLES[cursor]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
+ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=green'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
+ZSH_HIGHLIGHT_STYLES[function]='fg=green'
+ZSH_HIGHLIGHT_STYLES[command]='fg=green'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=green'
+ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green'
+#ZSH_HIGHLIGHT_STYLES[path]='fg=white,underline'
+#ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=grey,underline'
+#ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=white'
+#ZSH_HIGHLIGHT_STYLES[path_approx]='fg=white'
+ZSH_HIGHLIGHT_STYLES[globbing]='none'
+ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
+ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[redirection]='fg=magenta'
+ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=cyan,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=green,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=magenta,bold'
+ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=yellow,bold'
+ZSH_HIGHLIGHT_STYLES[assign]='none'
+
+ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor line)
+
+POWERLEVEL9K_MODE="nerdfont-complete"
+
+#POWERLEVEL9K_CUSTOM_KRONO_ICON='\ue737'
+#POWERLEVEL9K_CUSTOM_KRONO_ICON_BACKGROUND="white"
+#POWERLEVEL9K_CUSTOM_KRONO_ICON_FOREGROUND="black"
+# fish like shortening
+POWERLEVEL9K_SHORTEN_DELIMITER=""
+POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+# dirs
+POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+POWERLEVEL9K_DIR_SHOW_WRITABLE="true"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="010"
+POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="black"
+POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="010"
+POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="black"
+POWERLEVEL9K_DIR_HOME_BACKGROUND="010"
+POWERLEVEL9K_DIR_HOME_FOREGROUND="black"
+POWERLEVEL9K_DIR_ROOT_BACKGROUND="010"
+POWERLEVEL9K_DIR_ROOT_FOREGROUND="black"
+POWERLEVEL9K_HOME_ICON=''
+POWERLEVEL9K_HOME_SUB_ICON=''
+POWERLEVEL9K_FOLDER_ICON=''
+POWERLEVEL9K_ETC_ICON=''
+
+# status
+POWERLEVEL9K_STATUS_OK_BACKGROUND="235"
+POWERLEVEL9K_STATUS_OK_FOREGROUND="010"
+POWERLEVEL9K_STATUS_ERROR_BACKGROUND="235"
+POWERLEVEL9K_STATUS_ERROR_FOREGROUND="red"
+POWERLEVEL9K_STATUS_VERBOSE="true"
+POWERLEVEL9K_STATUS_CROSS="true"
+
+# vcs
+#POWERLEVEL9K_VCS_STAGED_ICON='\u00b1'
+#POWERLEVEL9K_VCS_UNTRACKED_ICON='*'
+#POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
+POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u1772'
+POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u1771'
+POWERLEVEL9K_VCS_GIT_ICON='\uE709'
+POWERLEVEL9K_VCS_GIT_GITHUB_ICON='\uE709'
+POWERLEVEL9K_VCS_BRANCH_ICON='\ue0a0'
+POWERLEVEL9K_SHOW_CHANGESET="false"
+
+#POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
+#POWERLEVEL9K_VCS_CLEAN_BACKGROUND='010'
+#POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
+#POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
+#POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
+#POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='grey'
 
 
 
-# Set up Node Version Manager
+# Vi-Mode
+POWERLEVEL9K_VI_INSERT_MODE_STRING='\uE62B'
+POWERLEVEL9K_VI_COMMAND_MODE_STRING='\uE62B'
+POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='093'
+POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='236'
+POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='blue'
+POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='236'
 
-export NVM_DIR="$HOME/.nvm"                            # You can change this if you want.
+POWERLEVEL9K_SUDO_ICON=$'\uF09C' # 
 
-export NVM_SOURCE="/usr/share/nvm"                     # The AUR package installs it to here.
-
-[ -s "$NVM_SOURCE/nvm.sh" ] && \. "$NVM_SOURCE/nvm.sh"  # Load NVM
+# prompt
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode custom_krono_icon dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
+# }}}
