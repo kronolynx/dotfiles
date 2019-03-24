@@ -22,32 +22,38 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 
 " Plugins -------------------------------------------------------------
 
+" install vim plug if not installed
+if has('nvim')
+  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !echo '[Downloading vim-plug for neovim] ...'
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs 
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+else
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !echo '[Downloading vim-plug for vim] ...'
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+endif
+
+
 " Load plugins {{{
 call plug#begin('~/.vim/plugged')
 "
-" " Snippets are separated from the engine. Add this if you want them:
-" All of your Plugins must be added before the following line
-" All plugins must be below this line
-" Note: for neovim must run 'pip install neovim'
-" Track the engine.
-" requires nerd font
-" requires pip install websocket-client sexpdata
-", { 'on':  'NERDTreeToggle' }
 "Plug 'SirVer/ultisnips'
 "Plug 'Townk/vim-autoclose'
 "Plug 'benmills/vimux'
-"Plug 'derekwyatt/vim-scala',  {'for': ['scala','sc']}
-"Plug 'ensime/ensime-vim',  {'for': ['scala','sc']}
 "Plug 'gerw/vim-latex-suite', { 'for': 'tex' }
 "Plug 'honza/vim-snippets'
 "Plug 'lervag/vimtex'
-"Plug 'neomake/neomake'
-"Plug 'racer-rust/vim-racer', {'for': ['rs']}
-"Plug 'rust-lang/rust.vim', {'for': ['rs']}
 "Plug 'scrooloose/syntastic'
 "Plug 'valloric/youcompleteme'
 "Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 "neomake replaces syntastic
+Plug 'neomake/neomake'
 Plug 'airblade/vim-gitgutter'
 Plug 'bling/vim-airline'
 Plug 'chiel92/vim-autoformat'
@@ -72,6 +78,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 " }}}
 
@@ -101,7 +108,7 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 "Open nerd tree
-map <leader>nt :NERDTreeToggle<CR>
+map <leader>tt :NERDTreeToggle<CR>
 " Open automatically nerdtree if no file is open
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -133,7 +140,7 @@ map <silent> <BS> :nohlsearch<CR>
 " save on escape not working  :(
 inoremap <CAPSLOCK> <CAPSLOCK>:w<CR>
 " Fast saving
-nmap <leader>fs :w!<cr>
+nmap <leader>ss :w!<cr>
 " indent current line
 noremap <leader>in v=
 " indent current line in visual mode
@@ -168,11 +175,11 @@ map <C-l> <C-W>l
 " }}}
 
 " tabs {{{
-map <leader>tn :tabnew<cr>
+"map <leader>te :tabedit
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>tr :tabnext
+map <leader>tm :tabmove<cr>
+map <leader>tn :tabnew<cr>
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
