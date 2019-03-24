@@ -267,8 +267,8 @@ main = do
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
-myDefaultTerminal = "urxvt"
-myTerminal = myDefaultTerminal ++ " -e fish"
+myDefaultTerminal = "alacritty"
+myTerminal = myDefaultTerminal -- ++ " -e fish"
 myTmuxTerminal = myDefaultTerminal ++ " -e tmux attach"
 
 -- myTerminal = "termite -e tmux"
@@ -279,7 +279,7 @@ myLauncher = "rofi -modi 'drun,run' -show drun"
 myTextEditor = "emacsclient -c -a emacs"
 
 -- Browser
-myBrowser = "vivaldi-stable"
+myBrowser = "google-chrome"
 
 -- File Manager
 myFileManager = "thunar"
