@@ -12,19 +12,19 @@ Config {
     , alignSep           = "}{"
     , commands =
       [
-        [ Run Battery
-            [ "--template", "<acstatus>"
-            , "--Low"     , "10"
-            , "--High"    , "80"
-            , "--low"     , "red"
-            , "--normal"  , "darkorange"
-            , "--high"    , "darkgreen"
-            , "-f"        , "AC/online"
-            , "--"
-                , "-o"  , " (<left>)"
-                , "-O"  , "<fc=#00e64d> (<left>)</fc>"
-                , "-i"  , "<fc=#66FF99></fc>"
-            ] 60
+        --[ Run Battery
+        --    [ "--template", "<acstatus>"
+        --    , "--Low"     , "10"
+        --    , "--High"    , "80"
+        --    , "--low"     , "red"
+        --    , "--normal"  , "darkorange"
+        --    , "--high"    , "darkgreen"
+        --    , "-f"        , "AC/online"
+        --    , "--"
+        --        , "-o"  , " (<left>)"
+        --        , "-O"  , "<fc=#00e64d> (<left>)</fc>"
+        --        , "-i"  , "<fc=#66FF99></fc>"
+        --    ] 60
         -- , Run Com "sh" ["-c", "awk '{print $1, $2, $3 }' /proc/loadavg"] "loadavg" 10
         -- , Run Com "sh" ["-c", "mpc | head -n -2 | sed 's,.*/,,' | cut -c-40"] "mpd" 50
          Run Date "<fc=#00ff00> %a %b %d</fc><fc=#ee9a00> %H:%M:%S</fc>" "date" 10
@@ -36,5 +36,6 @@ Config {
                              ]
         , Run StdinReader
         ]
-    , template = "%StdinReader%}{ %mpris2% %battery% %kbd% %date% "
+    --, template = "%StdinReader%}{ %mpris2% %battery% %kbd% %date% "
+    , template = "%StdinReader%}{ %mpris2% %kbd% %date% "
 }
