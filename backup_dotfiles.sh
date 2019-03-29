@@ -11,6 +11,7 @@ Xresources
 bash_profile
 bashrc
 config/Thunar
+config/alacritty
 config/cmus/lib.pl
 config/compton.conf
 config/dunst
@@ -59,6 +60,7 @@ wallpapers
 xinitrc
 xmonad/xmonad.hs
 z.sh
+zsh
 zshrc
 )
 # if no console argumen is provided the dotfiles array is used

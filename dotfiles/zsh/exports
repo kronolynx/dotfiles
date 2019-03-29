@@ -1,0 +1,217 @@
+# 0   = default color                   1   = bold
+# 4   = underlined                      5   = flashing text
+# 7   = reverse field                   31  = red
+# 32  = green                           33  = orange
+# 34  = blue                            35  = purple
+# 36  = cyan                            37  = grey
+# 40  = black background                41  = red background
+# 42  = green background                43  = orange background
+# 44  = blue background                 45  = purple background
+# 46  = cyan background                 47  = grey background
+# 90  = dark grey                       91  = light red
+# 92  = light green                     93  = yellow
+# 94  = light blue                      95  = light purple
+# 96  = turquoise                       100 = dark grey background
+# 101 = light red background            102 = light green background
+# 103 = yellow background               104 = light blue background
+# 105 = light purple background         106 = turquoise background
+#
+# Attribute codes:
+#  00 none
+#  01 bold
+#  02 faint                  22 normal
+#  03 standout               23 no-standout
+#  04 underline              24 no-underline
+#  05 blink                  25 no-blink
+#  07 reverse                27 no-reverse
+#  08 conceal
+#
+#
+LS_COLORS=$LS_COLORS:''   
+LS_COLORS=$LS_COLORS:'*,v=5;34;93'    # Versioncontrols   = Bold, Yellow
+LS_COLORS=$LS_COLORS:'*.7z=01;31' # 
+LS_COLORS=$LS_COLORS:'*.C=1;33'       # Sources           = Bold, Yellow
+LS_COLORS=$LS_COLORS:'*.JPG=1;32'     # Images            = Bold, Green
+LS_COLORS=$LS_COLORS:'*.Z=01;31' #
+LS_COLORS=$LS_COLORS:'*.a=1;36'       # Shared-libs       = Bold, Cyan
+LS_COLORS=$LS_COLORS:'*.aac=00;36' #
+LS_COLORS=$LS_COLORS:'*.ace=01;31' #
+LS_COLORS=$LS_COLORS:'*.alz=01;31' #
+LS_COLORS=$LS_COLORS:'*.arc=01;31' #
+LS_COLORS=$LS_COLORS:'*.arj=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.asf=01;35' #
+LS_COLORS=$LS_COLORS:'*.au=00;36' #
+LS_COLORS=$LS_COLORS:'*.avi=01;35' #
+LS_COLORS=$LS_COLORS:'*.awk=1;33'     # Sources           = Bold, Yellow
+LS_COLORS=$LS_COLORS:'*.bmp=01;35' #
+LS_COLORS=$LS_COLORS:'*.bz2=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.bz=01;31' #
+LS_COLORS=$LS_COLORS:'*.c=1;33'       # Sources           = Bold, Yellow
+LS_COLORS=$LS_COLORS:'*.cab=01;31' #
+LS_COLORS=$LS_COLORS:'*.cc=1;33'      # Sources           = Bold, Yellow
+LS_COLORS=$LS_COLORS:'*.cgm=01;35' #
+LS_COLORS=$LS_COLORS:'*.cpio=01;31' #
+LS_COLORS=$LS_COLORS:'*.deb=01;31' #
+LS_COLORS=$LS_COLORS:'*.dl=01;35' #
+LS_COLORS=$LS_COLORS:'*.doc=1;34'     # MS-Word *lol*     = Bold, Blue
+LS_COLORS=$LS_COLORS:'*.dwm=01;31' #
+LS_COLORS=$LS_COLORS:'*.dz=01;31' #
+LS_COLORS=$LS_COLORS:'*.ear=01;31' #
+LS_COLORS=$LS_COLORS:'*.emf=01;35' #
+LS_COLORS=$LS_COLORS:'*.esd=01;31' #
+LS_COLORS=$LS_COLORS:'*.flac=00;36' #
+LS_COLORS=$LS_COLORS:'*.flc=01;35' #
+LS_COLORS=$LS_COLORS:'*.fli=01;35' #
+LS_COLORS=$LS_COLORS:'*.flv=01;35' #
+LS_COLORS=$LS_COLORS:'*.gif=01;35' # Images
+LS_COLORS=$LS_COLORS:'*.gl=01;35' #
+LS_COLORS=$LS_COLORS:'*.gz=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.h=1;33'       # Sources           = Bold, Yellow
+LS_COLORS=$LS_COLORS:'*.htm=1;34'     # HTML              = Bold, Blue
+LS_COLORS=$LS_COLORS:'*.html=36'      # HTML              = Cyan
+LS_COLORS=$LS_COLORS:'*.jar=01;31' #
+LS_COLORS=$LS_COLORS:'*.jpeg=01;35' # Images
+LS_COLORS=$LS_COLORS:'*.jpg=01;35' # Images
+LS_COLORS=$LS_COLORS:'*.lha=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.lrz=01;31' #
+LS_COLORS=$LS_COLORS:'*.lz4=01;31' #
+LS_COLORS=$LS_COLORS:'*.lz=01;31' #
+LS_COLORS=$LS_COLORS:'*.lzh=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.lzma=01;31' #
+LS_COLORS=$LS_COLORS:'*.lzo=01;31' #
+LS_COLORS=$LS_COLORS:'*.m2v=01;35' #
+LS_COLORS=$LS_COLORS:'*.m4a=00;36' #
+LS_COLORS=$LS_COLORS:'*.m4v=01;35' #
+LS_COLORS=$LS_COLORS:'*.mid=00;36' #
+LS_COLORS=$LS_COLORS:'*.midi=00;36' #
+LS_COLORS=$LS_COLORS:'*.mjpeg=01;35' #
+LS_COLORS=$LS_COLORS:'*.mjpg=01;35' #
+LS_COLORS=$LS_COLORS:'*.mka=00;36' #
+LS_COLORS=$LS_COLORS:'*.mkv=01;35' #
+LS_COLORS=$LS_COLORS:'*.mng=01;35' #
+LS_COLORS=$LS_COLORS:'*.mov=01;35' #
+LS_COLORS=$LS_COLORS:'*.mp3=00;36' #
+LS_COLORS=$LS_COLORS:'*.mp4=01;35' #
+LS_COLORS=$LS_COLORS:'*.mp4v=01;35' #
+LS_COLORS=$LS_COLORS:'*.mpc=00;36' #
+LS_COLORS=$LS_COLORS:'*.mpeg=01;35' #
+LS_COLORS=$LS_COLORS:'*.mpg=01;35' #
+LS_COLORS=$LS_COLORS:'*.nuv=01;35' #
+LS_COLORS=$LS_COLORS:'*.o=1;36'       # Object-Files      = Bold, Cyan
+LS_COLORS=$LS_COLORS:'*.oga=00;36' #
+LS_COLORS=$LS_COLORS:'*.ogg=00;36' #
+LS_COLORS=$LS_COLORS:'*.ogm=01;35' #
+LS_COLORS=$LS_COLORS:'*.ogv=01;35' #
+LS_COLORS=$LS_COLORS:'*.ogx=01;35' #
+LS_COLORS=$LS_COLORS:'*.opus=00;36' #
+LS_COLORS=$LS_COLORS:'*.pbm=01;35' #
+LS_COLORS=$LS_COLORS:'*.pbm=1;32'     # Images            = Bold, Green
+LS_COLORS=$LS_COLORS:'*.pcx=01;35' #
+LS_COLORS=$LS_COLORS:'*.pdf=1,29'     # PDF               = Whitegrey, Bold
+LS_COLORS=$LS_COLORS:'*.pgm=01;35' # Images
+LS_COLORS=$LS_COLORS:'*.php=1;45'     # PHP               = White, Cyan
+LS_COLORS=$LS_COLORS:'*.pl=1;33'      # Sources           = Bold, Yellow
+LS_COLORS=$LS_COLORS:'*.png=01;35' # Images
+LS_COLORS=$LS_COLORS:'*.ppm=01;35' # Images
+LS_COLORS=$LS_COLORS:'*.qt=01;35' #
+LS_COLORS=$LS_COLORS:'*.ra=00;36' #
+LS_COLORS=$LS_COLORS:'*.rar=01;31' #
+LS_COLORS=$LS_COLORS:'*.rm=01;35' #
+LS_COLORS=$LS_COLORS:'*.rmvb=01;35' #
+LS_COLORS=$LS_COLORS:'*.rpm=01;31' #
+LS_COLORS=$LS_COLORS:'*.rz=01;31' #
+LS_COLORS=$LS_COLORS:'*.sar=01;31' #
+LS_COLORS=$LS_COLORS:'*.sh=47;31'     # Shell-Scripts     = Foreground White, Background Red
+LS_COLORS=$LS_COLORS:'*.sit=31'       # Archive           = Red
+LS_COLORS=$LS_COLORS:'*.sl=30;33'     # Slang-Scripts     = Yellow
+LS_COLORS=$LS_COLORS:'*.spx=00;36' #
+LS_COLORS=$LS_COLORS:'*.svg=01;35' #
+LS_COLORS=$LS_COLORS:'*.svgz=01;35' #
+LS_COLORS=$LS_COLORS:'*.swm=01;31' #
+LS_COLORS=$LS_COLORS:'*.swp=00;44;37' # Swapfiles (Vim)   = Foreground Blue, Background White
+LS_COLORS=$LS_COLORS:'*.t7z=01;31' #
+LS_COLORS=$LS_COLORS:'*.tar=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.taz=01;31' #
+LS_COLORS=$LS_COLORS:'*.tbz2=01;31' #
+LS_COLORS=$LS_COLORS:'*.tbz=01;31' #
+LS_COLORS=$LS_COLORS:'*.tga=01;35' #
+LS_COLORS=$LS_COLORS:'*.tgz=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.tif=01;35' #
+LS_COLORS=$LS_COLORS:'*.tiff=01;35' #
+LS_COLORS=$LS_COLORS:'*.tlz=01;31' #
+LS_COLORS=$LS_COLORS:'*.torrent=4;33' # Torrents          = Orange, Underline
+LS_COLORS=$LS_COLORS:'*.txt=1;34'     # Plain/Text        = Bold, Blue
+LS_COLORS=$LS_COLORS:'*.txz=01;31' #
+LS_COLORS=$LS_COLORS:'*.tz=01;31' #
+LS_COLORS=$LS_COLORS:'*.tzo=01;31' #
+LS_COLORS=$LS_COLORS:'*.tzst=01;31' #
+LS_COLORS=$LS_COLORS:'*.vim=35'       # Vim-"Scripts"     = Purple
+LS_COLORS=$LS_COLORS:'*.vob=01;35' #
+LS_COLORS=$LS_COLORS:'*.war=01;31' #
+LS_COLORS=$LS_COLORS:'*.wav=00;36' #
+LS_COLORS=$LS_COLORS:'*.webm=01;35' #
+LS_COLORS=$LS_COLORS:'*.wim=01;31' #
+LS_COLORS=$LS_COLORS:'*.wmv=01;35' #
+LS_COLORS=$LS_COLORS:'*.xbm=01;35' #
+LS_COLORS=$LS_COLORS:'*.xcf=01;35' #
+LS_COLORS=$LS_COLORS:'*.xpm=01;35' #
+LS_COLORS=$LS_COLORS:'*.xspf=00;36' #
+LS_COLORS=$LS_COLORS:'*.xwd=01;35' #
+LS_COLORS=$LS_COLORS:'*.xz=01;31' #
+LS_COLORS=$LS_COLORS:'*.yuv=01;35' #
+LS_COLORS=$LS_COLORS:'*.z=01;31' #
+LS_COLORS=$LS_COLORS:'*.zip=01;31' # Archive
+LS_COLORS=$LS_COLORS:'*.zoo=01;31' #
+LS_COLORS=$LS_COLORS:'*.zst=01;31' #
+LS_COLORS=$LS_COLORS:'*FAQ=31;7'      # FAQs              = Foreground Red, Background Black
+LS_COLORS=$LS_COLORS:'*INSTALL=31;7'  # INSTALLs          = Foreground Red, Background Black
+LS_COLORS=$LS_COLORS:'*README=31;7'   # READMEs           = Foreground Red, Background Black
+LS_COLORS=$LS_COLORS:'bd=40;33;01' # Block device
+LS_COLORS=$LS_COLORS:'ca=30;41' #
+LS_COLORS=$LS_COLORS:'cd=40;33;01' # Character device
+LS_COLORS=$LS_COLORS:'di=01;34' # Directory
+LS_COLORS=$LS_COLORS:'do=01;35' #
+LS_COLORS=$LS_COLORS:'ex=01;32' # Executable file
+LS_COLORS=$LS_COLORS:'fi=0'           # Regular file      = Default foreground
+LS_COLORS=$LS_COLORS:'ln=01;36'       # Symbolic link     = Bold, Cyan
+LS_COLORS=$LS_COLORS:'mh=00' #
+LS_COLORS=$LS_COLORS:'mi=00' #
+LS_COLORS=$LS_COLORS:'no=0'           # Normal text       = Default foreground  
+LS_COLORS=$LS_COLORS:'or=40;31;01' # Orphaned link
+LS_COLORS=$LS_COLORS:'ow=34;42' #
+LS_COLORS=$LS_COLORS:'pi=40;33' # Named pipe
+LS_COLORS=$LS_COLORS:'rs=0' #
+LS_COLORS=$LS_COLORS:'sg=30;43' #
+LS_COLORS=$LS_COLORS:'so=01;35' # Socket
+LS_COLORS=$LS_COLORS:'st=37;44' #
+LS_COLORS=$LS_COLORS:'su=37;41' #
+LS_COLORS=$LS_COLORS:'tw=30;42' #
+eS_COLORS=$LS_COLORS:'do=01;35'       # DO                = Bold, Magenta
+
+export LS_COLORS
+
+
+# The maximum number of events stored in the internal history list. If you use
+# the HIST_EXPIRE_DUPS_FIRST option, setting this value larger than the
+# SAVEHIST size will give you the difference as a cushion for saving
+# duplicated history events.
+HISTSIZE=10000
+# The name of the file used to store command history. When assigned to, history
+# is loaded from the specified file. Also, several invocations of the shell
+# running on the same machine will share history if their HISTFILE parameters
+# all point to the same file.
+# the difference between `SAVEHIST' and `HISTSIZE'
+# thanks to the FAQ. `HISTSIZE' is the number of lines of history that is
+# kept within any given, running zsh. `SAVEHIST' is the number of lines of
+# history that is written out to a file at the magic, mysterious moment 
+# when that event occurs. so cat-ing `HISTFILE' into wc -l should enumerate
+# the number of history events 
+if (( ! EUID )); then
+    HISTFILE=~/.root_histfile
+else
+    HISTFILE=~/.zhistory
+fi
+SAVEHIST=500
+
+WORDCHARS=${WORDCHARS//\/[&.;]}  # Dont consider certain characters part of the word
+

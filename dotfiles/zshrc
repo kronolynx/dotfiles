@@ -1,143 +1,50 @@
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
-# Syntax highlighting and tab completion
-autoload -Uz compinit
 
-## Options section
-setopt correct                                                  # Auto correct mistakes
-setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
-setopt nocaseglob                                               # Case insensitive globbing
-setopt rcexpandparam                                            # Array expension with parameters
-setopt numericglobsort                                          # Sort filenames numerically when it makes sense
-setopt nobeep                                                   # No beep
-setopt appendhistory                                            # Immediately append history instead of overwriting
-setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
-setopt autocd                                                   # if only directory path is entered, cd there.
-setopt share_history  # Share history between multiple shells
+# jump around 
+if [ -f ~/.z.sh ]; then
+    source ~/.z.sh
+fi
 
-setopt nocheckjobs                                              # Dont warn about running processes when exiting
-
-setopt auto_list
-setopt auto_menu
-setopt auto_pushd
-
-
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
-zstyle ':completion:*' rehash true                              # automatically find new executables in path 
-# Speed up completions
-zstyle ':completion:*' accept-exact '*(N)'
-zstyle ':completion:*' use-cache on
-zstyle ':completion:*' cache-path ~/.zsh/cache
-
-HISTFILE=~/.zhistory
-HISTSIZE=1000
-SAVEHIST=500
-
-WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Dont consider certain characters part of the word
-
-
-
-# Coloured man pages using less as pager
-man_color() {
-    env \
-	      LESS_TERMCAP_mb=$(printf "\e[1;31m") \
-	      LESS_TERMCAP_md=$(printf "\e[1;31m") \
-	      LESS_TERMCAP_me=$(printf "\e[0m") \
-	      LESS_TERMCAP_se=$(printf "\e[0m") \
-	      LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-	      LESS_TERMCAP_ue=$(printf "\e[0m") \
-	      LESS_TERMCAP_us=$(printf "\e[1;36m") \
-	      man "$@"
-}
-
-ZSH_THEME="powerlevel9k/powerlevel9k"
-
-# theme {{{ # must be before sourcing oh-my-zsh if not some icons missing
-
-#POWERLEVEL9K_COLOR_SCHEME='light'
-POWERLEVEL9K_MODE="nerdfont-complete"
-
-#POWERLEVEL9K_CUSTOM_KRONO_ICON='\ue737'
-#POWERLEVEL9K_CUSTOM_KRONO_ICON_BACKGROUND="white"
-#POWERLEVEL9K_CUSTOM_KRONO_ICON_FOREGROUND="black"
-# fish like shortening
-POWERLEVEL9K_SHORTEN_DELIMITER=""
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-
-# dirs
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
-POWERLEVEL9K_DIR_SHOW_WRITABLE="true"
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_BACKGROUND="010"
-POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND="black"
-POWERLEVEL9K_DIR_DEFAULT_BACKGROUND="010"
-POWERLEVEL9K_DIR_DEFAULT_FOREGROUND="black"
-POWERLEVEL9K_DIR_HOME_BACKGROUND="010"
-POWERLEVEL9K_DIR_HOME_FOREGROUND="black"
-POWERLEVEL9K_DIR_ROOT_BACKGROUND="010"
-POWERLEVEL9K_DIR_ROOT_FOREGROUND="black"
-POWERLEVEL9K_HOME_ICON=''
-POWERLEVEL9K_HOME_SUB_ICON=''
-POWERLEVEL9K_FOLDER_ICON=''
-POWERLEVEL9K_ETC_ICON=''
-
-# status
-POWERLEVEL9K_STATUS_OK_BACKGROUND="235"
-POWERLEVEL9K_STATUS_OK_FOREGROUND="010"
-POWERLEVEL9K_STATUS_ERROR_BACKGROUND="235"
-POWERLEVEL9K_STATUS_ERROR_FOREGROUND="red"
-POWERLEVEL9K_STATUS_VERBOSE="true"
-POWERLEVEL9K_STATUS_CROSS="true"
-
-# vcs
-POWERLEVEL9K_VCS_STASH_ICON='\uF0A0' # 
-POWERLEVEL9K_VCS_STAGED_ICON='\uF1CB' # 
-POWERLEVEL9K_VCS_UNSTAGED_ICON='\uF16C' # 
-POWERLEVEL9K_VCS_UNTRACKED_ICON='\uF21B' # 
-POWERLEVEL9K_VCS_COMMIT_ICON='\uF1D0' # 
-POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\uF409' # 
-POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\uF40A' # 
-# F408   F406   E708   E709   F1D2 
-POWERLEVEL9K_VCS_GIT_ICON='\uE709'  
-POWERLEVEL9K_VCS_GIT_GITHUB_ICON='\uE709'
-# E702   E0A0  
-POWERLEVEL9K_VCS_BRANCH_ICON='\uE0A0'
-POWERLEVEL9K_VCS_REMOTE_BRANCH_ICON='ue702'
-#POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-#POWERLEVEL9K_VCS_CLEAN_BACKGROUND='010'
-#POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-#POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-#POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
-#POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='grey'
-POWERLEVEL9K_SHOW_CHANGESET="false"
-
-# OS segment
-POWERLEVEL9K_OS_ICON_BACKGROUND="white"
-POWERLEVEL9K_OS_ICON_FOREGROUND="blue"
-
-
-
-# Vi-Mode E62B  
-POWERLEVEL9K_VI_INSERT_MODE_STRING='\uE62B'
-POWERLEVEL9K_VI_COMMAND_MODE_STRING='\uE62B'
-POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='093'
-POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='236'
-POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='blue'
-POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='236'
-
-POWERLEVEL9K_SUDO_ICON=$'\uF09C' # 
-
-# prompt
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(vi_mode custom_krono_icon dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
-# }}}
-
-## Plugins section: Enable fish style features
-zmodload zsh/terminfo
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down
-bindkey '^[[A' history-substring-search-up			
-bindkey '^[[B' history-substring-search-down
+# Test and source exported variables
+if [ -f ~/.zsh/exports ]; then
+    source ~/.zsh/exports
+fi
+# Test and then source some options
+if [ -f ~/.zsh/options ]; then
+    source ~/.zsh/options
+fi
+# Test and then source alias definitions.
+if [ -f ~/.zsh/aliases ]; then
+    source ~/.zsh/aliases
+fi
+# Test and then source the functions.
+if [ -f ~/.zsh/functions ]; then
+    source ~/.zsh/functions
+fi
+# Test and then source the completionsystem
+if [ -f ~/.zsh/compctl ]; then
+    source ~/.zsh/compctl
+fi
+# Test and then source the zstyles
+if [ -f ~/.zsh/style ]; then
+    source ~/.zsh/style
+fi
+# Test and then source the powerlevel9k ( must be sourced before ohmyzsh if not missing icons)
+if [ -f ~/.zsh/powerlevel9k ]; then
+    source ~/.zsh/powerlevel9k
+    ZSH_THEME="powerlevel9k/powerlevel9k"
+else
+    ZSH_THEME="agnoster"
+fi
+# Test and then source the keybindings
+if [ -f ~/.zsh/bindings ]; then
+    source ~/.zsh/bindings
+fi
+# Test and then source the wretched rest 
+if [ -f ~/.zsh/misc ]; then
+    source ~/.zsh/misc
+fi
 
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
@@ -146,129 +53,9 @@ plugins=(git up vi-mode extract zsh-history-substring-search zsh-syntax-highligh
 
 source $ZSH/oh-my-zsh.sh
 
-# highlight {{{ # must be set after sourcing oh-my-zsh
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=grey'
+# Test and then source zsh highlight (Must be sourced after oh-my-zsh)
+if [ -f ~/.zsh/stylehighlight ]; then
+    source ~/.zsh/stylehighlight
+fi
 
-ZSH_HIGHLIGHT_STYLES[default]='none'
-ZSH_HIGHLIGHT_STYLES[cursor]='fg=yellow'
-ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
-ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=yellow'
-ZSH_HIGHLIGHT_STYLES[alias]='fg=green'
-ZSH_HIGHLIGHT_STYLES[builtin]='fg=green'
-ZSH_HIGHLIGHT_STYLES[function]='fg=green'
-ZSH_HIGHLIGHT_STYLES[command]='fg=green'
-ZSH_HIGHLIGHT_STYLES[precommand]='fg=green'
-ZSH_HIGHLIGHT_STYLES[commandseparator]='fg=yellow'
-ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=green'
-#ZSH_HIGHLIGHT_STYLES[path]='fg=white,underline'
-#ZSH_HIGHLIGHT_STYLES[path_pathseparator]='fg=grey,underline'
-#ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=white'
-#ZSH_HIGHLIGHT_STYLES[path_approx]='fg=white'
-ZSH_HIGHLIGHT_STYLES[globbing]='none'
-ZSH_HIGHLIGHT_STYLES[history-expansion]='fg=magenta'
-ZSH_HIGHLIGHT_STYLES[single-hyphen-option]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[double-hyphen-option]='fg=blue'
-ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='none'
-ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=magenta'
-ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=magenta'
-ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=cyan'
-ZSH_HIGHLIGHT_STYLES[redirection]='fg=magenta'
-ZSH_HIGHLIGHT_STYLES[bracket-level-1]='fg=cyan,bold'
-ZSH_HIGHLIGHT_STYLES[bracket-level-2]='fg=green,bold'
-ZSH_HIGHLIGHT_STYLES[bracket-level-3]='fg=magenta,bold'
-ZSH_HIGHLIGHT_STYLES[bracket-level-4]='fg=yellow,bold'
-ZSH_HIGHLIGHT_STYLES[assign]='none'
-
-ZSH_HIGHLIGHT_PATTERNS=('rm -rf *' 'fg=white,bold,bg=red')
-
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern cursor line)
-
-# }}}
-
-
-# User configuration
-
-# vim style {{{
-bindkey -v
-bindkey '^P' up-history
-bindkey '^N' down-history
-bindkey '^?' backward-delete-char
-bindkey '^h' backward-delete-char
-bindkey '^w' backward-kill-word
-bindkey '^r' history-incremental-search-backward
-# {{{
-
-# my functions 
-
-function mp3download {
-	if [ "$#" -eq 1 ]
-	then
-		youtube-dl -xi --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $1
-	elif [ "$#" -eq 2 ]
-	then 
-		youtube-dl -xi -u $1 --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $2
-	else
-		echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
-	fi
-}
-function videodownload {
-	if [ "$#" -eq 1 ]
-	then
-		youtube-dl -i -o "%(title)s.%(ext)s" $1
-	elif [ "$#" -eq 2 ]
-	then 
-		youtube-dl -iu $1 -o "%(title)s.%(ext)s" $2
-	else
-		echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
-	fi
-}
-
-# alias {{{
-alias bvim=vim # normal vim in case of not having neovim
-alias nv=nvim
-alias vi=nvim
-alias vim=nvim
-alias G='| grep'
-alias H='| head'
-alias L='| less'
-alias M='| most'
-alias lp="lsof -i :" # e.g. lp 8080 # which app is using a port
-alias T='| tail'
-alias c="cmus"
-alias cat=bat
-alias h="htop"
-alias ip="ip -c"
-alias ipe='curl ipinfo.io/ip'
-alias l='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
-alias lt='ls --tree'
-alias list_colors='for code ({000..255}) print -P -- "$code: %F{$code}This is how your text would look like%f"'
-alias m=mp3download
-alias man="man_color"
-alias o='a -e xdg-open'
-alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
-alias rm="rm -i"
-alias tk="tmux kill-session -t "
-alias tkd="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
-alias untar='tar -sxvf '
-alias fv='f -e vim'
-alias v=videodownload
-alias wget='wget -c '
-
-# Ubuntu
-alias S="apt search "
-alias U="sudo apt update && sudo apt upgrade"
-alias I="sudo apt install "
-alias R="sudo apt remove "
-
-#zsh
-alias LZ="cat ~/.zshrc | grep -v '^#' | grep 'alias'"
-alias SZ="source ~/.zshrc"
-alias EZ="vim ~/.zshrc"
-# }}}
-
-# jump around 
-. ~/.z.sh
 
