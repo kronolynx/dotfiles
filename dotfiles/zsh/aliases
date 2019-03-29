@@ -1,0 +1,42 @@
+alias bvim=vim # normal vim in case of not having neovim
+alias nv=nvim
+alias vi=nvim
+alias vim=nvim
+alias G='| grep'
+alias H='| head'
+alias L='| less'
+alias M='| most'
+alias lp="lsof -i :" # e.g. lp 8080 # which app is using a port
+alias T='| tail'
+alias c="cmus"
+alias cat=bat
+alias h="htop"
+alias ip="ip -c"
+alias ipe='curl ipinfo.io/ip'
+alias l='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
+alias list_colors='for code ({000..255}) print -P -- "$code: %F{$code}This is how your text would look like%f"'
+alias m=mp3download
+alias man="man_color"
+alias o='a -e xdg-open'
+alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
+alias rm="rm -i"
+alias tk="tmux kill-session -t "
+alias tkd="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
+alias untar='tar -sxvf '
+alias fv='f -e vim'
+alias v=videodownload
+alias wget='wget -c '
+
+# Ubuntu
+alias S="apt search "
+alias U="sudo apt update && sudo apt upgrade"
+alias I="sudo apt install "
+alias R="sudo apt remove "
+
+#zsh
+alias LZ="cat ~/.zshrc | grep -v '^#' | grep 'alias'"
+alias SZ="source ~/.zshrc"
+alias EZ="vim ~/.zshrc"
