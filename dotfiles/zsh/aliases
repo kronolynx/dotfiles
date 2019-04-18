@@ -35,6 +35,8 @@ alias S="apt search "
 alias U="sudo apt update && sudo apt upgrade"
 alias I="sudo apt install "
 alias R="sudo apt remove "
+alias dist-upgrade-available="sudo do-release-upgrade -c"
+alias dist-upgrade="sudo do-release-upgrade"
 
 #zsh
 alias LZ="cat ~/.zshrc | grep -v '^#' | grep 'alias'"
