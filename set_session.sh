@@ -22,7 +22,7 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
-export BROWSER=firefox
+export BROWSER=google-chrome
 emacs --daemon &
 $HOME/.scripts/keyboard.sh &
 $HOME/.scripts/monitor.sh &
@@ -46,7 +46,7 @@ fi
 
 nitrogen --restore ~/.wallpapers &
 compton &
-trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1 &
+trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 255 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1 &
 nm-applet &
 xfce4-power-manager &
 clipit &
