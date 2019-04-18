@@ -55,6 +55,8 @@ scripts
 spacemacs
 tmux.conf
 vim/colors
+vim/templates
+vim/bundles
 vimrc
 wallpapers
 xinitrc
