@@ -42,7 +42,6 @@ import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.CycleWS -- cycle thru WS', toggle last WS
 -- actions
 import XMonad.Actions.CycleWindows -- classic alt-tab
-import XMonad.Actions.FloatKeys
 import XMonad.Actions.UpdatePointer
 
 import Graphics.X11.ExtraTypes.XF86
@@ -104,19 +103,6 @@ main = do
     , ("M-C-x", sendMessage $ Toggle REFLECTX)
     , ("M-C-y", sendMessage $ Toggle REFLECTY)
     , ("M-C-m", sendMessage $ Toggle MIRROR)
-       -- Float window
-    , ("M-t", withFocused $ \w -> floatLocation w >>= windows . W.float w . snd)
-    , ("M-C-t", toggleFloatNext)
-       -- Push window back into tilling
-    , ("M-S-t", withFocused $ windows . W.sink)
-       -- Move the floating focused window
-    , ("M-C-<R>", withFocused (keysMoveWindow (moveWD, 0)))
-    , ("M-C-<L>", withFocused (keysMoveWindow (-moveWD, 0)))
-    , ("M-C-<U>", withFocused (keysMoveWindow (0, -moveWD)))
-    , ("M-C-<D>", withFocused (keysMoveWindow (0, moveWD)))
-       -- Resize the floating focused window
-    , ("M-s", withFocused (keysResizeWindow (-resizeWD, resizeWD) (0.5, 0.5)))
-    , ("M-i", withFocused (keysResizeWindow (resizeWD, resizeWD) (0.5, 0.5)))
        -- Increase / Decrese the number of master pane
     , ("M-C-,", sendMessage $ IncMasterN (-1))
     , ("M-C-.", sendMessage $ IncMasterN 1)
