@@ -1,132 +1,106 @@
+" vim: fdm=marker foldenable sw=4 ts=4 sts=4
+" "zo" to open folds, "zc" to close, "zn" to disable.
 " Begin .vimrc
 color molokai
-set nocompatible              " be iMproved, required
-filetype plugin on                  " required
-set encoding=utf8
-"set guifont=DroidSansMono\ Nerd\ Font\ 11
-set guifont=SauceCodePro\ Nerd\ Font\ 11
 " leader {{{
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
 let mapleader = " "
 let g:mapleader = " "
 " }}}
-set noswapfile
-set mouse=a
+
+" Set stuff {{{
+syntax enable
+syntax on
+if has ("autocmd")
+  filetype plugin on                  " for netrw
+  " File type detection. Indent based on filetype. Recommended.
+  filetype plugin indent on
+endif
+"set guifont=DroidSansMono\ Nerd\ Font\ 11
+set nocompatible              " be iMproved, required
+
 " autosave
 :au FocusLost * :wa
 
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
-"inoremap <leader><leader> <Esc>/<++><Enter>"_c4l
-
-" Plugins -------------------------------------------------------------
-
-" install vim plug if not installed
-if has('nvim')
-  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-    silent !echo '[Downloading vim-plug for neovim] ...'
-    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs 
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  endif
-else
-  if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !echo '[Downloading vim-plug for vim] ...'
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  endif
-endif
-
-
-" Load plugins {{{
-call plug#begin('~/.vim/plugged')
-"
-"Plug 'SirVer/ultisnips'
-"Plug 'Townk/vim-autoclose'
-"Plug 'benmills/vimux'
-"Plug 'gerw/vim-latex-suite', { 'for': 'tex' }
-"Plug 'honza/vim-snippets'
-"Plug 'lervag/vimtex'
-"Plug 'scrooloose/syntastic'
-"Plug 'valloric/youcompleteme'
-"Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
-"neomake replaces syntastic
-Plug 'neomake/neomake'
-Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-airline'
-Plug 'chiel92/vim-autoformat'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'easymotion/vim-easymotion'
-Plug 'ervandew/supertab'
-Plug 'flazz/vim-colorschemes'
-Plug 'godlygeek/tabular'
-Plug 'junegunn/vim-easy-align'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'majutsushi/tagbar'
-Plug 'mattn/gist-vim' "https://github.com/mattn/gist-vim
-Plug 'mattn/webapi-vim'
-Plug 'mbbill/undotree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'sheerun/vim-polyglot'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-call plug#end()
+"set foldenable " Enable folding
+"set foldlevel=0 " Close all folds by default
+set autoindent      "Keep indentation from previous line
+set autowrite     " Automatically :write before running commands
+set backspace=indent,eol,start
+set cmdheight=2 " Height of the command bar
+set colorcolumn=+1 " Make it obvious where 80 characters is
+set complete+=kspell "word completion
+set cursorline " Highlight current line
+set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
+set diffopt=filler " Add vertical spaces to keep right and left aligned
+set encoding=utf-8 nobomb " BOM often causes trouble     "
+set encoding=utf8
+set expandtab " Expand tabs to spaces
+set foldcolumn=0 " Column to show folds
+set foldmethod=syntax " Syntax are used to specify folds
+set foldminlines=0 " Allow folding single lines
+set foldnestmax=5 " Set max fold nesting level "
+set formatoptions+=1 " Break before 1-letter words        "
+set formatoptions+=2 " Use indent from 2nd line of a paragraph
+set formatoptions+=c " Format comments
+set formatoptions+=l " Don't break lines that are already long
+set formatoptions+=n " Recognize numbered lists
+set formatoptions+=o " Make comment when using o or O from comment line
+set formatoptions+=q " Format comments with gq
+set formatoptions+=r " Continue comments by default
+set guifont=SauceCodePro\ Nerd\ Font\ 11
+set hid " A buffer becomes hidden when it is abandoned
+set history=1000 " Increase history from 20 default to 1000
+set hlsearch " Highlight searches
+set ignorecase " Ignore case of searches
+set incsearch " Highlight dynamically as pattern is typed
+set incsearch " Highlight dynamically as pattern is typed
+set iskeyword+=:
+set laststatus=2 " Always show the status line
+set lazyredraw " Don't redraw when we don't have to      "
+set matchpairs+=<:> " match between a pair of characters with % " to add more separate with , and add : between the characters
+set mouse=a " Enable mouse in all modes
+set nofoldenable " disable folding
+set nostartofline " Don’t reset cursor to start of line when moving around.
+set noswapfile
+set number relativenumber
+set path+=** " Provides tab-completion for all file-related tasks (Search down into subfolders)
+set ruler "Always show current position
+set shiftround
+set shiftwidth=2   "Indent by 2 spaces when using >>, <<, == etc.
+set shortmess=atI " Don’t show the intro message when starting Vim
+set showcmd " Show the (partial) command as it’s being typed
+set smartcase " if search has uppercase then use case sensitive search
+set smartindent     "Automatically inserts indentation in some cases"
+set softtabstop=2  "Indent by 2 spaces when pressing <TAB>
+set sw=2
+set t_Co=256 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set textwidth=80 " Make it obvious where 80 characters is
+set title " Show the filename in the window titlebar
+set undofile " Persistent Undo
+set wildmenu " Enhance command-line completion
 " }}}
 
-" plugin variables  {{{
-" detect filetype from the filename for gist
-let g:gist_detect_filetype = 1
-" disable autclose
-let g:autoclose_on = 0
-" disable polyglot latex
-let g:polyglot_disabled = ['latex']
-" set vimtex pdf viewer
-let g:vimtex_view_method = 'zathura'
-" open neomake automatically
-"let g:neomake_open_list = 2
-" When writing a buffer call neomake
-"call neomake#configure#automake('w')
+" ignore {{{
+set wildignore+=.DS_Store
+set wildignore+=*.jpg,*.jpeg,*.gif,*.png,*.gif,*.psd,*.o,*.obj,*.min.js
+set wildignore+=*/node_modules/*
+set wildignore+=*/smarty/*,*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,*/log/*,*/tmp/*,*/build/*,*/ckeditor/*,*/doc/*,*/source_maps/*,*/dist/*,*/targer/*
 " }}}
 
-"  plugin keybindings {{{
-"  autoformat file
-noremap <F3> :Autoformat<CR>
-"easy align
-" https://vimawesome.com/plugin/vim-easy-align
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-"Open nerd tree
-map <leader>tt :NERDTreeToggle<CR>
-" Open automatically nerdtree if no file is open
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" undotree
-nnoremap <F5> :UndotreeToggle<cr>
-
-" Turn tags
-nmap <F8> :TagbarToggle<CR>
-
+" easy clipboard copy/paste {{{
+noremap <leader>y "*y
+noremap <leader>Y "*Y
+noremap <leader>p "*p
+noremap <leader>P "*P
 " }}}
-
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
 " custom keybindings {{{
+" Sudo write 
+nnoremap <leader>W :w !sudo tee %<CR>
 " prepend space
 nnoremap <leader>ii i<space><esc>
 " apend space
@@ -152,10 +126,10 @@ map <leader>pp :setlocal paste!<cr>
 " Yank from cursor to end of line
 map Y y$
 " copy and paste
-vmap <C-c> "+yi
-vmap <C-x> "+c
-vmap <C-v> c<esc>"+p
-imap <C-v> <esc>"+pa
+"vmap <C-c> "+yi
+"vmap <C-x> "+c
+"vmap <C-v> c<esc>"+p
+"imap <C-v> <esc>"+pa
 " select all
 "map <C-S-A> <esc>ggVG<CR>
 " save
@@ -190,6 +164,10 @@ map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
 " }}}
 
 " buffers {{{
+" next buffer
+nnoremap <A-l> :bnext<cr>
+" previous buffer
+nnoremap <A-h> :bprevious<cr>
 " Close the current buffer
 map <leader>bd :bd<cr>
 " Close all the buffers
@@ -213,134 +191,29 @@ endtry
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " }}}
 
-" Set stuff {{{
-syntax on
-set number relativenumber
-set sw=2
-set iskeyword+=:
-set t_Co=256 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set laststatus=2 " Always show the status line
-set shiftwidth=4    "Indent by 2 spaces when using >>, <<, == etc.
-set softtabstop=4  "Indent by 2 spaces when pressing <TAB>
-set autoindent      "Keep indentation from previous line
-set smartindent     "Automatically inserts indentation in some cases"
-set expandtab " Expand tabs to spaces
-set backspace=indent,eol,start
-set cursorline " Highlight current line
-set diffopt=filler " Add vertical spaces to keep right and left aligned
-set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
-set encoding=utf-8 nobomb " BOM often causes trouble     "
-set foldcolumn=0 " Column to show folds
-"set foldenable " Enable folding
-set nofoldenable " disable folding
-"set foldlevel=0 " Close all folds by default
-set foldmethod=syntax " Syntax are used to specify folds
-set foldminlines=0 " Allow folding single lines
-set foldnestmax=5 " Set max fold nesting level "
-set formatoptions+=c " Format comments
-set formatoptions+=r " Continue comments by default
-set formatoptions+=o " Make comment when using o or O from comment line
-set formatoptions+=q " Format comments with gq
-set formatoptions+=n " Recognize numbered lists
-set formatoptions+=2 " Use indent from 2nd line of a paragraph
-set formatoptions+=l " Don't break lines that are already long
-set formatoptions+=1 " Break before 1-letter words        "
-set history=1000 " Increase history from 20 default to 1000
-set hlsearch " Highlight searches
-set ignorecase " Ignore case of searches
-set smartcase " if search has uppercase then use case sensitive search
-set incsearch " Highlight dynamically as pattern is typed
-set laststatus=2 " Always show status line
-set lazyredraw " Don't redraw when we don't have to      "
-set ruler "Always show current position
-set cmdheight=2 " Height of the command bar
-set hid " A buffer becomes hidden when it is abandoned
-set complete+=kspell "word completion
-" match between a pair of characters with %
-" to add more separate with , and add : between the characters
-set matchpairs+=<:>
+" Terminal {{{
+" set zsh if available
+if executable ('/usr/bin/zsh')
+  set shell=/usr/bin/zsh
+endif
+" open terminal
+nnoremap <A-s> :te<cr> 
 " }}}
 
 " spellcheck {{{
-"
 autocmd BufRead COMMIT_EDITMSG setlocal spell spelllang=en_us
 " set spell checking for markdown and latex
 " to change the language :spelllang=es || :spelllang=en_us
 autocmd BufNewFile,BufRead *.md,*.mkd,*.markdown set spell spelllang=en_us
-autocmd BufNewFile,BufRead *.tex set spell spelllang=es
+autocmd BufNewFile,BufRead *.tex set spell spelllang=en_us
 " to keep the custom words synchronized
-set spellfile=$HOME/Mega/vim/spell/en.utf-8.add
-set spellfile=$HOME/Mega/vim/spell/es.utf-8.add
+set spellfile=$HOME/Dropbox/vim/spell/en.utf-8.add
+set spellfile=$HOME/Dropbox/vim/spell/es.utf-8.add
 " }}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugin Configuration
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" ensime {{{
-"autocmd BufWritePost *.scala silent :EnTypeCheck
-"nnoremap <localleader>tp :EnType<CR>
-" jump to definition
-"nnoremap <localleader>df :EnDeclaration<CR>
-" }}}
-
-
-" syntastic {{{
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" }}}
-
-" Rust {{{
-"let g:rustfmt_autosave = 1
-"set hidden
-"let g:racer_cmd = "~/.cargo/bin"
-"let g:racer_experimental_completer = 1
-""let g:ycm_rust_src_path = "~/.appsc/rust-master/src/"
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-" }}}
-"  " Airline.vim {{{
-augroup airline_config
-  autocmd!
-  let g:airline_theme='minimalist'
-  let g:airline_powerline_fonts = 1
-  let g:airline_enable_syntastic = 1
-  let g:airline#extensions#tabline#buffer_nr_format = '%s '
-  let g:airline#extensions#tabline#buffer_nr_show = 1
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#fnamecollapse = 0
-  let g:airline#extensions#tabline#fnamemod = ':t'
-augroup END
-" }}}
-
-" latex {{{
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-" }}}
-
-
-" Powerline
-"set rtp+=/usr/share/powerline/bindings/vim/
-if has ("autocmd")
-  " File type detection. Indent based on filetype. Recommended.
-  filetype plugin indent on
-endif
 
 " Local directories {{{
 set backupdir=~/.vim/backup
-"set directory=~/.vim/swaps
+" set directory=~/.vim/swaps
 set undodir=~/.vim/undo
 " }}}
 
@@ -351,17 +224,8 @@ augroup autosourcing
   autocmd BufWritePost .vimrc source %
 augroup end
 " }}}
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-"command W w !sudo tee % > /dev/null
 
-" Format the status line
-"set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Helper functions {{{
 " Returns true if paste mode is enabled
 function! HasPaste()
     if &paste
@@ -369,3 +233,30 @@ function! HasPaste()
     endif
     return ''
 endfunction
+
+if filereadable(expand("~/.vim/bundles"))
+  source ~/.vim/bundles
+endif
+" }}}
+
+" ctags {{{
+" Create the `tags` file (may need to install ctags first)
+command! MakeTags !ctags -R .  
+" NOW WE CAN:
+" - Use ^] to jump to tag under cursor
+" - Use g^] for ambiguous tags
+" - Use ^t to jump back up the tag stack
+" }}}
+
+" File browsing {{{
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+let g:netrw_list_hide=netrw_gitignore#Hide()
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+" }}}
+
+" Templates {{{
+nnoremap ,sh :-1read $HOME/.vim/templates/script<CR>
+nnoremap ,html :-1read $HOME/.vim/templates/html<CR>3jwf>a
+" }}}
