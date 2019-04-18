@@ -444,6 +444,7 @@
 (use-package nand2tetris
   :ensure t
   :mode ("\\.hdl\\'" . nand2tetris-mode))
+(setq nand2tetris-core-base-dir "~/Workspace/nand2tetris")
 
 (use-package gitignore-mode
   :ensure t

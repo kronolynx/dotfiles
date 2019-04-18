@@ -9,6 +9,7 @@ set -gx PATH ~/.local/bin $PATH
 # console emacs
 alias em="emacsclient -nw -c -a emacs"
 alias emc="emacsclient -c -a emacs"
+alias vim=nvim
 alias vi=vim
 
 # apt alias
@@ -42,7 +43,6 @@ alias r='ranger --choosedir="$HOME/.rangerdir"; cd (cat $HOME/.rangerdir)' # fis
 alias v='f -e vim'
 alias o='a -e xdg-open'
 alias cat=bat
-alias ls=lsd
 alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
