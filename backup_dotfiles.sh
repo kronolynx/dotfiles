@@ -13,7 +13,7 @@ bashrc
 config/Thunar
 config/alacritty
 config/cmus/lib.pl
-config/compton.conf
+config/compton
 config/dunst
 config/fish/config.fish
 config/fish/fishfile
