@@ -8,7 +8,8 @@ import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FloatNext
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageHelpers(doFullFloat, doCenterFloat, isFullscreen, isDialog)
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook -- window alert bells
 
@@ -38,11 +39,11 @@ import XMonad.Prompt
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Window -- pops up a prompt with window names
 
-import XMonad.Actions.CycleRecentWS
-import XMonad.Actions.CycleWS -- cycle thru WS', toggle last WS
 -- actions
 import XMonad.Actions.CycleWindows -- classic alt-tab
 import XMonad.Actions.UpdatePointer
+import XMonad.Actions.CycleRecentWS
+import XMonad.Actions.CycleWS -- cycle thru WS', toggle last WS
 
 import Graphics.X11.ExtraTypes.XF86
 -- Keys
@@ -54,29 +55,21 @@ import qualified XMonad.StackSet as W
 
 main = do
   xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
-  xmonad $
+  xmonad $ ewmh $
     defaults
       { logHook =
           (dynamicLogWithPP $
            xmobarPP
-             { ppLayout =
-                 (\x ->
-                    case x of
-                      "Tall"            -> "\xf005" -- 
-                      "ThreeCol"        -> "\xfa6a" -- 頻
-                      "Mirror ThreeCol" -> "\xfa6e" -- 﩮
-                      "Spiral"          -> "\xf306" -- 
-                      "Mosaic"          -> "\xfa6d" -- 舘
-                      "Full"            -> "\xf5b5" -- 
-                      "Mirror Tall"     -> "\xf006" -- 
-                      "Mirror Mosaic"   -> "\xfa73" -- 侀
-                      "Tabbed"          -> "\xfd35" -- ﴵ
-                      "Mirror Spiral"   -> "\xfc06" -- ﰆ
-                      _                 -> x)
+             { ppLayout = myPPLayout
              , ppOutput = hPutStrLn xmproc . \s -> " " ++ s
-             , ppTitle  = xmobarColor "green" "" . shorten 50
+             , ppTitle  = xmobarColor "green" "" . shorten 80
+             --, ppTitle = xmobarColor myTitleColor "" . ( \ str -> "")
+             , ppCurrent = xmobarColor myCurrentWSColor "" . wrap """"
+             , ppVisible = xmobarColor myVisibleWSColor "" . wrap """"
+             , ppHidden = wrap """"
+	     --, ppHiddenNoWindows = xmobarColor myHiddenNoWindowsWSColor ""
              , ppSep    = " "
-             , ppUrgent = xmobarColor "red" "yellow"
+             , ppUrgent = xmobarColor myUrgentWSColor ""
              }) >>
           updatePointer (0.5, 0.5) (0.99, 0.99)
       }
@@ -161,69 +154,70 @@ main = do
     | (i, k) <- zip myWorkspaces [xK_1 ..]
     , (f, m) <-
         [ (W.greedyView, 0)
-        , (W.shift, controlMask)
-        , (\i -> W.greedyView i . W.shift i, shiftMask)
+          , (W.shift, controlMask)
+          , (\i -> W.greedyView i . W.shift i, shiftMask)
         ]]
 
     `additionalKeys`
     [ ((myModMask .|. shiftMask .|. controlMask, k), spawn l)
-    | (k, l) <- zip [xK_1 ..] myKbLayouts]
+      | (k, l) <- zip [xK_1 ..] myKbLayouts]
 
     `additionalKeysP`
        -- Launch terminal
     [ ("M-<Return>", spawn myTerminal)
        -- Launch text editor
-    , ("M-S-<Return>", spawn myTextEditor)
+      , ("M-S-<Return>", spawn myTextEditor)
        -- Launch tmux terminal
-    , ("M-C-<Return>", spawn myTmuxTerminal)
+      , ("M-C-<Return>", spawn myTmuxTerminal)
        -- Kill window
-    , ("M-C-k", spawn "xkill")
+      , ("M-C-k", spawn "xkill")
        -- Lock screen
-    , ("M-z", spawn "~/.scripts/i3lock.sh lock")
+      , ("M-z", spawn "$HOME/.xmonad/scripts/i3lock.sh lock")
        -- suspend
-    , ("M-S-z", spawn "~/.scripts/i3lock.sh suspend")
+      , ("M-S-z", spawn "$HOME/.xmonad/scripts/i3lock.sh suspend")
        -- Reboot
-    , ("M-S-0", spawn "~/.scripts/i3lock.sh reboot")
+      , ("M-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh reboot")
        -- Shutdown
-    , ("M-C-S-0", spawn "~/.scripts/i3lock.sh shutdown")
+      , ("M-C-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh shutdown")
        -- Exit
-    , ("M-C-0", io (exitWith ExitSuccess))
+      , ("M-C-0", io (exitWith ExitSuccess))
        -- Restart xmonad
-    , ( "M-S-r"
+      , ( "M-S-r"
       , spawn
           "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'")
        -- restart xmonad w/o recompiling
-    , ("M-r", spawn "xmonad --restart")
+      , ("M-r", spawn "xmonad --restart")
        -- Launch web browser
-    , ("M-<F2>", spawn myBrowser)
+      , ("M-<F2>", spawn myBrowser)
        -- Launch file manager
-    , ("M-<F3>", spawn myFileManager)
+      , ("M-<F3>", spawn myFileManager)
        -- Launch Console File Manager
-    , ("M-<F4>", spawn myConsoleFileManager)
+      , ("M-<F4>", spawn myConsoleFileManager)
        -- Launch dmenu for launching applicatiton
-    , ("M-d", spawn myLauncher)
+      , ("M-d", spawn myLauncher)
        -- Scratchpads
-    , ("M-S-C-t", namedScratchpadAction scratchpads "htop")
-    , ("M-S-C-c", namedScratchpadAction scratchpads "cmus")
+      , ("M-S-C-t", namedScratchpadAction scratchpads "htop")
+      , ("M-S-C-c", namedScratchpadAction scratchpads "cmus")
        -- Play / Pause media keys
-    , ("<XF86AudioPlay>", spawn "playerctl play-pause")
-    , ("<XF86AudioStop>", spawn "playerctl pause")
-    , ("<XF86AudioPrev>", spawn "playerctl previous")
-    , ("<XF86AudioNext>", spawn "playerctl next")
-    , ("<XF86HomePage>", spawn "mpc toggle")
+      , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+      , ("<XF86AudioStop>", spawn "playerctl pause")
+      , ("<XF86AudioPrev>", spawn "playerctl previous")
+      , ("<XF86AudioNext>", spawn "playerctl next")
+      , ("<XF86HomePage>", spawn "mpc toggle")
        -- Volume setting media keys
-    , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
-    , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
-    , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
-    , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
-    , ("S-<XF86AudioRaiseVolume>", spawn "playerctl + 5")
-    , ("S-<XF86AudioLowerVolume>", spawn "playerctl - 5")
-    , ("S-<XF86AudioMute>", spawn "playerctl 0")
+      , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
+      , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
+      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
+      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
+      , ("S-<XF86AudioRaiseVolume>", spawn "playerctl + 5")
+      , ("S-<XF86AudioLowerVolume>", spawn "playerctl - 5")
+      , ("S-<XF86AudioMute>", spawn "playerctl 0")
         -- Brightness Keys
-    , ( "<XF86MonBrightnessUp>"
+      , ( "M-S-=" --"<XF86MonBrightnessUp>"
       , spawn
           "xbacklight + 5 -time 100 -steps 1; notify-send 'brightness up $(xbacklight -get)")
-    , ( "<XF86MonBrightnessDown>"
+          --"notify-send 'brightness up $(xbacklight -get)")
+    , ( "M-S-/" --"<XF86MonBrightnessDown>"
       , spawn
           "xbacklight - 5 -time 100 -steps 1; notify-send 'brightness down $(xbacklight -get)")
        -- Touch pad
@@ -248,12 +242,26 @@ main = do
     , ( "C-<Print>"
       , spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
     ]
-
+-- myLayout
+myPPLayout =
+                 (\x ->
+                    case x of
+                      "Tall"            -> "\xf005" -- 
+                      "ThreeCol"        -> "\xfa6a" -- 頻
+                      "Mirror ThreeCol" -> "\xfa6e" -- 﩮
+                      "Spiral"          -> "\xf306" -- 
+                      "Mosaic"          -> "\xfa6d" -- 舘
+                      "Full"            -> "\xf5b5" -- 
+                      "Mirror Tall"     -> "\xf006" -- 
+                      "Mirror Mosaic"   -> "\xfa73" -- 侀
+                      "Tabbed"          -> "\xfd35" -- ﴵ
+                      "Mirror Spiral"   -> "\xfc06" -- ﰆ
+                      _                 -> x)
 -- Capture Screen
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
-myDefaultTerminal = "alacritty"
+myDefaultTerminal = "termite"
 myTerminal = myDefaultTerminal -- ++ " -e fish"
 myTmuxTerminal = myDefaultTerminal ++ " -e tmux attach"
 
@@ -265,7 +273,7 @@ myLauncher = "rofi -modi 'drun,run' -show drun"
 myTextEditor = "emacsclient -c -a emacs"
 
 -- Browser
-myBrowser = "google-chrome"
+myBrowser = "firefox"
 
 -- File Manager
 myFileManager = "thunar"
@@ -278,6 +286,14 @@ myTray =
 
 -- border width
 myBorderWidth = 4
+
+-- colors
+myTitleColor = "#c91a1a" -- color of window title
+myTitleLength = 80 -- truncate window title to this length
+myCurrentWSColor = "#6790eb" -- color of active workspace
+myVisibleWSColor = "#aaaaaa" -- color of inactive workspace
+myUrgentWSColor = "#c91a1a" -- color of workspace with 'urgent' window
+myHiddenNoWindowsWSColor = "white"
 
 -- Float window control width
 moveWD = 4
@@ -376,15 +392,16 @@ scratchpads =
 -- title is WM_NAME(STRING)
 myManageHook =
   composeAll . concat $
-  [ [className =? c --> doFloat                      | c       <- myClassFloats]
+  [ [isDialog --> doCenterFloat]
+  , [className =? c --> doFloat                      | c       <- myClassFloats]
   , [title     =? t --> doFloat                      | t       <- myTitleFloats]
   , [className =? c --> doCenterFloat                | c       <- myCenterFloats]
   , [title     =? t --> doCenterFloat                | t       <- myTitleCenterFloats]
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
   ]
   where
-    myCenterFloats = ["zenity"]
-    myTitleCenterFloats = ["File Operation Progress"]
+    myCenterFloats = ["zenity", "Arandr", "Galculator", "Oblogout"]
+    myTitleCenterFloats = ["File Operation Progress", "Downloads", "Save as..."]
     myClassFloats = []
     myTitleFloats = ["Media viewer"]
        -- workspace numbers start at 0
@@ -409,12 +426,11 @@ myNewManageHook =
 myStartupHook
   -- startupHook desktopConfig
  = do
+  spawn "$HOME/.xmonad/scripts/autostart.sh"
+  spawnOnce myTray
   setWMName "LG3D" -- Solves problems with Java GUI programs
-  spawnOnce "sh -c 'sleep 50; exec megasync'"
-  spawnOnce "sh -c 'sleep 50; exec dropbox'"
-  spawnOnce "sh -c 'sleep 60; exec telegram-desktop'"
 
-myHandleEventHook = docksEventHook <+> handleEventHook desktopConfig
+myHandleEventHook = fullscreenEventHook <+>  docksEventHook <+> handleEventHook desktopConfig
 
 ------------------------------------------------------------------------
 -- Key bindings

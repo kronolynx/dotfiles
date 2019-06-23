@@ -7,3 +7,4 @@ rofi.show-icons: true
 rofi.sidebar-mode: true
 rofi.m: -4
 rofi.theme: custom
+rofi.theme: /home/krono/.local/share/rofi/themes/ArcoLinux-Nord.rasi
