@@ -22,7 +22,7 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
-export BROWSER=google-chrome
+export BROWSER=firefox
 emacs --daemon &
 $HOME/.scripts/keyboard.sh &
 $HOME/.scripts/monitor.sh &
@@ -45,15 +45,9 @@ fi
 
 
 nitrogen --restore ~/.wallpapers &
-compton &
-trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 255 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1 &
-nm-applet &
-xfce4-power-manager &
-clipit &
 thunar --daemon &
 #xss-lock -- i3lock -n -i ~/.wallpapers/no-mans-sky-lock.png &
 xautolock -time 7 -locker lock &
-volumeicon &
 
 exec xmonad
 EOF
