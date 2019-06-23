@@ -1,0 +1,67 @@
+#!/bin/bash
+xmonad_desktop=(
+  xmonad
+  xmobar
+  libghc-xmonad-contrib-dev 
+  libghc-xmonad-dev
+  libghc-xmonad-extras-dev
+  trayer # systray
+  scrot # Simple command-line screenshot utility for X
+  clipit # Lightweight GTK+ clipboard manager
+  rofi # menu for launching applications (replacement for dmenu)
+  nitrogen # wallpaper browser and changing utility for X
+  # variety # Wallpaper changer, downloader and manager
+  compton # X compositor that may fix tearing issues
+
+  i3lock # logout, reboot, shutdown, blurlock
+  xautolock # autolock e.g xautolock -time 10 -locker xscreensaver
+  lxappearance # theme
+  dunst # Customizable and lightweight notification-daemon
+  volumeicon-alsa
+  catfish
+  xfce4-notifyd # gtk notifications
+  xfce4-power-manager # power manager
+)
+
+file_manager=(
+  thunar
+  thunar-volman
+  thunar-media-tags-plugin
+  thunar-archive-plugin
+  file-roller
+  xarchiver
+  libgsf
+  gvfs
+  periscope # subtitles
+)
+
+install_themes() {
+  # ppas
+  sudo add-apt-repository ppa:tista/adapta -y # theme adapta-nokoto
+  sudo add-apt-repository ppa:noobslab/icons -y # icons
+  sudo apt-add-repository ppa:numix/ppa -y # numix icons
+  sudo add-apt-repository ppa:papirus/papirus -y # papirus icons
+
+  # install themes
+  themes=(
+    arc-theme
+    adapta-gtk-theme
+    obsidian-1-icons
+    shadow-icon-theme
+    dalisha-icons
+    papirus-icon-theme
+    breeze-cursor-theme
+  )
+
+  ./install-app.sh ${themes[*]}
+}
+
+
+./install-app.sh ${xmonad_desktop[*]}
+./install-app.sh ${file_manager[*]}
+install_themes
+apps/thunar.sh
+
+# lock screen
+sudo cp apps/lock /bin/
+sudo chmod +x /bin/lock

@@ -49,6 +49,7 @@ ideavimrc
 images
 local/share/applications/emacsclient.desktop
 local/share/fonts
+local/share/rofi
 nanorc
 profile
 scripts
@@ -61,6 +62,7 @@ vimrc
 wallpapers
 xinitrc
 xmonad/xmonad.hs
+xmonad/scripts
 z.sh
 zsh
 zshrc
