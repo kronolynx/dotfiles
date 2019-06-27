@@ -2,94 +2,88 @@
   gpgsign = true
 [core]
   editor = vim#emacsclient -c -a emacs
-  filemode = false
+  pager = less
 [alias]
   amend = commit --amend --no-edit
-  # quick amend: Amend my staged changes to the last commit, keeping the same commit message
-  amend-stage = commit --amend -C HEAD
+  amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
   amendAdd = commit --amend --no-edit -a
-# Get the current branch name (not so useful in itself, but used in
-# other aliases)
-  branch-name = "!git rev-parse --abbrev-ref HEAD"
+  branch-name = "!git rev-parse --abbrev-ref HEAD" # Get the current branch name (not so useful in itself, but used in other aliases)
+  a = add -A
   c = commit
   ck = checkout
   ckb = checkout -b
   ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f"
-  # checkout remote branch e.g. git ckre new-branch-name remote-name remote-branch-name
-  ckre = "!f() { git fetch $2 && git ckb $1 $2/$3; }; f"
-  # checkout new branch from upstream master e.g. git ckup new-branch-name
-  ckup = "!f() { git ckre $1 upstream master; }; f"
-  cm = commit -m
-  count = "!git ls-files | xargs wc -l"
+  ckre = "!f() { git fetch $2 && git ckb $1 $2/$3; }; f" # checkout remote branch e.g. git ckre new-branch-name remote-name remote-branch-name
+  ckup = "!f() { git ckre $1 upstream master; }; f" # checkout new branch from upstream master e.g. git ckup new-branch-name
+  cleanloc = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"  # delete branches merged into master
+  cleanrem = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git push origin --delete"
   clonerec = "!f() { git clone --recursive $1; }; f"
-  #delete specified branch e.g. git del test-branch
-  delb = branch -D
-  # delete branches merged into master
-  delmerg = "git branch --merged master | grep -v '^[ *]*master$' | xargs git branch -d"
+  cm = commit -m
+  cam = commit -am
+  count = "!git ls-files | xargs wc -l"
+  cw = "!f() { git commit -m \"WIP $1\"; }; f" # prepend WIP to commit message
+  delb = branch -D #delete specified branch e.g. git del test-branch
   diffc = diff --cached
   fu = fetch upstream
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-  # stop tracking file for changes
-  ignore = "!f() { git update-index --assume-unchanged $1; }; f"
-  # Init git and add initial commit with all the files, add gitignore first to ignore files
-  initc = "!git init && git add -A && git commit -m 'Initial commit'"
-  # join last head and previous commit
-  join = "!git reset --soft HEAD~1 && git commit --amend -a"
-  # list aliases
-  la = "!git config -l | grep alias | cut -c 7-"
-  # list branches
-  ls = branch -v
-  # list remotes
-  lsr = remote -v
+  i = "!git add -i"
+  ignore = "!f() { git update-index --assume-unchanged $1; }; f" # stop tracking file for changes
+  initc = "!git init && git add -A && git commit -m 'Initial commit'" # Init git and add initial commit with all the files, add gitignore first to ignore files
+  join = "!git reset --soft HEAD~1 && git commit --amend -a" # join last head and previous commit
   l = log --graph --all --decorate --oneline -36
+  la = "!git config -l | grep alias | cut -c 7-" # list aliases
+  ls = branch -v # list branches
+  lsr = remote -v # list remotes
+  mema ="!f() { git ck master && git merge --ff-only $1 && git push origin master && git branch -d $1 && git push origin --delete $1;}; f" # merge branch into master and push then clean
+  mem ="!f() { git ck master && git merge --ff-only $1 && git push origin master && git push origin --delete $1;}; f" # merge branch into master and push then clean
+  mecuma ="!git mema $(git branch-name)" # merge current branch into master and push then clean
   #meup ="!f() {git branch | grep \* | cut -d ' ' -f2 | xargs git push upstream $1:master; }; f"
-  # merge to upstream current branch
-  meup ="!git push upstream $(git branch-name):master && git pod"
+  meup ="!git push upstream $(git branch-name):master && git pod" # merge to upstream current branch
+  mv = git branch -m # <oldname> <newname>
   p = push
   pdiff = diff @~..@
   pf = push -f
-  # push to origin
-  po = "!git push -u origin $(git branch-name)"
-  # delete origin
-  pod = "!git push origin --delete $(git branch-name)"
-  pom = pull origin master
-  #pu = push upstream
+  po = "!git push -u origin $(git branch-name)" # push to origin
+  pod = "!git push origin --delete $(git branch-name)" # delete origin
+  pom = "!git fetch && git pull origin master"
+  pop = stash pop
   pr = pull --rebase
   prom = pull --rebase origin master
   prum = pull --rebase upstream master
   pullall = submodule update --recursive --remote
   pullsub = submodule update --recursive
   rc = rebase --continue
-  # ours in this case means the changes that are not in the curren branch (inverse)
-  # the branch must be specified e.g. upstream/master
-  reb = "!f() { git rebase $1 -s recursive -X ours; }; f"
+  reb = "!f() { git rebase $1 -s recursive -X ours; }; f" # the branch must be specified e.g. upstream/master # ours in this case means the changes that are not in the curren branch (inverse)
   reom = reset --hard origin/master
+  ri = rebase -i # commit ref to start (not included) or HEAD~# where # is the number of commits to rebase/squash
   rim = rebase -i upstream/master
   ru = rebase upstream/master
-  # add all changes including untracked files and creates commit
-  save = !git add -A && git commit -m 'SAVEPOINT'
-  set-remote = remote set-url origin
+  s = status
+  set-remote = remote set-url origin # add all changes including untracked files and creates commit
   spull = !git pull && git submodule foreach git pull origin master
   spush = push --recurse-submodules=on-demand
+  staged = diff --staged
   st = stash
   stap = stash apply
-  # undo previous commit but keep all the changes in the working directory
-  undo = reset HEAD~1 --mixed
+  stsa = stash save
+  stls = stash list
+  stpa = stash --patch # partial stash
+  stsh = stash show # show latest stash
+  stbr = stash branch # <branch_name> <stash_id>
+  stdr = stash drop # <stash_id>
+  stcl = stash clear # caution deletes all stashes
+  unapp = "!git stash show -p | git apply -R" # undo the last stash apply
+  undo = reset HEAD~1 --mixed # undo previous commit but keep all the changes in the working directory
   undo-commit = reset --soft HEAD~1
-  # resume tracking file  for changes
-  unignore = "!f() { git update-index --no-assume-unchanged $1; }; f"
+  unignore = "!f() { git update-index --no-assume-unchanged $1; }; f" # resume tracking file  for changes
   unstage = reset HEAD
-  # commits tracked changes
-  wip = commit -am "WIP"
+  wipa = !git add -A && git commit -m 'WIP (save all changes)' # commits tracked changes
+  wips = commit -am "WIP (save staged changes)"
+#  cleanr = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\///' | xargs -n 1 git push --delete origin"
 [status]
   submoduleSummary = true
 [diff]
   submodule = log
-[pager]
-    # insanely beautiful diffs ==> npm install -g diff-so-fancy
-  #diff = diff-so-fancy | less --tabs=4 -RFX
-  #show = diff-so-fancy | less --tabs=4 -RFX
-
 #so much color
 [color]
   ui = auto
@@ -139,3 +133,5 @@
   default = current
 [github]
   user = kronolynx
+[init]
+  templatedir = ~/.git_template
