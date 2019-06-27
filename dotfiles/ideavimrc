@@ -6,7 +6,7 @@ set showmode
 set history=1000
 
 " tabs {{{
-nnoremap <C-w>x :action CloseContent<cr>
+nnoremap <C-w>c :action CloseContent<cr>
 nnoremap <C-w>o :action CloseAllEditorsButActive<cr>
 nnoremap <C-w>a :action CloseAllEditors<cr>
 nnoremap <C-w>g :action CloseEditorsGroup<cr>
@@ -28,8 +28,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
  
-nnoremap <C-w>- :action SplitHorizontally<cr>
-nnoremap <C-w>| :action SplitVertically<cr>
+nnoremap <C-w>s :action SplitHorizontally<cr>
+nnoremap <C-w>v :action SplitVertically<cr>
+noremap  <A-z> :action HideAllWindows<cr>
+nnoremap <A-t> :action ActivateProjectToolWindow<cr>
+nnoremap <A-s> :action ActivateTerminalToolWindow<cr>
+nnoremap <A-g> :action ActivateVersionControlToolWindow<cr>
+" nnoremap <A-s> :action Activatesbt-shell-toolwindowToolWindow<cr>
+nnoremap <A-b> :action ActivatesbtToolWindow<cr>
 " }}}
 
 " Plugins {{{
@@ -43,8 +49,8 @@ map <A-M>  <A-N>
 nnoremap <leader>gs :action GotoSuperMethod<cr>
 nnoremap <leader>fu :action FindUsages<cr>
 nnoremap <leader>gf :action GotoFile<cr>
+nnoremap <leader>gc :action GotoClass<cr>
 nnoremap <leader>fp :action FindInPath<cr>
-nnoremap <leader>fu :action FindUsages<cr>
 nnoremap <leader>se :action SearchEverywhere<cr>
 nnoremap <leader>ee :action GotoNextError<CR>
 nnoremap <leader>EE :action GotoPreviousError<CR>
@@ -60,10 +66,10 @@ nnoremap <leader>sr :action Replace<cr>
 
 
 " file navigation and tools {{{
-nnoremap <leader>T :action FileStructurePopup<cr>
+nnoremap <leader>fs :action FileStructurePopup<cr>
 nnoremap <leader>sw :action Switcher<cr>
-nnoremap <leader>sw :action ActivateProjectToolWindow<cr>
-nnoremap <leader>rfi :action RecentFiles<cr>
+nnoremap <leader>tw :action ActivateProjectToolWindow<cr>
+nnoremap <leader>rf :action RecentFiles<cr>
 map <A-s> :action ActivateTerminalToolWindow<cr>
 " }}}
 
