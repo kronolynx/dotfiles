@@ -62,186 +62,22 @@ main = do
            xmobarPP
              { ppLayout = myPPLayout
              , ppOutput = hPutStrLn xmproc . \s -> " " ++ s
-             , ppTitle  = xmobarColor "green" "" . shorten 80
-             --, ppTitle = xmobarColor myTitleColor "" . ( \ str -> "")
-             , ppCurrent = xmobarColor myCurrentWSColor "" . wrap """"
-             , ppVisible = xmobarColor myVisibleWSColor "" . wrap """"
-             , ppHidden = wrap """"
-	     --, ppHiddenNoWindows = xmobarColor myHiddenNoWindowsWSColor ""
+             , ppTitle  = xmobarColor myTitleColor "" . ( \ str -> "")
              , ppSep    = " "
              , ppUrgent = xmobarColor myUrgentWSColor ""
              }) >>
           updatePointer (0.5, 0.5) (0.99, 0.99)
       }
-       -------------------------------------------------------------------- }}}
-       -- Define keys to remove                                             {{{
-       ------------------------------------------------------------------------
-     `removeKeysP`
-       -- Unused gmrun binding
-    [ "M-S-p"
-       -- Unused close window binding
-    , "M-S-c"
-    ] `additionalKeysP`
-       -- Shrink / Expand the focused window
-    [ ("M-,", sendMessage Shrink)
-    , ("M-.", sendMessage Expand)
-    , ("M-S-.", sendMessage MirrorShrink)
-    , ("M-S-,", sendMessage MirrorExpand)
-       -- Toggle struts
-    , ("M-b", sendMessage ToggleStruts)
-       -- Close the focused window
-    , ("M-S-q", kill)
-       -- Toggle layout (Fullscreen mode)
-    , ("M-f", sendMessage $ Toggle NBFULL)
-    , ("M-C-x", sendMessage $ Toggle REFLECTX)
-    , ("M-C-y", sendMessage $ Toggle REFLECTY)
-    , ("M-C-m", sendMessage $ Toggle MIRROR)
-       -- Increase / Decrese the number of master pane
-    , ("M-C-,", sendMessage $ IncMasterN (-1))
-    , ("M-C-.", sendMessage $ IncMasterN 1)
-       -- Go to the next / previous workspace
-    , ("M-C-<R>", nextWS)
-    , ("M-C-<L>", prevWS)
-    , ("M-C-l", nextWS)
-    , ("M-C-h", prevWS)
-       -- Shift the focused window to the next / previous workspace
-    , ("M-S-<R>", shiftToNext)
-    , ("M-S-<L>", shiftToPrev)
-    , ("M-C-S-l", shiftToNext)
-    , ("M-C-S-h", shiftToPrev)
-       -- Previous workspace
-    , ("M-<Tab>", toggleWS) -- toggle last workspace (super-tab)
-       -- Window navigation
-    , ("M-<D>", sendMessage $ Go D)
-    , ("M-<U>", sendMessage $ Go U)
-    , ("M-<L>", sendMessage $ Go L)
-    , ("M-<R>", sendMessage $ Go R)
-    , ("M-j", sendMessage $ Go D)
-    , ("M-k", sendMessage $ Go U)
-    , ("M-h", sendMessage $ Go L)
-    , ("M-l", sendMessage $ Go R)
-       -- Swap windows
-    , ("M-S-<D>", sendMessage $ Swap D)
-    , ("M-S-<U>", sendMessage $ Swap U)
-    , ("M-S-<L>", sendMessage $ Swap L)
-    , ("M-S-<R>", sendMessage $ Swap R)
-    , ("M-S-j", sendMessage $ Swap D)
-    , ("M-S-k", sendMessage $ Swap U)
-    , ("M-S-h", sendMessage $ Swap L)
-    , ("M-S-l", sendMessage $ Swap R)
-       -- Shift the focused window to the master window
-    , ("M-m", windows W.shiftMaster)
-       -- Focus master
-    , ("M-S-m", windows W.focusMaster)
-       -- grid selection
-    , ("M-g", goToSelected myGridSelectConfig)
-       -- Search a window and focus into the window
-    , ("M-S-g", windowPromptGoto myXPConfig)
-       -- Search a window and bring to the current workspace
-    , ("M-C-g", windowPromptBring myXPConfig)
-       -- Move the focus to next screen (multi screen)
-    , ("M-S-<Tab>", nextScreen)
-       -- screen
-    , ("M-o", swapNextScreen)
-    , ("M-S-o", shiftNextScreen)
-       -- classic alt-tab behaviour
-    , ("M1-<Tab>", cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab)
-       -- Resize viewed windows to the correct size
-    , ("M-n", refresh)]
+      `removeKeysP`
+        myRemoveKeys
+      `additionalKeysP`
+        myKeys
+      `additionalKeys`
+        myLayoutKeys
+      `additionalKeysP`
+        myAppkeys
 
-    `additionalKeys`
-    [ ((m .|. myModMask, k), windows $ f i)
-    | (i, k) <- zip myWorkspaces [xK_1 ..]
-    , (f, m) <-
-        [ (W.greedyView, 0)
-          , (W.shift, controlMask)
-          , (\i -> W.greedyView i . W.shift i, shiftMask)
-        ]]
 
-    `additionalKeys`
-    [ ((myModMask .|. shiftMask .|. controlMask, k), spawn l)
-      | (k, l) <- zip [xK_1 ..] myKbLayouts]
-
-    `additionalKeysP`
-       -- Launch terminal
-    [ ("M-<Return>", spawn myTerminal)
-       -- Launch text editor
-      , ("M-S-<Return>", spawn myTextEditor)
-       -- Launch tmux terminal
-      , ("M-C-<Return>", spawn myTmuxTerminal)
-       -- Kill window
-      , ("M-C-k", spawn "xkill")
-       -- Lock screen
-      , ("M-z", spawn "$HOME/.xmonad/scripts/i3lock.sh lock")
-       -- suspend
-      , ("M-S-z", spawn "$HOME/.xmonad/scripts/i3lock.sh suspend")
-       -- Reboot
-      , ("M-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh reboot")
-       -- Shutdown
-      , ("M-C-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh shutdown")
-       -- Exit
-      , ("M-C-0", io (exitWith ExitSuccess))
-       -- Restart xmonad
-      , ( "M-S-r"
-      , spawn
-          "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'")
-       -- restart xmonad w/o recompiling
-      , ("M-r", spawn "xmonad --restart")
-       -- Launch web browser
-      , ("M-<F2>", spawn myBrowser)
-       -- Launch file manager
-      , ("M-<F3>", spawn myFileManager)
-       -- Launch Console File Manager
-      , ("M-<F4>", spawn myConsoleFileManager)
-       -- Launch dmenu for launching applicatiton
-      , ("M-d", spawn myLauncher)
-       -- Scratchpads
-      , ("M-S-C-t", namedScratchpadAction scratchpads "htop")
-      , ("M-S-C-c", namedScratchpadAction scratchpads "cmus")
-       -- Play / Pause media keys
-      , ("<XF86AudioPlay>", spawn "playerctl play-pause")
-      , ("<XF86AudioStop>", spawn "playerctl pause")
-      , ("<XF86AudioPrev>", spawn "playerctl previous")
-      , ("<XF86AudioNext>", spawn "playerctl next")
-      , ("<XF86HomePage>", spawn "mpc toggle")
-       -- Volume setting media keys
-      , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
-      , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
-      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
-      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
-      , ("S-<XF86AudioRaiseVolume>", spawn "playerctl + 5")
-      , ("S-<XF86AudioLowerVolume>", spawn "playerctl - 5")
-      , ("S-<XF86AudioMute>", spawn "playerctl 0")
-        -- Brightness Keys
-      , ( "M-S-=" --"<XF86MonBrightnessUp>"
-      , spawn
-          "xbacklight + 5 -time 100 -steps 1; notify-send 'brightness up $(xbacklight -get)")
-          --"notify-send 'brightness up $(xbacklight -get)")
-    , ( "M-S-/" --"<XF86MonBrightnessDown>"
-      , spawn
-          "xbacklight - 5 -time 100 -steps 1; notify-send 'brightness down $(xbacklight -get)")
-       -- Touch pad
-    , ( "<XF86TouchpanOn"
-      , spawn "synclient TouchpadOff=0 && notify-send 'Touchpad On")
-    , ( "<XF86TouchpanOff"
-      , spawn "synclient TouchpadOff=1 && notify-send 'Touchpad Off")
-       -- Explorer
-    , ("<XF86Explorer", spawn myBrowser)
-       -- Search
-    , ("<XF86Search", spawn (myBrowser ++ " https://duckduckgo.com"))
-       -- Suspendre
-    , ("<XF86Suspend", spawn "i~/.scripts/i3lock.sh suspend")
-       -- Take a screenshot (whole desktop)
-    , ("<Print>", spawn (myScreenCapture ++ "; notify-send 'Desktop captured'"))
-       -- Take a screenshot (selected area)
-    , ( "S-<Print>"
-      , spawn
-          ("notify-send 'Select Area';sleep 0.2;" ++
-           myScreenCapture ++ " -s && notify-send 'Area captured'"))
-       -- Take a screenshot (focused window)
-    , ( "C-<Print>"
-      , spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
-    ]
 -- myLayout
 myPPLayout =
                  (\x ->
@@ -262,10 +98,9 @@ myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
 myDefaultTerminal = "termite"
-myTerminal = myDefaultTerminal -- ++ " -e fish"
+myTerminal = myDefaultTerminal
 myTmuxTerminal = myDefaultTerminal ++ " -e tmux attach"
 
--- myTerminal = "termite -e tmux"
 -- Launcher
 myLauncher = "rofi -modi 'drun,run' -show drun"
 
@@ -290,7 +125,7 @@ myBorderWidth = 4
 -- colors
 myTitleColor = "#c91a1a" -- color of window title
 myTitleLength = 80 -- truncate window title to this length
-myCurrentWSColor = "#6790eb" -- color of active workspace
+myCurrentWSColor = "green" -- "#6790eb" -- color of active workspace
 myVisibleWSColor = "#aaaaaa" -- color of inactive workspace
 myUrgentWSColor = "#c91a1a" -- color of workspace with 'urgent' window
 myHiddenNoWindowsWSColor = "white"
@@ -299,10 +134,6 @@ myHiddenNoWindowsWSColor = "white"
 moveWD = 4
 
 resizeWD = 4
-
--- keyboard layouts
-myKbLayouts =
-  map ("setxkbmap -option caps:backspace -layout " ++) ["dvorak", "us", "es"]
 
 defaults =
   docks $
@@ -477,9 +308,9 @@ colorNormalbg = "#1c1c1c"
 colorfg = "#a8b6b8"
 
 -- Border Styling
-myNormalBorderColor = "#00002c"
+myNormalBorderColor = "#71469b" --"#00002c"
 
-myFocusedBorderColor = "#4ec2f7"
+myFocusedBorderColor = "#3da676" --"#4ec2f7"
 
 -- Color of current window title in xmobar.
 xmobarTitleColor = "#FFB6B0"
@@ -539,3 +370,172 @@ myGridSelectConfig = def { gs_navigate = myNavigation
                  , ((0, xK_n), move (1, 1) >> myNavigation)
                  , ((0, xK_Tab), moveNext >> myNavigation)
                  ]
+
+-------------------------------------------------------------------- }}}
+-- Define keys to remove                                             {{{
+------------------------------------------------------------------------
+myRemoveKeys = 
+  [
+    -- Unused gmrun binding
+    "M-S-p"
+    -- Unused close window binding
+    , "M-S-c"
+  ] 
+
+myKeys =
+       -- Shrink / Expand the focused window
+    [ ("M-,", sendMessage Shrink)
+    , ("M-.", sendMessage Expand)
+    , ("M-S-.", sendMessage MirrorShrink)
+    , ("M-S-,", sendMessage MirrorExpand)
+       -- Toggle struts
+    , ("M-b", sendMessage ToggleStruts)
+       -- Close the focused window
+    , ("M-S-q", kill)
+       -- Toggle layout (Fullscreen mode)
+    , ("M-f", sendMessage $ Toggle NBFULL)
+    , ("M-C-x", sendMessage $ Toggle REFLECTX)
+    , ("M-C-y", sendMessage $ Toggle REFLECTY)
+    , ("M-C-m", sendMessage $ Toggle MIRROR)
+       -- Increase / Decrese the number of master pane
+    , ("M-C-,", sendMessage $ IncMasterN (-1))
+    , ("M-C-.", sendMessage $ IncMasterN 1)
+       -- Go to the next / previous workspace
+    , ("M-C-<R>", nextWS)
+    , ("M-C-<L>", prevWS)
+    , ("M-C-l", nextWS)
+    , ("M-C-h", prevWS)
+       -- Shift the focused window to the next / previous workspace
+    , ("M-S-<R>", shiftToNext)
+    , ("M-S-<L>", shiftToPrev)
+    , ("M-C-S-l", shiftToNext)
+    , ("M-C-S-h", shiftToPrev)
+       -- Previous workspace
+    , ("M-<Tab>", toggleWS) -- toggle last workspace (super-tab)
+       -- Window navigation
+    , ("M-<D>", sendMessage $ Go D)
+    , ("M-<U>", sendMessage $ Go U)
+    , ("M-<L>", sendMessage $ Go L)
+    , ("M-<R>", sendMessage $ Go R)
+    , ("M-j", sendMessage $ Go D)
+    , ("M-k", sendMessage $ Go U)
+    , ("M-h", sendMessage $ Go L)
+    , ("M-l", sendMessage $ Go R)
+       -- Swap windows
+    , ("M-S-<D>", sendMessage $ Swap D)
+    , ("M-S-<U>", sendMessage $ Swap U)
+    , ("M-S-<L>", sendMessage $ Swap L)
+    , ("M-S-<R>", sendMessage $ Swap R)
+    , ("M-S-j", sendMessage $ Swap D)
+    , ("M-S-k", sendMessage $ Swap U)
+    , ("M-S-h", sendMessage $ Swap L)
+    , ("M-S-l", sendMessage $ Swap R)
+       -- Shift the focused window to the master window
+    , ("M-m", windows W.shiftMaster)
+       -- Focus master
+    , ("M-S-m", windows W.focusMaster)
+       -- grid selection
+    , ("M-g", goToSelected myGridSelectConfig)
+       -- Search a window and focus into the window
+    , ("M-S-g", windowPromptGoto myXPConfig)
+       -- Search a window and bring to the current workspace
+    , ("M-C-g", windowPromptBring myXPConfig)
+       -- Move the focus to next screen (multi screen)
+    , ("M-S-<Tab>", nextScreen)
+       -- screen
+    , ("M-o", swapNextScreen)
+    , ("M-S-o", shiftNextScreen)
+       -- classic alt-tab behaviour
+    , ("M1-<Tab>", cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab)
+       -- Resize viewed windows to the correct size
+    , ("M-n", refresh)]
+
+myLayoutKeys =
+    [ ((m .|. myModMask, k), windows $ f i)
+    | (i, k) <- zip myWorkspaces [xK_1 ..]
+    , (f, m) <-
+        [ (W.greedyView, 0)
+          , (W.shift, controlMask)
+          , (\i -> W.greedyView i . W.shift i, shiftMask)
+        ]]
+
+myAppkeys = 
+       -- Launch terminal
+    [ ("M-<Return>", spawn myTerminal)
+       -- Launch text editor
+      , ("M-S-<Return>", spawn myTextEditor)
+       -- Launch tmux terminal
+      , ("M-C-<Return>", spawn myTmuxTerminal)
+       -- Kill window
+      , ("M-C-k", spawn "xkill")
+       -- Lock screen
+      , ("M-z", spawn "$HOME/.xmonad/scripts/i3lock.sh lock")
+       -- suspend
+      , ("M-S-z", spawn "$HOME/.xmonad/scripts/i3lock.sh suspend")
+       -- Reboot
+      , ("M-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh reboot")
+       -- Shutdown
+      , ("M-C-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh shutdown")
+       -- Exit
+      , ("M-C-0", io (exitWith ExitSuccess))
+       -- Restart xmonad
+      , ( "M-S-r"
+      , spawn
+          "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'")
+       -- restart xmonad w/o recompiling
+      , ("M-r", spawn "xmonad --restart")
+       -- Launch web browser
+      , ("M-<F2>", spawn myBrowser)
+       -- Launch file manager
+      , ("M-<F3>", spawn myFileManager)
+       -- Launch Console File Manager
+      , ("M-<F4>", spawn myConsoleFileManager)
+       -- Launch dmenu for launching applicatiton
+      , ("M-d", spawn myLauncher)
+       -- Scratchpads
+      , ("M-S-C-t", namedScratchpadAction scratchpads "htop")
+      , ("M-S-C-c", namedScratchpadAction scratchpads "cmus")
+       -- Play / Pause media keys
+      , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+      , ("<XF86AudioStop>", spawn "playerctl pause")
+      , ("<XF86AudioPrev>", spawn "playerctl previous")
+      , ("<XF86AudioNext>", spawn "playerctl next")
+      , ("<XF86HomePage>", spawn "mpc toggle")
+       -- Volume setting media keys
+      , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
+      , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
+      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
+      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
+      , ("S-<XF86AudioRaiseVolume>", spawn "playerctl + 5")
+      , ("S-<XF86AudioLowerVolume>", spawn "playerctl - 5")
+      , ("S-<XF86AudioMute>", spawn "playerctl 0")
+        -- Brightness Keys
+      , ( "M-S-=" --"<XF86MonBrightnessUp>"
+      , spawn
+          "xbacklight + 5 -time 100 -steps 1; notify-send 'brightness up $(xbacklight -get)")
+          --"notify-send 'brightness up $(xbacklight -get)")
+    , ( "M-S-/" --"<XF86MonBrightnessDown>"
+      , spawn
+          "xbacklight - 5 -time 100 -steps 1; notify-send 'brightness down $(xbacklight -get)")
+       -- Touch pad
+    , ( "<XF86TouchpanOn"
+      , spawn "synclient TouchpadOff=0 && notify-send 'Touchpad On")
+    , ( "<XF86TouchpanOff"
+      , spawn "synclient TouchpadOff=1 && notify-send 'Touchpad Off")
+       -- Explorer
+    , ("<XF86Explorer", spawn myBrowser)
+       -- Search
+    , ("<XF86Search", spawn (myBrowser ++ " https://duckduckgo.com"))
+       -- Suspendre
+    , ("<XF86Suspend", spawn "i~/.scripts/i3lock.sh suspend")
+       -- Take a screenshot (whole desktop)
+    , ("<Print>", spawn (myScreenCapture ++ "; notify-send 'Desktop captured'"))
+       -- Take a screenshot (selected area)
+    , ( "S-<Print>"
+      , spawn
+          ("notify-send 'Select Area';sleep 0.2;" ++
+           myScreenCapture ++ " -s && notify-send 'Area captured'"))
+       -- Take a screenshot (focused window)
+    , ( "C-<Print>"
+      , spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
+    ]

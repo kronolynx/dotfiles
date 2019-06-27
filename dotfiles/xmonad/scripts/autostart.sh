@@ -7,7 +7,7 @@ function run {
   fi
 }
 
-
+#(sleep 2; run $HOME/.config/polybar/launch.sh) &
 compton --config $HOME/.config/compton/compton.conf &
 run compton &
 run nm-applet &
