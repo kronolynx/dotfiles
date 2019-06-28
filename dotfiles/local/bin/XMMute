@@ -1,0 +1,10 @@
+#!/bin/bash
+
+mute=$(amixer -D pulse get Master | awk  '/'Front' 'Left:' 'Playback'/  {print $6}')
+
+if [ "$mute" = "[off]" ]
+	then amixer -D pulse sset Master unmute
+else
+	amixer -D pulse sset Master mute
+fi
+exit 0
