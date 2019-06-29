@@ -38,7 +38,7 @@ config/termite
 config/tmux
 config/xmobar
 config/yay
-confip/volumeicon
+config/volumeicon
 dir_colors
 emacs.d/init.el
 gitconfig
@@ -62,7 +62,6 @@ vimrc
 wallpapers
 xinitrc
 xmonad/xmonad.hs
-xmonad/scripts
 z.sh
 zsh
 zshrc
