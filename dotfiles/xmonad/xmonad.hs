@@ -231,10 +231,10 @@ myManageHook =
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
   ]
   where
-    myCenterFloats = ["zenity", "Arandr", "Galculator", "Oblogout"]
+    myCenterFloats = ["zenity", "Arandr", "Galculator", "Oblogout", "Yad"]
     myTitleCenterFloats = ["File Operation Progress", "Downloads", "Save as..."]
     myClassFloats = []
-    myTitleFloats = ["Media viewer"]
+    myTitleFloats = ["Media viewer", "yad"]
        -- workspace numbers start at 0
     myShifts =
       [("keepassxc", 6)
@@ -257,7 +257,7 @@ myNewManageHook =
 myStartupHook
   -- startupHook desktopConfig
  = do
-  spawn "$HOME/.xmonad/scripts/autostart.sh"
+  spawn "$HOME/.scripts/autostart.sh"
   spawnOnce myTray
   setWMName "LG3D" -- Solves problems with Java GUI programs
 
@@ -310,7 +310,7 @@ colorfg = "#a8b6b8"
 -- Border Styling
 myNormalBorderColor = "#71469b" --"#00002c"
 
-myFocusedBorderColor = "#3da676" --"#4ec2f7"
+myFocusedBorderColor = "#4deeea" --"#4ec2f7"
 
 -- Color of current window title in xmobar.
 xmobarTitleColor = "#FFB6B0"
@@ -502,13 +502,9 @@ myAppkeys =
       , ("<XF86AudioNext>", spawn "playerctl next")
       , ("<XF86HomePage>", spawn "mpc toggle")
        -- Volume setting media keys
-      , ("<XF86AudioRaiseVolume>", spawn "amixer -q set Master 5%+")
-      , ("<XF86AudioLowerVolume>", spawn "amixer -q set Master 5%-")
-      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
-      , ("<XF86AudioMute>", spawn "amixer -q set Master toggle")
-      , ("S-<XF86AudioRaiseVolume>", spawn "playerctl + 5")
-      , ("S-<XF86AudioLowerVolume>", spawn "playerctl - 5")
-      , ("S-<XF86AudioMute>", spawn "playerctl 0")
+      , ("<XF86AudioRaiseVolume>", spawn "amixer -q -D pulse set Master 5%+ unmute")
+      , ("<XF86AudioLowerVolume>", spawn "amixer -q -D pulse set Master 5%- unmute")
+      , ("<XF86AudioMute>", spawn "XMMute")
         -- Brightness Keys
       , ( "M-S-=" --"<XF86MonBrightnessUp>"
       , spawn

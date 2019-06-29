@@ -104,6 +104,7 @@ system=(
   xdg-user-dirs # tool to manage well known user directories
   xserver-xorg-input-all # fix keyboard not working
   xserver-xorg-input-synaptics # touchpad
+  yad # tool for creating graphical dialogs from shell scripts
   zenity # Display graphical dialog boxes from shell scripts
 )
 
