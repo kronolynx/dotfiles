@@ -41,6 +41,10 @@ fi
 if [ -f ~/.zsh/bindings ]; then
     source ~/.zsh/bindings
 fi
+# Test and then source work related
+if [ -f ~/.zsh/work ]; then
+    source ~/.zsh/work
+fi
 # Test and then source the wretched rest 
 if [ -f ~/.zsh/misc ]; then
     source ~/.zsh/misc

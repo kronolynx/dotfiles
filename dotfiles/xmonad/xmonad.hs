@@ -24,7 +24,6 @@ import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
-import XMonad.Layout.Tabbed
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
 import XMonad.Actions.GridSelect
@@ -116,9 +115,6 @@ myFileManager = "thunar"
 -- Console File Manager
 myConsoleFileManager = myTerminal ++ " -e ranger"
 
-myTray =
-  "trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut true --transparent true --alpha 0 --tint 0x1A1918 --expand true --heighttype pixel --height 24 --monitor 0 --padding 1"
-
 -- border width
 myBorderWidth = 4
 
@@ -132,7 +128,6 @@ myHiddenNoWindowsWSColor = "white"
 
 -- Float window control width
 moveWD = 4
-
 resizeWD = 4
 
 defaults =
@@ -188,13 +183,11 @@ myLayout =
   name "Tall"     myTile   |||
   name "Mosaic"   myMosaic |||
   name "ThreeCol" my3cmi   |||
-  name "Spiral"   mySpiral |||
-  name "Tabbed"   myTabbed
+  name "Spiral"   mySpiral 
   where
     name n = renamed [Replace n] . spacing 5
     myTile = ResizableTall 1 (3 / 100) (4 / 7) []
     my3cmi = ThreeColMid 1 (3 / 100) (1 / 2)
-    myTabbed = layoutHints (tabbed shrinkText tabConfig)
     mySpiral = spiral (6 / 7)
     myMosaic = mosaic 2 [3, 2]
 
@@ -258,7 +251,6 @@ myStartupHook
   -- startupHook desktopConfig
  = do
   spawn "$HOME/.scripts/autostart.sh"
-  spawnOnce myTray
   setWMName "LG3D" -- Solves problems with Java GUI programs
 
 myHandleEventHook = fullscreenEventHook <+>  docksEventHook <+> handleEventHook desktopConfig
@@ -308,9 +300,9 @@ colorNormalbg = "#1c1c1c"
 colorfg = "#a8b6b8"
 
 -- Border Styling
-myNormalBorderColor = "#71469b" --"#00002c"
+myNormalBorderColor = "#71469b" 
 
-myFocusedBorderColor = "#4deeea" --"#4ec2f7"
+myFocusedBorderColor = "#4deeea" 
 
 -- Color of current window title in xmobar.
 xmobarTitleColor = "#FFB6B0"
@@ -333,21 +325,6 @@ myXPConfig =
     , position = Top
     }
 
--- tab theme
-tabConfig =
-  defaultTheme
-    { activeBorderColor = "#7C7C7C"
-    , activeTextColor = "#CEFFAC"
-    , activeColor = "#000000"
-    , inactiveBorderColor = "#7C7C7C"
-    , inactiveTextColor = "#EEEEEE"
-    , inactiveColor = "#000000"
-    , urgentColor = "yellow"
-    , urgentBorderColor = "black"
-    , urgentTextColor = "yellow"
-    }
-
-
 -- GridSelect configuration
 myGridSelectConfig :: GSConfig Window
 myGridSelectConfig = def { gs_navigate = myNavigation
@@ -359,16 +336,16 @@ myGridSelectConfig = def { gs_navigate = myNavigation
     navKeymap =
       M.fromList [ ((0, xK_Escape), cancel)
                  , ((0, xK_Return), select)
-                 , ((0, xK_slash), substringSearch myNavigation)
-                 , ((0, xK_h), move (-1, 0) >> myNavigation)
-                 , ((0, xK_l), move (1, 0) >> myNavigation)
-                 , ((0, xK_j), move (0, 1) >> myNavigation)
-                 , ((0, xK_k), move (0, -1) >> myNavigation)
-                 , ((0, xK_y), move (-1, -1) >> myNavigation)
-                 , ((0, xK_u), move (1, -1) >> myNavigation)
-                 , ((0, xK_b), move (-1, 1) >> myNavigation)
-                 , ((0, xK_n), move (1, 1) >> myNavigation)
-                 , ((0, xK_Tab), moveNext >> myNavigation)
+                 , ((0, xK_slash), substringSearch myNavigation)  -- search
+                 , ((0, xK_h), move (-1, 0) >> myNavigation)      -- move left
+                 , ((0, xK_l), move (1, 0) >> myNavigation)       -- move right
+                 , ((0, xK_j), move (0, 1) >> myNavigation)       -- move down
+                 , ((0, xK_k), move (0, -1) >> myNavigation)      -- move up
+                 , ((0, xK_y), move (-1, -1) >> myNavigation)     -- move diagonal up left
+                 , ((0, xK_u), move (1, -1) >> myNavigation)      -- move diagonal up right
+                 , ((0, xK_b), move (-1, 1) >> myNavigation)      -- move diagonal down left
+                 , ((0, xK_n), move (1, 1) >> myNavigation)       -- move diagonal down right
+                 , ((0, xK_Tab), moveNext >> myNavigation)        -- move next
                  ]
 
 -------------------------------------------------------------------- }}}
@@ -411,7 +388,7 @@ myKeys =
     , ("M-C-S-l", shiftToNext)
     , ("M-C-S-h", shiftToPrev)
        -- Previous workspace
-    , ("M-<Tab>", toggleWS) -- toggle last workspace (super-tab)
+    , ("M-<Tab>", toggleWS) -- toggle last workspace 
        -- Window navigation
     , ("M-<D>", sendMessage $ Go D)
     , ("M-<U>", sendMessage $ Go U)
@@ -441,7 +418,7 @@ myKeys =
        -- Search a window and bring to the current workspace
     , ("M-C-g", windowPromptBring myXPConfig)
        -- Move the focus to next screen (multi screen)
-    , ("M-S-<Tab>", nextScreen)
+    , ("M-s", nextScreen)
        -- screen
     , ("M-o", swapNextScreen)
     , ("M-S-o", shiftNextScreen)
@@ -469,13 +446,13 @@ myAppkeys =
        -- Kill window
       , ("M-C-k", spawn "xkill")
        -- Lock screen
-      , ("M-z", spawn "$HOME/.xmonad/scripts/i3lock.sh lock")
+      , ("M-z", spawn "$HOME/.scripts/i3lock.sh lock")
        -- suspend
-      , ("M-S-z", spawn "$HOME/.xmonad/scripts/i3lock.sh suspend")
+      , ("M-S-z", spawn "$HOME/.scripts/i3lock.sh suspend")
        -- Reboot
-      , ("M-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh reboot")
+      , ("M-S-0", spawn "$HOME/.scripts/i3lock.sh reboot")
        -- Shutdown
-      , ("M-C-S-0", spawn "$HOME/.xmonad/scripts/i3lock.sh shutdown")
+      , ("M-C-S-0", spawn "$HOME/.scripts/i3lock.sh shutdown")
        -- Exit
       , ("M-C-0", io (exitWith ExitSuccess))
        -- Restart xmonad
@@ -506,11 +483,10 @@ myAppkeys =
       , ("<XF86AudioLowerVolume>", spawn "amixer -q -D pulse set Master 5%- unmute")
       , ("<XF86AudioMute>", spawn "XMMute")
         -- Brightness Keys
-      , ( "M-S-=" --"<XF86MonBrightnessUp>"
+      , ( "<XF86MonBrightnessUp>"
       , spawn
           "xbacklight + 5 -time 100 -steps 1; notify-send 'brightness up $(xbacklight -get)")
-          --"notify-send 'brightness up $(xbacklight -get)")
-    , ( "M-S-/" --"<XF86MonBrightnessDown>"
+    , ( "<XF86MonBrightnessDown>"
       , spawn
           "xbacklight - 5 -time 100 -steps 1; notify-send 'brightness down $(xbacklight -get)")
        -- Touch pad
@@ -523,7 +499,7 @@ myAppkeys =
        -- Search
     , ("<XF86Search", spawn (myBrowser ++ " https://duckduckgo.com"))
        -- Suspendre
-    , ("<XF86Suspend", spawn "i~/.scripts/i3lock.sh suspend")
+    , ("<XF86Suspend", spawn "~/.scripts/i3lock.sh suspend")
        -- Take a screenshot (whole desktop)
     , ("<Print>", spawn (myScreenCapture ++ "; notify-send 'Desktop captured'"))
        -- Take a screenshot (selected area)
