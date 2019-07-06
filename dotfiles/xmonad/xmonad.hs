@@ -18,7 +18,6 @@ import XMonad.Layout.LayoutHints
 import XMonad.Layout.Mosaic
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.MultiToggle.Instances -- NBFULL, MIRROR
-import XMonad.Layout.NoBorders
 import XMonad.Layout.Reflect
 import XMonad.Layout.Renamed
 import XMonad.Layout.ResizableTile
@@ -35,14 +34,17 @@ import XMonad.Util.SpawnOnce
 
 -- prompt
 import XMonad.Prompt
+import XMonad.Prompt.Input
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Window -- pops up a prompt with window names
+import XMonad.Prompt.Layout
 
 -- actions
 import XMonad.Actions.CycleWindows -- classic alt-tab
 import XMonad.Actions.UpdatePointer
 import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.CycleWS -- cycle thru WS', toggle last WS
+import XMonad.Actions.FloatKeys -- float windows
 
 import Graphics.X11.ExtraTypes.XF86
 -- Keys
@@ -191,6 +193,9 @@ myLayout =
     mySpiral = spiral (6 / 7)
     myMosaic = mosaic 2 [3, 2]
 
+myAutoSP = myXPConfig { autoComplete       = Just 1000 }
+myWaitSP = myXPConfig { autoComplete       = Just 1000000 }
+
 -- Scratchpads
 scratchpads =
   [ NS
@@ -309,6 +314,19 @@ xmobarTitleColor = "#FFB6B0"
 
 -- Color of current workspace in xmobar.
 xmobarCurrentWorkspaceColor = "#CEFFAC"
+-- floats
+centerR = W.RationalRect (1/4) (1/4) (1/2) (1/2)
+bigCenterR = W.RationalRect (1/8) (1/8) (3/4) (3/4)
+leftR = W.RationalRect (0) (1/8) (1/2) (3/4)
+rightR = W.RationalRect (4/8) (1/8) (1/2) (3/4)
+
+myFloats = cycle [ -- TODO cycle through the floats instead of assigning a keybinding to each one
+   W.RationalRect (1/4) (1/4) (1/2) (1/2) -- center
+  , W.RationalRect (1/8) (1/8) (3/4) (3/4) -- bigCenter
+  , W.RationalRect (0) (1/8) (1/2) (3/4) -- left
+  , W.RationalRect (4/8) (1/8) (1/2) (3/4) -- right
+           ]
+
 
 -- Prompt configuration
 myXPConfig =
@@ -407,6 +425,11 @@ myKeys =
     , ("M-S-k", sendMessage $ Swap U)
     , ("M-S-h", sendMessage $ Swap L)
     , ("M-S-l", sendMessage $ Swap R)
+     -- Push floating window back into tilling
+    , ("M-t", withFocused $ windows . W.sink)
+    --, ("M-S-t", withFocused (keysMoveWindowTo (512,384) (1%2, 1%2))) -- center the window on screen)
+    , ("M-S-t", withFocused $ windows . flip W.float bigCenterR)
+    --, ("M-S-t", withFocused $ windows . flip W.float (myFloats !! 1))--bigCenterR)
        -- Shift the focused window to the master window
     , ("M-m", windows W.shiftMaster)
        -- Focus master
@@ -425,7 +448,9 @@ myKeys =
        -- classic alt-tab behaviour
     , ("M1-<Tab>", cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab)
        -- Resize viewed windows to the correct size
-    , ("M-n", refresh)]
+    , ("M-n", refresh)
+    -- , ("M-S-\\", myLayoutPrompt)
+    ]
 
 myLayoutKeys =
     [ ((m .|. myModMask, k), windows $ f i)
@@ -479,16 +504,19 @@ myAppkeys =
       , ("<XF86AudioNext>", spawn "playerctl next")
       , ("<XF86HomePage>", spawn "mpc toggle")
        -- Volume setting media keys
-      , ("<XF86AudioRaiseVolume>", spawn "amixer -q -D pulse set Master 5%+ unmute")
-      , ("<XF86AudioLowerVolume>", spawn "amixer -q -D pulse set Master 5%- unmute")
-      , ("<XF86AudioMute>", spawn "XMMute")
+      , ("<XF86AudioRaiseVolume>", spawn --"amixer -q -D pulse set Master 5%+ unmute && notify-send 'Volume up'")
+          "$HOME/.scripts/VolControl.sh up")
+      , ("<XF86AudioLowerVolume>", spawn --"amixer -q -D pulse set Master 5%- unmute && notify-send 'Volume down'")
+          "$HOME/.scripts/VolControl.sh down")
+      , ("<XF86AudioMute>", spawn "$HOME/.scripts/XMMute.sh")
         -- Brightness Keys
       , ( "<XF86MonBrightnessUp>"
-      , spawn
-          "xbacklight + 5 -time 100 -steps 1; notify-send 'brightness up $(xbacklight -get)")
-    , ( "<XF86MonBrightnessDown>"
-      , spawn
-          "xbacklight - 5 -time 100 -steps 1; notify-send 'brightness down $(xbacklight -get)")
+        , spawn
+          "xbacklight + 5 -time 100 -steps 1 && notify-send \"brightness up $(xbacklight -get)\"")
+      , ( "<XF86MonBrightnessDown>"
+        , spawn
+          "xbacklight - 5 -time 100 -steps 1 && notify-send \"brightness down $(xbacklight -get)\"")
+      , ( "M-S-C-=", spawn "$HOME/.scripts/xbacklight-toggle.sh")
        -- Touch pad
     , ( "<XF86TouchpanOn"
       , spawn "synclient TouchpadOff=0 && notify-send 'Touchpad On")
