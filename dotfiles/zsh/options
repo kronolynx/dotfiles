@@ -7,11 +7,11 @@ setopt nobeep                                                   # No beep
 setopt appendhistory                                            # Immediately append history instead of overwriting
 setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
 setopt autocd                                                   # if only directory path is entered, cd there.
-setopt share_history  # Share history between multiple shells
-
 setopt nocheckjobs                                              # Dont warn about running processes when exiting
 
 setopt auto_list
 setopt auto_menu
 setopt auto_pushd
 
+unsetopt inc_append_history
+unsetopt share_history

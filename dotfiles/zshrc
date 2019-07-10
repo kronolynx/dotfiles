@@ -10,10 +10,6 @@ fi
 if [ -f ~/.zsh/exports ]; then
     source ~/.zsh/exports
 fi
-# Test and then source some options
-if [ -f ~/.zsh/options ]; then
-    source ~/.zsh/options
-fi
 # Test and then source alias definitions.
 if [ -f ~/.zsh/aliases ]; then
     source ~/.zsh/aliases
@@ -50,7 +46,6 @@ if [ -f ~/.zsh/misc ]; then
     source ~/.zsh/misc
 fi
 
-
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git up vi-mode extract zsh-history-substring-search zsh-syntax-highlighting zsh-autosuggestions)
@@ -63,3 +58,7 @@ if [ -f ~/.zsh/stylehighlight ]; then
 fi
 
 
+# Test and then source some options
+if [ -f ~/.zsh/options ]; then
+    source ~/.zsh/options
+fi
