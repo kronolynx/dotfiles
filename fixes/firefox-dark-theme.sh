@@ -19,6 +19,17 @@ color: #111;
 #downloads-indicator-counter {
 color: white;
 }
+
+
+button,
+input[type="reset"],
+input[type="button"],
+input[type="submit"] {
+  border: 2px outset white;
+  background-color: #eeeeee;
+  color: black;
+  -moz-appearance: none !important;
+}
 EOF
 # save present working directory
 CUR_DIR=$PWD
