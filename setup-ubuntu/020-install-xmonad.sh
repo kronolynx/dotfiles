@@ -35,31 +35,10 @@ file_manager=(
   periscope # subtitles
 )
 
-install_themes() {
-  # ppas
-  sudo add-apt-repository ppa:tista/adapta -y # theme adapta-nokoto
-  sudo add-apt-repository ppa:noobslab/icons -y # icons
-  sudo apt-add-repository ppa:numix/ppa -y # numix icons
-  sudo add-apt-repository ppa:papirus/papirus -y # papirus icons
-
-  # install themes
-  themes=(
-    arc-theme
-    adapta-gtk-theme
-    obsidian-1-icons
-    shadow-icon-theme
-    dalisha-icons
-    papirus-icon-theme
-    breeze-cursor-theme
-  )
-
-  ./install-app.sh ${themes[*]}
-}
 
 
 ./install-app.sh ${xmonad_desktop[*]}
 ./install-app.sh ${file_manager[*]}
-install_themes
 apps/thunar.sh
 
 # lock screen
