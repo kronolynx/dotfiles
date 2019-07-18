@@ -63,7 +63,7 @@ add_sbt() {
 add_ammonite() {
   if [ ! -f "/usr/local/bin/amm" ]; then
     echo -e "Installing ammonite"
-    sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/lihaoyi/Ammonite/releases/download/1.6.5/2.12-1.6.5) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm'
+    sudo sh -c '(echo "#!/usr/bin/env sh" && curl -L https://github.com/lihaoyi/Ammonite/releases/download/1.6.9/2.12-1.6.9) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm'
   fi
 }
 
