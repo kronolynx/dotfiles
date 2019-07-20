@@ -7,7 +7,6 @@ xmonad_desktop=(
   libghc-xmonad-extras-dev
   trayer # systray
   scrot # Simple command-line screenshot utility for X
-  clipit # Lightweight GTK+ clipboard manager
   rofi # menu for launching applications (replacement for dmenu)
   nitrogen # wallpaper browser and changing utility for X
   # variety # Wallpaper changer, downloader and manager
@@ -17,8 +16,6 @@ xmonad_desktop=(
   xautolock # autolock e.g xautolock -time 10 -locker xscreensaver
   lxappearance # theme
   dunst # Customizable and lightweight notification-daemon
-  volumeicon-alsa
-  catfish
   xfce4-notifyd # gtk notifications
   xfce4-power-manager # power manager
 )
@@ -30,17 +27,11 @@ file_manager=(
   thunar-archive-plugin
   file-roller
   xarchiver
-  libgsf
   gvfs
-  periscope # subtitles
+  catfish
 )
 
 
 
 ./install-app.sh ${xmonad_desktop[*]}
 ./install-app.sh ${file_manager[*]}
-apps/thunar.sh
-
-# lock screen
-sudo cp apps/lock /bin/
-sudo chmod +x /bin/lock

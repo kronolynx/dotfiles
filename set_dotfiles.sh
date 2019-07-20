@@ -7,6 +7,8 @@
 # if no console argument is provided the origin is set to dotfiles
 dotfiles_origin=${@:-dotfiles}
 
+# chmod scripts in dotfiles folder
+find $dotfiles_origin -type f -iname "*.sh" -exec chmod +x {} \;
 
 # backup location  e.g. backup-20180804164746
 backup_dir="backup-$(date +'%Y%m%d')$(date +'%H%M%S')"
@@ -56,3 +58,6 @@ echo "dotfiles copied"
 
 # reload xresources
 xrdb ~/.Xresources
+
+# reload fonts
+fc-cache -f -v
