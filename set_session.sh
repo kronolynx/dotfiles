@@ -53,3 +53,9 @@ EOF
 sudo echo "$DESKTOP" > /usr/share/xsessions/xmonad_krono.desktop
 sudo echo "$START" > /usr/local/bin/xmonad-krono
 chmod +x /usr/local/bin/xmonad-krono
+
+echo -e ""
+echo -e "################################################################"
+echo -e "############## \e[32m Xmonad session created \e[0m"
+echo -e "################################################################"
+echo -e ""

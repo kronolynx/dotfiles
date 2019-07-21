@@ -253,3 +253,17 @@ URxvt.perl-extcommon:             tabbed
 ! -xos4-terminus-bold-r-normal--24-240-72-72-c-120-iso10646-1
 ! -xos4-terminus-bold-r-normal--28-280-72-72-c-140-iso10646-1
 ! -xos4-terminus-bold-r-normal--32-320-72-72-c-160-iso10646-1
+
+
+!{{{ XMESSAGE
+Xmessage*font:                  xft:Inconsolata:size=12:antialias=true:hinting=true
+Xmessage*background:            #3F3F3F
+Xmessage*foreground:            #F0DFAF
+Xmessage*form.*.shapeStyle:     rectangle
+Xmessage*Scrollbar.width:       1
+Xmessage*Scrollbar.borderWidth: 0
+!Xmessage.form.message.Scroll:  WhenNeeded
+Xmessage*Buttons:               Quit
+Xmessage*defaultButton:         Quit
+!Xmessage*geometry:             +90+80
+!}}}
