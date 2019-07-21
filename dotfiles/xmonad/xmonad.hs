@@ -256,7 +256,6 @@ myStartupHook
   -- startupHook desktopConfig
  = do
   spawn "$HOME/.scripts/autostart.sh"
-  setWMName "LG3D" -- Solves problems with Java GUI programs
 
 myHandleEventHook = fullscreenEventHook <+>  docksEventHook <+> handleEventHook desktopConfig
 

@@ -4,6 +4,7 @@ declare -A debs=(
   ["jwilm/alacritty"]="Alacritty.*amd64.deb" # terminal
   ["sharkdp/bat"]="bat_.*amd64.deb" # cat replacement
   ["onivim/oni"]="Oni.*amd64-linux.deb" # editor based on neovim
+  ["BoostIO/boost-releases"]="boostnote.*amd64.deb" # markdown note taking app 
 )
 
 
@@ -19,7 +20,12 @@ do
 done
 
 for f in *.deb; do
-    echo -e "\e[32mInstallin $f\e[39m"
+    echo -e ""
+    echo -e "################################################################"
+    echo -e "##################\e[32m Installing $f \e[0m"
+    echo -e "################################################################"
+    echo -e ""
+
     sudo dpkg -i "$f"
     sudo apt install -fy
     rm -f "$f"

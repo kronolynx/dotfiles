@@ -55,9 +55,11 @@ profile
 scripts
 spacemacs
 tmux.conf
+vim/backup/.keep
+vim/bundles
 vim/colors
 vim/templates
-vim/bundles
+vim/undo/.keep
 vimrc
 wallpapers
 xinitrc
@@ -80,4 +82,8 @@ for f in ${files[*]} ; do
     fi
 done
 
-echo "Backup created '$backup'"
+echo -e ""
+echo -e "################################################################"
+echo -e "############## \e[32m Backup created \e[36m '$backup' \e[0m"
+echo -e "################################################################"
+echo -e ""
