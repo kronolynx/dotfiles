@@ -13,6 +13,7 @@
   ck = checkout
   ckb = checkout -b
   ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f"
+  ckm = checkout master
   ckre = "!f() { git fetch $2 && git ckb $1 $2/$3; }; f" # checkout remote branch e.g. git ckre new-branch-name remote-name remote-branch-name
   ckup = "!f() { git ckre $1 upstream master; }; f" # checkout new branch from upstream master e.g. git ckup new-branch-name
   cleanloc = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"  # delete branches merged into master
@@ -55,6 +56,7 @@
   rc = rebase --continue
   reb = "!f() { git rebase $1 -s recursive -X ours; }; f" # the branch must be specified e.g. upstream/master # ours in this case means the changes that are not in the curren branch (inverse)
   reom = reset --hard origin/master
+  resf = checkout HEAD -- # <file-path>  reset file to HEAD
   ri = rebase -i # commit ref to start (not included) or HEAD~# where # is the number of commits to rebase/squash
   rim = rebase -i upstream/master
   ru = rebase upstream/master
