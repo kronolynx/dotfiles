@@ -15,6 +15,7 @@ development=(
   emacs # GNU Emacs editor
   git # version control system
   highlight # Universal source code to formatted text converter
+  entr # Run arbitrary commands when files change
 )
 
 education=(
