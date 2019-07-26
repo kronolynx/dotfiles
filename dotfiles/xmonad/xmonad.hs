@@ -8,7 +8,7 @@ import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FloatNext
 import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers(doFullFloat, doCenterFloat, isFullscreen, isDialog)
+import XMonad.Hooks.ManageHelpers(doFullFloat, doCenterFloat, isDialog, transience')
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook -- window alert bells
@@ -98,35 +98,36 @@ myPPLayout =
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
-myDefaultTerminal = "termite"
-myTerminal = myDefaultTerminal
+myDefaultTerminal :: String
+myDefaultTerminal = "st"
+myTerminal :: String
+myTerminal = myDefaultTerminal  
+myTmuxTerminal :: String
 myTmuxTerminal = myDefaultTerminal ++ " -e tmux attach"
 
 -- Launcher
+myLauncher :: String
 myLauncher = "rofi -modi 'drun,run' -show drun"
 
 -- Editor
+myTextEditor :: String
 myTextEditor = "emacsclient -c -a emacs"
 
 -- Browser
+myBrowser :: String
 myBrowser = "firefox"
 
 -- File Manager
+myFileManager :: String
 myFileManager = "thunar"
 
 -- Console File Manager
+myConsoleFileManager :: String
 myConsoleFileManager = myTerminal ++ " -e ranger"
 
--- border width
-myBorderWidth = 4
+helpCommand :: X ()
+helpCommand = spawn ("echo " ++ show help ++ " | xmessage -file -")
 
--- colors
-myTitleColor = "#c91a1a" -- color of window title
-myTitleLength = 80 -- truncate window title to this length
-myCurrentWSColor = "green" -- "#6790eb" -- color of active workspace
-myVisibleWSColor = "#aaaaaa" -- color of inactive workspace
-myUrgentWSColor = "#c91a1a" -- color of workspace with 'urgent' window
-myHiddenNoWindowsWSColor = "white"
 
 -- Float window control width
 moveWD = 4
@@ -151,6 +152,7 @@ defaults =
     , handleEventHook = myHandleEventHook
     }
 
+myWorkspaces :: [String]
 myWorkspaces =
   [ "<fc=#78da59>\xf1d0</fc>" -- 
   , "<fc=#ffff33>\xe737</fc>" -- 
@@ -219,6 +221,7 @@ scratchpads =
 -- resource (also known as appName) is the first element in WM_CLASS(STRING)
 -- className is the second element in WM_CLASS(STRING)
 -- title is WM_NAME(STRING)
+-- https://hackage.haskell.org/package/xmonad-0.15/docs/XMonad-ManageHook.html
 myManageHook =
   composeAll . concat $
   [ [isDialog --> doCenterFloat]
@@ -227,6 +230,7 @@ myManageHook =
   , [className =? c --> doCenterFloat                | c       <- myCenterFloats]
   , [title     =? t --> doCenterFloat                | t       <- myTitleCenterFloats]
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
+  , [transience'] -- move transient windows like dialogs/alerts on top of their parents
   ]
   where
     myCenterFloats = ["zenity", "Arandr", "Galculator", "Oblogout", "Yad"]
@@ -243,6 +247,7 @@ myManageHook =
       , ("Spotify", 6)
       , ("vivaldi-stable", 0)]
 
+myNewManageHook :: ManageHook
 myNewManageHook =
   composeAll
     [ manageDocks
@@ -252,6 +257,7 @@ myNewManageHook =
     , myManageHook
     ]
 
+myStartupHook :: X ()
 myStartupHook
   -- startupHook desktopConfig
  = do
@@ -267,6 +273,7 @@ myHandleEventHook = fullscreenEventHook <+>  docksEventHook <+> handleEventHook 
 -- ("right alt"), which does not conflict with emacs keybindings. The
 -- "windows key" is usually mod4Mask.
 --
+myModMask :: KeyMask
 myModMask = mod4Mask
 
 ------------------------------------------------------------------------
@@ -288,30 +295,58 @@ myMouseBindings (XConfig {XMonad.modMask = modMask}) =
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
 
+
 -- Color Setting
+colorBlue :: String
 colorBlue = "#868bae"
 
+colorGreen :: String
 colorGreen = "#00d700"
 
+colorRed :: String
 colorRed = "#ff005f"
 
+colorGray :: String
 colorGray = "#666666"
 
+colorWhite :: String
 colorWhite = "#bdbdbd"
 
+colorNormalbg :: String
 colorNormalbg = "#1c1c1c"
 
+colorfg :: String
 colorfg = "#a8b6b8"
 
+-- X11 color names:
+-- https://www.wikiwand.com/en/X11_color_names
+
+
+-- colors
+myTitleColor = "#c91a1a" -- color of window title
+myTitleLength = 80 -- truncate window title to this length
+myCurrentWSColor = "green" -- "#6790eb" -- color of active workspace
+myVisibleWSColor = "#aaaaaa" -- color of inactive workspace
+myUrgentWSColor = "#c91a1a" -- color of workspace with 'urgent' window
+myHiddenNoWindowsWSColor = "white"
+
+-- border width
+myBorderWidth :: Dimension
+myBorderWidth = 6
+
 -- Border Styling
+myNormalBorderColor :: String
 myNormalBorderColor = "#71469b" 
 
-myFocusedBorderColor = "#4deeea" 
+myFocusedBorderColor :: String
+myFocusedBorderColor = "#87CEFA" 
 
 -- Color of current window title in xmobar.
+xmobarTitleColor :: String
 xmobarTitleColor = "#FFB6B0"
 
 -- Color of current workspace in xmobar.
+xmobarCurrentWorkspaceColor :: String
 xmobarCurrentWorkspaceColor = "#CEFFAC"
 -- floats
 centerR = W.RationalRect (1/4) (1/4) (1/2) (1/2)
@@ -537,4 +572,29 @@ myAppkeys =
        -- Take a screenshot (focused window)
     , ( "C-<Print>"
       , spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
+    , ( "M-/", helpCommand)
     ]
+
+help :: String
+help = unlines ["The modifier key is 'Super'. keybindings:",
+    "",
+    "-- launching and killing programs",
+    "",
+    "-- move focus up or down the window stack",
+    "",
+    "-- modifying the window order",
+    "",
+    "-- resizing the master/slave ratio",
+    "",
+    "-- floating layer support",
+    "",
+    "-- increase or decrease number of windows in the master area",
+    "",
+    "-- Workspaces & screens",
+    "mod-[1..9]         Switch to workSpace N",
+    "mod-Shift-[1..9]   Move client to workspace N",
+    "",
+    "-- Mouse bindings: default actions bound to mouse events",
+    "mod-button1  Set the window to floating mode and move by dragging",
+    "mod-button2  Raise the window to the top of the stack",
+    "mod-button3  Set the window to floating mode and resize by dragging"]
