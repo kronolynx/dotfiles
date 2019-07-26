@@ -82,4 +82,4 @@ set_xinit
 xrdb ~/.Xresources
 
 # reload fonts
-fc-cache -f -v
+fc-cache -vf ~/.local/share/fonts

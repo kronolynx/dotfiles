@@ -6,31 +6,9 @@ Xft.dpi:       96
 Xft.antialias: true
 Xft.hinting:   true
 Xft.rgba:      rgb
-Xft.autohint:  false
+Xft.autohint:  true
 Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
-
-!!!!!!!!!!!!!!!!!! 
-!! XTerm settings
-!!!!!!!!!!!!!!!!!! 
-
-XTerm*background:        #222D31
-XTerm*foreground:        #d8d8d8
-XTerm*pointerColor:      #1ABB9B
-XTerm*faceName:          Fixed
-XTerm*faceSize:          11
-XTerm*reverseVideo:      on
-XTerm*selectToClipboard: true
-XTerm.termName: xterm-256color
-XTerm.vt100.locale: true
-XTerm.vt100.metaSendsEscape: true
-XTerm.vt100.backarrowKey: false
-XTerm.ttyModes: erase ^?
-XTerm.vt100.saveLines: 4096
-XTerm.vt100.scrollBar: true
-XTerm.vt100.scrollbar.width: 8
-XTerm.vt100.faceName: FantasqueSansMono Nerd Font:size=12:antialias=false
-XTerm.vt100.font: 7x13
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! Color settings 
@@ -42,35 +20,80 @@ XTerm.vt100.font: 7x13
 *pointerColorBackground:          #2B2C2B
 *pointerColorForeground:          #16A085
 
-*.foreground: #dddddd
-*.background: #000000
+*foreground: #dddddd
+*background: #000000
 !! black dark/light
-*.color0:     #000000
-*.color8:     #767676
+*color0:     #000000
+*color8:     #767676
 !! red dark/light
-*.color1:     #cc0403
-*.color9:     #f2201f
+*color1:     #cc0403
+*color9:     #f2201f
 !! green dark/light
-*.color2:     #19cb00
-*.color10:    #23fd00
+*color2:     #19cb00
+*color10:    #23fd00
 !! yellow dark/light
-*.color3:     #cecb00
-*.color11:    #fffd00
+*color3:     #cecb00
+*color11:    #fffd00
 !! blue dark/light
-*.color4:     #0d73cc
-*.color12:    #1a8fff
+*color4:     #0d73cc
+*color12:    #1a8fff
 !! magenta dark/light
-*.color5:     #cb1ed1
-*.color13:    #fd28ff
+*color5:     #cb1ed1
+*color13:    #fd28ff
 !! cyan dark/light
-*.color6:     #0dcdcd
-*.color14:    #14ffff
+*color6:     #0dcdcd
+*color14:    #14ffff
 !! white dark/light
-*.color7:     #dddddd
-*.color15:    #ffffff
+*color7:     #dddddd
+*color15:    #ffffff
 
 Xcursor.theme: xcursor-breeze
 Xcursor.size:                     0
+
+!!!!!!!!!!!!!!!!!! 
+!! XTerm settings
+!!!!!!!!!!!!!!!!!! 
+
+XTerm.termName: xterm-256color
+XTerm.ttyModes: erase ^?
+XTerm.vt100.backarrowKey: false
+XTerm.vt100.faceName: FantasqueSansMono Nerd Font:style=Regular:size=11:antialias=true
+XTerm.vt100.font: 7x13
+XTerm.vt100.locale: true
+XTerm.vt100.metaSendsEscape: true
+XTerm.vt100.pointerColor:      #1ABB9B
+XTerm.vt100.saveLines: 10000
+XTerm.vt100.scrollBar: false
+XTerm.vt100.selectToClipboard: true
+XTerm*renderFont: true
+! double-click to select whole URLs :D
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+
+!!!! black dark/light
+!!XTerm.vt100.color0:     #000000
+!!XTerm.vt100.color8:     #767676
+!!!! red dark/light
+!!XTerm.vt100.color1:     #cc0403
+!!XTerm.vt100.color9:     #f2201f
+!!!! green dark/light
+!!XTerm.vt100.color2:     #19cb00
+!!XTerm.vt100.color10:    #23fd00
+!!!! yellow dark/light
+!!XTerm.vt100.color3:     #cecb00
+!!XTerm.vt100.color11:    #fffd00
+!!!! blue dark/light
+!!XTerm.vt100.color4:     #0d73cc
+!!XTerm.vt100.color12:    #1a8fff
+!!!! magenta dark/light
+!!XTerm.vt100.color5:     #cb1ed1
+!!XTerm.vt100.color13:    #fd28ff
+!!!! cyan dark/light
+!!XTerm.vt100.color6:     #0dcdcd
+!!XTerm.vt100.color14:    #14ffff
+!!!! white dark/light
+!!XTerm.vt100.color7:     #dddddd
+!!XTerm.vt100.color15:    #ffffff
 
 !!!!!!!!!!!!!!!!!!
 !! URXVT settings
