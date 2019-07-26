@@ -50,6 +50,7 @@ images
 local/share/applications/emacsclient.desktop
 local/share/fonts
 local/share/rofi
+local/bin/lock
 nanorc
 profile
 scripts

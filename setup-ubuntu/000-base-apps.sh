@@ -16,6 +16,7 @@ development=(
   git # version control system
   highlight # Universal source code to formatted text converter
   entr # Run arbitrary commands when files change
+  silversearcher-ag #  very fast grep-like program, alternative to ack-grep
 )
 
 education=(
