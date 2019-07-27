@@ -25,6 +25,7 @@ config/mimeapps.list
 config/nano
 config/neofetch
 config/nvim
+config/oblogout/oblogout.conf
 config/pavucontrol.ini
 config/pcmanfm
 config/qt5ct
@@ -36,9 +37,9 @@ config/systemd
 config/terminator
 config/termite
 config/tmux
+config/volumeicon
 config/xmobar
 config/yay
-config/volumeicon
 dir_colors
 emacs.d/init.el
 gitconfig
@@ -47,14 +48,15 @@ gvimrc
 i3
 ideavimrc
 images
+local/bin/lock
 local/share/applications/emacsclient.desktop
 local/share/fonts
 local/share/rofi
-local/bin/lock
 nanorc
 profile
 scripts
 spacemacs
+themes/adeos-cores/oblogout
 tmux.conf
 vim/backup/.keep
 vim/bundles

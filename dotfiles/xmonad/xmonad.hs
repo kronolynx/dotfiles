@@ -226,6 +226,7 @@ myManageHook =
   composeAll . concat $
   [ [isDialog --> doCenterFloat]
   , [className =? c --> doFloat                      | c       <- myClassFloats]
+  , [className =? c --> doFullFloat                  | c       <- myFullFloats]
   , [title     =? t --> doFloat                      | t       <- myTitleFloats]
   , [className =? c --> doCenterFloat                | c       <- myCenterFloats]
   , [title     =? t --> doCenterFloat                | t       <- myTitleCenterFloats]
@@ -237,6 +238,7 @@ myManageHook =
     myTitleCenterFloats = ["File Operation Progress", "Downloads", "Save as..."]
     myClassFloats = []
     myTitleFloats = ["Media viewer", "yad"]
+    myFullFloats = ["Oblogout"]
        -- workspace numbers start at 0
     myShifts =
       [("keepassxc", 6)
@@ -504,16 +506,14 @@ myAppkeys =
       , ("M-C-<Return>", spawn myTmuxTerminal)
        -- Kill window
       , ("M-C-k", spawn "xkill")
+       -- Launch oblogout (reboot, shutdown)
+      , ("M-C-0", spawn "oblogout")
        -- Lock screen
       , ("M-z", spawn "$HOME/.scripts/i3lock.sh lock")
        -- suspend
       , ("M-S-z", spawn "$HOME/.scripts/i3lock.sh suspend")
-       -- Reboot
-      , ("M-S-0", spawn "$HOME/.scripts/i3lock.sh reboot")
-       -- Shutdown
-      , ("M-C-S-0", spawn "$HOME/.scripts/i3lock.sh shutdown")
        -- Exit
-      , ("M-C-0", io (exitWith ExitSuccess))
+       --, ("M-C-0", io (exitWith ExitSuccess))
        -- Restart xmonad
       , ( "M-S-r"
       , spawn
