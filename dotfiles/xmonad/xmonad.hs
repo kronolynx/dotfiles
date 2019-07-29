@@ -99,7 +99,7 @@ myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 -- DefaultTerminal
 myDefaultTerminal :: String
-myDefaultTerminal = "st"
+myDefaultTerminal = "alacritty"
 myTerminal :: String
 myTerminal = myDefaultTerminal  
 myTmuxTerminal :: String
@@ -234,7 +234,7 @@ myManageHook =
   , [transience'] -- move transient windows like dialogs/alerts on top of their parents
   ]
   where
-    myCenterFloats = ["zenity", "Arandr", "Galculator", "Oblogout", "Yad"]
+    myCenterFloats = ["zenity", "Arandr", "Galculator", "Yad"]
     myTitleCenterFloats = ["File Operation Progress", "Downloads", "Save as..."]
     myClassFloats = []
     myTitleFloats = ["Media viewer", "yad"]
