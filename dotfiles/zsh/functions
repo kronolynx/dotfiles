@@ -1,3 +1,4 @@
+
 # Coloured man pages using less as pager
 man_color() {
     env \
@@ -364,6 +365,11 @@ function mcd()
     test -d "$1" && print "mkcd: Directory $1 already exists"
     mkdir -p -- "$1"
     cd -- "$1"
+}
+
+# ls after cd
+function cd() {
+    builtin cd "$@" && ls -G
 }
 
 # MISC: cd && ls

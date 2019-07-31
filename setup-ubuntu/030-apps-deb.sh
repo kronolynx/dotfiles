@@ -1,7 +1,7 @@
 #!/bin/bash
 
 debs=(
-  https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.01.31_amd64.deb
+  https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2019.02.14_amd64.deb
 )
 
 install_deb() {
@@ -12,6 +12,7 @@ install_deb() {
     rm -f "TEMP"
 }
 
-for deb in ${@}; do
+
+for deb in $debs; do
   install_deb $deb
 done

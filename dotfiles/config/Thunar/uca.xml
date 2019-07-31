@@ -4,25 +4,25 @@
 	<icon>utilities-terminal</icon>
 	<name>Open in terminal</name>
 	<unique-id>1546342368585267-4</unique-id>
-	<command>sh -c &apos;cd  %f;urxvt -e fish&apos;</command>
+	<command>sh -c &apos;cd  %f; alacritty&apos;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
 </action>
 <action>
-	<icon>application-running</icon>
+	<icon>gnome-xterm</icon>
 	<name>Run in terminal</name>
 	<unique-id>1546343694771926-14</unique-id>
-	<command>urxvt -e %f --hold</command>
+	<command>alacritty -e %f --hold</command>
 	<description></description>
 	<patterns>*</patterns>
 	<other-files/>
 </action>
 <action>
-	<icon>terminus</icon>
+	<icon>bash</icon>
 	<name>Open in ranger</name>
 	<unique-id>1546342636246662-6</unique-id>
-	<command>sh -c &apos;cd %f;urxvt -e ranger&apos;</command>
+	<command>sh -c &apos;cd %f;alacritty -e ranger&apos;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -37,10 +37,10 @@
 	<directories/>
 </action>
 <action>
-	<icon>vim</icon>
+	<icon>gvim</icon>
 	<name>Vim edit</name>
 	<unique-id>1546345110665097-23</unique-id>
-	<command>urxvt -e vim %f</command>
+	<command>alacritty -e vim %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -59,10 +59,10 @@
 	<text-files/>
 </action>
 <action>
-	<icon>vim</icon>
+	<icon>gvim</icon>
 	<name>Edit as root (Vim)</name>
 	<unique-id>1546345136260384-24</unique-id>
-	<command>urxvt -e sudo vim %f</command>
+	<command>alacritty -e sudo vim %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<startup-notify/>
@@ -70,10 +70,10 @@
 	<text-files/>
 </action>
 <action>
-	<icon>vim</icon>
+	<icon>gvim</icon>
 	<name>Vim diff files</name>
 	<unique-id>1546345387864888-29</unique-id>
-	<command>urxvt -e vim -d %F</command>
+	<command>alacritty -e vim -d %F</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -81,7 +81,7 @@
 	<text-files/>
 </action>
 <action>
-	<icon>clipboard</icon>
+	<icon>qlipper</icon>
 	<name>Copy Pathname to Clipboard</name>
 	<unique-id>1535384248103164-6</unique-id>
 	<command>echo -n %f | clipit</command>
@@ -98,7 +98,7 @@
 	<icon>disk-usage-analyzer</icon>
 	<name>Disk usage</name>
 	<unique-id>1546345308024122-27</unique-id>
-	<command>urxvt -e ncdu %f</command>
+	<command>alacritty -e ncdu %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -109,7 +109,7 @@
 	<video-files/>
 </action>
 <action>
-	<icon>gpdftext</icon>
+	<icon>libreoffice-impress</icon>
 	<name>Export to PDF</name>
 	<unique-id>1535384801016300-10</unique-id>
 	<command>unoconv -f pdf %F</command>
@@ -118,7 +118,7 @@
 	<other-files/>
 </action>
 <action>
-	<icon>folder-move</icon>
+	<icon>desktop-panel</icon>
 	<name>Move into new folder</name>
 	<unique-id>1546345320816285-28</unique-id>
 	<command>NEW_FOLDER=$(zenity --entry --title &quot;Move into new folder&quot; --text &quot;Please enter a name for the new folder&quot;); mkdir $NEW_FOLDER; mv %F $NEW_FOLDER</command>
@@ -132,7 +132,7 @@
 	<video-files/>
 </action>
 <action>
-	<icon>selection-move-to-layer-below</icon>
+	<icon>desktop-panel</icon>
 	<name>Flatten folder</name>
 	<unique-id>1535385419583214-13</unique-id>
 	<command>find . -mindepth 2 -type f -exec mv &quot;{}&quot; . \; &amp;&amp; find . -type d -empty -delete</command>
@@ -141,7 +141,7 @@
 	<directories/>
 </action>
 <action>
-	<icon>format-text-lowercase</icon>
+	<icon>dictionary</icon>
 	<name>Rename to lower case</name>
 	<unique-id>1535385481159801-14</unique-id>
 	<command>for file in %N; do mv &quot;$file&quot; &quot;$(echo &quot;$file&quot; | tr &apos;[:upper:]&apos; &apos;[:lower:]&apos;)&quot;; done</command>
@@ -155,7 +155,7 @@
 	<video-files/>
 </action>
 <action>
-	<icon>format-text-direction-horizontal</icon>
+	<icon>dictionary</icon>
 	<name>Slugify filename</name>
 	<unique-id>1535385539971952-15</unique-id>
 	<command>for file in %N; do mv &quot;$file&quot; &quot;$(echo &quot;$file&quot; | tr -s &apos; &apos; | tr &apos; A-Z&apos; &apos;-a-z&apos; | tr -s &apos;-&apos; | tr -c &apos;[:alnum:][:cntrl:].&apos; &apos;-&apos;)&quot;; done</command>
@@ -169,7 +169,7 @@
 	<video-files/>
 </action>
 <action>
-	<icon>clipboard</icon>
+	<icon>qlipper</icon>
 	<name>Copy contents to clipboard</name>
 	<unique-id>1535385602583712-16</unique-id>
 	<command>cat &quot;%F&quot; | clipit</command>
@@ -179,7 +179,7 @@
 	<text-files/>
 </action>
 <action>
-	<icon>accessories-character-map</icon>
+	<icon>fcitx-remind-active</icon>
 	<name>Download subtitles</name>
 	<unique-id>1535385198515150-11</unique-id>
 	<command>periscope -l de -l fr -l nl -l ro %F &amp;&amp; zenity –info –title “Done” –text “Subtitles downloaded successfully” || zenity –error –title “Error” –text “Subtitles not downloaded successfully”</command>
