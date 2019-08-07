@@ -1,7 +1,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 import System.Exit
-import XMonad
+import XMonad  hiding ( (|||) )
 import XMonad.Config.Desktop
 
 -- hooks
@@ -12,6 +12,7 @@ import XMonad.Hooks.ManageHelpers(doFullFloat, doCenterFloat, isDialog, transien
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook -- window alert bells
+import XMonad.Layout.LayoutCombinators
 
 -- layouts
 import XMonad.Layout.LayoutHints
@@ -25,7 +26,10 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.WindowNavigation
-import XMonad.Actions.GridSelect
+import XMonad.Layout.Circle
+import XMonad.Layout.HintedGrid
+import XMonad.Layout.OneBig
+
 
 -- utils
 import XMonad.Util.NamedScratchpad
@@ -37,7 +41,7 @@ import XMonad.Prompt
 import XMonad.Prompt.Input
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Window -- pops up a prompt with window names
-import XMonad.Prompt.Layout
+import XMonad.Prompt.ConfirmPrompt
 
 -- actions
 import XMonad.Actions.CycleWindows -- classic alt-tab
@@ -45,6 +49,7 @@ import XMonad.Actions.UpdatePointer
 import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.CycleWS -- cycle thru WS', toggle last WS
 import XMonad.Actions.FloatKeys -- float windows
+import XMonad.Actions.GridSelect -- find window using grid
 
 import Graphics.X11.ExtraTypes.XF86
 -- Keys
@@ -187,16 +192,21 @@ myLayout =
   name "Tall"     myTile   |||
   name "Mosaic"   myMosaic |||
   name "ThreeCol" my3cmi   |||
-  name "Spiral"   mySpiral 
+  name "Spiral"   mySpiral |||
+  name "HintedGrid" myHintedGrid |||
+  name "OneBig" myOneBig |||
+  name "Circle" Circle
+  
   where
     name n = renamed [Replace n] . spacing 5
     myTile = ResizableTall 1 (3 / 100) (4 / 7) []
     my3cmi = ThreeColMid 1 (3 / 100) (1 / 2)
     mySpiral = spiral (6 / 7)
     myMosaic = mosaic 2 [3, 2]
+    myHintedGrid = GridRatio (4/3) False
+    myOneBig = OneBig (4/6) (4/6)
 
-myAutoSP = myXPConfig { autoComplete       = Just 1000 }
-myWaitSP = myXPConfig { autoComplete       = Just 1000000 }
+
 
 -- Scratchpads
 scratchpads =
@@ -237,8 +247,8 @@ myManageHook =
     myCenterFloats = ["zenity", "Arandr", "Galculator", "Yad"]
     myTitleCenterFloats = ["File Operation Progress", "Downloads", "Save as..."]
     myClassFloats = []
-    myTitleFloats = ["Media viewer", "yad"]
-    myFullFloats = ["Oblogout"]
+    myTitleFloats = ["Media viewer", "Yad"]
+    myFullFloats = []
        -- workspace numbers start at 0
     myShifts =
       [("keepassxc", 6)
@@ -363,7 +373,6 @@ myFloats = cycle [ -- TODO cycle through the floats instead of assigning a keybi
   , W.RationalRect (4/8) (1/8) (1/2) (3/4) -- right
            ]
 
-
 -- Prompt configuration
 myXPConfig =
   defaultXPConfig
@@ -378,6 +387,8 @@ myXPConfig =
     , fgHLight = "#00152b"
     , position = Top
     }
+
+myWaitSP = myXPConfig { autoComplete       = Just 1000000 }
 
 -- GridSelect configuration
 myGridSelectConfig :: GSConfig Window
@@ -462,20 +473,22 @@ myKeys =
     , ("M-S-h", sendMessage $ Swap L)
     , ("M-S-l", sendMessage $ Swap R)
      -- Push floating window back into tilling
-    , ("M-t", withFocused $ windows . W.sink)
+    , ("M-S-t", withFocused $ windows . W.sink)
     --, ("M-S-t", withFocused (keysMoveWindowTo (512,384) (1%2, 1%2))) -- center the window on screen)
-    , ("M-S-t", withFocused $ windows . flip W.float bigCenterR)
-    --, ("M-S-t", withFocused $ windows . flip W.float (myFloats !! 1))--bigCenterR)
+    , ("M-t b", withFocused $ windows . flip W.float bigCenterR)
+    , ("M-t c", withFocused $ windows . flip W.float centerR)
+    , ("M-t l", withFocused $ windows . flip W.float leftR)
+    , ("M-t r", withFocused $ windows . flip W.float rightR)
        -- Shift the focused window to the master window
     , ("M-m", windows W.shiftMaster)
        -- Focus master
     , ("M-S-m", windows W.focusMaster)
        -- grid selection
-    , ("M-g", goToSelected myGridSelectConfig)
+    , ("M-g s", goToSelected myGridSelectConfig)
        -- Search a window and focus into the window
-    , ("M-S-g", windowPromptGoto myXPConfig)
+    , ("M-g g", windowPrompt myXPConfig Goto allWindows)
        -- Search a window and bring to the current workspace
-    , ("M-C-g", windowPromptBring myXPConfig)
+    , ("M-g b", windowPrompt myXPConfig Bring allWindows)
        -- Move the focus to next screen (multi screen)
     , ("M-s", nextScreen)
        -- screen
@@ -485,7 +498,17 @@ myKeys =
     , ("M1-<Tab>", cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab)
        -- Resize viewed windows to the correct size
     , ("M-n", refresh)
-    -- , ("M-S-\\", myLayoutPrompt)
+    -- Rotate through the available layout algorithms
+    , ("M-<Space>", sendMessage NextLayout)
+    --  Reset the layouts on the current workspace to default
+    --, ("M-S-<Space>", setLayout $ XMonad.layoutHook conf)
+    , ("M-a 0" , sendMessage $ JumpToLayout "Tall")
+    , ("M-a 1" , sendMessage $ JumpToLayout "Mosaic")
+    , ("M-a 2" , sendMessage $ JumpToLayout "ThreeCol")
+    , ("M-a 3" , sendMessage $ JumpToLayout "Spiral")
+    , ("M-a 4" , sendMessage $ JumpToLayout "HintedGrid")
+    , ("M-a 5" , sendMessage $ JumpToLayout "OneBig")
+    , ("M-a 6" , sendMessage $ JumpToLayout "Circle")
     ]
 
 myLayoutKeys =
@@ -497,6 +520,10 @@ myLayoutKeys =
           , (\i -> W.greedyView i . W.shift i, shiftMask)
         ]]
 
+myLogout :: String -> X ()
+myLogout command = 
+  confirmPrompt myXPConfig command $ spawn ("$HOME/.scripts/i3lock.sh " ++ command)
+
 myAppkeys = 
        -- Launch terminal
     [ ("M-<Return>", spawn myTerminal)
@@ -506,14 +533,16 @@ myAppkeys =
       , ("M-C-<Return>", spawn myTmuxTerminal)
        -- Kill window
       , ("M-C-k", spawn "xkill")
-       -- Launch oblogout (reboot, shutdown)
-      , ("M-C-0", spawn "oblogout")
        -- Lock screen
-      , ("M-z", spawn "$HOME/.scripts/i3lock.sh lock")
+      , ("M-z l", myLogout "lock")
        -- suspend
-      , ("M-S-z", spawn "$HOME/.scripts/i3lock.sh suspend")
+      , ("M-z s", myLogout "suspend")
+       -- reboot
+      , ("M-z r", myLogout "reboot")
+      -- shutdown // halt
+      , ("M-z h", myLogout "shutdown")
        -- Exit
-       --, ("M-C-0", io (exitWith ExitSuccess))
+      , ("M-z e", confirmPrompt myXPConfig "Exit" $ io (exitWith ExitSuccess))
        -- Restart xmonad
       , ( "M-S-r"
       , spawn
@@ -527,7 +556,8 @@ myAppkeys =
        -- Launch Console File Manager
       , ("M-<F4>", spawn myConsoleFileManager)
        -- Launch dmenu for launching applicatiton
-      , ("M-d", spawn myLauncher)
+      -- , ("M-d", spawn myLauncher)
+      , ("M-d", shellPrompt myXPConfig)
        -- Scratchpads
       , ("M-S-C-t", namedScratchpadAction scratchpads "htop")
       , ("M-S-C-c", namedScratchpadAction scratchpads "cmus")
@@ -572,7 +602,7 @@ myAppkeys =
        -- Take a screenshot (focused window)
     , ( "C-<Print>"
       , spawn (myScreenCapture ++ " -u; notify-send 'Focused window captured'"))
-    , ( "M-/", helpCommand)
+    , ( "M-?", helpCommand)
     ]
 
 help :: String
