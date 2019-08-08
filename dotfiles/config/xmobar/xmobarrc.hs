@@ -76,9 +76,9 @@ Config {
         -- LEMD is the ICAO code for Madrid/Barajas
         , Run Weather "LEMD" ["-t","<tempC>°C <skyCondition>","-L","16","-H","30","-n","#CEFFAC","-h","#FFB6B0","-l","#96CBFE"] 36000
         , Run Com "sh" ["-c", "mpc | head -n -2 | sed 's,.*/,,' | cut -c-40"] "mpd" 50
-        , Run Date "<action=`~/.scripts/calendar.sh` button=1><fc=#00ff00> %a %b %d</fc></action><fc=#001eff> %H:%M:%S</fc>" "date" 10
+        , Run Date "<action=`~/.scripts/calendar.sh` button=1><fc=#00ff00> %a %b %d</fc></action><fc=#00a1f1> %H:%M:%S</fc>" "date" 10
         , Run Com "/bin/bash" ["-c", "~/.scripts/XMgetvolume.sh"]  "XVol" 10
-        , Run Mpris2 "spotify" ["-t", "<artist> - <title>"] 10
+        , Run Mpris2 "spotify" ["-t", "<artist> - <title>", "-x", ""] 10
         , Run Com "/bin/bash" ["-c", "~/.scripts/trayerpad.sh"]  "trayerpad" 10
         , Run Com "/bin/bash" ["-c", "~/.scripts/weather3.sh madrid"] "mad" 36000
         -- keyboard layout indicator
