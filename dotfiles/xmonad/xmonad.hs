@@ -1,87 +1,68 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-import           System.Exit
+--
+-- If there are more than 3 explicit imports required a qualified import is used
+-- If a type has only one constructor it is imported implicitly with (..)
+--
+--
 import           XMonad                              hiding ((|||))
-import           XMonad.Config.Desktop
 
 -- hooks
-import           XMonad.Hooks.DynamicLog
-import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.FloatNext
-import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.ManageHelpers          (doCenterFloat,
-                                                      doFullFloat, isDialog,
-                                                      transience')
-import           XMonad.Hooks.UrgencyHook
-
-import           XMonad.Layout.Circle
-import           XMonad.Layout.HintedGrid
+import qualified XMonad.Hooks.DynamicLog             as DL
+import           XMonad.Hooks.EwmhDesktops           (ewmh, fullscreenEventHook)
+import           XMonad.Hooks.FloatNext              (floatNextHook)
+import qualified XMonad.Hooks.ManageDocks            as ManageDocks
+import qualified XMonad.Hooks.ManageHelpers          as ManageHelpers
+import           XMonad.Hooks.UrgencyHook            (UrgencyHook, urgencyHook)
 
 -- layouts
-import           XMonad.Layout.LayoutCombinators
-import           XMonad.Layout.LayoutHints
-import           XMonad.Layout.Mosaic
-import           XMonad.Layout.MultiToggle
-import           XMonad.Layout.MultiToggle.Instances
-import           XMonad.Layout.OneBig
-import           XMonad.Layout.Reflect
-import           XMonad.Layout.Renamed
-import           XMonad.Layout.ResizableTile
-import           XMonad.Layout.Spacing
-import           XMonad.Layout.Spiral
-import           XMonad.Layout.ThreeColumns
-import           XMonad.Layout.WindowNavigation
-
-import qualified XMonad.Util.Cursor                  as Cursor
+import           XMonad.Layout.Circle                (Circle (..))
+import           XMonad.Layout.HintedGrid            (Grid (GridRatio))
+import           XMonad.Layout.LayoutCombinators     (JumpToLayout (JumpToLayout), (|||))
+import           XMonad.Layout.Mosaic                (mosaic)
+import           XMonad.Layout.MultiToggle           (Toggle (..), mkToggle1)
+import           XMonad.Layout.MultiToggle.Instances (StdTransformers (MIRROR, NBFULL))
+import           XMonad.Layout.OneBig                (OneBig (OneBig))
+import           XMonad.Layout.Reflect               (REFLECTX (..), REFLECTY (..))
+import           XMonad.Layout.Renamed               (Rename (Replace), renamed)
+import qualified XMonad.Layout.ResizableTile         as RTile
+import           XMonad.Layout.Spacing               (spacing)
+import           XMonad.Layout.Spiral                (spiral)
+import           XMonad.Layout.ThreeColumns          (ThreeCol (ThreeColMid))
+import qualified XMonad.Layout.WindowNavigation      as Nav
 
 -- utils
-import           XMonad.Util.NamedScratchpad
+import qualified XMonad.Util.Cursor                  as Cursor
+import           XMonad.Util.EZConfig                (checkKeymap, mkKeymap)
+import qualified XMonad.Util.NamedScratchpad         as NScratchpad
 import           XMonad.Util.NamedWindows            (getName)
-import           XMonad.Util.Run                     (spawnPipe)
-import           XMonad.Util.Run
-import           XMonad.Util.Scratchpad
-import           XMonad.Util.SpawnOnce
-import           XMonad.Util.WindowProperties
-import           XMonad.Util.WorkspaceCompare
-import           XMonad.Util.XSelection
+import           XMonad.Util.Run                     (safeSpawn, spawnPipe)
+import           XMonad.Util.Scratchpad              (scratchpadFilterOutWorkspace)
+import           XMonad.Util.WorkspaceCompare        (getSortByIndex)
 
 -- prompt
 import qualified XMonad.Prompt                       as Prompt
-import           XMonad.Prompt.ConfirmPrompt
-import           XMonad.Prompt.Input
-import           XMonad.Prompt.Shell
-import           XMonad.Prompt.Window
-
-import           XMonad.Actions.CycleRecentWS
-import           XMonad.Actions.CycleWS
+import           XMonad.Prompt.ConfirmPrompt         (confirmPrompt)
+import           XMonad.Prompt.Input                 (inputPromptWithCompl, (?+))
+import           XMonad.Prompt.Shell                 (shellPrompt)
+import qualified XMonad.Prompt.Window                as WPrompt
 
 -- actions
-import           XMonad.Actions.CycleWindows
-import           XMonad.Actions.FloatKeys
-import           XMonad.Actions.GridSelect
-import           XMonad.Actions.Search
-import           XMonad.Actions.UpdatePointer
-import           XMonad.Actions.UpdatePointer
-import           XMonad.Actions.WindowBringer
-import qualified XMonad.Actions.WorkspaceNames       as WorkspaceNames
+import qualified XMonad.Actions.CycleWS              as CycleWS
+import           XMonad.Actions.CycleWindows         (cycleRecentWindows)
+import qualified XMonad.Actions.GridSelect           as GS
+import qualified XMonad.Actions.Search               as Search
+import           XMonad.Actions.UpdatePointer        (updatePointer)
+import           XMonad.Actions.WorkspaceNames       (swapWithCurrent)
 
-import           Graphics.X11.ExtraTypes.XF86
-
--- Keys
-import           XMonad.Util.EZConfig                as EZConfig
-
-import           Control.Monad
-import           Data.List                           (isInfixOf)
-import qualified Data.Map                            as M
-import           System.IO
+import           XMonad.Config.Desktop               (desktopConfig)
 import qualified XMonad.StackSet                     as W
 
-main :: IO ()
-main = do
-  xmobar <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
-  xmonad $ -- withUrgencyHook LibNotifyUrgencyHook
-    --docks $
-    ewmh $ myConfig {logHook = myLogHook xmobar}
+import           Control.Monad                       (liftM2)
+import           Data.List                           (isInfixOf, isPrefixOf)
+import qualified Data.Map                            as M
+import           System.Exit                         (ExitCode (ExitSuccess), exitWith)
+import           System.IO                           (Handle, hPutStrLn)
 
 myConfig =
   def
@@ -100,19 +81,19 @@ myConfig =
     , handleEventHook = myHandleEventHook
     }
 
-myXmobarPP :: Handle -> PP
+myXmobarPP :: Handle -> DL.PP
 myXmobarPP h =
-  xmobarPP
-    { ppOutput = hPutStrLn h . \s -> " " ++ s
-    , ppCurrent = xmobarColor colorNormalbg "" . wrap "(" ")"
-    , ppVisible = xmobarColor colorNormalbg "" . wrap "[" "]"
-    , ppUrgent =
-        xmobarColor colorNormalbg colorRed . wrap "*" "*" . myXmobarStrip
-    , ppLayout = myPPLayout
-    , ppTitle = \str -> ""
-    , ppSort = fmap (. scratchpadFilterOutWorkspace) getSortByIndex
-    , ppSep = " "
-    , ppWsSep = " "
+  DL.xmobarPP
+    { DL.ppOutput = hPutStrLn h . \s -> " " ++ s
+    , DL.ppCurrent = DL.xmobarColor colorNormalbg "" . DL.wrap "(" ")"
+    , DL.ppVisible = DL.xmobarColor colorNormalbg "" . DL.wrap "[" "]"
+    , DL.ppUrgent =
+        DL.xmobarColor colorNormalbg colorRed . DL.wrap "*" "*" . myXmobarStrip
+    , DL.ppLayout = myPPLayout
+    , DL.ppTitle = \str -> ""
+    , DL.ppSort = fmap (. scratchpadFilterOutWorkspace) getSortByIndex
+    , DL.ppSep = " "
+    , DL.ppWsSep = " "
     }
 
 ------------------------------------------------------------------------
@@ -143,7 +124,7 @@ myModMask :: KeyMask
 myModMask = mod4Mask
 
 myKeys :: XConfig l -> M.Map (KeyMask, KeySym) (X ())
-myKeys config = EZConfig.mkKeymap config myKeymap
+myKeys config = mkKeymap config myKeymap
 
 myKeymap :: [([Char], X ())]
 myKeymap =
@@ -161,32 +142,30 @@ myKeymap =
 myMovementKeys =
   myWindowMovementKeys ++
   myWorkspaceMovementKeys ++
-  myWorkspaceMovementKeys' ++
-  myScreenMovementKeys ++
-  myGotoLayoutKeys
+  myWorkspaceMovementKeys' ++ myScreenMovementKeys ++ myGotoLayoutKeys
 
 myWindowMovementKeys =
-  [ ("M-<D>", windowGo D)
-  , ("M-<U>", windowGo U)
-  , ("M-<L>", windowGo L)
-  , ("M-<R>", windowGo R)
-  , ("M-j", windowGo D)
-  , ("M-k", windowGo U)
-  , ("M-h", windowGo L)
-  , ("M-l", windowGo R)
+  [ ("M-<D>", windowGo Nav.D)
+  , ("M-<U>", windowGo Nav.U)
+  , ("M-<L>", windowGo Nav.L)
+  , ("M-<R>", windowGo Nav.R)
+  , ("M-j", windowGo Nav.D)
+  , ("M-k", windowGo Nav.U)
+  , ("M-h", windowGo Nav.L)
+  , ("M-l", windowGo Nav.R)
   , ("M-S-m", windows W.focusMaster) -- Focus master
   , ("M1-<Tab>", cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab)
   ]
   where
-    windowGo = sendMessage . Go
+    windowGo = sendMessage . Nav.Go
 
 myWorkspaceMovementKeys =
   [ (prefix ++ key, func ws)
   | (prefix, func) <-
       [ ("M-", windows . W.greedyView) -- go to workspace
       , ("M-S-", windows . viewShift) -- go to workspace taking current window
-      , ("M-C-", WorkspaceNames.swapWithCurrent) -- change workspace number
-      , ("M-C-S-", windows . W.shift) -- send window to workspace
+      , ("M-C-", windows . W.shift) -- send window to workspace
+      , ("M-C-S-", swapWithCurrent) -- change workspace number
       ]
   , (key, ws) <- zip keys myWorkspaces
   ]
@@ -195,16 +174,16 @@ myWorkspaceMovementKeys =
     viewShift = liftM2 (.) W.greedyView W.shift
 
 myWorkspaceMovementKeys' =
-  [ ("M-C-<R>", nextWS) -- Go to the next
-  , ("M-C-<L>", prevWS) --  Go to previous workspace
-  , ("M-C-l", nextWS) -- Go to the next
-  , ("M-C-h", prevWS) --  Go to previous workspace
+  [ ("M-C-<R>", CycleWS.nextWS) -- Go to the next
+  , ("M-C-<L>", CycleWS.prevWS) --  Go to previous workspace
+  , ("M-C-l", CycleWS.nextWS) -- Go to the next
+  , ("M-C-h", CycleWS.prevWS) --  Go to previous workspace
   ]
 
 myScreenMovementKeys =
-  [ ("M-s", nextScreen) -- Move the focus to next screen (multi screen)
-  , ("M-o", swapNextScreen)
-  , ("M-S-o", shiftNextScreen)
+  [ ("M-s", CycleWS.nextScreen) -- Move the focus to next screen (multi screen)
+  , ("M-o", CycleWS.swapNextScreen)
+  , ("M-S-o", CycleWS.shiftNextScreen)
   ]
 
 myGotoLayoutKeys =
@@ -222,17 +201,17 @@ myGotoLayoutKeys =
 myLayoutKeys = myLayoutKeys' ++ myLayoutSwapKeys ++ myLayoutTransformKeys
 
 myLayoutSwapKeys =
-  [ ("M-S-<D>", layoutSwap D)
-  , ("M-S-<U>", layoutSwap U)
-  , ("M-S-<L>", layoutSwap L)
-  , ("M-S-<R>", layoutSwap R)
-  , ("M-S-j", layoutSwap D)
-  , ("M-S-k", layoutSwap U)
-  , ("M-S-h", layoutSwap L)
-  , ("M-S-l", layoutSwap R)
+  [ ("M-S-<D>", layoutSwap Nav.D)
+  , ("M-S-<U>", layoutSwap Nav.U)
+  , ("M-S-<L>", layoutSwap Nav.L)
+  , ("M-S-<R>", layoutSwap Nav.R)
+  , ("M-S-j", layoutSwap Nav.D)
+  , ("M-S-k", layoutSwap Nav.U)
+  , ("M-S-h", layoutSwap Nav.L)
+  , ("M-S-l", layoutSwap Nav.R)
   ]
   where
-    layoutSwap = sendMessage . Swap
+    layoutSwap = sendMessage . Nav.Swap
 
 myLayoutKeys' =
   [ ("M-f", sendMessage $ Toggle NBFULL) -- Toggle Fullscreen mode
@@ -245,19 +224,19 @@ myLayoutKeys' =
 myLayoutTransformKeys =
   [ ("M-,", sendMessage Shrink)
   , ("M-.", sendMessage Expand)
-  , ("M-S-.", sendMessage MirrorShrink)
-  , ("M-S-,", sendMessage MirrorExpand)
+  , ("M-S-.", sendMessage RTile.MirrorShrink)
+  , ("M-S-,", sendMessage RTile.MirrorExpand)
   , ("M-g x", sendMessage $ Toggle REFLECTX)
   , ("M-g y", sendMessage $ Toggle REFLECTY)
   , ("M-g m", sendMessage $ Toggle MIRROR) -- Toggle Mirror layout
   ]
 
 myWorkspaceKeys =
-  [ ("M-C-S-<R>", shiftToNext) -- Shift the focused window to the next workspace
-  , ("M-C-S-<L>", shiftToPrev) -- Shift the focused window to the previous workspace
-  , ("M-C-S-l", shiftToNext) -- Shift the focused window to the next workspace
-  , ("M-C-S-h", shiftToPrev) -- Shift the focused window to the previous workspace
-  , ("M-<Tab>", toggleWS) -- toggle last workspace
+  [ ("M-C-S-<R>", CycleWS.shiftToNext) -- Shift the focused window to the next workspace
+  , ("M-C-S-<L>", CycleWS.shiftToPrev) -- Shift the focused window to the previous workspace
+  , ("M-C-S-l", CycleWS.shiftToNext) -- Shift the focused window to the next workspace
+  , ("M-C-S-h", CycleWS.shiftToPrev) -- Shift the focused window to the previous workspace
+  , ("M-<Tab>", CycleWS.toggleWS) -- toggle last workspace
   ]
 
 myFloatKeys =
@@ -319,8 +298,8 @@ myMediaKeys =
   ]
 
 myScratchPadKeys =
-  [ ("M-n h", namedScratchpadAction scratchpads "htop")
-  , ("M-n c", namedScratchpadAction scratchpads "cmus")
+  [ ("M-n h", NScratchpad.namedScratchpadAction scratchpads "htop")
+  , ("M-n c", NScratchpad.namedScratchpadAction scratchpads "cmus")
   ]
 
 myControlKeys = myXmonadKeys ++ myLogoutKeys
@@ -328,13 +307,15 @@ myControlKeys = myXmonadKeys ++ myLogoutKeys
 myXmonadKeys =
   [ ("M-S-q", kill) -- Close the focused window
        -- Toggle struts
-  , ("M-b", sendMessage ToggleStruts)
+  , ("M-b", sendMessage ManageDocks.ToggleStruts)
        -- grid selection
-  , ("M-g s", goToSelected myGridSelectConfig)
+  , ("M-g s", GS.goToSelected myGridSelectConfig)
        -- Search a window and focus into the window
-  , ("M-g g", windowPrompt myPromptInfix Goto allWindows)
+  , ( "M-g g"
+    , WPrompt.windowPrompt myPromptInfix WPrompt.Goto WPrompt.allWindows)
        -- Search a window and bring to the current workspace
-  , ("M-g b", windowPrompt myPromptInfix Bring allWindows)
+  , ( "M-g b"
+    , WPrompt.windowPrompt myPromptInfix WPrompt.Bring WPrompt.allWindows)
   , ("M-g l", myLayoutPrompt)
        -- Resize viewed windows to the correct size
   --, ("M-n", refresh)
@@ -438,13 +419,13 @@ myWorkspaces =
 -- which denotes layout choice.
 --
 myLayout =
-  avoidStruts $
+  ManageDocks.avoidStruts $
   -- Toggles
   mkToggle1 NBFULL $
   mkToggle1 REFLECTX $
   mkToggle1 REFLECTY $
   mkToggle1 MIRROR $
-  configurableNavigation (navigateColor myNormalBorderColor) $
+  Nav.configurableNavigation (Nav.navigateColor myNormalBorderColor) $
   -- Layouts
   name "Tall" myTile |||
   name "HintedGrid" myHintedGrid |||
@@ -453,7 +434,7 @@ myLayout =
   name "Mosaic" myMosaic ||| name "ThreeCol" my3cmi ||| name "Spiral" mySpiral
   where
     name n = renamed [Replace n] . spacing 5
-    myTile = ResizableTall 1 (3 / 100) (4 / 7) []
+    myTile = RTile.ResizableTall 1 (3 / 100) (4 / 7) []
     my3cmi = ThreeColMid 1 (3 / 100) (1 / 2)
     mySpiral = spiral (6 / 7)
     myMosaic = mosaic 2 [3, 2]
@@ -463,21 +444,21 @@ myLayout =
 ------------------------------------------------------------------------
 -- Scratchpads
 --
-scratchpads :: [NamedScratchpad]
+scratchpads :: [NScratchpad.NamedScratchpad]
 scratchpads =
-  [ NS
+  [ NScratchpad.NS
       "htop"
       (myTerminal ++ " -t process -e htop")
       (title =? "process")
       myPosition
-  , NS
+  , NScratchpad.NS
       "cmus"
       (myTerminal ++ " -t process -e cmus")
       (resource =? "cmus")
       myPosition
   ]
   where
-    myPosition = customFloating $ W.RationalRect (1/3) (1/3) (1/3) (1/3)
+    myPosition = NScratchpad.customFloating $ W.RationalRect (1 / 3) (1 / 3) (1 / 3) (1 / 3)
 
 ------------------------------------------------------------------------
 -- Manage Hooks
@@ -485,17 +466,17 @@ scratchpads =
 myManageHook :: ManageHook
 myManageHook =
   composeAll
-    [ manageDocks
+    [ ManageDocks.manageDocks
     , floatNextHook
     , manageHook desktopConfig
-    , namedScratchpadManageHook scratchpads
+    , NScratchpad.namedScratchpadManageHook scratchpads
     , myManageHook'
     ]
 
 myLogHook :: Handle -> X ()
 myLogHook b
           -- ewmhDesktopsLogHook >> (dynamicLogWithPP $ myXmobarPP xmobar)
- = (dynamicLogWithPP $ myXmobarPP b) >> updatePointer (0.5, 0.5) (1, 1)
+ = (DL.dynamicLogWithPP $ myXmobarPP b) >> updatePointer (0.5, 0.5) (1, 1)
 
 --
 -- https://wiki.haskell.org/Xmonad/Frequently_asked_questions
@@ -506,14 +487,14 @@ myLogHook b
 -- https://hackage.haskell.org/package/xmonad-0.15/docs/XMonad-ManageHook.html
 myManageHook' =
   composeAll . concat $
-  [ [isDialog --> doCenterFloat]
+  [ [ManageHelpers.isDialog --> ManageHelpers.doCenterFloat]
   , [className =? c --> doFloat | c <- myClassFloats]
-  , [className =? c --> doFullFloat | c <- myFullFloats]
+  , [className =? c --> ManageHelpers.doFullFloat | c <- myFullFloats]
   , [title =? t --> doFloat | t <- myTitleFloats]
-  , [className =? c --> doCenterFloat | c <- myCenterFloats]
-  , [title =? t --> doCenterFloat | t <- myTitleCenterFloats]
+  , [className =? c --> ManageHelpers.doCenterFloat | c <- myCenterFloats]
+  , [title =? t --> ManageHelpers.doCenterFloat | t <- myTitleCenterFloats]
   , [className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts]
-  , [transience'] -- move transient windows like dialogs/alerts on top of their parents
+  , [ManageHelpers.transience'] -- move transient windows like dialogs/alerts on top of their parents
   ]
   where
     myCenterFloats = ["zenity", "Arandr", "Galculator", "Yad"]
@@ -534,12 +515,13 @@ myManageHook' =
 
 myStartupHook :: X ()
 myStartupHook = do
-  EZConfig.checkKeymap myConfig myKeymap
+  checkKeymap myConfig myKeymap
   Cursor.setDefaultCursor Cursor.xC_left_ptr
   spawn "$HOME/.scripts/autostart.sh"
 
 myHandleEventHook =
-  fullscreenEventHook <+> docksEventHook <+> handleEventHook desktopConfig
+  fullscreenEventHook <+>
+  ManageDocks.docksEventHook <+> handleEventHook desktopConfig
 
 data LibNotifyUrgencyHook =
   LibNotifyUrgencyHook
@@ -560,7 +542,7 @@ instance UrgencyHook LibNotifyUrgencyHook where
 -- Prompt
 --
 -- Prompt configuration
-myPrompt :: XPConfig
+myPrompt :: Prompt.XPConfig
 myPrompt =
   def
     { Prompt.font = "xft:SauceCodePro Nerd Font:size=14:antialias=true"
@@ -577,7 +559,7 @@ myPrompt =
     , Prompt.searchPredicate = isPrefixOf
     }
 
-myPromptInfix :: XPConfig
+myPromptInfix :: Prompt.XPConfig
 myPromptInfix = myPrompt {Prompt.searchPredicate = isInfixOf}
 
 myLayoutPrompt :: X ()
@@ -695,27 +677,38 @@ myFloats =
     ]
 
 -- GridSelect configuration
-myGridSelectConfig :: GSConfig Window
+myGridSelectConfig :: GS.GSConfig Window
 myGridSelectConfig =
-  def {gs_navigate = myNavigation, gs_colorizer = fromClassName}
+  def {GS.gs_navigate = myNavigation, GS.gs_colorizer = GS.fromClassName}
   where
     myNavigation =
-      makeXEventhandler $ shadowWithKeymap navKeymap $ const defaultNavigation
+      GS.makeXEventhandler $
+      GS.shadowWithKeymap navKeymap $ const GS.defaultNavigation
     navKeymap =
       M.fromList
-        [ ((0, xK_Escape), cancel)
-        , ((0, xK_Return), select)
-        , ((0, xK_slash), substringSearch myNavigation) -- search
-        , ((0, xK_h), move (-1, 0) >> myNavigation) -- move left
-        , ((0, xK_l), move (1, 0) >> myNavigation) -- move right
-        , ((0, xK_j), move (0, 1) >> myNavigation) -- move down
-        , ((0, xK_k), move (0, -1) >> myNavigation) -- move up
-        , ((0, xK_y), move (-1, -1) >> myNavigation) -- move diagonal up left
-        , ((0, xK_u), move (1, -1) >> myNavigation) -- move diagonal up right
-        , ((0, xK_b), move (-1, 1) >> myNavigation) -- move diagonal down left
-        , ((0, xK_n), move (1, 1) >> myNavigation) -- move diagonal down right
-        , ((0, xK_Tab), moveNext >> myNavigation) -- move next
+        [ ((0, xK_Escape), GS.cancel)
+        , ((0, xK_Return), GS.select)
+        , ((0, xK_slash), GS.substringSearch myNavigation) -- search
+        , ((0, xK_h), GS.move (-1, 0) >> myNavigation) -- move left
+        , ((0, xK_l), GS.move (1, 0) >> myNavigation) -- move right
+        , ((0, xK_j), GS.move (0, 1) >> myNavigation) -- move down
+        , ((0, xK_k), GS.move (0, -1) >> myNavigation) -- move up
+        , ((0, xK_y), GS.move (-1, -1) >> myNavigation) -- move diagonal up left
+        , ((0, xK_u), GS.move (1, -1) >> myNavigation) -- move diagonal up right
+        , ((0, xK_b), GS.move (-1, 1) >> myNavigation) -- move diagonal down left
+        , ((0, xK_n), GS.move (1, 1) >> myNavigation) -- move diagonal down right
+        , ((0, xK_Tab), GS.moveNext >> myNavigation) -- move next
         ]
+
+------------------------------------------------------------------------
+-- Main
+--
+main :: IO ()
+main = do
+  xmobar <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
+  xmonad $ -- withUrgencyHook LibNotifyUrgencyHook
+    --docks $
+    ewmh $ myConfig {logHook = myLogHook xmobar}
 
 ------------------------------------------------------------------------
 -- Testing
@@ -751,14 +744,14 @@ help =
     , "mod-button3  Set the window to floating mode and resize by dragging"
     ]
 
-delicious = searchEngine "delicious" "http://delicious.com/doitian/"
+delicious = Search.searchEngine "delicious" "http://delicious.com/doitian/"
 
 searchEngineMap method =
   M.fromList $
   [ ((0, xK_b), method delicious)
-  , ((0, xK_d), method dictionary)
-  , ((0, xK_g), method google)
-  , ((0, xK_w), method wikipedia)
+  , ((0, xK_d), method Search.dictionary)
+  , ((0, xK_g), method Search.google)
+  , ((0, xK_w), method Search.wikipedia)
   ]
 
 myXmobarStrip :: String -> String
