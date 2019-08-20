@@ -16,19 +16,14 @@ import qualified XMonad.Hooks.ManageHelpers          as ManageHelpers
 import           XMonad.Hooks.UrgencyHook            (UrgencyHook, urgencyHook)
 
 -- layouts
-import           XMonad.Layout.Circle                (Circle (..))
-import           XMonad.Layout.HintedGrid            (Grid (GridRatio))
-import           XMonad.Layout.LayoutCombinators     (JumpToLayout (JumpToLayout), (|||))
-import           XMonad.Layout.Mosaic                (mosaic)
+import           XMonad.Layout.LayoutCombinators     (JumpToLayout (JumpToLayout),
+                                                      (|||))
 import           XMonad.Layout.MultiToggle           (Toggle (..), mkToggle1)
 import           XMonad.Layout.MultiToggle.Instances (StdTransformers (MIRROR, NBFULL))
-import           XMonad.Layout.OneBig                (OneBig (OneBig))
-import           XMonad.Layout.Reflect               (REFLECTX (..), REFLECTY (..))
+import           XMonad.Layout.Reflect               (REFLECTX (..),
+                                                      REFLECTY (..))
 import           XMonad.Layout.Renamed               (Rename (Replace), renamed)
-import qualified XMonad.Layout.ResizableTile         as RTile
 import           XMonad.Layout.Spacing               (spacing)
-import           XMonad.Layout.Spiral                (spiral)
-import           XMonad.Layout.ThreeColumns          (ThreeCol (ThreeColMid))
 import qualified XMonad.Layout.WindowNavigation      as Nav
 
 -- utils
@@ -43,12 +38,13 @@ import           XMonad.Util.WorkspaceCompare        (getSortByIndex)
 -- prompt
 import qualified XMonad.Prompt                       as Prompt
 import           XMonad.Prompt.ConfirmPrompt         (confirmPrompt)
-import           XMonad.Prompt.Input                 (inputPromptWithCompl, (?+))
+import           XMonad.Prompt.Input                 (inputPromptWithCompl,
+                                                      (?+))
 import           XMonad.Prompt.Shell                 (shellPrompt)
 import qualified XMonad.Prompt.Window                as WPrompt
 
--- actions
 import qualified XMonad.Actions.CycleWS              as CycleWS
+-- actions
 import           XMonad.Actions.CycleWindows         (cycleRecentWindows)
 import qualified XMonad.Actions.GridSelect           as GS
 import qualified XMonad.Actions.Search               as Search
@@ -61,8 +57,39 @@ import qualified XMonad.StackSet                     as W
 import           Control.Monad                       (liftM2)
 import           Data.List                           (isInfixOf, isPrefixOf)
 import qualified Data.Map                            as M
-import           System.Exit                         (ExitCode (ExitSuccess), exitWith)
+import           System.Exit                         (ExitCode (ExitSuccess),
+                                                      exitWith)
 import           System.IO                           (Handle, hPutStrLn)
+
+import           XMonad.Layout.Accordion             (Accordion (Accordion))
+import           XMonad.Layout.BinarySpacePartition  (emptyBSP)
+import           XMonad.Layout.Circle                (Circle (..))
+import           XMonad.Layout.Column                (Column (Column))
+import           XMonad.Layout.Cross                 (simpleCross)
+import           XMonad.Layout.Dishes                (Dishes (Dishes))
+import           XMonad.Layout.DragPane              (DragType (Horizontal), dragPane)
+import qualified XMonad.Layout.Dwindle               as Dwindle
+import           XMonad.Layout.FixedColumn           (FixedColumn (FixedColumn))
+import           XMonad.Layout.Grid                  (Grid (Grid))
+import qualified XMonad.Layout.GridVariants          as GridVariants
+import           XMonad.Layout.HintedGrid            (Grid (GridRatio))
+import qualified XMonad.Layout.HintedTile            as HintedTile
+import           XMonad.Layout.Mosaic                (mosaic)
+import           XMonad.Layout.MosaicAlt             (MosaicAlt (MosaicAlt))
+import           XMonad.Layout.MouseResizableTile    (mouseResizableTile)
+import           XMonad.Layout.MultiColumns          (multiCol)
+import           XMonad.Layout.OneBig                (OneBig (OneBig))
+import qualified XMonad.Layout.ResizableTile         as RTile
+import           XMonad.Layout.Roledex               (Roledex (Roledex))
+import           XMonad.Layout.SimpleFloat           (simpleFloat)
+import           XMonad.Layout.Simplest              (Simplest (Simplest))
+import           XMonad.Layout.SimplestFloat         (simplestFloat)
+import           XMonad.Layout.Spiral                (spiral)
+import           XMonad.Layout.StackTile             (StackTile (StackTile))
+import           XMonad.Layout.Tabbed                (simpleTabbed)
+import           XMonad.Layout.ThreeColumns          (ThreeCol (ThreeColMid))
+import           XMonad.Layout.TwoPane               (TwoPane (TwoPane))
+import           XMonad.Layout.ZoomRow               (zoomRow)
 
 myConfig =
   def
@@ -376,21 +403,21 @@ myPPLayout :: [Char] -> [Char]
 myPPLayout =
   (\x ->
      case x of
-       "Tall"            -> "\xf005" -- 
-       "ThreeCol"        -> "\xfa6a" -- 頻
-       "Mirror ThreeCol" -> "\xfa6e" -- 﩮
-       "Spiral"          -> "\xf306" -- 
-       "Mosaic"          -> "\xfa6d" -- 舘
-       "Full"            -> "\xf5b5" -- 
-       "Mirror Tall"     -> "\xf006" -- 
-       "Mirror Mosaic"   -> "\xfa73" -- 侀
-       "Tabbed"          -> "\xfd35" -- ﴵ
-       "Mirror Spiral"   -> "\xfc06" -- ﰆ
-       "Circle"          -> "\xe22e" -- 
-       "OneBig"          -> "\xf286" -- 
-       "HintedGrid"      -> "\xfb8a" -- ﮊ
-       _                 -> x)
+       _ -> x)
 
+--       "Tall"            -> "\xf005" -- 
+--       "ThreeCol"        -> "\xfa6a" -- 頻
+--       "Mirror ThreeCol" -> "\xfa6e" -- 﩮
+--       "Spiral"          -> "\xf306" -- 
+--       "Mosaic"          -> "\xfa6d" -- 舘
+--       "Full"            -> "\xf5b5" -- 
+--       "Mirror Tall"     -> "\xf006" -- 
+--       "Mirror Mosaic"   -> "\xfa73" -- 侀
+--       "Tabbed"          -> "\xfd35" -- ﴵ
+--       "Mirror Spiral"   -> "\xfc06" -- ﰆ
+--       "Circle"          -> "\xe22e" -- 
+--       "OneBig"          -> "\xf286" -- 
+--       "HintedGrid"      -> "\xfb8a" -- ﮊ
 myWorkspaces :: [String]
 myWorkspaces =
   fmap myWorkspaceIcon $
@@ -427,19 +454,63 @@ myLayout =
   mkToggle1 MIRROR $
   Nav.configurableNavigation (Nav.navigateColor myNormalBorderColor) $
   -- Layouts
-  name "Tall" myTile |||
-  name "HintedGrid" myHintedGrid |||
-  name "OneBig" myOneBig |||
+  name "Accordion" Accordion |||
+  name "Binary" emptyBSP |||
   name "Circle" Circle |||
-  name "Mosaic" myMosaic ||| name "ThreeCol" my3cmi ||| name "Spiral" mySpiral
+  name "Column" myColumn |||
+  name "Cross" simpleCross |||
+  name "Dishes" myDishes |||
+  name "DragPane" myDragPane |||
+  name "Dwindle" myDwindle |||
+  name "DwindleSpiral" myDwindleSpiral |||
+  name "DwindleSqueeze" myDwindleSqueeze |||
+  name "FixedColumn" myFixedColumn |||
+  name "Grid" Grid |||
+  name "GridVariant" myGridVariant |||
+  name "HintedGrid" myHintedGrid |||
+  name "HintedTileTall" myHintedTileTall |||
+  name "HintedTileWide" myHintedTileWide |||
+  name "Mosaic" myMosaic |||
+  name "MosaicAlt" myMosaicAlt |||
+  name "MouseResizableTile" mouseResizableTile |||
+  name "MultiColumns" myMultiColumns |||
+  name "OneBig" myOneBig |||
+  name "Roledex" Roledex |||
+  name "SimpleFloat" simpleFloat |||
+  name "SimpleTabbed" simpleTabbed |||
+  name "SimplestFloat" Simplest |||
+  name "Spiral" mySpiral |||
+  name "SplitGrid" mySplitGrid |||
+  name "StackTile" myStackTile |||
+  name "Tall" myTile |||
+  name "ThreeCol" myThreeCol |||
+  name "TwoPane" myTwoPane |||
+  name "ZoomRow" zoomRow
   where
     name n = renamed [Replace n] . spacing 5
-    myTile = RTile.ResizableTall 1 (3 / 100) (4 / 7) []
-    my3cmi = ThreeColMid 1 (3 / 100) (1 / 2)
-    mySpiral = spiral (6 / 7)
-    myMosaic = mosaic 2 [3, 2]
+    myThreeCol = ThreeColMid 1 (3 / 100) (1 / 2)
+    myColumn = Column (16 / 10)
+    myDishes = Dishes 2 (1 / 6)
+    myDragPane = dragPane Horizontal (1 / 10) (1 / 2)
+    myDwindle = Dwindle.Dwindle Dwindle.R Dwindle.CW (3 / 2) (11 / 10)
+    myDwindleSpiral = Dwindle.Spiral Dwindle.L Dwindle.CW (3 / 2) (11 / 10)
+    myDwindleSqueeze = Dwindle.Squeeze Dwindle.D (3 / 2) (11 / 10)
+    myFixedColumn = FixedColumn 1 20 80 10
+    myGridVariant = GridVariants.Grid (16 / 10)
     myHintedGrid = GridRatio (4 / 3) False
+    myHintedTile = HintedTile.HintedTile 1 (1 / 2) (3 / 100) HintedTile.TopLeft
+    myHintedTileTall = myHintedTile HintedTile.Tall
+    myHintedTileWide = myHintedTile HintedTile.Wide
+    myMosaic = mosaic 2 [3, 2]
+    myMosaicAlt = MosaicAlt M.empty
+    myMultiColumns = multiCol [1] 4 0.01 0.5
     myOneBig = OneBig (4 / 6) (4 / 6)
+    mySpiral = spiral (6 / 7)
+    mySplitGrid =
+      GridVariants.SplitGrid GridVariants.L 2 3 (2 / 3) (16 / 10) (5 / 100)
+    myStackTile = StackTile 1 (3 / 100) (1 / 2)
+    myTwoPane = TwoPane (3 / 100) (1 / 2)
+    myTile = RTile.ResizableTall 1 (3 / 100) (4 / 7) []
 
 ------------------------------------------------------------------------
 -- Scratchpads
@@ -458,7 +529,9 @@ scratchpads =
       myPosition
   ]
   where
-    myPosition = NScratchpad.customFloating $ W.RationalRect (1 / 3) (1 / 3) (1 / 3) (1 / 3)
+    myPosition =
+      NScratchpad.customFloating $
+      W.RationalRect (1 / 3) (1 / 3) (1 / 3) (1 / 3)
 
 ------------------------------------------------------------------------
 -- Manage Hooks
