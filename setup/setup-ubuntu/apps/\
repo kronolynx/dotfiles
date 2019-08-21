@@ -1,0 +1,35 @@
+#!/bin/bash
+VERSION="0.8.2"
+
+#curl https://dl.suckless.org/st/st-$VERSION.tar.gz | tar xz
+cd "st-$VERSION"
+
+patches=(
+alpha/st-alpha-0.8.2
+scrollback/st-scrollback-0.8.2
+scrollback/st-scrollback-mouse-0.8.2
+vertcenter/st-vertcenter-20180320-6ac8c8a
+#xresources/st-xresources-20190105-3be4cf1
+font2/st-font2-20190416-ba72400
+)
+
+for p in ${patches[*]}; do
+  echo "$p"
+  #curl -O -J "https://st.suckless.org/patches/$p.diff"
+done
+
+for i in *.diff; do
+  [ -f "$i" ] || break
+  echo "Applying $i"
+  #patch -Np1 -i $i
+done
+
+ls
+FONT='static char *font = "FantasqueSansMono Nerd Font:pixelsize=14:antialias=true:autohint=true";'
+#
+sed -i config.h -e "s/.*font.*=/$FONT/"
+
+#sudo make clean install
+
+#cd ..
+#rm -rf "st-$VERSION"
