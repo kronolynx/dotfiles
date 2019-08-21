@@ -1,0 +1,47 @@
+# work {{{
+alias dup="docker-compose.sh up"
+alias dow="docker-compose.sh down"
+alias publ="sbt compile publishLocal && notify-send Published publ || notify-send Failed publ" 
+alias publr="ag -l | entr -s 'sbt compile publishLocal && notify-send Published publr || notify-send Failed publr'" # http://eradman.com/entrproject/
+alias dpubl="sbt compile publishLocal docker:publishLocal && notify-send Published dpubl || notify-send Failed dpubl"
+alias dpublr="ag -l | entr -s 'sbt compile publishLocal docker:publishLocal && notify-send Published dpublr || notify-send Failed dpublr'" # http://eradman.com/entrproject/
+alias cpubl="sbt clean compile publishLocal publishLocal && notify-send Published cpubl || notify-send Failed cpubl"
+alias cdpubl="sbt clean compile publishLocal docker:publishLocal && notify-send Published cdpubl || notify-send Failed cdpubl"
+alias dw='watch docker ps -a'
+alias dl='docker logs -f '
+alias dprune="docker system prune -f" # remove all docker containers
+alias dls="docker ps -a" # list all docker containers
+alias sbtr="ag -l | entr sbt" # http://eradman.com/entrproject/
+alias reload="ag -l | entr"
+alias ctarget="find -name target | xargs rm -rf"
+function dbash() {
+  docker exec -it $1 bash
+}
+#alias testOnly=sbt testOnly *MySuite -- -z foo
+# }}}
+#
+
+#docker exec -it `docker ps | grep wurstmeister/kafka | awk '{print $1}'`  /opt/kafka/bin/kafka-console-consumer.sh --zookeeper zookeeper1:2181 --topic email-sender --from-beginning
+
+# restart docker service when using sbt test
+# takes as argument the name of the service that we want to have the image replaced with (first run docker:publishLocal to generate a new image for the service)
+# e.g:  restart_service wr-admin-domain-server
+function restart_service() {
+  RUN_CMD=`runlike $1`;
+  docker stop $1;
+  docker rm -f $1;
+  $RUN_CMD;
+}
+
+
+#kibana (Elastic search)  # https://www.elastic.co/guide/en/kibana/current/deb.html
+# to access kibana localhost:5601
+alias kub="sudo systemctl start kibana.service"
+alias kdown="sudo systemctl stop kibana.service"
+
+export LD_PRELOAD=/usr/lib/libwcwidth-icons.so
+emulate sh -c 'source /etc/profile'
+
+clean_target () {
+  find -name target | xargs rm -rf
+}
