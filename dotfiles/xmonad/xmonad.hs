@@ -61,6 +61,7 @@ import qualified XMonad.StackSet                     as W
 import           Control.Monad                       (liftM2)
 import           Data.List                           (isInfixOf, isPrefixOf)
 import qualified Data.Map                            as M
+import           Data.Char                           (toLower)
 import           System.Exit                         (ExitCode (ExitSuccess), exitWith)
 import           System.IO                           (Handle, hPutStrLn)
 
@@ -252,13 +253,15 @@ myLauncherKeys = myLauncherKeys' ++ myScreenCaptureKeys
 myLauncherKeys' =
   fmap spawn <$>
   [ ("M-<Return>", myTerminal) -- Launch terminal
-  , ("M-e b", myBrowser) -- Launch text editor
-  , ("M-e e", myTextEditor) -- Launch text editor
-  , ("M-e f", myFileManager) -- Launch text editor
-  , ("M-e k", "xkill") -- Kill window
-  , ("M-e r", myConsoleFileManager) -- Launch text editor
-  , ("M-e t", myTmuxTerminal) -- Launch tmux terminal
-  , ("M-e v", "nvim") -- Launch text editor
+  , ("M-S-<Return>", myFileManager) -- Launch FileManager
+  , ("M-C-<Return>", myConsoleFileManager) -- Launch Console File Manager
+  , ("M-' b", myBrowser) -- Launch browser
+  , ("M-' e", myTextEditor) -- Launch text editor
+  , ("M-' f", myFileManager) -- Launch File Manager 
+  , ("M-' k", "xkill") -- Kill window
+  , ("M-' r", myConsoleFileManager) -- Launch text editor
+  , ("M-' t", myTmuxTerminal) -- Launch tmux terminal
+  , ("M-' v", "nvim") -- Launch text editor
   , ("M-S-C-=", "$HOME/.scripts/xbacklight-toggle.sh")
   ]
 
@@ -302,9 +305,7 @@ myScratchPadKeys =
   , ("M-n c", NScratchpad.namedScratchpadAction scratchpads "cmus")
   ]
 
-myControlKeys = myXmonadKeys ++ myLogoutKeys
-
-myXmonadKeys =
+myControlKeys =
   [ ("M-S-q", kill) -- Close the focused window
        -- Toggle struts
   , ("M-b", sendMessage ManageDocks.ToggleStruts)
@@ -328,14 +329,7 @@ myXmonadKeys =
   , ("M-d", shellPrompt myPrompt) -- launch apps
   , ("M-S-d", spawn myLauncher) -- launch apps
   , ("M-?", helpCommand)
-  ]
-
-myLogoutKeys =
-  [ ("M-; l", myLogoutPrompt "lock") -- Lock screen
-  , ("M-; s", myLogoutPrompt "suspend") -- suspend
-  , ("M-; r", myLogoutPrompt "reboot") -- reboot
-  , ("M-; h", myLogoutPrompt "shutdown") -- shutdown // halt
-  , ("M-; e", confirmPrompt myPrompt "Exit" $ io (exitWith ExitSuccess)) -- Exit
+  , ("M-0", mySessionPrompt)
   ]
 
 ------------------------------------------------------------------------
@@ -346,7 +340,7 @@ myScreenCapture :: String
 myScreenCapture = "scrot '%Y-%m-%d_$wx$h.png' -e 'mv $f ~/Pictures/'"
 
 myTerminal :: String
-myTerminal = "alacritty"
+myTerminal = "urxvt"
 
 myTmuxTerminal :: String
 myTmuxTerminal = myTerminal ++ " -e tmux attach"
@@ -577,10 +571,30 @@ myLayoutPrompt =
        , "7.Spiral"
        ]) ?+ \l -> sendMessage $ JumpToLayout $ drop 2 l
 
-myLogoutPrompt :: String -> X ()
-myLogoutPrompt command =
-  confirmPrompt myPrompt command $
-  spawn ("$HOME/.scripts/i3lock.sh " ++ command)
+mySessionPrompt :: X ()
+mySessionPrompt =
+  inputPromptWithCompl
+    myPrompt {Prompt.autoComplete = Just 1000}
+    "\x23FB " -- ⏻
+    (Prompt.mkComplFunFromList'
+       [ "1.Lock"
+       , "2.Suspend"
+       , "3.Reboot"
+       , "4.Shutdown"
+       , "5.Exit"
+       ]) ?+ \l -> prompt $ map toLower $ drop 2 l
+       where 
+        prompt =
+              (\x -> 
+              case x of 
+                "lock" -> noConfirm x
+                "suspend" -> noConfirm x
+                "reboot" -> confirm x
+                "shutdown" -> confirm x
+                "exit" -> confirmPrompt myPrompt x $ io (exitWith ExitSuccess)-- Exit
+              ) where
+                confirm command = confirmPrompt myPrompt command $ spawn ("$HOME/.scripts/i3lock.sh " ++ command)
+                noConfirm command = spawn ("$HOME/.scripts/i3lock.sh " ++ command)
 
 ------------------------------------------------------------------------
 -- Colors
