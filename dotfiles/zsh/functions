@@ -1,3 +1,21 @@
+# ls after cd and if the directory doesn't exist try at home
+function cd() {
+    if ! test -d $@ && test -d "$HOME/$@"; then
+      builtin cd "$HOME/$@" && ls -G
+    else 
+      builtin cd "$@" && ls -G
+    fi
+}
+
+# MISC: mkdir && cd
+function mcd()
+{
+    test -z "$1" && echo mkcd: no path given && return
+    test -d "$1" && print "mkcd: Directory $1 already exists"
+    mkdir -p -- "$1"
+    cd -- "$1"
+}
+
 
 # Coloured man pages using less as pager
 man_color() {
@@ -357,23 +375,6 @@ function dirsize()
     echo
     echo "Total: " $(du -sh $dir 2>/dev/null | awk '{print $1}')
 }
-
-# MISC: mkdir && cd
-function mcd()
-{
-    test -z "$1" && echo mkcd: no path given && return
-    test -d "$1" && print "mkcd: Directory $1 already exists"
-    mkdir -p -- "$1"
-    cd -- "$1"
-}
-
-# ls after cd
-function cd() {
-    builtin cd "$@" && ls -G
-}
-
-# MISC: cd && ls
-function cl() { cd $1 && ls -a }
 
 # MISC: Use vim to convert plaintext to HTML
 function 2html() { vim -u NONE -n -c ':syntax on' -c ':so $VIMRUNTIME/syntax/2html.vim' -c ':wqa' $1 > /dev/null 2> /dev/null }
