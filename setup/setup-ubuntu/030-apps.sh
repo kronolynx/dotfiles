@@ -1,10 +1,6 @@
 #!/bin/bash
 
-my_print(){
-  echo -e "################################################################"
-  echo -e "########## \e[36m Installing $1 \e[0m"
-  echo -e "################################################################"
-}
+SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
 
 accessories=(
   cmatrix # simulates the display from "The Matrix"
@@ -110,42 +106,29 @@ system=(
   zenity # Display graphical dialog boxes from shell scripts
 )
 
-if [ -n "$accessories" ]; then 
-  my_print "accessories"
-  ./install-app.sh ${accessories[*]}
-fi
-if [ -n "$development" ]; then 
-  my_print "development" 
-  ./install-app.sh ${development[*]}
-fi
-if [ -n "$education" ]; then 
-  my_print "education" 
-  ./install-app.sh ${education[*]}
-fi
-if [ -n "$graphics" ]; then 
-  my_print "graphics"
-  ./install-app.sh ${graphics[*]}
-fi
-if [ -n "$internet" ]; then 
-  my_print "internet"
-  ./install-app.sh ${internet[*]}
-fi
-if [ -n "$multimedia" ]; then
-  my_print "multimedia"
-  ./install-app.sh ${multimedia[*]}
-fi
-if [ -n "$office" ]; then 
-  my_print "office"
-  ./install-app.sh ${office[*]}
-fi
-if [ -n "$other" ]; then
-  my_print "other"
-  ./install-app.sh ${other[*]}
-fi
-if [ -n "$system" ]; then
-  my_print "system"
-  ./install-app.sh ${system[*]}
-fi
+$SCRIPTPATH/helpers/pprint.sh "accessories"
+$SCRIPTPATH/helpers/install-app.sh ${accessories[*]}
 
+$SCRIPTPATH/helpers/pprint.sh "development" 
+$SCRIPTPATH/helpers/install-app.sh ${development[*]}
 
-#apps/ohmyszs.sh
+$SCRIPTPATH/helpers/pprint.sh "education" 
+$SCRIPTPATH/helpers/install-app.sh ${education[*]}
+
+$SCRIPTPATH/helpers/pprint.sh "graphics"
+$SCRIPTPATH/helpers/install-app.sh ${graphics[*]}
+
+$SCRIPTPATH/helpers/pprint.sh "internet"
+$SCRIPTPATH/helpers/install-app.sh ${internet[*]}
+
+$SCRIPTPATH/helpers/pprint.sh "multimedia"
+$SCRIPTPATH/helpers/install-app.sh ${multimedia[*]}
+
+$SCRIPTPATH/helpers/pprint.sh "office"
+$SCRIPTPATH/helpers/install-app.sh ${office[*]}
+
+$SCRIPTPATH/helpers/pprint.sh "other"
+$SCRIPTPATH/helpers/install-app.sh ${other[*]}
+
+$SCRIPTPATH/helpers/pprint.sh "system"
+$SCRIPTPATH/helpers/install-app.sh ${system[*]}

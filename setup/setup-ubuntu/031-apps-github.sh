@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+
 declare -A debs=(
   ["jwilm/alacritty"]="Alacritty.*amd64.deb" # terminal
   ["sharkdp/bat"]="bat_.*amd64.deb" # cat replacement
@@ -7,9 +9,10 @@ declare -A debs=(
   ["BoostIO/boost-releases"]="boostnote.*amd64.deb" # markdown note taking app 
 )
 
+$SCRIPTPATH/helpers/pprint.sh "Installing debs from github"
 
 mkdir -p temp
-cd temp
+(cd temp
 for repo in "${!debs[@]}";
 do
     curl -s "https://api.github.com/repos/$repo/releases/latest" \
@@ -20,16 +23,11 @@ do
 done
 
 for f in *.deb; do
-    echo -e ""
-    echo -e "################################################################"
-    echo -e "##################\e[32m Installing $f \e[0m"
-    echo -e "################################################################"
-    echo -e ""
+    $SCRIPTPATH/helpers/pprint.sh "Intalling $f" "blue"
 
     sudo dpkg -i "$f"
     sudo apt install -fy
     rm -f "$f"
 done
-
-cd ..
+)
 rmdir temp
