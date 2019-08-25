@@ -19,6 +19,6 @@ run compton &
 run xfce4-power-manager &
 run dropbox &
 
-if [ -f autostart_work.sh ]
+if [ -f autostart_work.sh ]; then
   ./autostart_work.sh
 fi
