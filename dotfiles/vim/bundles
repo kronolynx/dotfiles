@@ -33,23 +33,23 @@ call plug#begin('~/.vim/plugged')
 "Plug 'valloric/youcompleteme'
 "Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 "neomake replaces syntastic
-Plug 'neomake/neomake'
+"Plug 'bling/vim-airline'
+"Plug 'flazz/vim-colorschemes'
 Plug 'airblade/vim-gitgutter'
-Plug 'bling/vim-airline'
+Plug 'arcticicestudio/nord-vim'
 Plug 'chiel92/vim-autoformat'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'easymotion/vim-easymotion'
 Plug 'ervandew/supertab'
-Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/tabular'
 Plug 'junegunn/vim-easy-align'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'majutsushi/tagbar'
 Plug 'mattn/gist-vim' "https://github.com/mattn/gist-vim
 Plug 'mattn/webapi-vim'
 Plug 'mbbill/undotree'
+Plug 'neomake/neomake'
 Plug 'ryanoasis/vim-devicons'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
@@ -57,11 +57,13 @@ Plug 'sheerun/vim-polyglot'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'dhruvasagar/vim-table-mode'
 call plug#end()
 " }}}
+
+colorscheme nord
 
 " plugin variables  {{{
 " detect filetype from the filename for gist
@@ -144,7 +146,7 @@ au Syntax * RainbowParenthesesLoadBraces
 "  " Airline.vim {{{
 augroup airline_config
   autocmd!
-  let g:airline_theme='minimalist'
+  let g:airline_theme='nord'
   let g:airline_powerline_fonts = 1
   let g:airline_enable_syntastic = 1
   let g:airline#extensions#tabline#buffer_nr_format = '%s '
