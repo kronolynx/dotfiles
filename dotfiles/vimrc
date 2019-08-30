@@ -1,7 +1,7 @@
 " vim: fdm=marker foldenable sw=4 ts=4 sts=4
 " "zo" to open folds, "zc" to close, "zn" to disable.
 " Begin .vimrc
-color molokai
+"color molokai
 " leader {{{
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
