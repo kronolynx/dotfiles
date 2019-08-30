@@ -4,6 +4,7 @@ SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relat
 
 apps=(
   neovim
+  software-properties-common
   git # version control system
   firefox
   build-essential # base devel
