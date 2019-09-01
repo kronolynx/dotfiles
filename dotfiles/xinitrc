@@ -9,15 +9,12 @@ usermodmap=$HOME/.Xmodmap
 sysresources=/etc/X11/xinit/.Xresources
 sysmodmap=/etc/X11/xinit/.Xmodmap
 
-export BROWSER=vivaldi-stable
-emacs --daemon &
 ~/.scripts/keyboard.sh &
 ~/.scripts/monitor.sh &
 if [ -f /usr/bin/redshift ]; then
   redshift -c ~/.config/redshift/redshift.conf &
 fi
 
-notify-send "Welcome $USER"
 # merge in defaults and keymaps
 
 if [ -f $sysresources ]; then
