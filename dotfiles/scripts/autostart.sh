@@ -17,7 +17,7 @@ compton --config $HOME/.config/compton/compton.conf &
 xsetroot -cursor_name left_ptr
 run compton &
 run xfce4-power-manager &
-run dropbox &
+run dropbox start &
 
 if [ -f autostart_work.sh ]; then
   ./autostart_work.sh
