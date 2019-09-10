@@ -9,11 +9,10 @@ import           XMonad                              hiding ((|||))
 
 -- hooks
 import qualified XMonad.Hooks.DynamicLog             as DL
-import           XMonad.Hooks.EwmhDesktops           (ewmh, fullscreenEventHook)
+import           XMonad.Hooks.EwmhDesktops           (ewmh)
 import           XMonad.Hooks.FloatNext              (floatNextHook)
 import qualified XMonad.Hooks.ManageDocks            as ManageDocks
 import qualified XMonad.Hooks.ManageHelpers          as ManageHelpers
-import           XMonad.Hooks.UrgencyHook            (UrgencyHook, urgencyHook)
 
 -- layouts
 import           XMonad.Layout.Circle                (Circle (..))
@@ -34,7 +33,6 @@ import qualified XMonad.Layout.WindowNavigation      as Nav
 -- utils
 import qualified XMonad.Util.Cursor                  as Cursor
 import           XMonad.Util.EZConfig                (checkKeymap, mkKeymap)
-import qualified XMonad.Util.NamedScratchpad         as NScratchpad
 import           XMonad.Util.NamedWindows            (getName)
 import           XMonad.Util.Run                     (safeSpawn, spawnPipe)
 import           XMonad.Util.Scratchpad              (scratchpadFilterOutWorkspace)
@@ -89,7 +87,7 @@ myXmobarPP h =
     , DL.ppCurrent = DL.xmobarColor colorNormalbg "" . DL.wrap "(" ")"
     , DL.ppVisible = DL.xmobarColor colorNormalbg "" . DL.wrap "[" "]"
     , DL.ppUrgent =
-        DL.xmobarColor colorNormalbg colorRed . DL.wrap "*" "*" . myXmobarStrip
+        DL.xmobarColor colorNormalbg colorRed
     , DL.ppLayout = myPPLayout
     , DL.ppTitle = \str -> ""
     , DL.ppSort = fmap (. scratchpadFilterOutWorkspace) getSortByIndex
@@ -136,7 +134,6 @@ myKeymap =
     , myLayoutKeys
     , myMediaKeys
     , myMovementKeys
-    , myScratchPadKeys
     , myWorkspaceKeys
     ]
 
@@ -300,11 +297,6 @@ myMediaKeys =
   , ("<XF86Search>", myBrowser ++ " https://duckduckgo.com") -- Search
   ]
 
-myScratchPadKeys =
-  [ ("M-n h", NScratchpad.namedScratchpadAction scratchpads "htop")
-  , ("M-n c", NScratchpad.namedScratchpadAction scratchpads "cmus")
-  ]
-
 myControlKeys =
   [ ("M-S-q", kill) -- Close the focused window
        -- Toggle struts
@@ -436,25 +428,6 @@ myLayout =
     myOneBig = OneBig (4 / 6) (4 / 6)
 
 ------------------------------------------------------------------------
--- Scratchpads
---
-scratchpads :: [NScratchpad.NamedScratchpad]
-scratchpads =
-  [ NScratchpad.NS
-      "htop"
-      (myTerminal ++ " -t process -e htop")
-      (title =? "process")
-      myPosition
-  , NScratchpad.NS
-      "cmus"
-      (myTerminal ++ " -t process -e cmus")
-      (resource =? "cmus")
-      myPosition
-  ]
-  where
-    myPosition = NScratchpad.customFloating $ W.RationalRect (1 / 3) (1 / 3) (1 / 3) (1 / 3)
-
-------------------------------------------------------------------------
 -- Manage Hooks
 --
 myManageHook :: ManageHook
@@ -463,7 +436,6 @@ myManageHook =
     [ ManageDocks.manageDocks
     , floatNextHook
     , manageHook desktopConfig
-    , NScratchpad.namedScratchpadManageHook scratchpads
     , myManageHook'
     ]
 
@@ -514,23 +486,7 @@ myStartupHook = do
   spawn "$HOME/.scripts/autostart.sh"
 
 myHandleEventHook =
-  fullscreenEventHook <+>
   ManageDocks.docksEventHook <+> handleEventHook desktopConfig
-
-data LibNotifyUrgencyHook =
-  LibNotifyUrgencyHook
-  deriving (Read, Show)
-
-instance UrgencyHook LibNotifyUrgencyHook where
-  urgencyHook LibNotifyUrgencyHook w = do
-    name <- getName w
-    ws <- gets windowset
-    whenJust (W.findTag w ws) (flash name)
-    where
-      flash name index =
-        safeSpawn
-          "notify-send"
-          [(show name ++ " requests your attention on workspace " ++ index)]
 
 ------------------------------------------------------------------------
 -- Prompt
@@ -682,14 +638,6 @@ leftR = W.RationalRect (0) (1 / 8) (1 / 2) (3 / 4)
 
 rightR = W.RationalRect (4 / 8) (1 / 8) (1 / 2) (3 / 4)
 
-myFloats =
-  cycle -- TODO cycle through the floats instead of assigning a keybinding to each one
-    [ W.RationalRect (1 / 4) (1 / 4) (1 / 2) (1 / 2) -- center
-    , W.RationalRect (1 / 8) (1 / 8) (3 / 4) (3 / 4) -- bigCenter
-    , W.RationalRect (0) (1 / 8) (1 / 2) (3 / 4) -- left
-    , W.RationalRect (4 / 8) (1 / 8) (1 / 2) (3 / 4) -- right
-    ]
-
 -- GridSelect configuration
 myGridSelectConfig :: GS.GSConfig Window
 myGridSelectConfig =
@@ -720,12 +668,11 @@ myGridSelectConfig =
 main :: IO ()
 main = do
   xmobar <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
-  xmonad $ -- withUrgencyHook LibNotifyUrgencyHook
-    --docks $
+  xmonad $
     ewmh $ myConfig {logHook = myLogHook xmobar}
 
 ------------------------------------------------------------------------
--- Testing
+-- Todo implement help
 --
 -- https://snipt.net/doitian/xmonad-configuration/
 helpCommand :: X ()
@@ -758,55 +705,3 @@ help =
     , "mod-button3  Set the window to floating mode and resize by dragging"
     ]
 
-delicious = Search.searchEngine "delicious" "http://delicious.com/doitian/"
-
-searchEngineMap method =
-  M.fromList $
-  [ ((0, xK_b), method delicious)
-  , ((0, xK_d), method Search.dictionary)
-  , ((0, xK_g), method Search.google)
-  , ((0, xK_w), method Search.wikipedia)
-  ]
-
-myXmobarStrip :: String -> String
-myXmobarStrip = strip []
-  where
-    strip keep x
-      | null x = keep
-      | "<fc=" `isPrefixOf` x = strip keep (drop 1 . dropWhile (/= '>') $ x)
-      | "</fc>" `isPrefixOf` x = strip keep (drop 5 x)
-      | '<' == head x = strip (keep ++ "<") (tail x)
-      | otherwise =
-        let (good, x') = span (/= '<') x
-         in strip (keep ++ good) x'
--- TODO remove markdown from prompt to bring/go to window
---myWindows :: XWindowMap
---myWindows = withWindowSet (return . W.index) >>= winMap
---  where
---    winMap = fmap M.fromList . mapM pair
---    pair w = do
---      name <- fmap show $ getName w
---      return (myXmobarStrip name, w)
---windowMap' :: (X.WindowSpace -> Window -> X String) -> X (M.Map String Window)
---windowMap' titler = do
---  ws <- gets X.windowset
---  M.fromList . concat <$> mapM keyValuePairs (W.workspaces ws)
--- where keyValuePairs ws = mapM (keyValuePair ws) $ W.integrate' (W.stack ws)
---       keyValuePair ws w = flip (,) w <$> titler ws w
---
---
----- | Returns the window name as will be listed in dmenu.
-----   Tagged with the workspace ID, to guarantee uniqueness, and to let the user
-----   know where he's going.
---mdecorateName :: X.WindowSpace -> Window -> X String
---mdecorateName ws w = do
---  name <- show <$> getName w
---  return $ name ++ " [" ++ W.tag ws ++ "]"
---
---myWindows :: XWindowMap
---myWindows = windowMap' mDecorateName
---
---myDecorateName :: X.WindowSpace -> Window -> X String
---myDecorateName ws w = do
---  name <- show <$> getName w
---  return $ name ++ " [2" ++ W.tag ws ++ "2]"
