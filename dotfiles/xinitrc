@@ -11,6 +11,7 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 
 ~/.scripts/keyboard.sh &
 ~/.scripts/monitor.sh &
+
 if [ -f /usr/bin/redshift ]; then
   redshift -c ~/.config/redshift/redshift.conf &
 fi
@@ -65,16 +66,13 @@ get_session(){
     openbox) dbus_args+=(openbox-session) ;;
     xmonad-krono) 
       dbus_args+=(xmonad-krono) 
-      # https://wiki.haskell.org/Xmonad/Frequently_asked_questions#Problems_with_Java_applications.2C_Applet_java_console
       export _JAVA_AWT_WM_NONREPARENTING=1
       ;;
     xmonad*) 
       dbus_args+=(xmonad) 
-      # https://wiki.haskell.org/Xmonad/Frequently_asked_questions#Problems_with_Java_applications.2C_Applet_java_console
       export _JAVA_AWT_WM_NONREPARENTING=1
       ;;
-    *)
-      dbus_args+=($session) ;;
+    *) dbus_args+=($session) ;;
   esac
 }
 exec $(get_session)
