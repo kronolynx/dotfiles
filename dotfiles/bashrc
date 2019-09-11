@@ -1,8 +1,10 @@
 #
 # ~/.bashrc
 #
+GPG_TTY=$(tty)
+export GPG_TTY
 
-if [ -z "$BASH_EXECUTION_STRING" ] && which fish &> /dev/null ; then
+if [ -z "$BASH_EXECUTION_STRING" ] && which fish &> /dev/null && [ "$1" != "fallback" ]; then
     # drop into fish
     exec fish; 
 fi

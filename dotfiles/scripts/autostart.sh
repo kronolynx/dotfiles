@@ -18,7 +18,8 @@ xsetroot -cursor_name left_ptr
 run compton &
 run xfce4-power-manager &
 run dropbox start &
+run ulauncher &
 
-if [ -f autostart_work.sh ]; then
-  ./autostart_work.sh
+if [ -f ~/.scripts/autostart_work.sh ]; then
+  ~/.scripts/autostart_work.sh
 fi
