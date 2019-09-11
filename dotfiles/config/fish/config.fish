@@ -36,6 +36,10 @@ alias v="vim"
 alias vi="nvim"
 alias vim="nvim"
 alias wget='wget -c '
+alias gts='git status'
+alias gtl='git log'
+alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
+alias bashb='bash -s fallback'
 
 # Ubuntu
 alias S="apt search "
@@ -96,6 +100,10 @@ function cd
   end
 end
 
+# make ammonite work with fish
+function amm --description 'Scala REPL'
+    sh -c 'amm "$@"' amm $argv
+end
 
 # navigation.
 function ..    ; cd .. ; end
