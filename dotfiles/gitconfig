@@ -1,5 +1,5 @@
 [commit]
-  gpgsign = true
+  gpgsign = false
 [core]
   editor = vim#emacsclient -c -a emacs
   pager = less
