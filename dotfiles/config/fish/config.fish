@@ -39,7 +39,7 @@ alias wget='wget -c '
 alias gts='git status'
 alias gtl='git log'
 alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
-alias bashb='bash -s fallback'
+alias bashi='bash -s interactive'
 
 # Ubuntu
 alias S="apt search "
