@@ -8,6 +8,7 @@ local widgets = {}
 -- From Files
 widgets.vol = require('widgets.vol')
 widgets.bat = require('widgets.bat')
+widgets.mpris = require('widgets.mpris')
 widgets.kblayout = require('widgets.kblayout')
 
 -- Separators

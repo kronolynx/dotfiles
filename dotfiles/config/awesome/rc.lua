@@ -151,7 +151,7 @@ awful.screen.connect_for_each_screen(function(s)
       -- s.mytasklist,
       widgets.seperator,
     },
-    nil,
+    widgets.mpris,
     { -- Right widgets
       layout = wibox.layout.fixed.horizontal,
       id     = "rightwidgets",
