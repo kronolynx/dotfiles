@@ -3,22 +3,30 @@
 SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
 
 awesome=(
-  # awesome # uncomment this line to install the version offered by ubuntu (must comment the line that calls to apps/awesome.sh)
-  acpi awesome-extra feh liblua5.3-0 libxcb-xtest0 lua-filesystem lua-lgi menu
-  rlwrap yudit-common
+  awesome 
+  acpi 
+  awesome-extra 
+  liblua5.3-0 
+  libxcb-xtest0 
+  lua-filesystem 
+  lua-lgi 
+  menu
+  rlwrap 
+  yudit-common
   awesome-doc
+)
+
+apps=(
   xserver-xephyr
   pulsemixer # for evil audio
   pulseaudio-utils # for evil audio pacmd, pactl
   mpc # command line for mpd used in evil mpd
   upower # for evil battery
-)
-
-apps=(
   scrot # Simple command-line screenshot utility for X
   rofi # menu for launching applications (replacement for dmenu)
   compton # X compositor that may fix tearing issues
   xsel
+  playerctl #  utility to control media players via MPRIS
   dunst # Customizable and lightweight notification-daemon
   i3lock # logout, reboot, shutdown, blurlock
   xautolock # autolock e.g xautolock -time 10 -locker xscreensaver
@@ -64,8 +72,8 @@ theme() {
 }
 
 $SCRIPTPATH/helpers/pprint.sh "Setting up awesome" 
-$SCRIPTPATH/apps/awesome.sh # to install version v4.3 in ubuntu 18.04
-$SCRIPTPATH/helpers/install-app.sh ${awesome[*]}
+$SCRIPTPATH/apps/awesome.sh # to install version v4.3 from github in ubuntu
+# $SCRIPTPATH/helpers/install-app.sh ${awesome[*]} # uncomment this line to install the version offered by ubuntu (must comment the line that calls to apps/awesome.sh)
 $SCRIPTPATH/helpers/install-app.sh ${file_manager[*]}
 $SCRIPTPATH/helpers/install-app.sh ${apps[*]}
 $SCRIPTPATH/helpers/install-app.sh ${system[*]}
