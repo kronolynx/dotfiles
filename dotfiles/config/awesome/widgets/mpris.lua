@@ -12,21 +12,28 @@ local mpris_widget         = wibox.widget {
   end,
 }
 
+local function get_playing_now(c)
+   local artist = nil
+   local title = nil
+   for line in string.gmatch(c, "[^\r\n]+") do
+     if not artist then
+       artist = string.match(line, ".*artist%s*(.+)")
+     end
+     if not title then
+       title = string.match(line, ".*title%s*(.+)")
+     end
+   end
+   return artist, title
+ end
+
 local update_widget = function(widget, stdout)
   local escape_f  = require("awful.util").escape
   local text = ""
-  local artist = ""
-  local title = ""
   local state_icon = string.match(stdout, "Playing") and '' or
       (string.match(stdout, "Paused") and  '' or nil)
 
   if state_icon then
-    for k, v in string.gmatch(stdout, "'[^:]+:([^']+)':[%s]<%[?'([^']+)'%]?>")
-    do
-      if k == "artist" then artist = escape_f(v)
-      elseif k == "title" then title = escape_f(v)
-      end
-    end
+    local artist, title = get_playing_now(stdout)
 
     text = state_icon .. " " .. artist .. " - " .. title
   end
