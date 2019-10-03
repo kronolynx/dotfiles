@@ -1,20 +1,19 @@
 local awful         = require("awful")
-local naughty       = require("naughty")
 local gears         = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-local wibox         = require("wibox")
-local variables     = require("variables")
+-- Enable hotkeys help widget for VIM and other apps
+-- when client with a matching name is opened:
+require("awful.hotkeys_popup.keys")
+require("variables")
 
-modkey              = "Mod4" -- Super
-altkey              = "Mod1" -- Alt
-ctrlkey             = "Control"
-shiftkey            = "Shift"
-
-local keys          = {}
+local modkey   = "Mod4" -- Super
+local altkey   = "Mod1" -- Alt
+local ctrlkey  = "Control"
+local shiftkey = "Shift"
 
 
 -- {{{ Key bindings
-globalkeys          = gears.table.join(
+globalkeys     = gears.table.join(
 -- Move between tags
     awful.key({ altkey }, "h", awful.tag.viewprev, { description = "view previous", group = "tag" }),
     awful.key({ altkey }, "l", awful.tag.viewnext, { description = "view next", group = "tag" }),
@@ -141,9 +140,9 @@ globalkeys          = gears.table.join(
         local next_screen       = screen[next_screen_index]
         local next_tag          = next_screen.selected_tag
         if next_tag then
-          local current_tag    = current_screen.selected_tag
-          local clients        = current_screen.clients
-          local tag_clients    = next_tag:clients()
+          local current_tag = current_screen.selected_tag
+          local clients     = current_screen.clients
+          local tag_clients = next_tag:clients()
           for _, c in pairs(clients) do
             c:move_to_tag(next_tag)
           end
@@ -162,9 +161,6 @@ globalkeys          = gears.table.join(
     ),
     awful.key({ modkey }, "F3", function() awful.spawn(browser1) end,
         { description = "open " .. browser1, group = "apps" }
-    ),
-    awful.key({ modkey }, "w", function() awful.util.mymainmenu:show() end,
-        { description = "show main menu", group = "awesome" }
     ),
     awful.key({ modkey, shiftkey }, "Return", function() awful.spawn(file1) end,
         { description = "open main file manager", group = "apps" }
@@ -207,12 +203,12 @@ globalkeys          = gears.table.join(
     awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
         { description = "run prompt", group = "launcher" }
     ),
-    awful.key({ modkey }, "z", function() 
+    awful.key({ modkey }, "z", function()
       awful.spawn.with_shell(lockscreen)
     end,
         { description = "lock screen", group = "awesome" }
     ),
-    awful.key({ modkey, shiftkey }, "z", function ()
+    awful.key({ modkey, shiftkey }, "z", function()
       awful.spawn.with_shell(logmenu)
     end,
         { description = "logout menu", group = "awesome" }
@@ -242,7 +238,7 @@ globalkeys          = gears.table.join(
     end,
         { description = "kill all visible clients for the current tag", group = "client" }
     ),
--- Menubar
+-- Launcher
     awful.key({ altkey }, "d", function() awful.spawn.with_shell(my_launcher) end,
         { description = "run launcher", group = "launcher" }
     ),
@@ -299,7 +295,7 @@ globalkeys          = gears.table.join(
     )
 )
 
-clientkeys          = gears.table.join(
+clientkeys     = gears.table.join(
     awful.key(
         { modkey, shiftkey }, "f", function(c)
           c.fullscreen = not c.fullscreen
@@ -345,14 +341,14 @@ clientkeys          = gears.table.join(
     end,
         { description = "minimize", group = "client" }
     ),
-    awful.key({ modkey, ctrlkey }, "n", function ()
+    awful.key({ modkey, ctrlkey }, "n", function()
       local c = awful.client.restore()
       -- Focus restored client
       if c then
-        c:emit_signal("request::activate", "key.unminimize", {raise = true})
+        c:emit_signal("request::activate", "key.unminimize", { raise = true })
       end
     end,
-    {description = "restore minimized", group = "client"})
+        { description = "restore minimized", group = "client" })
 )
 
 
@@ -453,24 +449,24 @@ end
 -- }}}
 
 clientbuttons              = gears.table.join(
-    awful.button({ }, 1, function (c)
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
+    awful.button({ }, 1, function(c)
+      c:emit_signal("request::activate", "mouse_click", { raise = true })
     end),
-    awful.button({ modkey }, 1, function (c) -- left click
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.move(c)
+    awful.button({ modkey }, 1, function(c)
+      -- left click
+      c:emit_signal("request::activate", "mouse_click", { raise = true })
+      awful.mouse.client.move(c)
     end),
-    awful.button({ modkey }, 3, function (c) -- right click
-        c:emit_signal("request::activate", "mouse_click", {raise = true})
-        awful.mouse.client.resize(c)
+    awful.button({ modkey }, 3, function(c)
+      -- right click
+      c:emit_signal("request::activate", "mouse_click", { raise = true })
+      awful.mouse.client.resize(c)
     end)
 )
 
 awful.util.taglist_buttons = gears.table.join(
     awful.button({}, 1, function(t) t:view_only() end),
-    awful.button({}, 3, awful.tag.viewtoggle),
-    awful.button({}, 4, function(t) awful.tag.viewnext(t.screen) end),
-    awful.button({}, 5, function(t) awful.tag.viewprev(t.screen) end)
+    awful.button({}, 3, awful.tag.viewtoggle)
 )
 
 clientbuttons_jetbrains    = gears.table.join(
@@ -478,16 +474,5 @@ clientbuttons_jetbrains    = gears.table.join(
     awful.button({ modkey }, 3, awful.mouse.client.resize)
 )
 -- }}
-
--- Mouse Actions
--- {{{ Mouse bindings
-root.buttons(
-    gears.table.join(
-        awful.button({}, 3, function() awful.util.mymainmenu:toggle() end)
-    --awful.button({ }, 4, awful.tag.viewnext),
-    --awful.button({ }, 5, awful.tag.viewprev)
-    )
-)
--- }}}
 
 root.keys(globalkeys)

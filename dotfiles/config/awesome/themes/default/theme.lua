@@ -1,8 +1,5 @@
 local os                                        = os
 
-
-local awful = require("awful")
-local beautiful = require("beautiful")
 local theme_assets                              = require("beautiful.theme_assets")
 local xresources                                = require("beautiful.xresources")
 local dpi                                       = xresources.apply_dpi
@@ -121,84 +118,6 @@ theme.layout_cornerse                           = theme.dir .. "/icons/layouts/c
 theme.useless_gap                               = dpi(3)
 theme.screen_margin                             = dpi(5)
 theme.maximized_hide_border                     = true
---theme.separator_text = " "
---
---theme.taglist_text_color_empty    = { theme.xcolor8, theme.xcolor8, theme.xcolor8, theme.xcolor8, theme.xcolor8, theme.xcolor8, theme.xcolor8, theme.xcolor8, theme.xcolor8, theme.xcolor8 }
---theme.taglist_text_color_occupied  = { theme.xcolor1, theme.xcolor2, theme.xcolor3, theme.xcolor4, theme.xcolor5, theme.xcolor6, theme.xcolor1, theme.xcolor2, theme.xcolor3, theme.xcolor4 }
---theme.taglist_text_color_focused  = { theme.xcolor1, theme.xcolor2, theme.xcolor3, theme.xcolor4, theme.xcolor5, theme.xcolor6, theme.xcolor1, theme.xcolor2, theme.xcolor3, theme.xcolor4 }
---theme.taglist_text_color_urgent   = { theme.xcolor9, theme.xcolor10, theme.xcolor11, theme.xcolor12, theme.xcolor13, theme.xcolor14, theme.xcolor9, theme.xcolor10, theme.xcolor11, theme.xcolor12 }
---
----- Noodle Text Taglist
----- theme.taglist_text_empty    = {"","","","","","","","","",""}
----- theme.taglist_text_occupied = {"","","ﰊ","","","","","","",""}
----- theme.taglist_text_focused  = {"ﰉ","","","","","","","","",""}
----- theme.taglist_text_urgent   = {"","","","","","","","","",""} 
---theme.taglist_text_empty    = {"","","","","","","","","",""}
---theme.taglist_text_occupied = {"","","","","","","","","",""}
---theme.taglist_text_focused  = {"","","","","","","","","",""}
---theme.taglist_text_urgent   = {"","","","","","","","","",""}
---
---local s = awful.screen.focused()
---local ntags = 10
---local tag_text = {}
---
---
---local helpers = {}
---local inspect = require("inspect")
---
---function helpers.colorize_text(txt, fg)
---  return "<span foreground='" .. fg .."'>" .. txt .. "</span>"
---end
---
---local function update_widget()
---  inspect(beautiful)
---  for i = 1, ntags do
---    local tag_clients
---    if s.tags[i] then
---      tag_clients = s.tags[i]:clients()
---    end
---    if s.tags[i] == s.selected_tag then
---      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_focused[i], beautiful.taglist_text_color_focused[i])
---    elseif awful.tag.getproperty(s.tags[i], "urgent") then
---      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_urgent[i], beautiful.taglist_text_color_urgent[i])
---    elseif tag_clients and #tag_clients > 0 then
---      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_occupied[i], beautiful.taglist_text_color_occupied[i])
---    else
---      tag_text[i].markup = helpers.colorize_text(beautiful.taglist_text_empty[i], beautiful.taglist_text_color_empty[i])
---    end
---  end
---end
---
---client.connect_signal("unmanage", function(c)
---  update_widget()
---end)
---client.connect_signal("untagged", function(c)
---  update_widget()
---end)
---client.connect_signal("tagged", function(c)
---  update_widget()
---end)
---client.connect_signal("screen", function(c)
---  update_widget()
---end)
---awful.tag.attached_connect_signal(s, "property::selected", function ()
---  update_widget()
---end)
---awful.tag.attached_connect_signal(s, "property::hide", function ()
---  update_widget()
---end)
---awful.tag.attached_connect_signal(s, "property::activated", function ()
---  update_widget()
---end)
---awful.tag.attached_connect_signal(s, "property::screen", function ()
---  update_widget()
---end)
---awful.tag.attached_connect_signal(s, "property::index", function ()
---  update_widget()
---end)
---awful.tag.attached_connect_signal(s, "property::urgent", function ()
---  update_widget()
---end)
 
 -- Define the icon theme for application icons. If not set then the icons
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.

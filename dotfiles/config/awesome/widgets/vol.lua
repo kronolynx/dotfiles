@@ -1,13 +1,6 @@
 local awful          = require("awful")
 local wibox          = require("wibox")
-local build_widget   = require("widgets.build_widget")
 
-local vol_perc       = wibox.widget {
-  markup = "00%",
-  align  = 'center',
-  valign = 'center',
-  widget = wibox.widget.textbox
-}
 local vol_icons      = {
   mute = "婢",
   vlow = "",
@@ -15,53 +8,81 @@ local vol_icons      = {
   mid  = "墳",
   high = ""
 }
-local vol_icon       = vol_icons.high
-local vol_icon_color = "#ff8e1e" -- TODO put colors in to variables
 
-awesome.connect_signal("evil::volume", function(volume, muted)
-  local cur_vol   = tonumber(volume)
-  vol_perc.markup = string.format("%02d%%", cur_vol)
-
-  if cur_vol >= 70 then
-    vol_icon = vol_icons.high
-  elseif cur_vol >= 40 then
-    vol_icon = vol_icons.mid
-  elseif cur_vol >= 15 then
-    vol_icon = vol_icons.low
-  else
-    vol_icon = vol_icons.vlow
+local get_vol_status = function(c)
+  local status
+  local percentage
+  for line in string.gmatch(c, "[^\r\n]+") do
+    if not status and not percentage then
+      percentage, status = string.match(line, "%[(%d+).%]%s%[(%a+)%]")
+    end
   end
-
-  if muted then
-    vol_icon_color  = "gray"
-    vol_icon        = vol_icons.mute
-    vol_perc.markup = "<span foreground='grey'><s>" .. vol_perc.markup .. "</s></span>"
-  else
-    vol_icon_color = "#ff8e1e"
-  end
-  vol:UpdateIcon(vol_icon, vol_icon_color)
+  return status, tonumber(percentage)
 end
+
+local vol            = awful.widget.watch(
+    { awful.util.shell, "-c", "amixer -D pulse get Master" },
+    2,
+    function(widget, stdout)
+      local status, cur_vol = get_vol_status(stdout)
+      local current_icon
+      local current_vol
+
+      if status == "on" then
+        local vol_icon
+        if cur_vol >= 70 then
+          vol_icon = vol_icons.high
+        elseif cur_vol >= 40 then
+          vol_icon = vol_icons.mid
+        elseif cur_vol >= 15 then
+          vol_icon = vol_icons.low
+        else
+          vol_icon = vol_icons.vlow
+        end
+        current_icon = "<span foreground='lime'>" .. vol_icon .. "</span>"
+        current_vol  = cur_vol .. " "
+      else
+        current_icon = "<span foreground='grey'><s>" .. vol_icons.mute .. "</s></span>"
+        current_vol  = "<span foreground='grey'><s>" .. cur_vol .. "</s></span> "
+      end
+      widget:set_markup(current_icon, current_vol)
+    end,
+    wibox.widget {
+      {
+        id     = 'current_icon',
+        widget = wibox.widget.textbox,
+      },
+      {
+        id     = 'current_vol',
+        widget = wibox.widget.textbox,
+      },
+      layout     = wibox.layout.fixed.horizontal,
+      spacing    = 5,
+      set_markup = function(self, icon, percentage)
+        self.current_icon.markup = icon
+        self.current_vol.markup  = percentage
+      end,
+    }
 )
 
-vol = build_widget:new(vol_perc, vol_icon, vol_icon_color, true)
-
-vol.widget:buttons(awful.util.table.join(
+vol:buttons(awful.util.table.join(
     awful.button({}, 2, function()
       -- left click
       awful.spawn("pavucontrol")
     end),
     awful.button({}, 3, function()
       -- right click
-      os.execute("pulsemixer --toggle-mute")
+      awful.spawn.with_shell("pulsemixer --toggle-mute")
     end),
     awful.button({}, 4, function()
       -- scroll up
-      os.execute("pulsemixer --change-volume +2")
+      awful.spawn.with_shell("pulsemixer --change-volume +2")
     end),
     awful.button({}, 5, function()
       -- scroll down
-      os.execute("pulsemixer --change-volume -2")
+      awful.spawn.with_shell("pulsemixer --change-volume -2")
     end)
 ))
 
-return vol.widget
+return vol
+
