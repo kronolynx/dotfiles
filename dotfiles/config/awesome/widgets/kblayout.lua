@@ -3,7 +3,7 @@ local wibox = require("wibox")
 
 local kb    = wibox.widget {
   {
-    markup = '<span color="#cc00ff"></span>',
+    markup = '<span color="' .. awful.util.my_colors.dark.magenta .. '"></span>',
     widget = wibox.widget.textbox
   },
   {

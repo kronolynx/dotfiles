@@ -39,11 +39,11 @@ local vol            = awful.widget.watch(
         else
           vol_icon = vol_icons.vlow
         end
-        current_icon = "<span foreground='lime'>" .. vol_icon .. "</span>"
+        current_icon = "<span foreground='" .. awful.util.my_colors.dark.green .. "'>" .. vol_icon .. "</span>"
         current_vol  = cur_vol .. " "
       else
-        current_icon = "<span foreground='grey'><s>" .. vol_icons.mute .. "</s></span>"
-        current_vol  = "<span foreground='grey'><s>" .. cur_vol .. "</s></span> "
+        current_icon = "<span foreground='" .. awful.util.my_colors.dark.gray .. "'><s>" .. vol_icons.mute .. "</s></span>"
+        current_vol  = "<span foreground='" .. awful.util.my_colors.dark.gray .. "'><s>" .. cur_vol .. "</s></span> "
       end
       widget:set_markup(current_icon, current_vol)
     end,

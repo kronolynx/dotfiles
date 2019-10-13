@@ -36,6 +36,33 @@ awful.layout.layouts = {
   utils.centerwork,
 }
 
+awful.util.my_colors = { -- TODO find a better place to store colors
+  background = "#1D1F28",
+  foreground = "#FDFDFD",
+  light      = {
+    black   = "#282A36", -- color0
+    red     = "#F37F97", -- color1
+    green   = "#5ADECD", -- color2
+    yellow  = "#F2A272", -- color3
+    blue    = "#8897F4", -- color4
+    magenta = "#C574DD", -- color5
+    cyan    = "#79E6F3", -- color6
+    white   = "#FDFDFD", -- color7
+    gray    = "#C0C0C0"
+  },
+  dark       = {
+    black   = "#414458", -- color8
+    red     = "#FF4971", -- color9
+    green   = "#18E3C8", -- color10
+    yellow  = "#FF8037", -- color11
+    blue    = "#556FFF", -- color12
+    magenta = "#B043D1", -- color13
+    cyan    = "#3FDCEE", -- color14
+    white   = "#BEBEC1", -- color15
+    gray    = "#848482"
+  }
+}
+
 awful.util.tagnames  = {
   {
     { name = "", sel = true },
@@ -62,7 +89,7 @@ awful.util.tagnames  = {
 }
 
 local themes         = {
-  "default"      -- 1
+  "default" -- 1
 }
 
 chosen_theme         = themes[1]

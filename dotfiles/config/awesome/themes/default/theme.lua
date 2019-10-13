@@ -1,33 +1,33 @@
 local os                                        = os
-
+local util                                      = require("awful.util")
 local theme_assets                              = require("beautiful.theme_assets")
 local xresources                                = require("beautiful.xresources")
 local dpi                                       = xresources.apply_dpi
 local xrdb                                      = xresources.get_current_theme()
-
+local colors                                    = util.my_colors or {}
 local theme                                     = {}
 
 theme.dir                                       = os.getenv("HOME") .. "/.config/awesome/themes/default"
 
 -- Colors
-theme.xbackground                               = xrdb.background
-theme.xforeground                               = xrdb.foreground
-theme.xcolor0                                   = xrdb.color0
-theme.xcolor1                                   = xrdb.color1
-theme.xcolor2                                   = xrdb.color2
-theme.xcolor3                                   = xrdb.color3
-theme.xcolor4                                   = xrdb.color4
-theme.xcolor5                                   = xrdb.color5
-theme.xcolor6                                   = xrdb.color6
-theme.xcolor7                                   = xrdb.color7
-theme.xcolor8                                   = xrdb.color8
-theme.xcolor9                                   = xrdb.color9
-theme.xcolor10                                  = xrdb.color10
-theme.xcolor11                                  = xrdb.color11
-theme.xcolor12                                  = xrdb.color12
-theme.xcolor13                                  = xrdb.color13
-theme.xcolor14                                  = xrdb.color14
-theme.xcolor15                                  = xrdb.color15
+theme.xbackground                               = colors.background or xrdb.background
+theme.xforeground                               = colors.foreground or xrdb.foreground
+theme.xcolor0                                   = colors.light.black or xrdb.color0
+theme.xcolor1                                   = colors.light.red or xrdb.color1
+theme.xcolor2                                   = colors.light.green or xrdb.color2
+theme.xcolor3                                   = colors.light.yellow or xrdb.color3
+theme.xcolor4                                   = colors.light.blue or xrdb.color4
+theme.xcolor5                                   = colors.light.magenta or xrdb.color5
+theme.xcolor6                                   = colors.light.cyan or xrdb.color6
+theme.xcolor7                                   = colors.light.white or xrdb.color7
+theme.xcolor8                                   = colors.dark.black or xrdb.color8
+theme.xcolor9                                   = colors.dark.red or xrdb.color9
+theme.xcolor10                                  = colors.dark.green or xrdb.color10
+theme.xcolor11                                  = colors.dark.yellow or xrdb.color11
+theme.xcolor12                                  = colors.dark.blue or xrdb.color12
+theme.xcolor13                                  = colors.dark.magenta or xrdb.color13
+theme.xcolor14                                  = colors.dark.cyan or xrdb.color14
+theme.xcolor15                                  = colors.dark.white or xrdb.color15
 theme.wallpaper                                 = "~/.wallpapers/no-mans-sky.png"
 
 -- Fonts

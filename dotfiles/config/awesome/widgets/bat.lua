@@ -22,11 +22,11 @@ local bat_icons      = {
   chfull  = ""
 }
 
-local bat_colors     = { -- TODO update colors
-  full       = "lime",
-  charged    = "blue",
-  discharged = "orange",
-  warn       = "red"
+local bat_colors     = {
+  full       = awful.util.my_colors.dark.green,
+  charged    = awful.util.my_colors.dark.blue,
+  discharged = awful.util.my_colors.dark.yellow,
+  warn       = awful.util.my_colors.dark.red
 }
 
 local build_icon     = function(icon, icon_color)
@@ -118,11 +118,11 @@ local bat            = awful.widget.watch(
 bat:buttons(awful.util.table.join(
     awful.button({}, 4, function()
       -- scroll up
-      awful.spawn.with_shell("xbacklight + 5 -time 100 -steps 1")
+      awful.spawn.with_shell("xbacklight + 3 -time 100 -steps 1")
     end),
     awful.button({}, 5, function()
       -- scroll down
-      awful.spawn.with_shell("xbacklight - 6 -time 100 -steps 1")
+      awful.spawn.with_shell("xbacklight - 3 -time 100 -steps 1")
     end)
 ))
 
