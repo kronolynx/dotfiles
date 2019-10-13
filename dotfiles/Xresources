@@ -13,64 +13,49 @@ Xft.lcdfilter: lcddefault
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! Color settings 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! Copyright (c) 2016-present Arctic Ice Studio <development@arcticicestudio.com>
-! Copyright (c) 2016-present Sven Greb <code@svengreb.de>
+!! light
+!  color0:   black	
+!  color1:   red
+!  color2:   green	
+!  color3:   yellow
+!  color4:   blue
+!  color5:   magenta
+!  color6:   cyan 
+!  color7:   white
+!! dark
+!  color8:   black	
+!  color9:   red
+!  color10:	 green
+!  color11:	 yellow
+!  color12:	 blue
+!  color13:	 magenta
+!  color14:	 cyan
+!  color15:	 white
 
-! Project:    Nord XResources
-! Version:    0.1.0
-! Repository: https://github.com/arcticicestudio/nord-xresources
-! License:    MIT
+*.background:	  #1D1F28
+*.foreground:	  #FDFDFD
+*.cursorColor:	#C574DD
+*.fading: 8
 
-#define nord0 #2E3440
-#define nord1 #3B4252
-#define nord2 #434C5E
-#define nord3 #4C566A
-#define nord4 #D8DEE9
-#define nord5 #E5E9F0
-#define nord6 #ECEFF4
-#define nord7 #8FBCBB
-#define nord8 #88C0D0
-#define nord9 #81A1C1
-#define nord10 #5E81AC
-#define nord11 #BF616A
-#define nord12 #D08770
-#define nord13 #EBCB8B
-#define nord14 #A3BE8C
-#define nord15 #B48EAD
+*.color0:	  #282A36
+*.color1:	  #F37F97
+*.color2:	  #5ADECD
+*.color3:	  #F2A272
+*.color4:	  #8897F4
+*.color5:	  #C574DD
+*.color6:	  #79E6F3
+*.color7:	  #FDFDFD
+*.color8:	  #414458
+*.color9:	  #FF4971
+*.color10:	#18E3C8
+*.color11:	#FF8037
+*.color12:	#556FFF
+*.color13:	#B043D1
+*.color14:	#3FDCEE
+*.color15:	#BEBEC1
 
-*.foreground:   nord4
-*.background:   nord0
-*.cursorColor:  nord4
-*fading: 8
-*fadeColor: nord3
-
-!! black dark/light
-*.color0: nord1
-*.color8: nord3
-!! red dark/light
-*.color1: nord11
-*.color9: nord11
-!! green dark/light
-*.color2: nord14
-*.color10: nord14
-!! yellow dark/light
-*.color3: nord13
-*.color11: nord13
-!! blue dark/light
-*.color4: nord9
-*.color12: nord9
-!! magenta dark/light
-*.color5: nord15
-*.color13: nord15
-!! cyan dark/light
-*.color6: nord8
-*.color14: nord7
-!! white dark/light
-*.color7: nord5
-*.color15: nord6
-
-Xcursor.theme: xcursor-breeze
-Xcursor.size:                     0
+Xcursor.theme:  xcursor-breeze
+Xcursor.size:   0
 
 !!!!!!!!!!!!!!!!!! 
 !! XTerm settings
