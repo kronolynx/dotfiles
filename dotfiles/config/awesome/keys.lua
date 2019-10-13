@@ -268,12 +268,12 @@ globalkeys     = gears.table.join(
     ),
 -- Screen Brightness
     awful.key({}, "XF86MonBrightnessUp", function()
-      awful.spawn.with_shell('xbacklight + 5 -time 100 -steps 1 && notify-send "brightness up $(xbacklight -get)"')
+      awful.spawn.with_shell('xbacklight + 3 -time 100 -steps 1 && notify-send "brightness up $(xbacklight -get)"')
     end,
         { description = "Increase brightness", group = "controls" }
     ),
     awful.key({}, "XF86MonBrightnessDown", function()
-      awful.spawn.with_shell('xbacklight - 5 -time 100 -steps 1 && notify-send "brightness down $(xbacklight -get)"')
+      awful.spawn.with_shell('xbacklight - 3 -time 100 -steps 1 && notify-send "brightness down $(xbacklight -get)"')
     end,
         { description = "Decrease brightness", group = "controls" }
     ),
@@ -366,7 +366,7 @@ for i = 1, 9 do
           tag:view_only()
         end
       end,
-          { description = "view tag #" .. i, group = "tag" }
+          { description = "view tag", group = "tag" }
       ),
   -- Move client to tag.
       awful.key({ modkey, ctrlkey }, "#" .. i + 9, function()
@@ -377,7 +377,7 @@ for i = 1, 9 do
           end
         end
       end,
-          { description = "move focused client to tag #" .. i, group = "tag" }
+          { description = "move focused client to tag", group = "tag" }
       ),
   -- Toggle tag display.
       awful.key({ modkey, altkey }, "#" .. i + 9, function()
@@ -387,7 +387,7 @@ for i = 1, 9 do
           awful.tag.viewtoggle(tag)
         end
       end,
-          { description = "toggle tag #" .. i, group = "tag" }
+          { description = "toggle tag", group = "tag" }
       ),
   -- Move all visible clients to tag and focus that tag
       awful.key({ modkey, shiftkey, altkey }, "#" .. i + 9, function()
@@ -400,7 +400,7 @@ for i = 1, 9 do
           tag:view_only()
         end
       end,
-          { description = "move all visible clients to tag #" .. i, group = "tag" }
+          { description = "move all visible clients to tag", group = "tag" }
       ),
   -- Greedy view ,Move client to tag and view tag
       awful.key({ modkey, shiftkey }, "#" .. i + 9, function()
@@ -412,7 +412,7 @@ for i = 1, 9 do
           end
         end
       end,
-          { description = "move focused client to tag and view tag #" .. i, group = "tag" }
+          { description = "move focused client to tag and view tag", group = "tag" }
       ),
   -- Toggle tag on focused client.
       awful.key({ modkey, shiftkey, ctrlkey }, "#" .. i + 9, function()
@@ -423,7 +423,7 @@ for i = 1, 9 do
           end
         end
       end,
-          { description = "toggle focused client on tag #" .. i, group = "tag" }
+          { description = "toggle focused client on tag", group = "tag" }
       ),
       awful.key({ altkey, shiftkey }, "#" .. i + 9, function()
         local current_screen = awful.screen.focused()
@@ -442,7 +442,7 @@ for i = 1, 9 do
           end
         end
       end,
-          { description = "swap current tag with tag #" .. i, group = "tag" }
+          { description = "swap current tag with tag", group = "tag" }
       )
   )
 end
