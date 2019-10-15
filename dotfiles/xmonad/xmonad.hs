@@ -339,7 +339,7 @@ myTmuxTerminal = myTerminal ++ " -e tmux attach"
 
 -- Launcher
 myLauncher :: String
-myLauncher = "rofi -show drun"
+myLauncher = "rofi -show drun -no-plugins"
 
 -- Editor
 myTextEditor :: String
@@ -463,8 +463,8 @@ myManageHook' =
   , [ManageHelpers.transience'] -- move transient windows like dialogs/alerts on top of their parents
   ]
   where
-    myCenterFloats = ["zenity", "Arandr", "Galculator", "Yad"]
-    myTitleCenterFloats = ["File Operation Progress", "Downloads", "Save as..."]
+    myCenterFloats = ["zenity", "Arandr", "Galculator", "Yad", "albert"]
+    myTitleCenterFloats = ["File Operation Progress", "Downloads", "Save as...", "Ulauncher Preferences"]
     myClassFloats = []
     myTitleFloats = ["Media viewer", "Yad"]
     myFullFloats = []
@@ -475,8 +475,8 @@ myManageHook' =
       , ("TelegramDesktop", 4)
       , ("Thunderbird", 4)
       , ("Slack", 5)
-      , ("Spotify", 6)
-      , ("vivaldi-stable", 0)
+      , ("Spotify", 5)
+      , ("Odio", 5)
       ]
 
 myStartupHook :: X ()
