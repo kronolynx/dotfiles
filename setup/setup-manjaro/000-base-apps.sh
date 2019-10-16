@@ -10,8 +10,6 @@ curl
 openssl
 # front end for Xrandr (screen related)
 arandr
-# terminal emulator
-kitty
 
 #./install-app.sh rxvt-unicode
 # yubico U2F (2 factor authentication)
@@ -26,6 +24,9 @@ pulseaudio
 # e.g. tldr cups
 tldr
 
+# terminal emulator
+urxvt
+
 # touchpad
 xf86-input-synaptics
 
@@ -36,4 +37,5 @@ p7zip
 xarchiver
 )
 
-./install-app.sh ${apps[*]}
+$SCRIPTPATH/helpers/pprint.sh "Installing base apps" 
+$SCRIPTPATH/helpers/install-app.sh ${apps[*]}
