@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+
 apps=(
 # interactive process viewer
 htop
@@ -33,4 +35,5 @@ teensy-loader-cli
 bat
 )
 
-./install-app.sh ${apps[*]}
+$SCRIPTPATH/helpers/pprint.sh "Installing cli apps" 
+$SCRIPTPATH/helpers/install-app.sh ${apps[*]}

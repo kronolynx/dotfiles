@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+
 apps=(
 vlc
 smplayer
@@ -9,4 +11,5 @@ youtube-dl
 mkchromecast
 )
 
-./install-app.sh ${apps[*]}
+$SCRIPTPATH/helpers/pprint.sh "Installing video" 
+$SCRIPTPATH/helpers/install-app.sh ${apps[*]}

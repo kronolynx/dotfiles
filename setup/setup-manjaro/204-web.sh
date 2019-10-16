@@ -1,4 +1,7 @@
 #!/bin/bash
+
+SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+
 apps=(
   # browser
   vivaldi
@@ -16,4 +19,5 @@ apps=(
   keepassxc
 )
 
-./install-app.sh ${apps[*]}
+$SCRIPTPATH/helpers/pprint.sh "Installing web" 
+$SCRIPTPATH/helpers/install-app.sh ${apps[*]}

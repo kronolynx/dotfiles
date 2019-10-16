@@ -1,4 +1,6 @@
 #!/bin/bash
+SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+
 apps=(
 # i3
 i3-gaps
@@ -41,4 +43,5 @@ clipit
 sysstat
 )
 
-./install-app.sh ${apps[*]}
+$SCRIPTPATH/helpers/pprint.sh "Installing i3" 
+$SCRIPTPATH/helpers/install-app.sh ${apps[*]}

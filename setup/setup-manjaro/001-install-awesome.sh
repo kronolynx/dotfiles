@@ -1,14 +1,11 @@
 #!/bin/bash
+
+SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+
 apps=(
-xmonad
-xmonad-contrib
-xmobar
-# STAnd-aLONE sysTRAY.
-stalonetray
+awesome
 # Simple command-line screenshot utility for X
 scrot
-# Lightweight GTK+ clipboard manager
-clipit
 # menu for launching applications (replacement for dmenu)
 rofi
 # wallpaper
@@ -17,29 +14,17 @@ nitrogen
 compton
 # to display current song
 playerctl
-# logout, reboot, shutdown, blurlock
-i3exit
 # autolock e.g xautolock -time 10 -locker xscreensaver
 xautolock
 # theme
 lxappearance
-# Customizable and lightweight notification-daemon
+# Customizable and lightweight notifi��,��,cation-daemon
 dunst
-
-thunar
-termite
-nitrogen
 # gtk notifications
 xfce4-notifyd
 # power manager
 xfce4-power-manager
 
-# themes
-adapta-gtk-theme
-xcursor-breeze
-papirus-icon-theme
-obsidian-icon-theme
-shadow-icon-theme
 )
 
-./install-app.sh ${apps[*]}
+$SCRIPTPATH/helpers/install-app.sh ${apps[*]}
