@@ -1,5 +1,5 @@
 [commit]
-  gpgsign = false
+  gpgsign = true
 [core]
   editor = vim
   pager = less
@@ -129,16 +129,11 @@
   prune = true
 [diff]
   compactionHeuristic = true
-[remote "origin"]
-  fetch = +refs/heads/*:refs/remotes/origin/*
+#[remote "origin"]
+#  fetch = +refs/heads/*:refs/remotes/origin/*
 [stash]
   showPatch = true
 [push]
   default = current
 [github]
   user = kronolynx
-[init]
-  templatedir = ~/.git_template
-[credential]
-  #helper = gnome-keyring
-  helper = cache --timeout=3600 # 1 hour password timeout
