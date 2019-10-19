@@ -41,16 +41,31 @@ alias gtl='git log'
 alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias bashi='bash -s interactive'
 
-# Ubuntu
-alias S="apt search "
-alias U="sudo apt update && sudo apt upgrade"
-alias I="sudo apt install -y"
-alias R="sudo apt remove "
-alias dist-upgrade-available="sudo do-release-upgrade -c"
-alias dist-upgrade="sudo do-release-upgrade"
-alias hold="sudo apt-mark hold" # mark package as held back which will prevent the package from being autmotically upgraded
-alias unhold="sudo apt-mark unhold" # cancel previously set hold package
-alias showhold="apt-mark showhold" # print a list of packages on hold
+# to create more alias for different distro operations
+# https://wiki.archlinux.org/index.php/Pacman/Rosetta
+
+## Manjaro
+alias S="yay -Ss " # search
+alias U="sudo pacman -Syu" # update
+alias Ua="yay -Syu" # update including aur packages
+alias Uf="sudo pacman -Syy" # force update
+alias I="yay -S " # install
+alias Iy="yay -S --noconfirm " # install no confirm
+alias R="sudo pacman -Rs " # remove with dependcies
+alias Rd="sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
+alias which="pacman -Qo "
+
+## Ubuntu
+# alias S="apt search "
+# alias U="sudo apt update && sudo apt upgrade"
+# alias I="sudo apt install -y"
+# alias R="sudo apt remove "
+# alias dist-upgrade-available="sudo do-release-upgrade -c"
+# alias dist-upgrade="sudo do-release-upgrade"
+# alias hold="sudo apt-mark hold" # mark package as held back which will prevent the package from being autmotically upgraded
+# alias unhold="sudo apt-mark unhold" # cancel previously set hold package
+# alias showhold="apt-mark showhold" # print a list of packages on hold
+
 
 # source and edit
 alias EF="vim ~/.config/fish/config.fish"
