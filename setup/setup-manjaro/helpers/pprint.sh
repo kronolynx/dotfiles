@@ -4,7 +4,7 @@ width=80
 inner_width=58
 normal="\e[0m"
 
-case "${2:-cyan}" in 
+case "${2:-cyan}" in
   "red")     color="\e[31m" ;;
   "green")   color="\e[32m" ;;
   "yellow")  color="\e[33m" ;;
@@ -22,12 +22,12 @@ side_padding=$(generate_padding "#" 10)
 full_padding=$(generate_padding "#" $width)
 
 split_long_text() {
-   echo "TODO: split text to keep it centered with less than 58 characters per line"
+  echo "TODO: split text to keep it centered with less than 58 characters per line"
 }
 
 center_text() {
   let "even = ${#1} % 2"
-  let "padding = ($inner_width - ${#1}) / 2" 
+  let "padding = ($inner_width - ${#1}) / 2"
   leftp=$(generate_padding " " $padding)
   rightp=$(generate_padding " " $(expr $padding + $even))
   printf "${side_padding}${leftp}${color} $1 ${normal}${rightp}${side_padding}"
