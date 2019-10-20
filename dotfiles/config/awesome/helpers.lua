@@ -24,6 +24,15 @@ function helpers.set_wallpaper(s)
   end
 end
 
+function helpers.pad(size)
+  local str = ""
+  for i = 1, size do
+      str = str .. " "
+  end
+  local pad = wibox.widget.textbox(str)
+  return pad
+end
+
 -- Tag back and forth:
 -- If you try to focus the same tag you are at, go back to the previous tag.
 -- Useful for quick switching after for example checking an incoming chat
@@ -121,6 +130,18 @@ end
 
 function helpers.colorize_text(txt, fg)
   return "<span foreground='" .. fg .."'>" .. txt .. "</span>"
+end
+-- Create rounded rectangle shape (in one line)
+helpers.rrect = function(radius)
+  return function(cr, width, height)
+      gears.shape.rounded_rect(cr, width, height, radius)
+  end
+end
+
+helpers.prrect = function(radius, tl, tr, br, bl)
+  return function(cr, width, height)
+      gears.shape.partially_rounded_rect(cr, width, height, tl, tr, br, bl, radius)
+  end
 end
 
 return helpers

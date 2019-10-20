@@ -8,6 +8,7 @@ widgets.bat       = require('widgets.bat')
 widgets.mpris     = require('widgets.mpris')
 widgets.kblayout  = require('widgets.kblayout')
 widgets.textclock = require('widgets.clock')
+widgets.exit_screen = require('widgets.exit_screen')
 
 -- Separators
 widgets.space     = wibox.widget.textbox('<span>  </span>')
