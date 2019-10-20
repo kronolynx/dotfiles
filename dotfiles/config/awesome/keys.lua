@@ -113,8 +113,16 @@ globalkeys     = gears.table.join(
     awful.key({ modkey, shiftkey }, "j", function() awful.client.swap.global_bydirection("down") end,
         { description = "swap with direction down", group = "client" }
     ),
-    awful.key({ modkey }, "u", awful.client.urgent.jumpto,
-        { description = "jump to urgent client", group = "client" }),
+    -- Urgent or Undo:
+    -- Jump to urgent client or (if there is no such client) go back
+    -- to the last tag
+    awful.key({ modkey }, "u", function() 
+      if awful.client.urgent.get() then 
+        awful.client.urgent.jumpto()
+      else 
+        awful.tag.history.restore()
+      end
+    end, { description = "jump to urgent client/last window", group = "client" }),
 -- Show/Hide Wibox
     awful.key({ modkey }, "b", function()
       for s in screen do
@@ -203,15 +211,10 @@ globalkeys     = gears.table.join(
     awful.key({ modkey }, "r", function() awful.screen.focused().mypromptbox:run() end,
         { description = "run prompt", group = "launcher" }
     ),
-    awful.key({ modkey }, "z", function()
-      awful.spawn.with_shell(lockscreen)
+    awful.key({ modkey }, "Escape", function ()
+        exit_screen_show()
     end,
-        { description = "lock screen", group = "awesome" }
-    ),
-    awful.key({ modkey, shiftkey }, "z", function()
-      awful.spawn.with_shell(logmenu)
-    end,
-        { description = "logout menu", group = "awesome" }
+        {description = "logout menu", group = "awesome"}
     ),
     awful.key({ modkey }, "x", function()
       awful.prompt.run {
