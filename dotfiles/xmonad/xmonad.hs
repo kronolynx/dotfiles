@@ -483,7 +483,7 @@ myStartupHook :: X ()
 myStartupHook = do
   checkKeymap myConfig myKeymap
   Cursor.setDefaultCursor Cursor.xC_left_ptr
-  spawn "$HOME/.scripts/autostart.sh"
+  spawn "$HOME/.xmonad/autorun.sh"
 
 myHandleEventHook =
   ManageDocks.docksEventHook <+> handleEventHook desktopConfig
