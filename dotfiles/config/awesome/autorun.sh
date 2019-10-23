@@ -22,7 +22,9 @@ if (command -v  xfce4-power-manager && ! pgrep xfce4-power-man) ; then
 fi
 
 run thunar --daemon
+run emacs --daemon
 run urxvtd -q -o -f
+run feh --bg-scale ~/.wallpapers/girl-anime.jpg
 
 run compton --shadow-exclude '!focused'
 
@@ -33,4 +35,4 @@ if [ -f ~/.scripts/autostart_work.sh ]; then
   ~/.scripts/autostart_work.sh
 fi
 
-xautolock -time 7 -locker lock &
+run xautolock -time 7 -locker lock

@@ -53,7 +53,6 @@ beautiful.notification_icon_size = 100 -- for awesome 4.3+
 
 -- Screen
 awful.screen.connect_for_each_screen(function(s)
-  helpers.set_wallpaper(s)
   wibar.setup(s)
 end)
 
