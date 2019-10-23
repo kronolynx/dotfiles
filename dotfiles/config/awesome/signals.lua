@@ -3,8 +3,6 @@ local wibox     = require("wibox")
 local awful     = require("awful")
 local gears = require("gears")
 local helpers   = require("helpers")
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", helpers.set_wallpaper)
 
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function(c)

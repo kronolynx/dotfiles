@@ -13,7 +13,6 @@ my_screen_capture    = "scrot '%F-%H%M%S.png' -e 'mv $f ~/Pictures/'"
 my_launcher          = "rofi -show drun -no-plugins"
 lockscreen           = "$HOME/.scripts/i3lock.sh lock"
 logmenu              = "$HOME/.scripts/logmenu.sh"
--- exit_screen = require("widgets").exit_screen
 
 awful.util.terminal  = terminal
 
