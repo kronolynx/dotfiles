@@ -58,3 +58,5 @@ link_dotfiles() {
 }
 
 link_dotfiles
+
+fc-cache -vf ~/.local/share/fonts
