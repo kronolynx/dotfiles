@@ -14,7 +14,7 @@ set -gx PATH ~/.local/bin $PATH
 alias vim=nvim
 alias vi=vim
 alias emx="emacsclient -t"
-alias emacs="emacsclient -c -a emacs"
+alias emc="emacsclient -c -a emacs"
 alias cm="cmus"
 alias co="code ."
 alias cat=bat # replace cat with bat
