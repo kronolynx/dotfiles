@@ -1,5 +1,5 @@
 {
-	"buildDir": "/home/krono/.cache/yay",
+	"buildDir": "~/.cache/yay",
 	"editor": "vim",
 	"editorflags": "",
 	"makepkgbin": "makepkg",
