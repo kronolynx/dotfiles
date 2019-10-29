@@ -22,6 +22,8 @@ base=(
   pulseaudio
   # terminal emulator
   rxvt-unicode
+  # tabs for urxvt
+  urxvt-tabbedex
   # touchpad
   xf86-input-synaptics
   # code editor
