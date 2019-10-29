@@ -12,6 +12,6 @@ widgets.exit_screen = require('widgets.exit_screen')
 
 -- Separators
 widgets.space     = wibox.widget.textbox('<span>  </span>')
-widgets.separator = wibox.widget.textbox(' <span color="grey"> </span>  ')
+widgets.separator = wibox.widget.textbox('<span color="grey"> </span>')
 
 return widgets

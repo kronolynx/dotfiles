@@ -28,7 +28,6 @@ theme.xcolor12                                  = colors.dark.blue or xrdb.color
 theme.xcolor13                                  = colors.dark.magenta or xrdb.color13
 theme.xcolor14                                  = colors.dark.cyan or xrdb.color14
 theme.xcolor15                                  = colors.dark.white or xrdb.color15
-theme.wallpaper                                 = "~/.wallpapers/no-mans-sky.png"
 
 -- Fonts
 theme.font                                      = "FantasqueSansMono Nerd Font Regular 12"
@@ -44,29 +43,20 @@ theme.bg_urgent                                 = theme.xcolor1
 theme.fg_urgent                                 = theme.xcolor15
 
 -- Borders
-theme.border_width                              = dpi(2)
-theme.border_normal                             = theme.xbackground
-theme.border_focus                              = theme.xcolor7
+theme.border_width                              = dpi(3)
+theme.border_normal                             = theme.xcolor5
+theme.border_focus                              = theme.xcolor2
 
 -- Taglist
 theme.taglist_bg_focus                          = theme.xcolor15
 theme.taglist_fg_focus                          = theme.bg_normal
 theme.taglist_bg_empty                          = theme.bg_normal
 theme.taglist_fg_empty                          = theme.xcolor7
-theme.taglist_fg_occupied                       = theme.xcolor15
-theme.taglist_bg_occupied                       = theme.xcolor0
+theme.taglist_fg_occupied                       = theme.fg_normal
+theme.taglist_bg_occupied                       = theme.bg_normal
 theme.taglist_bg_urgent                         = theme.xcolor1
 theme.taglist_fg_urgent                         = theme.xcolor15
 theme.taglist_spacing                           = dpi(0)
-
--- Generate taglist squares:
-local taglist_square_size                       = dpi(3)
-theme.taglist_squares_sel                       = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
-)
-theme.taglist_squares_unsel                     = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
-)
 
 theme.awesome_icon                              = theme.dir .. "/icons/awesome.png"
 -- Define the image to load
