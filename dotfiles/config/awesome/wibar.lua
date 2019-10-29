@@ -39,31 +39,21 @@ wibar.setup     = function(s)
   -- Create a taglist widget
   s.mytaglist            = awful.widget.taglist {
     screen  = s,
-    filter  = awful.widget.taglist.filter.all,
+    -- filter  = awful.widget.taglist.filter.all,
+    filter  = function (t) return t.selected or #t:clients() > 0 end,
     buttons = awful.util.taglist_buttons
   }
 
   local tasklist_buttons = gears.table.join(
-      awful.button({ }, 1, function(c)
-        if c == client.focus then
-          c.minimized = true
-        else
-          c:emit_signal(
-              "request::activate",
-              "tasklist",
-              { raise = true }
-          )
-        end
-      end),
       awful.button({ }, 3, function()
         awful.menu.client_list({ theme = { width = 250 } })
       end)
   )
 
   -- Create a tasklist widget
-  s.mytasklist           = awful.widget.tasklist {
+  s.mytasklist      = awful.widget.tasklist {
     screen          = s,
-    filter          = awful.widget.tasklist.filter.currenttags,
+    filter          = awful.widget.tasklist.filter.focused,
     buttons         = tasklist_buttons,
     style           = {
       shape_border_width = 1,
@@ -71,11 +61,9 @@ wibar.setup     = function(s)
       shape              = gears.shape.rounded_bar,
     },
     layout          = {
-      spacing = 2,
+      spacing = 3,
       layout  = wibox.layout.flex.horizontal
     },
-    -- Notice that there is *NO* wibox.wibox prefix, it is a template,
-    -- not a widget instance.
     widget_template = {
       {
         {
@@ -98,7 +86,7 @@ wibar.setup     = function(s)
         widget = wibox.container.margin
       },
       id           = 'background_role',
-      forced_width = 150,
+      forced_width = 230,
       widget       = wibox.container.background,
     }
   }
@@ -113,9 +101,10 @@ wibar.setup     = function(s)
     { -- Left widgets
       layout = wibox.layout.fixed.horizontal,
       s.mytaglist,
+      widgets.space,
       s.mypromptbox,
       s.mytasklist,
-      widgets.seperator,
+      widgets.space,
     },
     widgets.mpris,
     { -- Right widgets
