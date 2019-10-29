@@ -120,7 +120,7 @@ URxvt*mouseWheelScrollPage:       false
 URxvt*cursorBlink:                true
 URxvt*background:                 black
 URxvt*foreground:                 grey
-URxvt*saveLines:                  12000
+URxvt*saveLines:                  42000
 
 ! for 'fake' transparency (without Compton) uncomment the following three lines
 ! URxvt*inheritPixmap:            true
@@ -140,7 +140,32 @@ URxvt.keysym.Control-Up:          \033[1;5A
 URxvt.keysym.Shift-Control-Up:    \033[1;6A
 URxvt.keysym.Control-Down:        \033[1;5B
 URxvt.keysym.Shift-Control-Down:  \033[1;6B
-URxvt.perl-extcommon:             tabbed
+URxvt.perl-ext-common:             default,tabbedex,matcher
+URxvt*url-launcher:              firefox
+URxvt.matcher.button  : 1
+!! Tabs
+URxvt.tabbed.autohide: true
+URxvt.keysym.Control-t: perl:tabbedex:new_tab
+URxvt.keysym.Control-Tab: perl:tabbedex:next_tab
+URxvt.keysym.Control-Shift-Tab: perl:tabbedex:prev_tab
+URxvt.keysym.Control-Shift-R: perl:tabbedex:rename_tab
+
+! do not scroll with output
+URxvt*scrollTtyOutput: false
+
+! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
+URxvt*scrollWithBuffer: true
+
+! scroll back to the bottom on keypress
+URxvt*scrollTtyKeypress: true
+
+!! scrollback in console apps
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt.secondaryWheel: 1
+
+
+
 ! URxvt.keysym.M-C-c:               perl:clipboard:copy
 ! URxvt.keysym.M-v:                 perl:clipboard:paste
 ! URxvt.keysym.M-C-v:               perl:clipboard:paste_escaped
@@ -265,7 +290,6 @@ URxvt.perl-extcommon:             tabbed
 ! URxvt*tab-fg:                     colour
 ! URxvt*tabbar-bg:                  colour
 ! URxvt*tabbar-fg:                  colour
-! URxvt*url-launcher:               string
 
 ! The Terminus font uses the following X-names:
 ! -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
