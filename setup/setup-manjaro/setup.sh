@@ -7,7 +7,7 @@ find $SCRIPTPATH -type f -iname "*.sh" -exec chmod +x {} \;
 
 base=(
   # base devel
-  base-devel
+  # base-devel
   # version control system
   git
   # URL retrieval utility
@@ -51,6 +51,9 @@ cli=(
   pulsemixer
   # to display current song
   playerctl
+  # web media mpris controller  -- requires firefox/chrome plugin
+  # https://github.com/f1u77y/web-media-controller
+  web-media-controller-mpris-git
   # RandR-based backlight control
   xorg-xbacklight
   # calculator for the terminal  command (qalc)
@@ -109,7 +112,7 @@ coding=(
   # code color higlight
   highlight
   # Latex
-  texlive-most
+  # texlive-most
   # Scala interactive build tool
   sbt
   # re-implementation of the Scala REPL from first principles.
