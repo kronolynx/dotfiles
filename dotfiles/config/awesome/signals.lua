@@ -25,46 +25,46 @@ client.connect_signal("property::minimized", function(c)
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-  -- buttons for the titlebar
-  local buttons = gears.table.join(
-      awful.button({ }, 1, function()
-        client.focus = c
-        c:raise()
-        awful.mouse.client.move(c)
-      end),
-      awful.button({ }, 3, function()
-        client.focus = c
-        c:raise()
-        awful.mouse.client.resize(c)
-      end)
-  )
-
-  awful.titlebar(c):setup {
-    { -- Left
-      awful.titlebar.widget.iconwidget(c),
-      buttons = buttons,
-      layout  = wibox.layout.fixed.horizontal
-    },
-    { -- Middle
-      { -- Title
-        align  = "center",
-        widget = awful.titlebar.widget.titlewidget(c)
-      },
-      buttons = buttons,
-      layout  = wibox.layout.flex.horizontal
-    },
-    { -- Right
-      awful.titlebar.widget.floatingbutton(c),
-      awful.titlebar.widget.maximizedbutton(c),
-      awful.titlebar.widget.stickybutton(c),
-      awful.titlebar.widget.ontopbutton(c),
-      awful.titlebar.widget.closebutton(c),
-      layout = wibox.layout.fixed.horizontal()
-    },
-    layout = wibox.layout.align.horizontal
-  }
-end)
+-- client.connect_signal("request::titlebars", function(c)
+--   -- buttons for the titlebar
+--   local buttons = gears.table.join(
+--       awful.button({ }, 1, function()
+--         client.focus = c
+--         c:raise()
+--         awful.mouse.client.move(c)
+--       end),
+--       awful.button({ }, 3, function()
+--         client.focus = c
+--         c:raise()
+--         awful.mouse.client.resize(c)
+--       end)
+--   )
+-- 
+--   awful.titlebar(c):setup {
+--     { -- Left
+--       awful.titlebar.widget.iconwidget(c),
+--       buttons = buttons,
+--       layout  = wibox.layout.fixed.horizontal
+--     },
+--     { -- Middle
+--       { -- Title
+--         align  = "center",
+--         widget = awful.titlebar.widget.titlewidget(c)
+--       },
+--       buttons = buttons,
+--       layout  = wibox.layout.flex.horizontal
+--     },
+--     { -- Right
+--       awful.titlebar.widget.floatingbutton(c),
+--       awful.titlebar.widget.maximizedbutton(c),
+--       awful.titlebar.widget.stickybutton(c),
+--       awful.titlebar.widget.ontopbutton(c),
+--       awful.titlebar.widget.closebutton(c),
+--       layout = wibox.layout.fixed.horizontal()
+--     },
+--     layout = wibox.layout.align.horizontal
+--   }
+-- end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
@@ -74,7 +74,10 @@ client.connect_signal("mouse::enter", function(c)
   end
 end)
 
-client.connect_signal("focus", helpers.border_adjust)
+client.connect_signal("focus", function(c)
+  c.border_color = beautiful.border_focus
+end)
+
 client.connect_signal("unfocus", function(c)
   c.border_color = beautiful.border_normal
 end)
@@ -83,3 +86,7 @@ end)
 client.connect_signal("property::minimized", function(c)
   c.minimized = false
 end)
+
+-- tag.connect_signal("property::urgent", function (t)
+--   ins(t)
+-- end)

@@ -1,7 +1,7 @@
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
-
+ins = require("inspect")
 -- Standard awesome library
 local awful = require("awful")
 require("awful.autofocus")
@@ -40,29 +40,29 @@ require("variables")
 -- Themes define colours, icons, font and wallpapers. (must be loaded before widgets)
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
 
-----------------------------------------------------------------------------------------
---    Start customization here
+-- ----------------------------------------------------------------------------------------
+-- --    Start customization here
 
--- imports
+-- -- imports
 local helpers                    = require("helpers")
 local wibar                      = require("wibar")
 
--- notifications icon size
--- naughty.config.defaults['icon_size'] = 100 -- for older awesome versions
-beautiful.notification_icon_size = 100 -- for awesome 4.3+
+-- -- notifications icon size
+-- -- naughty.config.defaults['icon_size'] = 100 -- for older awesome versions
+-- beautiful.notification_icon_size = 100 -- for awesome 4.3+
 
 -- Screen
 awful.screen.connect_for_each_screen(function(s)
   wibar.setup(s)
 end)
 
--- keys
+-- -- keys
 require("keys")
 
--- Signals
+-- -- Signals
 require("signals")
 
--- rules
+-- -- rules
 require("rules")
 
 -- autorun
