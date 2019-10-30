@@ -33,6 +33,7 @@ theme.xcolor15                                  = colors.dark.white or xrdb.colo
 theme.font                                      = "FantasqueSansMono Nerd Font Regular 12"
 theme.taglist_font                              = "FantasqueSansMono Nerd Font Bold 12"
 theme.iconFont                                  = "FantasqueSansMono Nerd Font 12"
+theme.taglist_font                              = "gamefont 14"
 
 -- Standard Background and Foreground
 theme.bg_normal                                 = theme.xbackground
@@ -48,8 +49,8 @@ theme.border_normal                             = theme.xcolor5
 theme.border_focus                              = theme.xcolor2
 
 -- Taglist
-theme.taglist_bg_focus                          = theme.xcolor15
-theme.taglist_fg_focus                          = theme.bg_normal
+theme.taglist_bg_focus                          = theme.bg_normal
+theme.taglist_fg_focus                          = theme.xcolor7
 theme.taglist_bg_empty                          = theme.bg_normal
 theme.taglist_fg_empty                          = theme.xcolor7
 theme.taglist_fg_occupied                       = theme.fg_normal

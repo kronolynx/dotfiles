@@ -3,14 +3,6 @@ local gears     = require("gears")
 local awful     = require("awful")
 
 local helpers   = {}
--- Turn border color to back if there is only one client in the tag.
-function helpers.border_adjust(c)
-  if #awful.screen.focused().clients == 1 then
-    c.border_color = beautiful.border_normal
-  else
-    c.border_color = beautiful.border_focus
-  end
-end
 
 function helpers.pad(size)
   local str = ""

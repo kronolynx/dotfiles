@@ -18,13 +18,13 @@ awful.util.terminal  = terminal
 
 awful.layout.layouts = {
   awful.layout.suit.tile,
-  awful.layout.suit.floating,
+  awful.layout.suit.fair,
   awful.layout.suit.spiral,
+  awful.layout.suit.floating,
   -- awful.layout.suit.spiral.dwindle,
   --awful.layout.suit.tile.left,
   awful.layout.suit.tile.bottom,
   -- awful.layout.suit.tile.top,
-  awful.layout.suit.fair,
   awful.layout.suit.fair.horizontal,
   awful.layout.suit.max,
   -- awful.layout.suit.max.fullscreen,
@@ -65,26 +65,28 @@ awful.util.my_colors = { -- TODO find a better place to store colors
 
 awful.util.tagnames  = {
   {
-    { name = "", sel = true },
-    { name = "" },
-    { name = "" },
-    { name = "" },
-    { name = "", lay = awful.layout.layouts[3], mw = 0.87 },
-    { name = "" },
-    { name = "" },
-    { name = "" },
-    { name = "" }
+    { name = "", sel = true },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "", lay = awful.layout.layouts[2], mw = 0.87 },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" }
   },
   {
-    { name = "", sel = true },
-    { name = "" },
-    { name = "" },
-    { name = "" },
-    { name = "" },
-    { name = "" },
-    { name = "" },
-    { name = "" },
-    { name = "" }
+    { name = "", sel = true },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" },
+    { name = "" }
   }
 }
 
