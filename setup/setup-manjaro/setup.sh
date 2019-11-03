@@ -87,6 +87,10 @@ cli=(
   xorg-xbacklight
   # cat replacement with color syntax
   bat
+  # Search tool
+  ripgrep
+  # command-line fuzzy finder
+  fzf
 )
 
 cli_media=(
