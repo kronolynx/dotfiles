@@ -32,6 +32,11 @@
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
+;; replace the active region just by typing text, just like modern editors
+(delete-selection-mode +1)
+;; remember last position in file
+(save-place-mode 1)
+(setq save-place-forget-unreadable-files nil)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -73,7 +78,6 @@
 (setq package-archives '(
                          ("elpa" . "http://elpa.gnu.org/packages/")
                          ("org" . "http://orgmode.org/elpa/")
-                         ("melpa-stable" . "http://stable.melpa.org/packages/")
                          ("melpa" . "http://melpa.org/packages/")
                          )
       )
@@ -95,11 +99,11 @@
   :init
   (xclip-mode 1))
 
-
 (use-package general :ensure t
   :config
   (general-define-key "C-;" 'avy-goto-word-1)
   (general-define-key "C-s" 'save-all)
+  (general-define-key "C-/" 'evilnc-comment-or-uncomment-lines)
   (general-define-key
    :states '(normal visual insert emacs)
    :prefix "SPC"
@@ -142,7 +146,7 @@
   (setq ivy-re-builders-alist
         '((counsel-M-x . ivy--regex-fuzzy) ; Only counsel-M-x use flx fuzzy search
           (t . ivy--regex-plus)))
-    (setq ivy-initial-inputs-alist nil))
+  (setq ivy-initial-inputs-alist nil))
 
 
 (use-package counsel :ensure t
@@ -160,8 +164,13 @@
   :general
   (general-define-key
    :keymaps 'normal
-      "SPC s" 'swiper))
+   "SPC s" 'swiper))
 
+(use-package rainbow-delimiters :ensure t
+  :config
+  (progn
+    ;; Enable in all programming-related modes
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
 ;; display help for key usage
 (use-package which-key :ensure t
@@ -189,7 +198,9 @@
 ;; evil
 ;;----------------------------------------------------------------------------
 (use-package evil
+  :diminish undo-tree-mode
   :ensure t ;; install the evil package if not installed
+  :defer .1 ;; don't block emacs when starting, load evil immediately after startup
   :init ;; tweak evil's configuration before loading it
   (setq evil-ex-complete-emacs-commands nil
         evil-search-module 'evil-search 
@@ -219,19 +230,58 @@
 
 ;; Press “%” to jump between matched tags
 (use-package evil-matchit
-  :ensure t
-  :config
-    (global-evil-matchit-mode))
+             :ensure t
+             :config
+             (global-evil-matchit-mode))
 
 (use-package evil-nerd-commenter
   :ensure t
-  :general
-  ("M-/" 'evilnc-comment-or-uncomment-lines))
+  ;;:after evil
+  ;;:config
+  ;;(global-unset-key (kbd "C-/"))
+  ;;;;(global-set-key (kbd "C-/") 'evilnc-comment-operator)
+  ;;;;(global-unset-key (kbd "C-/"))
+  ;;:bind ("C-/" . evilnc-comment-or-uncomment-lines)
+  :init (global-set-key (kbd "C-/") #'evilnc-comment-or-uncomment-lines)
+  )
+
+(use-package evil-lion
+  :ensure t
+  :config
+  (evil-lion-mode))
+
+;; gx operator, like vim-exchange
+(use-package evil-exchange
+  :ensure t
+  :bind (:map evil-normal-state-map
+              ("gx" . evil-exchange)
+              ("gX" . evil-exchange-cancel)))
+
+;; * operator in vusual mode
+(use-package evil-visualstar
+  :ensure t
+  :bind (:map evil-visual-state-map
+              ("*" . evil-visualstar/begin-search-forward)
+              ("#" . evil-visualstar/begin-search-backward)))
+
+;; C-+ C-- to increase/decrease number like Vim's C-a C-x
+(use-package evil-numbers
+  :ensure t
+  :config
+  (progn
+    (define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
+    (define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)))
+
+(use-package evil-magit :ensure t
+  :init
+  (setq evil-magit-state 'normal)
+  (setq evil-magit-use-y-for-yank nil)
+  )
 
 (use-package powerline
   :ensure t
   :config
-    (powerline-center-evil-theme))
+  (powerline-center-evil-theme))
 
 ;; vim like number line
 (setq-default display-line-numbers 'visual
@@ -265,16 +315,11 @@
    :keymaps 'normal
    "SPC g s" 'magit-status))
 
-(use-package evil-magit :ensure t
-  :init
-  (setq evil-magit-state 'normal)
-    (setq evil-magit-use-y-for-yank nil)
-  )
 
 ;; Highlighting TODO keywords
 (use-package hl-todo
   :ensure t
-    :config (global-hl-todo-mode))
+  :config (global-hl-todo-mode))
 
 ;; rss feed
 (use-package elfeed-goodies :ensure t)
@@ -282,7 +327,22 @@
 (use-package elfeed
   :ensure t
   :config
-    (setq elfeed-db-directory (expand-file-name "feeds" user-emacs-directory)))
+  (setq elfeed-db-directory (expand-file-name "feeds" user-emacs-directory)))
+
+;; Automatically refreshes the buffer for changes outside of Emacs
+(use-package autorevert :ensure t
+  :ensure nil
+  :hook (after-init . global-auto-revert-mode)
+  :config
+  (setq auto-revert-interval 2
+        auto-revert-check-vc-info t
+        auto-revert-verbose nil))
+;; Show matching parentheses
+(use-package paren :ensure t
+  :ensure nil
+  :config
+  (setq show-paren-delay 0)
+  (show-paren-mode +1))
 
 ;;----------------------------------------------------------------------------
 ;; languages
@@ -344,5 +404,6 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-one t))
+  (load-theme 'tango-dark t)
+  (load-theme 'doom-molokai t))
 
