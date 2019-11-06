@@ -13,33 +13,15 @@
       custom-safe-themes t
       scroll-preserve-screen-position t
       )
-
+(add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-(prefer-coding-system 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
 
 ;; UI
-(scroll-bar-mode -1)
-(tool-bar-mode -1)
-(blink-cursor-mode -1)
-(transient-mark-mode -1)
-(delete-selection-mode)
-(column-number-mode)
-(tooltip-mode    -1)
-(menu-bar-mode   -1)
 
 ;; replace the active region just by typing text, just like modern editors
 (delete-selection-mode +1)
-;; remember last position in file
-(save-place-mode 1)
-(setq save-place-forget-unreadable-files nil)
-
-(defalias 'yes-or-no-p 'y-or-n-p)
-
 
 (let ((normal-gc-cons-threshold (* 128 1024 1024))
       (init-gc-cons-threshold (* 256 1024 1024)))
@@ -57,42 +39,16 @@
 
 (add-hook 'focus-out-hook 'save-all)
 
-;; Treat clipboard input as UTF-8 string first; compound text next, etc.
-(setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
-(setq-default indent-tabs-mode nil
-              tab-width 2
-              indicate-empty-lines nil)
-
-(add-hook
- 'after-init-hook
- (defun my/set-faces ()
-   (custom-set-faces
-    '(default ((t (:height 130 :family "SauceCodePro Nerd Font" :weight normal)))))
-   ))
-;;----------------------------------------------------------------------------
-;; Load package
-;;----------------------------------------------------------------------------
-(eval-and-compile
-  (require 'package))
-(setq package-archives '(
-                         ("elpa" . "http://elpa.gnu.org/packages/")
-                         ("org" . "http://orgmode.org/elpa/")
-                         ("melpa" . "http://melpa.org/packages/")
-                         )
-      )
-(package-initialize)
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-when-compile
-  (require 'use-package))
 
 ;;----------------------------------------------------------------------------
 ;; packages
 ;;----------------------------------------------------------------------------
+
+(require 'init-package)
+(require 'init-gui)
+(require 'init-evil)
+(require 'init-color)
 
 ;; copy to clipboard for -nw
 (use-package xclip :ensure t
@@ -166,11 +122,6 @@
    :keymaps 'normal
    "SPC s" 'swiper))
 
-(use-package rainbow-delimiters :ensure t
-  :config
-  (progn
-    ;; Enable in all programming-related modes
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
 ;; display help for key usage
 (use-package which-key :ensure t
@@ -192,110 +143,11 @@
              (setq ranger-cleanup-eagerly t)
              )
 (use-package git-gutter :ensure t
-             :config
-             (global-git-gutter-mode +1))
-;;----------------------------------------------------------------------------
-;; evil
-;;----------------------------------------------------------------------------
-(use-package evil
-  :diminish undo-tree-mode
-  :ensure t ;; install the evil package if not installed
-  :defer .1 ;; don't block emacs when starting, load evil immediately after startup
-  :init ;; tweak evil's configuration before loading it
-  (setq evil-ex-complete-emacs-commands nil
-        evil-search-module 'evil-search 
-        evil-shift-round nil 
-        evil-split-window-below t
-        evil-vsplit-window-right t
-        evil-want-C-u-scroll t
-        evil-want-fine-undo t
-        evil-want-integration t
-        evil-want-keybinding nil)
-  :config ;; tweak evil after loading it
-  (evil-mode 1)
-
-  ;; example how to map a command in normal mode (called 'normal state' in evil)
-  (define-key evil-normal-state-map (kbd ", w") 'evil-window-vsplit))
-
-(use-package evil-collection
-  :after evil
-  :ensure t
   :config
-  (evil-collection-init))
+  (global-git-gutter-mode +1))
 
-(use-package evil-surround
-  :ensure t
-  :config
-  (global-evil-surround-mode))
 
-;; Press “%” to jump between matched tags
-(use-package evil-matchit
-             :ensure t
-             :config
-             (global-evil-matchit-mode))
 
-(use-package evil-nerd-commenter
-  :ensure t
-  ;;:after evil
-  ;;:config
-  ;;(global-unset-key (kbd "C-/"))
-  ;;;;(global-set-key (kbd "C-/") 'evilnc-comment-operator)
-  ;;;;(global-unset-key (kbd "C-/"))
-  ;;:bind ("C-/" . evilnc-comment-or-uncomment-lines)
-  :init (global-set-key (kbd "C-/") #'evilnc-comment-or-uncomment-lines)
-  )
-
-(use-package evil-lion
-  :ensure t
-  :config
-  (evil-lion-mode))
-
-;; gx operator, like vim-exchange
-(use-package evil-exchange
-  :ensure t
-  :bind (:map evil-normal-state-map
-              ("gx" . evil-exchange)
-              ("gX" . evil-exchange-cancel)))
-
-;; * operator in vusual mode
-(use-package evil-visualstar
-  :ensure t
-  :bind (:map evil-visual-state-map
-              ("*" . evil-visualstar/begin-search-forward)
-              ("#" . evil-visualstar/begin-search-backward)))
-
-;; C-+ C-- to increase/decrease number like Vim's C-a C-x
-(use-package evil-numbers
-  :ensure t
-  :config
-  (progn
-    (define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
-    (define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)))
-
-(use-package evil-magit :ensure t
-  :init
-  (setq evil-magit-state 'normal)
-  (setq evil-magit-use-y-for-yank nil)
-  )
-
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-center-evil-theme))
-
-;; vim like number line
-(setq-default display-line-numbers 'visual
-              display-line-numbers-widen t
-              ;; this is the default
-              display-line-numbers-current-absolute t)
-
-(defun noct:relative ()
-  (setq-local display-line-numbers 'visual))
-
-(defun noct:absolute ()
-  (setq-local display-line-numbers t))
-(add-hook 'evil-insert-state-entry-hook #'noct:absolute)
-(add-hook 'evil-insert-state-exit-hook #'noct:relative)
 
 
 
@@ -307,7 +159,7 @@
   :diminish aggressive-indent-mode
   :hook (emacs-lisp-mode . aggressive-indent-mode)
   :config
-    (setq aggressive-indent-sit-for-time 0.5))
+  (setq aggressive-indent-sit-for-time 0.5))
 
 (use-package magit :ensure t
   :general
@@ -395,15 +247,7 @@
 
 (use-package less-css-mode
   :ensure t
-    :mode "\\.less\\'")
+  :mode "\\.less\\'")
 
-;;----------------------------------------------------------------------------
-;; Theme
-;;----------------------------------------------------------------------------
 
-(use-package doom-themes
-  :ensure t
-  :config
-  (load-theme 'tango-dark t)
-  (load-theme 'doom-molokai t))
 
