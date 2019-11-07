@@ -16,7 +16,8 @@
 (use-package powerline
   :config
   (powerline-center-evil-theme))
-
+(add-hook 'after-init-hook 'powerline-reset)
+(use-package powerline-evil)
 ;;(add-to-list 'default-frame-alist '(background-color . "honeydew2"))
 
 (provide 'init-color)

@@ -38,9 +38,7 @@
   :config
   (global-evil-matchit-mode))
 
-(use-package evil-nerd-commenter
-  :bind ("C-/" . evilnc-comment-or-uncomment-lines)
-  )
+(use-package evil-nerd-commenter)
 
 (use-package evil-lion
   :config

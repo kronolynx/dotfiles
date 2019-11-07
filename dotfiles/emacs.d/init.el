@@ -9,6 +9,7 @@
 
 (require 'init-editor)
 (require 'init-package)
+(require 'init-general)
 (require 'init-gui)
 (require 'init-evil)
 (require 'init-color)
@@ -19,35 +20,6 @@
   :init
   (xclip-mode 1))
 
-(use-package general
-  :config
-  (general-define-key "C-;" 'avy-goto-word-1)
-  (general-define-key "C-s" 'save-all)
-  (general-unbind "C-/")
-  (general-define-key
-   :states '(normal visual insert emacs)
-   :prefix "SPC"
-   :non-normal-prefix "C-SPC"
-
-   ;; simple command
-   "/"   'counsel-ag
-   "TAB" '(switch-to-other-buffer :which-key "prev buffer")
-   "SPC" '(avy-goto-word-or-subword-1  :which-key "go to char")
-   ;; buffers
-   "bl" 'ivy-switch-buffer
-   ;; files
-   "ff" 'counsel-find-file
-   ;; search
-   "sc" 'evil-ex-nohighlight
-
-   ;; Applications
-   "a" '(:ignore t :which-key "Applications")
-   "ar" 'ranger
-   "ad" 'dired
-   "g"  '(:ignore t :which-key "Git")
-   "gs" '(magit-status :which-key "git status")
-   )
-  )
 
 (use-package ivy
   :delight
@@ -177,7 +149,8 @@
   :diminish (yas-minor-mode . " Ⓨ"))
 
 (use-package company                    ; Graphical (auto-)completion
-  :diminish company-mode
+  ;; :diminish company-mode
+  :delight
   :init (global-company-mode)
   :config
   (setq company-tooltip-align-annotations t
@@ -206,13 +179,17 @@
   (require 'smartparens-config)
   :diminish smartparens-mode)
 
-(use-package all-the-icons)
+(use-package all-the-icons) ;; don't forget to M-x all-the-icons-install-fonts
 
 (use-package neotree
   :after evil
-  :init (evil-set-initial-state 'neotree-mode 'normal)
+  :init
+  (evil-set-initial-state 'neotree-mode 'normal)
   :config
   (progn
+    (setq neo-smart-open t)
+    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+    (setq projectile-switch-project-action 'neotree-projectile-action)
     (defun neo-buffer--insert-header ()
       (let ((start (point)))
         (set-text-properties start (point) '(face neo-header-face)))
