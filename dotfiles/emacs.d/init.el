@@ -207,3 +207,14 @@
   :diminish smartparens-mode)
 
 (use-package all-the-icons)
+
+(use-package neotree
+  :after evil
+  :init (evil-set-initial-state 'neotree-mode 'normal)
+  :config
+  (progn
+    (defun neo-buffer--insert-header ()
+      (let ((start (point)))
+        (set-text-properties start (point) '(face neo-header-face)))
+      (neo-buffer--newline-and-begin))
+    ))
