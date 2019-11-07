@@ -3,7 +3,6 @@
 ;;----------------------------------------------------------------------------
 (use-package evil
   :diminish undo-tree-mode
-  :ensure t ;; install the evil package if not installed
   :defer .1 ;; don't block emacs when starting, load evil immediately after startup
   :init ;; tweak evil's configuration before loading it
   (setq evil-ex-complete-emacs-commands nil
@@ -23,60 +22,53 @@
 
 (use-package evil-collection
   :after evil
-  :ensure t
   :config
   (evil-collection-init))
 
 (use-package evil-surround
-  :ensure t
   :config
   (global-evil-surround-mode))
 
+(use-package evil-embrace
+  :commands (evil-embrace-enable-evil-surround-integration
+             evil-embrace-disable-evil-surround-integration))
+
 ;; Press “%” to jump between matched tags
 (use-package evil-matchit
-  :ensure t
   :config
   (global-evil-matchit-mode))
 
 (use-package evil-nerd-commenter
-  :ensure t
-  ;;:after evil
-  ;;:config
-  ;;(global-unset-key (kbd "C-/"))
-  ;;;;(global-set-key (kbd "C-/") 'evilnc-comment-operator)
-  ;;;;(global-unset-key (kbd "C-/"))
-  ;;:bind ("C-/" . evilnc-comment-or-uncomment-lines)
-  :init (global-set-key (kbd "C-/") #'evilnc-comment-or-uncomment-lines)
+  :bind ("C-/" . evilnc-comment-or-uncomment-lines)
   )
 
 (use-package evil-lion
-  :ensure t
   :config
   (evil-lion-mode))
 
 ;; gx operator, like vim-exchange
 (use-package evil-exchange
-  :ensure t
+  :disabled
   :bind (:map evil-normal-state-map
               ("gx" . evil-exchange)
               ("gX" . evil-exchange-cancel)))
 
 ;; * operator in vusual mode
 (use-package evil-visualstar
-  :ensure t
   :bind (:map evil-visual-state-map
               ("*" . evil-visualstar/begin-search-forward)
               ("#" . evil-visualstar/begin-search-backward)))
 
 ;; C-+ C-- to increase/decrease number like Vim's C-a C-x
 (use-package evil-numbers
-  :ensure t
   :config
   (progn
     (define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
     (define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)))
 
-(use-package evil-magit :ensure t
+(use-package evil-magit
+  :requires magit
+  :after (magit)
   :init
   (setq evil-magit-state 'normal)
   (setq evil-magit-use-y-for-yank nil)
@@ -96,9 +88,5 @@
 (add-hook 'evil-insert-state-entry-hook #'noct:absolute)
 (add-hook 'evil-insert-state-exit-hook #'noct:relative)
 
-(use-package powerline
-  :ensure t
-  :config
-  (powerline-center-evil-theme))
 
 (provide 'init-evil)

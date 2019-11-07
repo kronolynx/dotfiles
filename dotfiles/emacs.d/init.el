@@ -2,64 +2,28 @@
 ;;; Commentary: Emacs Startup File --- initialization for Emacs
 ;;; code:
 
-(setq delete-old-versions -1; delete excess backup versions silently
-      version-control t; use version control
-      vc-make-backup-files t; make backups file even when in version controlled dir
-      backup-directory-alist `(("." . "~/.emacs.d/backups")) ; which directory to put backups
-      vc-follow-symlinks t       ; don't ask for confirmation when opening symlinked file
-      auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ;transform backups file name
-      ring-bell-function 'ignore ; silent bell when you make a mistake
-      sentence-end-double-space nil ; sentence SHOULD end with only a point.
-      custom-safe-themes t
-      scroll-preserve-screen-position t
-      )
-(add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
-
-
-;; UI
-
-;; replace the active region just by typing text, just like modern editors
-(delete-selection-mode +1)
-
-(let ((normal-gc-cons-threshold (* 128 1024 1024))
-      (init-gc-cons-threshold (* 256 1024 1024)))
-  (setq gc-cons-threshold init-gc-cons-threshold)
-  (add-hook #'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold normal-gc-cons-threshold))))
-
-(add-hook 'focus-out-hook #'garbage-collect)
-
-;; save buffers on focus lost
-(defun save-all ()
-  "Save all buffers."
-  (interactive)
-  (save-some-buffers t))
-
-(add-hook 'focus-out-hook 'save-all)
-
-
-
 ;;----------------------------------------------------------------------------
 ;; packages
 ;;----------------------------------------------------------------------------
+(add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
 
+(require 'init-editor)
 (require 'init-package)
 (require 'init-gui)
 (require 'init-evil)
 (require 'init-color)
+(require 'init-prog-lang)
 
 ;; copy to clipboard for -nw
-(use-package xclip :ensure t
+(use-package xclip
   :init
   (xclip-mode 1))
 
-(use-package general :ensure t
+(use-package general
   :config
   (general-define-key "C-;" 'avy-goto-word-1)
   (general-define-key "C-s" 'save-all)
-  (general-define-key "C-/" 'evilnc-comment-or-uncomment-lines)
+  (general-unbind "C-/")
   (general-define-key
    :states '(normal visual insert emacs)
    :prefix "SPC"
@@ -69,6 +33,12 @@
    "/"   'counsel-ag
    "TAB" '(switch-to-other-buffer :which-key "prev buffer")
    "SPC" '(avy-goto-word-or-subword-1  :which-key "go to char")
+   ;; buffers
+   "bl" 'ivy-switch-buffer
+   ;; files
+   "ff" 'counsel-find-file
+   ;; search
+   "sc" 'evil-ex-nohighlight
 
    ;; Applications
    "a" '(:ignore t :which-key "Applications")
@@ -79,8 +49,8 @@
    )
   )
 
-(use-package ivy :ensure t
-  :diminish (ivy-mode . "")             ; does not display ivy in the modeline
+(use-package ivy
+  :delight
   :demand t
   :init
   (ivy-mode 1)                          ; enable ivy globally at startup
@@ -105,7 +75,7 @@
   (setq ivy-initial-inputs-alist nil))
 
 
-(use-package counsel :ensure t
+(use-package counsel 
   :general
   (general-define-key
    :keymaps 'normal
@@ -116,7 +86,7 @@
    "SPC p s" 'counsel-rg
    "SPC SPC" 'counsel-M-x))
 
-(use-package swiper :ensure t
+(use-package swiper
   :general
   (general-define-key
    :keymaps 'normal
@@ -124,44 +94,48 @@
 
 
 ;; display help for key usage
-(use-package which-key :ensure t
+(use-package which-key 
   :diminish which-key-mode
+  :init
+  (setq which-key-sort-order #'which-key-prefix-then-key-order
+        which-key-sort-uppercase-first nil
+        which-key-add-column-padding 1
+        which-key-max-display-columns nil
+        which-key-min-display-lines 6
+        which-key-side-window-slot -10)
   :config
   (which-key-mode 1))
 
-(use-package avy :ensure t
+(use-package avy 
   :commands (avy-goto-word-1))
 
-(use-package flycheck :ensure t
-             :config
-             (global-flycheck-mode))
+(use-package flycheck 
+  :delight
+  :config
+  (global-flycheck-mode))
 
-(use-package ranger :ensure t
-             :commands (ranger)
-             :bind (("C-x d" . deer))
-             :config
-             (setq ranger-cleanup-eagerly t)
-             )
-(use-package git-gutter :ensure t
+(use-package ranger
+  :commands (ranger)
+  :bind (("C-x d" . deer))
+  :config
+  (setq ranger-cleanup-eagerly t)
+  )
+(use-package git-gutter 
+  :delight
   :config
   (global-git-gutter-mode +1))
-
-
-
-
 
 
 ;;----------------------------------------------------------------------------
 ;; misc
 ;;----------------------------------------------------------------------------
 (use-package aggressive-indent
-  :ensure t
   :diminish aggressive-indent-mode
   :hook (emacs-lisp-mode . aggressive-indent-mode)
   :config
   (setq aggressive-indent-sit-for-time 0.5))
 
-(use-package magit :ensure t
+(use-package magit
   :general
   (general-define-key
    :keymaps 'normal
@@ -170,84 +144,66 @@
 
 ;; Highlighting TODO keywords
 (use-package hl-todo
-  :ensure t
   :config (global-hl-todo-mode))
 
 ;; rss feed
-(use-package elfeed-goodies :ensure t)
-(use-package elfeed-web :ensure t)
+(use-package elfeed-goodies)
+(use-package elfeed-web)
 (use-package elfeed
-  :ensure t
   :config
   (setq elfeed-db-directory (expand-file-name "feeds" user-emacs-directory)))
 
 ;; Automatically refreshes the buffer for changes outside of Emacs
-(use-package autorevert :ensure t
-  :ensure nil
+(use-package autorevert
+  :delight auto-revert-mode
   :hook (after-init . global-auto-revert-mode)
   :config
   (setq auto-revert-interval 2
         auto-revert-check-vc-info t
         auto-revert-verbose nil))
+
 ;; Show matching parentheses
-(use-package paren :ensure t
-  :ensure nil
+(use-package paren 
   :config
   (setq show-paren-delay 0)
   (show-paren-mode +1))
 
-;;----------------------------------------------------------------------------
-;; languages
-;;----------------------------------------------------------------------------
+;; Enable nice rendering of diagnostics like compile errors.
+(use-package flycheck
+  :init (global-flycheck-mode))
 
-(use-package rjsx-mode
-  :ensure t
-  :mode "\\.js\\'"
-  :config (setq js2-basic-offset 2
-                js2-strict-missing-semi-warning nil
-                js2-missing-semi-one-line-override nil
-                js2-bounce-indent-p nil))
+(use-package yasnippet                  ; Snippets
+  :defer t
+  :diminish (yas-minor-mode . " Ⓨ"))
 
-(use-package markdown-mode
-  :ensure t
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-    :init (setq markdown-command "multimarkdown"))
-
-;; haskell
-(use-package haskell-mode
-  :ensure t
+(use-package company                    ; Graphical (auto-)completion
+  :diminish company-mode
+  :init (global-company-mode)
   :config
-    (setq haskell-interactive-popup-error nil))
+  (setq company-tooltip-align-annotations t
+        company-tooltip-flip-when-above t
+        company-show-numbers t)
+  )
 
-(use-package lua-mode
-    :ensure t)
-
-(use-package web-mode
-  :ensure t
-  :mode (("\\.html?\\'" . web-mode))
+                                        ; projectile
+(use-package projectile
   :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2
-        web-mode-block-padding 2
-        web-mode-comment-style 2
+  (progn
+    (projectile-global-mode)
+    (setq projectile-completion-system 'ivy
+          projectile-switch-project-action 'projectile-dired
+          projectile-remember-window-configs t
+          projectile-use-git-grep 1)))
 
-        web-mode-enable-css-colorization t
-        web-mode-enable-auto-pairing t
-        web-mode-enable-comment-keywords t
-        web-mode-enable-current-element-highlight t
-        ))
+(use-package paredit
+  :delight
+  :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+                 (add-hook 'lua-mode-hook 'paredit-mode)))
 
-(use-package sass-mode
-  :ensure t
-  :mode "\\.sass\\'")
+(use-package smartparens
+  :config
+  (setq sp-show-pair-from-inside nil)
+  (require 'smartparens-config)
+  :diminish smartparens-mode)
 
-(use-package less-css-mode
-  :ensure t
-  :mode "\\.less\\'")
-
-
-
+(use-package all-the-icons)
