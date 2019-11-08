@@ -162,6 +162,14 @@ awful.rules.rules = {
         "Slack",
       },
     },
-    properties = { screen = 1, tag = awful.screen.focused().tags[5], floating = false }
+    properties = { screen = function () return screen.count () >= 2 and screen[2] or screen[1] end, tag = awful.screen.focused().tags[5], floating = false }
+  },
+  {
+    rule_any   = {
+      class = {
+        "Spotify",
+      },
+    },
+    properties = { screen = function () return screen.count () >= 2 and screen[2] or screen[1] end, tag = awful.screen.focused().tags[6], floating = false }
   }
 }

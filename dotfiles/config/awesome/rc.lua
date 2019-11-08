@@ -49,7 +49,7 @@ local wibar                      = require("wibar")
 
 -- -- notifications icon size
 -- -- naughty.config.defaults['icon_size'] = 100 -- for older awesome versions
--- beautiful.notification_icon_size = 100 -- for awesome 4.3+
+beautiful.notification_icon_size = 100 -- for awesome 4.3+
 
 -- Screen
 awful.screen.connect_for_each_screen(function(s)

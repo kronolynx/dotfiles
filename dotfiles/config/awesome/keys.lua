@@ -3,7 +3,7 @@ local gears         = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
+--require("awful.hotkeys_popup.keys")
 require("variables")
 
 local modkey   = "Mod4" -- Super
@@ -15,8 +15,6 @@ local shiftkey = "Shift"
 -- {{{ Key bindings
 globalkeys     = gears.table.join(
 -- Move between tags
-    awful.key({ altkey }, "h", awful.tag.viewprev, { description = "view previous", group = "tag" }),
-    awful.key({ altkey }, "l", awful.tag.viewnext, { description = "view next", group = "tag" }),
     awful.key({ modkey }, "Tab", awful.tag.history.restore, { description = "go back", group = "tag" }),
 -- Focus clients by direction
     awful.key({ modkey }, "Down", function()
@@ -45,7 +43,7 @@ globalkeys     = gears.table.join(
     ),
     awful.key({ modkey }, "Right", function()
       awful.client.focus.global_bydirection("right")
-      if client.focus then
+     if client.focus then
         client.focus:raise()
       end
     end,
@@ -122,7 +120,8 @@ globalkeys     = gears.table.join(
       else 
         awful.tag.history.restore()
       end
-    end, { description = "jump to urgent client/last window", group = "client" }),
+    end, { description = "jump to urgent client/last window", group = "client" }
+    ),
 -- Show/Hide Wibox
     awful.key({ modkey }, "b", function()
       for s in screen do
@@ -135,6 +134,9 @@ globalkeys     = gears.table.join(
         { description = "toggle wibox", group = "awesome" }
     ),
 -- Move between screens
+    awful.key({ modkey, }, "s", function() awful.screen.focus_relative(1) end,
+        { description = "focus the next screen", group = "screen" }
+    ),
     awful.key({ altkey }, "Left", function() awful.screen.focus_relative(1) end,
         { description = "focus the next screen", group = "screen" }
     ),
@@ -162,7 +164,8 @@ globalkeys     = gears.table.join(
         end
       end
     end,
-        { description = "swap tag clients with the tag on the next screen", group = "tag" }),
+       { description = "swap tag clients with the tag on the next screen", group = "tag" }
+    ),
 -- Standard program
     awful.key({ modkey }, "Return", function() awful.spawn(terminal) end,
         { description = "open a terminal", group = "apps" }
@@ -225,9 +228,6 @@ globalkeys     = gears.table.join(
       }
     end,
         { description = "lua execute prompt", group = "awesome" }
-    ),
-    awful.key({ modkey, }, "s", function() awful.screen.focus_relative(1) end,
-        { description = "focus the next screen", group = "screen" }
     ),
     awful.key({ ctrlkey }, "Escape", function() awful.spawn("xkill") end,
         { desc = "launch xkill", group = "client" }
