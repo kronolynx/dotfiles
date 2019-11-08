@@ -3,6 +3,7 @@
 [core]
   editor = nvim
   pager = less
+  excludesfile = /home/jortiz/.gitignore
 [alias]
   amend = commit --amend --no-edit
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
