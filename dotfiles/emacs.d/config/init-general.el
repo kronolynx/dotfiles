@@ -7,7 +7,7 @@
    "C-s" 'save-all
    "C-/" 'evilnc-comment-or-uncomment-lines
    "M-/" 'evilnc-comment-or-uncomment-lines
-   [f8]   'neotree-toggle
+   "M-1"  'neotree-toggle
    )
   (general-def 'normal 'neotree-mode
     "z" 'neotree-toggle

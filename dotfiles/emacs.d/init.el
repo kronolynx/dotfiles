@@ -92,11 +92,14 @@
   :config
   (setq ranger-cleanup-eagerly t)
   )
+
 (use-package git-gutter 
-  :delight
+  :custom
+  (git-gutter:modified-sign "~")		
+  (git-gutter:added-sign    "+")	
+  (git-gutter:deleted-sign  "-")
   :config
   (global-git-gutter-mode +1))
-
 
 ;;----------------------------------------------------------------------------
 ;; misc
@@ -106,6 +109,15 @@
   :hook (emacs-lisp-mode . aggressive-indent-mode)
   :config
   (setq aggressive-indent-sit-for-time 0.5))
+
+(use-package google-this)
+(use-package google-translate
+  :bind
+  ("M-o t" . google-translate-at-point)
+  ("M-o T" . google-translate-at-point-reverse)
+  :custom
+  (google-translate-default-source-language "en")
+  (google-translate-default-target-language "de"))
 
 (use-package magit
   :general
@@ -146,20 +158,29 @@
 
 (use-package yasnippet                  ; Snippets
   :defer t
-  :diminish (yas-minor-mode . " Ⓨ"))
+  :custom (yas-snippet-dirs '("~/.emacs.d/snippets"))
+  :diminish yas-minor-mode
+  :hook (after-init . yas-global-mode))
 
 (use-package company                    ; Graphical (auto-)completion
-  ;; :diminish company-mode
-  :delight
+  :diminish company-mode
   :init (global-company-mode)
+  :bind
+  (:map company-active-map
+        ("C-n" . company-select-next)
+        ("C-p" . company-select-previous)
+        ("<tab>" . company-complete-common-or-cycle)
+        :map company-search-map
+        ("C-p" . company-select-previous)
+        ("C-n" . company-select-next))
   :config
   (setq company-tooltip-align-annotations t
         company-tooltip-flip-when-above t
         company-show-numbers t)
   )
 
-                                        ; projectile
 (use-package projectile
+  :diminish
   :config
   (progn
     (projectile-global-mode)
@@ -174,24 +195,83 @@
                  (add-hook 'lua-mode-hook 'paredit-mode)))
 
 (use-package smartparens
+  :diminish smartparens-mode
   :config
-  (setq sp-show-pair-from-inside nil)
   (require 'smartparens-config)
-  :diminish smartparens-mode)
+  (setq sp-show-pair-from-inside nil)
+  (sp-pair "=" "=" :actions '(wrap))
+  (sp-pair "+" "+" :actions '(wrap))
+  (sp-pair "<" ">" :actions '(wrap))
+  (sp-pair "$" "$" :actions '(wrap))
+  )
 
 (use-package all-the-icons) ;; don't forget to M-x all-the-icons-install-fonts
 
 (use-package neotree
-  :after evil
+  :after evil projectile
   :init
   (evil-set-initial-state 'neotree-mode 'normal)
+  :bind
+  ("<f8>" . neotree-current-dir-toggle)
+  ("<f9>" . neotree-projectile-toggle)
   :config
   (progn
     (setq neo-smart-open t)
-    (setq neo-theme (if (display-graphic-p) 'icons 'arrow))
+    (setq neo-theme 'icons)
     (setq projectile-switch-project-action 'neotree-projectile-action)
     (defun neo-buffer--insert-header ()
       (let ((start (point)))
         (set-text-properties start (point) '(face neo-header-face)))
       (neo-buffer--newline-and-begin))
-    ))
+    )
+  :preface
+  (defun neotree-projectile-toggle ()
+    (interactive)
+    (let ((project-dir
+           (ignore-errors
+           ;;; Pick one: projectile or find-file-in-project
+             (projectile-project-root)
+             ))
+          (file-name (buffer-file-name))
+          (neo-smart-open t))
+      (if (and (fboundp 'neo-global--window-exists-p)
+               (neo-global--window-exists-p))
+          (neotree-hide)
+        (progn
+          (neotree-show)
+          (if project-dir
+              (neotree-dir project-dir))
+          (if file-name
+              (neotree-find file-name))))))
+  (defun neotree-current-dir-toggle ()
+    (interactive)
+    (let ((project-dir
+           (ignore-errors
+             (ffip-project-root)
+             ))
+          (file-name (buffer-file-name))
+          (neo-smart-open t))
+      (if (and (fboundp 'neo-global--window-exists-p)
+               (neo-global--window-exists-p))
+          (neotree-hide)
+        (progn
+          (neotree-show)
+          (if project-dir
+              (neotree-dir project-dir))
+          (if file-name
+              (neotree-find file-name))))))
+  )
+
+(use-package dashboard
+  :diminish
+  (dashboard-mode page-break-lines-mode)
+  :custom
+  (dashboard-center-content t)
+  (dashboard-startup-banner 4)
+  (dashboard-items '((recents . 15)
+                     (projects . 5)
+                     (bookmarks . 5)))
+  :custom-face
+  (dashboard-heading ((t (:foreground "#f1fa8c" :weight bold))))
+  :hook
+  (after-init . dashboard-setup-startup-hook))

@@ -71,8 +71,14 @@
 
 (use-package lsp-mode
   ;; Optional - enable lsp-mode automatically in scala files
-  :hook (scala-mode . lsp)
-  :config (setq lsp-prefer-flymake nil))
+  :custom
+  (lsp-auto-guess-root t)
+  (lsp-prefer-flymake nil)
+  :hook
+  ((scala-mode) . lsp)
+  :config
+  (require 'lsp-clients)
+  )
 
 (use-package lsp-ui)
 
@@ -122,5 +128,7 @@
         sh-basic-offset 2               ; The offset for nested indentation
         ))
 
+(use-package fish-mode
+  :mode "\\.fish\\'")
 
 (provide 'init-prog-lang)

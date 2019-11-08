@@ -46,7 +46,6 @@
 
 ;; gx operator, like vim-exchange
 (use-package evil-exchange
-  :disabled
   :bind (:map evil-normal-state-map
               ("gx" . evil-exchange)
               ("gX" . evil-exchange-cancel)))

@@ -34,6 +34,15 @@
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 
+;; Quiet Startup
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-message t)
+(setq inhibit-startup-echo-area-message t)
+(setq initial-scratch-message nil)
+                                        ; Deleting files go to OS's trash folder
+(setq delete-by-moving-to-trash t)    
+; use space
+(setq-default indent-tabs-mode nil)   
 ;; remember last position in file
 (save-place-mode 1)
 
@@ -62,6 +71,9 @@
       x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)
       scroll-preserve-screen-position t)
 
+(xterm-mouse-mode t)
+(global-set-key   [mouse-4] '(lambda () (interactive) (scroll-down 1)))
+(global-set-key   [mouse-5] '(lambda () (interactive) (scroll-up   1)))
 
 
 
