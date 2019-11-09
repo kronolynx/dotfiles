@@ -38,35 +38,21 @@
   (setq ivy-use-virtual-buffers t)       ; extend searching to bookmarks and
   (setq ivy-height 20)                   ; set height of the ivy window
   (setq ivy-count-format "(%d/%d) ")     ; count format, from the ivy help page
+  (setq ivy-initial-inputs-alist nil)
   (setq ivy-display-style 'fancy)
   (setq ivy-format-function 'ivy-format-function-line) ; Make highlight extend all the way to the right
-  ;; TODO testing out the fuzzy search
-  (setq ivy-re-builders-alist
-        '((counsel-M-x . ivy--regex-fuzzy) ; Only counsel-M-x use flx fuzzy search
-          (t . ivy--regex-plus)))
-  (setq ivy-initial-inputs-alist nil))
+  )
 
 
-(use-package counsel 
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC f f" 'counsel-find-file
-   "SPC h f" 'counsel-describe-function
-   "SPC u"   'counsel-unicode-char
-   "SPC p f" '(counsel-git :which-key "find file in git dir")
-   "SPC p s" 'counsel-rg
-   "SPC SPC" 'counsel-M-x))
-
-(use-package swiper
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC s" 'swiper))
+(use-package counsel)
+(use-package swiper)
+(use-package smex
+  :config
+  (smex-initialize))
 
 
 ;; display help for key usage
-(use-package which-key 
+(use-package which-key
   :diminish which-key-mode
   :init
   (setq which-key-sort-order #'which-key-prefix-then-key-order
@@ -78,25 +64,24 @@
   :config
   (which-key-mode 1))
 
-(use-package avy 
+(use-package avy
   :commands (avy-goto-word-1))
 
-(use-package flycheck 
+(use-package flycheck
   :delight
   :config
   (global-flycheck-mode))
 
 (use-package ranger
   :commands (ranger)
-  :bind (("C-x d" . deer))
   :config
   (setq ranger-cleanup-eagerly t)
   )
 
-(use-package git-gutter 
+(use-package git-gutter
   :custom
-  (git-gutter:modified-sign "~")		
-  (git-gutter:added-sign    "+")	
+  (git-gutter:modified-sign "~")
+  (git-gutter:added-sign    "+")
   (git-gutter:deleted-sign  "-")
   :config
   (global-git-gutter-mode +1))
@@ -119,11 +104,7 @@
   (google-translate-default-source-language "en")
   (google-translate-default-target-language "de"))
 
-(use-package magit
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC g s" 'magit-status))
+(use-package magit)
 
 
 ;; Highlighting TODO keywords
@@ -159,6 +140,10 @@
 
 (use-package company                    ; Graphical (auto-)completion
   :diminish company-mode
+  :custom
+  (company-tooltip-align-annotations t)
+  (company-tooltip-flip-when-above t)
+  (company-show-numbers t)
   :init (global-company-mode)
   :bind
   (:map company-active-map
@@ -168,10 +153,6 @@
         :map company-search-map
         ("C-p" . company-select-previous)
         ("C-n" . company-select-next))
-  :config
-  (setq company-tooltip-align-annotations t
-        company-tooltip-flip-when-above t
-        company-show-numbers t)
   )
 
 (use-package projectile
@@ -183,11 +164,6 @@
           projectile-switch-project-action 'projectile-dired
           projectile-remember-window-configs t
           projectile-use-git-grep 1)))
-
-;; (use-package paredit
-;;   :delight
-;;   :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-;;                  (add-hook 'lua-mode-hook 'paredit-mode)))
 
 (use-package smartparens
   :diminish smartparens-mode
@@ -202,7 +178,7 @@
   )
 
 ;; Show matching parentheses
-(use-package paren 
+(use-package paren
   :disabled
   :config
   (setq show-paren-delay 0)
@@ -215,7 +191,7 @@
   :init
   (evil-set-initial-state 'neotree-mode 'normal)
   :bind
-  ("<f8>" . neotree-current-dir-toggle)
+  ("<f8>" . neotree-toggle)
   ("<f9>" . neotree-projectile-toggle)
   :config
   (progn
@@ -249,6 +225,7 @@
   )
 
 (use-package dashboard
+  :disabled
   :diminish
   (dashboard-mode page-break-lines-mode)
   :custom

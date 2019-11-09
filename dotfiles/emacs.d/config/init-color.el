@@ -3,7 +3,6 @@
 ;;----------------------------------------------------------------------------
 (use-package doom-themes
   :config
-  ;; (load-theme 'tango-dark t)
   ;; (load-theme 'doom-molokai t)
   (load-theme 'doom-dracula t)
   (with-eval-after-load 'org
@@ -11,32 +10,36 @@
   )
 
 (use-package doom-modeline
-  :after evil doom-themes
+  ;; :disabled
+  :after (evil doom-themes)
   :custom
+  (column-number-mode nil)
+  (doom-modeline-buffer-encoding nil)
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
-  (doom-modeline-icon t)
-  (doom-modeline-unicode-fallback t)
   (doom-modeline-evil-state-icon t)
-  ;; (doom-modeline-major-mode-icon nil)
-  ;; (doom-modeline-minor-modes nil)
+  (doom-modeline-icon (display-graphic-p))
+  (doom-modeline-major-mode-icon t)
+  (doom-modeline-unicode-fallback t)
+  (line-number-mode nil)
+  (set-cursor-color "cyan")
+  ;; (doom-modeline-minor-modes (featurep 'minions))
+  (doom-modeline-minor-modes t)
   :hook
   (after-init . doom-modeline-mode)
-  :config
-  (set-cursor-color "cyan")
-  (line-number-mode 0)
-  (column-number-mode 0)
-  (doom-modeline-def-modeline 'main
-    '(window-number matches buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker)))
+  )
 
+(use-package minions
+  :config (minions-mode 1)
+  )
 (use-package nyan-mode
+  :disabled
   :custom
   (nyan-cat-face-number 4)
   (nyan-animate-nyancat t)
   :hook
   (doom-modeline-mode . nyan-mode))
 
-(use-package rainbow-delimiters 
+(use-package rainbow-delimiters
   :config
   (progn
     ;; Enable in all programming-related modes
