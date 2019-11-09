@@ -6,8 +6,8 @@
   ;; (load-theme 'tango-dark t)
   ;; (load-theme 'doom-molokai t)
   (load-theme 'doom-dracula t)
-  (doom-themes-neotree-config)
-  (doom-themes-org-config)
+  (with-eval-after-load 'org
+    (doom-themes-org-config))
   )
 
 (use-package doom-modeline
@@ -15,6 +15,8 @@
   :custom
   (doom-modeline-buffer-file-name-style 'truncate-with-project)
   (doom-modeline-icon t)
+  (doom-modeline-unicode-fallback t)
+  (doom-modeline-evil-state-icon t)
   ;; (doom-modeline-major-mode-icon nil)
   ;; (doom-modeline-minor-modes nil)
   :hook
@@ -40,11 +42,19 @@
     ;; Enable in all programming-related modes
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
+(use-package emojify
+  :commands emojify-mode
+  :custom
+  (emojify-emoji-styles '(unicode github))
+  (emojify-display-style 'unicode)
+  :hook ((after-init . global-emojify-mode)))
+
 ;; (use-package powerline
 ;;   :config
 ;;   (powerline-center-evil-theme))
 ;; (add-hook 'after-init-hook 'powerline-reset)
 ;; (use-package powerline-evil)
 ;;(add-to-list 'default-frame-alist '(background-color . "honeydew2"))
+
 
 (provide 'init-color)

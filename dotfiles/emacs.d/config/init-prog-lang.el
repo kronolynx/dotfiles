@@ -54,7 +54,8 @@
 
 ;; Enable scala-mode and sbt-mode
 (use-package scala-mode
-  :mode "\\.s\\(cala\\|bt\\)$")
+  :mode "\\.s\\(cala\\|bt\\)$"
+  :config (progn (add-hook 'scala-mode-hook #'yas-minor-mode)))
 
 (use-package sbt-mode
   :commands sbt-start sbt-command

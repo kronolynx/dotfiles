@@ -146,11 +146,6 @@
         auto-revert-check-vc-info t
         auto-revert-verbose nil))
 
-;; Show matching parentheses
-(use-package paren 
-  :config
-  (setq show-paren-delay 0)
-  (show-paren-mode +1))
 
 ;; Enable nice rendering of diagnostics like compile errors.
 (use-package flycheck
@@ -189,21 +184,29 @@
           projectile-remember-window-configs t
           projectile-use-git-grep 1)))
 
-(use-package paredit
-  :delight
-  :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-                 (add-hook 'lua-mode-hook 'paredit-mode)))
+;; (use-package paredit
+;;   :delight
+;;   :config (progn (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+;;                  (add-hook 'lua-mode-hook 'paredit-mode)))
 
 (use-package smartparens
   :diminish smartparens-mode
   :config
   (require 'smartparens-config)
+  (smartparens-global-mode)
   (setq sp-show-pair-from-inside nil)
   (sp-pair "=" "=" :actions '(wrap))
   (sp-pair "+" "+" :actions '(wrap))
   (sp-pair "<" ">" :actions '(wrap))
   (sp-pair "$" "$" :actions '(wrap))
   )
+
+;; Show matching parentheses
+(use-package paren 
+  :disabled
+  :config
+  (setq show-paren-delay 0)
+  (show-paren-mode +1))
 
 (use-package all-the-icons) ;; don't forget to M-x all-the-icons-install-fonts
 
@@ -231,23 +234,6 @@
            (ignore-errors
            ;;; Pick one: projectile or find-file-in-project
              (projectile-project-root)
-             ))
-          (file-name (buffer-file-name))
-          (neo-smart-open t))
-      (if (and (fboundp 'neo-global--window-exists-p)
-               (neo-global--window-exists-p))
-          (neotree-hide)
-        (progn
-          (neotree-show)
-          (if project-dir
-              (neotree-dir project-dir))
-          (if file-name
-              (neotree-find file-name))))))
-  (defun neotree-current-dir-toggle ()
-    (interactive)
-    (let ((project-dir
-           (ignore-errors
-             (ffip-project-root)
              ))
           (file-name (buffer-file-name))
           (neo-smart-open t))

@@ -20,30 +20,50 @@
     "SPC" 'neotree-change-root
     "q"   'neotree-hide
     "l"   'neotree-enter    )
+  (general-define-key '
+   :states '(scala-mode)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+   "ei" 'lsp-metals-build-connect
+   )
   (general-define-key
    :states '(normal visual insert emacs)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
 
    ;; simple command
-   "/"   'counsel-ag
-   "TAB" '(switch-to-other-buffer :which-key "prev buffer")
+   "TAB" '(evil-switch-to-windows-last-buffer :which-key "prev buffer")
    "SPC" '(avy-goto-word-or-subword-1  :which-key "go to char")
    ;; neotree
    "nt" 'neotree-toggle
    ;; buffers
-   "bl" 'ivy-switch-buffer
+   "t" '(:ignore t :which-key "buffer")
+   "tl" '(counsel-buffer-or-recentf :which-key "switch or recent")
+   "to" '(counsel-switch-buffer-other-window :which-key "other window")
    ;; files
-   "ff" 'counsel-find-file
+   "f" '(:ignore t :which-key "file")
+   "ff" '(counsel-find-file :which-key "find")
+   "fr" '(counsel-recentf :which-key "recent")
    ;; search
-   "sc" 'evil-ex-nohighlight
+   "s" '(:ignore t :which-key "search")
+   "ss" '(counsel-grep-or-swiper :which-key "swiper")
+   "sp" '(swiper-thing-at-point :which-key "swiper at point")
+   "se"   '(counsel-ag :which-key "everywhere")
+   ;; "sc" 'evil-ex-nohighlight
+
+   ;; goto
+   "g" '(:ignore t :which-key "goto")
+
+   "x" '(:ignore t :which-key "xref")
+   "xo" '(xref--find-definitions-other-window :which-key "go to definition other")
+   "xg" '(xref--find-definitions :which-key "go to definition")
 
    ;; Applications
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
    "ad" 'dired
-   "g"  '(:ignore t :which-key "Git")
    ;; Git
+   "m" '(:ignore t :which-key "git")
    "ms" '(magit-status :which-key "git status")
    "ml" '(magit-log :which-key "git log")
    "md" '(magit-diff :which-key "git diff")
