@@ -12,7 +12,7 @@
    "C->" '(evil-window-decrease-width :which-key "decrease width")
    "C-<" '(evil-window-increase-width :which-key "increase width")
    )
-  (general-def 'normal 'neotree-mode
+  (general-def 'normal 'neotree-mode-map
     "z" 'neotree-toggle
     "RET" 'neotree-enter
     "c"   'neotree-create-node
