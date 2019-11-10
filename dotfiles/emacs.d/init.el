@@ -6,6 +6,7 @@
 ;; packages
 ;;----------------------------------------------------------------------------
 (add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "config/lang" user-emacs-directory))
 
 (require 'init-editor)
 (require 'init-package)
@@ -14,6 +15,7 @@
 (require 'init-evil)
 (require 'init-color)
 (require 'init-prog-lang)
+(require 'init-lang)
 
 ;; copy to clipboard for -nw
 (use-package xclip
@@ -197,13 +199,6 @@
   :bind
   ("<f8>" . neotree-toggle)
   ("<f9>" . neotree-projectile-toggle)
-  :config
-  (progn
-    (defun neo-buffer--insert-header ()
-      (let ((start (point)))
-        (set-text-properties start (point) '(face neo-header-face)))
-      (neo-buffer--newline-and-begin))
-    )
   :preface
   (defun neotree-projectile-toggle ()
     (interactive)

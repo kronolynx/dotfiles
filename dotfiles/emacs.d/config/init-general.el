@@ -17,9 +17,10 @@
     "j"   'neotree-next-line
     "k"   'neotree-previous-line
     "RET" 'neotree-enter
-    "c"   'neotree-create-node
+    "n"   'neotree-create-node
     "r"   'neotree-rename-node
     "d"   'neotree-delete-node
+    "m"   'make-directory
     "SPC" 'neotree-change-root
     "q"   'neotree-hide
     "l"   'neotree-enter
@@ -93,10 +94,21 @@
    "w" '(:ignore t :which-key "window")
    "wc" '(evil-window-delete :which-key "delete")
    "wo" '(delete-other-windows :which-key "delete other")
-   "wb" '(balance-windows :which-key "balance")
+   "wg" '(balance-windows :which-key "balance")
    "wr" '(evil-window-rotate-downwards :which-key "rotate")
    "w," '(evil-window-decrease-height :which-key "decrease height")
    "w." '(evil-window-increase-height :which-key "increase height")
+   "wv" '(evil-window-vsplit :which-key "vertical split")
+   "w-" '(evil-window-split :which-key "horizontal split")
+   "wm" '(:ignore t :which-key "move")
+   "wml" '(evil-window-move-far-right :which-key "right")
+   "wmh" '(evil-window-move-far-left :which-key "left")
+   "wmt" '(evil-window-move-very-top :which-key "top")
+   "wmb" '(evil-window-move-very-bottom :which-key "bottom")
+   "wl" '(evil-window-next :which-key "right")
+   "wh" '(evil-window-prev :which-key "left")
+   "wt" '(evil-window-top :which-key "top")
+   "wb" '(evil-window-bottom :which-key "bottom")
    )
   )
 

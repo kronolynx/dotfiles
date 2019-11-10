@@ -10,7 +10,6 @@
   )
 
 (use-package doom-modeline
-  ;; :disabled
   :after (evil doom-themes)
   :custom
   (column-number-mode nil)
@@ -22,7 +21,6 @@
   (doom-modeline-unicode-fallback t)
   (line-number-mode nil)
   (set-cursor-color "cyan")
-  ;; (doom-modeline-minor-modes (featurep 'minions))
   (doom-modeline-minor-modes t)
   :hook
   (after-init . doom-modeline-mode)
@@ -31,6 +29,7 @@
 (use-package minions
   :config (minions-mode 1)
   )
+
 (use-package nyan-mode
   :disabled
   :custom
@@ -51,13 +50,5 @@
   (emojify-emoji-styles '(unicode github))
   (emojify-display-style 'unicode)
   :hook ((after-init . global-emojify-mode)))
-
-;; (use-package powerline
-;;   :config
-;;   (powerline-center-evil-theme))
-;; (add-hook 'after-init-hook 'powerline-reset)
-;; (use-package powerline-evil)
-;;(add-to-list 'default-frame-alist '(background-color . "honeydew2"))
-
 
 (provide 'init-color)

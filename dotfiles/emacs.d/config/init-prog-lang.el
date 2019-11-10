@@ -9,12 +9,6 @@
 
 (use-package lua-mode)
 
-(use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown"))
 
 (use-package web-mode
   :mode (("\\.html?\\'" . web-mode))
@@ -51,42 +45,6 @@
 (use-package less-css-mode
   :disabled
   :mode "\\.less\\'")
-
-;; Enable scala-mode and sbt-mode
-(use-package scala-mode
-  :mode "\\.s\\(cala\\|bt\\)$"
-  :config (progn (add-hook 'scala-mode-hook #'yas-minor-mode)))
-
-(use-package sbt-mode
-  :commands sbt-start sbt-command
-  :config
-  ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-  ;; allows using SPACE when in the minibuffer
-  (substitute-key-definition
-   'minibuffer-complete-word
-   'self-insert-command
-   minibuffer-local-completion-map)
-  ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-  (setq sbt:program-options '("-Dsbt.supershell=false"))
-  )
-
-(use-package lsp-mode
-  ;; Optional - enable lsp-mode automatically in scala files
-  :custom
-  (lsp-auto-guess-root t)
-  (lsp-prefer-flymake nil)
-  :hook
-  ((scala-mode) . lsp)
-  :config
-  (require 'lsp-clients)
-  )
-
-(use-package lsp-ui)
-
-;; Add company-lsp backend for metals
-(use-package company-lsp
-  :after company
-  )
 
 (use-package yaml-mode                  ; YAML
   :defer t
