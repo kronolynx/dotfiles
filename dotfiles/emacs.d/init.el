@@ -188,6 +188,10 @@
 
 (use-package neotree
   :after evil projectile
+  :custom
+  (neo-smart-open t)
+  (neo-theme 'icons)
+  (projectile-switch-project-action 'neotree-projectile-action)
   :init
   (evil-set-initial-state 'neotree-mode 'normal)
   :bind
@@ -195,9 +199,6 @@
   ("<f9>" . neotree-projectile-toggle)
   :config
   (progn
-    (setq neo-smart-open t)
-    (setq neo-theme 'icons)
-    (setq projectile-switch-project-action 'neotree-projectile-action)
     (defun neo-buffer--insert-header ()
       (let ((start (point)))
         (set-text-properties start (point) '(face neo-header-face)))

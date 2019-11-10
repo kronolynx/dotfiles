@@ -13,16 +13,20 @@
    "C-<" '(evil-window-increase-width :which-key "increase width")
    )
   (general-def 'normal 'neotree-mode-map
-    "z" 'neotree-toggle
+    "z"   'neotree-toggle
+    "j"   'neotree-next-line
+    "k"   'neotree-previous-line
     "RET" 'neotree-enter
     "c"   'neotree-create-node
     "r"   'neotree-rename-node
     "d"   'neotree-delete-node
-    "j"   'neotree-next-node
-    "k"   'neotree-previous-node
     "SPC" 'neotree-change-root
     "q"   'neotree-hide
-    "l"   'neotree-enter    )
+    "l"   'neotree-enter
+    "g"   'neotree-refresh
+    "A"   'neotree-stretch-toggle
+    "H"   'neotree-hidden-file-toggle
+    )
   (general-define-key
    :states '(scala-mode)
    :prefix "SPC"
