@@ -107,8 +107,8 @@
    "wmb" '(evil-window-move-very-bottom :which-key "bottom")
    "wl" '(evil-window-next :which-key "right")
    "wh" '(evil-window-prev :which-key "left")
-   "wt" '(evil-window-top :which-key "top")
-   "wb" '(evil-window-bottom :which-key "bottom")
+   "wk" '(evil-window-up :which-key "top")
+   "wj" '(evil-window-down :which-key "bottom")
    )
   )
 

@@ -234,3 +234,5 @@
   (dashboard-heading ((t (:foreground "#f1fa8c" :weight bold))))
   :hook
   (after-init . dashboard-setup-startup-hook))
+
+(use-package docker-tramp)
