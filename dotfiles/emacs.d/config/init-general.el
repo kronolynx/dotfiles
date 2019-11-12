@@ -32,26 +32,32 @@
    :states '(scala-mode)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
-   "ei" 'lsp-metals-build-connect
+   "xb" '(lsp-metals-build-connect :which-key "metals build")
+   "xi" '(lsp-metals-build-import :which-key "metals import")
+   "gi" '(sbt-find-definitions :which-key "implementation")
+   "su" '(sbt-find-usages :which-key "usages")
    )
   (general-define-key
    :states '(normal visual insert emacs)
    :prefix "SPC"
    :non-normal-prefix "C-SPC"
 
+
    ;; simple command
    "TAB" '(evil-switch-to-windows-last-buffer :which-key "prev buffer")
-   "SPC" '(avy-goto-word-or-subword-1  :which-key "go to char")
-   ;; neotree
-   "nt" 'neotree-toggle
+   "SPC" '(avy-goto-word-or-subword-1  :which-key "jump to word")
+
    ;; buffers
    "t" '(:ignore t :which-key "buffer")
    "tl" '(counsel-buffer-or-recentf :which-key "switch or recent")
    "to" '(counsel-switch-buffer-other-window :which-key "other window")
+
    ;; files
-   "f" '(:ignore t :which-key "file")
+   "f" '(:ignore t :which-key "files")
    "ff" '(counsel-find-file :which-key "find")
    "fr" '(counsel-recentf :which-key "recent")
+   "fg" '(counsel-git :which-key "find file in git dir")
+
    ;; search
    "s" '(:ignore t :which-key "search")
    "ss" '(counsel-grep-or-swiper :which-key "swiper")
@@ -62,25 +68,26 @@
 
    ;; editor
    "e" '(:ignore t :which-key "editor")
-   "ed" '(counsel-describe-function :whiche-key "describe function")
-   "u"   '(counsel-unicode-char)
-   "pf" '((counsel-git :which-key "find file in git dir"))
+   "ed" '(counsel-describe-function :which-key "describe function")
+   "eb" '(evil-jump-backward :which-key "jump backward")
+   "ef" '(evil-jump-forward :which-key "jump forward")
+
+
    ;; goto
    "g" '(:ignore t :which-key "goto")
-
-   "x" '(:ignore t :which-key "xref")
-   "xo" '(xref--find-definitions-other-window :which-key "go to definition other")
-   "xg" '(xref--find-definitions :which-key "go to definition")
+   "gd" '(xref--find-definitions :which-key "go to definition")
+   "go" '(xref--find-definitions-other-window :which-key "go to definition other")
 
    ;; Applications
    "a" '(:ignore t :which-key "Applications")
    "ar" 'ranger
 
-   ;; projectile
+   ;; project
    "p" '(:ignore t :which-key "projectile")
    "pf" '(projectile-find-file :which-key "find file")
    "pr" '(projectile-recentf-files :which-key "recent files")
    "ps" '(projectile-ag :which-key "search")
+
 
    ;; Git
    "m" '(:ignore t :which-key "git")
@@ -96,10 +103,12 @@
    "wo" '(delete-other-windows :which-key "delete other")
    "wg" '(balance-windows :which-key "balance")
    "wr" '(evil-window-rotate-downwards :which-key "rotate")
-   "w," '(evil-window-decrease-height :which-key "decrease height")
-   "w." '(evil-window-increase-height :which-key "increase height")
+   "w>" '(evil-window-decrease-height :which-key "decrease height")
+   "w<" '(evil-window-increase-height :which-key "increase height")
+   "w," '(evil-window-decrease-width :which-key "decrease width")
+   "w." '(evil-window-increase-width :which-key "increase width")
    "wv" '(evil-window-vsplit :which-key "vertical split")
-   "w-" '(evil-window-split :which-key "horizontal split")
+   "ws" '(evil-window-split :which-key "horizontal split")
    "wm" '(:ignore t :which-key "move")
    "wml" '(evil-window-move-far-right :which-key "right")
    "wmh" '(evil-window-move-far-left :which-key "left")
@@ -109,6 +118,16 @@
    "wh" '(evil-window-prev :which-key "left")
    "wk" '(evil-window-up :which-key "top")
    "wj" '(evil-window-down :which-key "bottom")
+
+   ;; help
+   "h" '(:ignore t :which-key "help")
+   "hk" '(key-description :which-key "describe key")
+   "hf" '(describe-function :which-key "describe function")
+   "hb" '(describe-bindings :which-key "describe bindings")
+
+   ;; misc
+   "x" '(:ignore t :which-key "misc")
+   "xu" '(counsel-unicode-char :which-key "unicode char")
    )
   )
 
