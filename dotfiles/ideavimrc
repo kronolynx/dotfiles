@@ -1,82 +1,382 @@
 "actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 let mapleader=" "
-source ~/.vimrc
+" source ~/.vimrc
 
 set showmode
 set history=1000
 
-" tabs {{{
-nnoremap <C-w>c :action CloseContent<cr>
-nnoremap <C-w>o :action CloseAllEditorsButActive<cr>
-nnoremap <C-w>a :action CloseAllEditors<cr>
-nnoremap <C-w>g :action CloseEditorsGroup<cr>
-nnoremap <C-w>r :action ReopenClosedTab<cr>
-nnoremap <C-w>m :action MoveEditorToOppositeTabGroup<cr>
+" Search as characters are entered
+set incsearch
 
-nnoremap <A-h> gT
-nnoremap <A-l> gt
-nnoremap <C-s-tab> gT
-nnoremap <C-tab> gt
-" duplicate tab
-noremap <leader>yt :action OpenEditorInOppositeTabGroup<cr>
-" }}}
+" Highlight search results
+set hlsearch
 
-" windows {{{
-" easy window navigation
-nnoremap <C-l> <C-w>l
-nnoremap <C-j> <C-w>j
-nnoremap <C-h> <C-w>h
-nnoremap <C-k> <C-w>k
- 
-nnoremap <C-w>s :action SplitHorizontally<cr>
-nnoremap <C-w>v :action SplitVertically<cr>
-noremap  <A-z> :action HideAllWindows<cr>
-nnoremap <A-t> :action ActivateProjectToolWindow<cr>
-nnoremap <A-s> :action ActivateTerminalToolWindow<cr>
-nnoremap <A-g> :action ActivateVersionControlToolWindow<cr>
-" nnoremap <A-s> :action Activatesbt-shell-toolwindowToolWindow<cr>
-nnoremap <A-b> :action ActivatesbtToolWindow<cr>
-" }}}
+" If a pattern contains an uppercase letter, searching is case sensitive,
+" otherwise, it is not.
+set ignorecase
+set smartcase
 
 " Plugins {{{
 set surround
 set multiple-cursors
-" multiple cursors
-map <A-M>  <A-N>
-" }}}
-
-" code navigation {{{
-nnoremap <leader>gs :action GotoSuperMethod<cr>
-nnoremap <leader>fu :action FindUsages<cr>
-nnoremap <leader>gf :action GotoFile<cr>
-nnoremap <leader>gc :action GotoClass<cr>
-nnoremap <leader>fp :action FindInPath<cr>
-nnoremap <leader>se :action SearchEverywhere<cr>
-nnoremap <leader>ee :action GotoNextError<CR>
-nnoremap <leader>EE :action GotoPreviousError<CR>
-nnoremap <A-C-d> :action Back<cr>
-nnoremap <A-C-s> :action Forward<cr>
-" }}}
-
-" code edit {{{
-nnoremap <leader>rr :action RenameElement<cr>
-nnoremap <leader>ff :action ReformatCode<CR>
-nnoremap <leader>sr :action Replace<cr>
-" }}}
-
-
-" file navigation and tools {{{
-nnoremap <leader>fs :action FileStructurePopup<cr>
-nnoremap <leader>sw :action Switcher<cr>
-nnoremap <leader>tw :action ActivateProjectToolWindow<cr>
-nnoremap <leader>rf :action RecentFiles<cr>
-map <A-s> :action ActivateTerminalToolWindow<cr>
 " }}}
 
 " other {{{
-noremap <leader>v <ESC>:action EvaluateExpression<CR>
 nnoremap <leader>w :action SaveAll<cr>
-nnoremap <leader>ll :action CompileProject<cr>
 " remove extra whitespace
-nmap <leader>cc :%s/\s\+$<CR><Paste> 
-" {{{
+nmap <leader>cc :%s/\s\+$<CR><Paste>
+vmap <leader>cc <Esc>:%s/\s\+$<CR><Paste>
+
+map <C-n> :action <cr>
+vap <C-n> <Esc>:action <cr>
+
+map <C-p> :action <cr>
+vap <C-p> <Esc>:action <cr>
+
+" }}}
+
+" tab {{{
+nnoremap <leader>tl :action NextTab<cr>
+vnoremap <leader>tl <Esc>:action NextTab<cr>
+
+nnoremap <leader>th :action PreviousTab<cr>
+vnoremap <leader>th <Esc>:action PreviousTab<cr>
+
+nnoremap <leader>tr :action Switcher<cr>
+vnoremap <leader>tr <Esc>:action Switcher<cr>
+
+" duplicate tab opossite group (yank)
+nnoremap <leader>to :action MoveEditorToOppositeTabGroup<cr>
+vnoremap <leader>to <Esc>:action MoveEditorToOppositeTabGroup<cr>
+
+noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
+voremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
+
+" undo (reopen)
+nnoremap <leader>tu :action Reopenclosedtab<cr>
+nnoremap <leader>tu <Esc>:action Reopenclosedtab<cr>
+
+" cycle tabs
+nnoremap <C-s-tab> NextTab
+nnoremap <C-tab> PreviousTab
+
+"nnoremap <leader-tab> :action GoToLastTab<cr>
+"nnoremap <leader-tab> <Esc>:action GoToLastTab<cr>
+
+" Focus last tab
+nnoremap <leader><tab>    :action VimFilePrevious<CR>
+vnoremap <leader><tab>    <Esc>:action VimFilePrevious<CR>
+
+" }}}
+
+" editor {{{
+nnoremap <leader>ea :action GotoAction<cr>
+vnoremap <leader>ea <Esc>:action GotoAction<cr>
+
+nnoremap <leader>eb :action Back<cr>
+vnoremap <leader>eb <Esc>:action Back<cr>
+
+nnoremap <leader>ef :action Forward<cr>
+vnoremap <leader>ef <Esc>:action Forward<cr>
+
+"nnoremap <leader>e= :action ReformatCode<cr>
+nnoremap <leader>e= :action ShowReformatFileDialog<cr>
+vnoremap <leader>e= <Esc>:action ShowReformatFileDialog<cr>
+
+nnoremap <leader>ec :action CompileProject<cr>
+vnoremap <leader>ec <Esc>:action CompileProject<cr>
+
+nnoremap <leader>ee :action EvaluateExpression<CR>
+vnoremap <leader>ee <Esc>:action EvaluateExpression<CR>
+
+nnoremap <leader>ei :action ImplicitArgumentsMenu.ShowImplicits<cr>
+vnoremap <leader>ei <Esc>:action ImplicitArgumentsMenu.ShowImplicits<cr>
+
+nnoremap <leader>eI :action ImplicitArgumentsMenu.ExpandImplicits<cr>
+vnoremap <leader>eI <Esc>:action ImplicitArgumentsMenu.ExpandImplicits<cr>
+
+nnoremap <leader>ep :action ParameterInfo<cr>
+vnoremap <leader>ep <Esc>:action ParameterInfo<cr>
+
+nnoremap <leader>er :action RenameElement<cr>
+vnoremap <leader>er <Esc>:action RenameElement<cr>
+
+" Insert snippet
+nnoremap <leader>es    :action InsertLiveTemplate<CR>
+vnoremap <leader>es    <Esc>:action InsertLiveTemplate<CR>
+
+nnoremap <leader>el :action RecentLocations<cr>
+vnoremap <leader>el <Esc>:action RecentLocations<cr>
+
+" multiple cursors
+nnoremap <leader>m <A-N>
+
+
+
+" Show usages for symbol.
+" Ideally this should be FindInPath the current word, but I think that it is
+" not possible.
+nnoremap <leader>*    :action ShowUsages<CR>
+vnoremap <leader>*    <Esc>:action ShowUsages<CR>
+
+" }}}
+
+" jump {{{
+nnoremap <leader><leader> :action emacsIDEAs.AceJumpWord<cr>
+vnoremap <leader><leader> <Esc>:action emacsIDEAs.AceJumpWord<cr>
+" }}}
+
+" file {{{
+" Find file
+nnoremap <leader>ff    :action GotoFile<CR>
+vnoremap <leader>ff    <Esc>:action GotoFile<CR>
+
+nnoremap <leader>fe :action <cr>
+vnoremap <leader>fe <Esc>:action <cr>
+
+nnoremap <leader>fu :action <cr>
+vnoremap <leader>fu <Esc>:action <cr>
+
+nnoremap <leader>fl :action Recentfiles<cr>
+vnoremap <leader>fl <Esc>:action Recentfiles<cr>
+
+nnoremap <leader>fc :action RecentChangedFiles<cr>
+vnoremap <leader>fc <Esc>:action RecentChangedFiles<cr>
+
+nnoremap <leader>fo :action OpenFile<cr>
+vnoremap <leader>fo <Esc>:action OpenFile<cr>
+
+" Recent files
+nnoremap <leader>fr    :action RecentFiles<CR>
+vnoremap <leader>fr    <Esc>:action RecentFiles<CR>
+
+" Rename file
+nnoremap <leader>fR    :action RenameFile<CR>
+vnoremap <leader>fR    <Esc>:action RenameFile<CR>
+
+" New file
+nnoremap <leader>fN :action NewFile<cr>
+vnoremap <leader>fN <Esc>:action NewFile<cr>
+
+" Copy file path
+nnoremap <leader>fy    :action CopyPaths<CR>
+vnoremap <leader>fy    <Esc>:action CopyPaths<CR>
+
+" }}}
+
+" goto {{{
+nnoremap <leader>gd :action GotoTypeDeclaration<cr>
+vnoremap <leader>gd <Esc>:action GotoTypeDeclaration<cr>
+
+nnoremap <leader>gi :action GotoImplementation<cr>
+vnoremap <leader>gi <Esc>:action GotoImplementation<cr>
+
+nnoremap <leader>gs :action GotoSuperMethod<cr>
+vnoremap <leader>gs <Esc>:action GotoSuperMethod<cr>
+
+nnoremap <leader>gf :action GotoFile<cr>
+vnoremap <leader>gf <Esc>:action GotoFile<cr>
+
+nnoremap <leader>gc :action GotoClass<cr>
+vnoremap <leader>gc <Esc>:action GotoClass<cr>
+
+" Go to code block start
+nnoremap <leader>g[    :action EditorCodeBlockStart<CR>
+vnoremap <leader>g[    <Esc>:action EditorCodeBlockStart<CR>
+
+" Go to code block end
+nnoremap <leader>g]    :action EditorCodeBlockEnd<CR>
+vnoremap <leader>g]    <Esc>:action EditorCodeBlockEnd<CR>
+
+" Go to next change
+nnoremap g,    :action JumpToNextChange<CR>
+vnoremap g,    :action JumpToNextChange<CR>
+
+" Go to last change
+nnoremap g.    :action JumpToLastChange<CR>
+vnoremap g.    :action JumpToLastChange<CR>
+
+" }}}
+
+" git (m from magit) {{{
+nnoremap <leader>ma :action Git.Add<cr>
+vnoremap <leader>ma <Esc>:action Git.Add<cr>
+
+nnoremap <leader>mp :action Git.Pull<cr>
+vnoremap <leader>mp <Esc>:action Git.Pull<cr>
+
+nnoremap <leader>mf :action Git.Fetch<cr>
+vnoremap <leader>mf <Esc>:action Git.Fetch<cr>
+
+nnoremap <leader>mi :action Git.Init<cr>
+vnoremap <leader>mi <Esc>:action Git.Init<cr>
+
+nnoremap <leader>ml :action Git.Log<cr>
+vnoremap <leader>ml <Esc>:action Git.Log<cr>
+
+nnoremap <leader>mu :action Git.Unstash<cr>
+vnoremap <leader>mu <Esc>:action Git.Unstash<cr>
+
+" Show local changes window (git status)
+nnoremap <leader>mw    :action Vcs.Show.Local.Changes<CR>
+vnoremap <leader>mw    <Esc>:action Vcs.Show.Local.Changes<CR>
+
+nnoremap <leader>ms :action Git.Stash<cr>
+vnoremap <leader>ms <Esc>:action Git.Stash<cr>
+
+" }}}
+
+" search {{{
+nnoremap <leader>su :action FindUsages<cr>
+vnoremap <leader>su <Esc>:action FindUsages<cr>
+
+nnoremap <leader>sp :action FindInPath<cr>
+vnoremap <leader>sp <Esc>:action FindInPath<cr>
+
+nnoremap <leader>se :action SearchEverywhere<cr>
+vnoremap <leader>se <Esc>:action SearchEverywhere<cr>
+
+nnoremap <leader>sm :action SearchModal<cr>
+vnoremap <leader>sm <Esc>:action SearchModal<cr>
+
+nnoremap <leader>sf :action FindUsagesInFile<cr>
+vnoremap <leader>sf <Esc>:action FindUsagesInFile<cr>
+
+" Highlight current symbol. Do it again to toggle highlight.
+nnoremap <leader>sh    :action HighlightUsagesInFile<CR>
+vnoremap <leader>sh    <Esc>:action HighlightUsagesInFile<CR>
+
+nnoremap * :action FindWordAtCaret<cr>
+vnoremap * <Esc>:action FindWordAtCaret<cr>
+
+" }}}
+
+" window {{{
+nnoremap <leader>wc :action CloseContent<cr>
+vnoremap <leader>wc <Esc>:action CloseContent<cr>
+
+nnoremap <leader>wo :action CloseAllEditorsButActive<cr>
+vnoremap <leader>wo <Esc>:action CloseAllEditorsButActive<cr>
+
+nnoremap <leader>wr :action <cr>
+vnoremap <leader>wr <Esc>:action <cr>
+
+nnoremap <leader>wv :action SplitVertically<cr>
+vnoremap <leader>wv <Esc>:action SplitVertically<cr>
+
+nnoremap <leader>ws :action SplitHorizontally<cr>
+vnoremap <leader>ws <Esc>:action SplitHorizontally<cr>
+
+" move tab back to main group
+nnoremap <leader>wu :action Unsplit<cr>
+vnoremap <leader>wu <Esc>:action Unsplit<cr>
+
+" move all tabs back to main group
+nnoremap <leader>wa :action UnsplitAll<cr>
+vnoremap <leader>wa <Esc>:action UnsplitAll<cr>
+
+nnoremap <leader>wl <C-w>l
+nnoremap <leader>wh <C-w>h
+nnoremap <leader>wj <C-w>j
+nnoremap <leader>wk <C-w>k
+
+noremap  <A-z> :action HideAllWindows<cr>
+voremap  <A-z> <Esc>:action HideAllWindows<cr>
+
+
+nnoremap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-h> <C-w>h
+nnoremap <C-k> <C-w>k
+
+nnoremap <A-,> :action DecrementWindowWidth<cr>
+vnoremap <A-,> <Esc>:action DecrementWindowWidth<cr>
+
+nnoremap <A-.> :action IncrementWindowWidth<cr>
+vnoremap <A-.> <Esc>:action IncrementWindowWidth<cr>
+
+nnoremap <A-S-,> :action DecrementWindowHeight<cr>
+vnoremap <A-S-,> <Esc>:action DecrementWindowHeight<cr>
+
+nnoremap <A-S-.> :action IncrementWindowHeight<cr>
+vnoremap <A-S-.> <Esc>:action IncrementWindowHeight<cr>
+
+" }}}
+
+" other {{{
+" Show key bindings
+nnoremap <leader>hk     :map<CR>
+vnoremap <leader>hk     <Esc>:map<CR>
+
+" Show kill ring
+nnoremap <leader>xy    :action PasteMultiple<CR>
+vnoremap <leader>xy    :action PasteMultiple<CR>
+
+" Transpose characters
+nnoremap <leader>xtc    xhP
+vnoremap <leader>xtc    <Esc>xhP
+
+" Delete all spaces except one
+nnoremap <leader>xd<Space>    wh:action EditorHungryBackSpace<CR>
+vnoremap <leader>xd<Space>    <Esc>wh:action EditorHungryBackSpace<CR>
+
+" Transpose lines
+nnoremap <leader>xt    ddkP
+vnoremap <leader>xt    <Esc>ddkP
+
+" Toggle Show Whitespaces
+nnoremap <leader>xw    :action EditorToggleShowWhitespaces<CR>
+vnoremap <leader>xw    <Esc>:action EditorToggleShowWhitespaces<CR>
+
+" Toggle show indent guide
+nnoremap <leader>xi    :action EditorToggleShowIndentLines<CR>
+vnoremap <leader>xi    <Esc>:action EditorToggleShowIndentLines<CR>
+
+" Toggle view truncate lines
+nnoremap <leader>xv    :action EditorGutterToggleGlobalSoftWraps<CR>
+vnoremap <leader>xv    <Esc>:action EditorGutterToggleGlobalSoftWraps<CR>
+
+" Toggle distraction free mode
+nnoremap <leader>xf    :action ToggleDistractionFreeMode<CR>
+vnoremap <leader>xf    <Esc>:action ToggleDistractionFreeMode<CR>
+
+" Reload .ideavimrc
+nnoremap <leader>xr    :source ~/.ideavimrc<CR>
+vnoremap <leader>xr    <Esc>:source ~/.ideavimrc<CR>
+
+" Show settings
+nnoremap <leader>xs :action ShowSettings<cr>
+vnoremap <leader>xs <Esc>:action ShowSettings<cr>
+
+" Increase font size
+nnoremap <leader>x+    :action EditorIncreaseFontSize<CR>
+vnoremap <leader>x+    <Esc>:action EditorIncreaseFontSize<CR>
+nnoremap <leader>x=    :action EditorIncreaseFontSize<CR>
+vnoremap <leader>x=    <Esc>:action EditorIncreaseFontSize<CR>
+
+" Decrease font size
+nnoremap <leader>x-    :action EditorDecreaseFontSize<CR>
+vnoremap <leader>x-    <Esc>:action EditorDecreaseFontSize<CR>
+
+" Reset font size
+nnoremap <leader>x0    :action EditorResetFontSize<CR>
+vnoremap <leader>x0    <Esc>:action EditorResetFontSize<CR>
+
+" Show color picker
+nnoremap <leader>xc    :action ShowColorPicker<CR>
+vnoremap <leader>xc    <Esc>:action ShowColorPicker<CR>
+" }}}
+
+" quit {{{
+" Close project
+nnoremap <leader>qq    :action CloseProject<CR>
+vnoremap <leader>qq    <Esc>:action CloseProject<CR>
+
+" Exit (close all projects)
+nnoremap <leader>qQ    :action Exit<CR>
+vnoremap <leader>qQ    <Esc>:action Exit<CR>
+
+" Save all and close project
+nnoremap <leader>qs    :action SaveAll<CR>:action CloseProject<CR>
+vnoremap <leader>qs    <Esc>:action SaveAll<CR>:action CloseProject<CR>
+" }}}
