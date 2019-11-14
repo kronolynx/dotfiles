@@ -1,21 +1,6 @@
 ;;----------------------------------------------------------------------------
 ;; Package
 ;;----------------------------------------------------------------------------
-;; (eval-and-compile
-;;   (require 'package))
-;; (setq package-archives '(
-;;                          ("elpa" . "https://elpa.gnu.org/packages/")
-;;                          ("org" . "https://orgmode.org/elpa/")
-;;                          ("melpa-stable" . "https://stable.melpa.org/packages/")
-;;                          ("melpa" . "https://melpa.org/packages/")
-;;                          )
-;;       )
-;; (package-initialize)
-
-;; (unless (package-installed-p 'use-package)
-;;   (package-refresh-contents)
-;;   (package-install 'use-package)
-;;   (package-install 'diminish))
 
 (eval-and-compile
   (setq load-prefer-newer t
@@ -41,11 +26,8 @@
 
 ;; global ensure
 (require 'use-package-ensure)
-(setq use-package-always-ensure t)
-;; Enable defer and ensure by default for use-package
-;; Keep auto-save/backup files separate from source code:  https://github.com/scalameta/metals/issues/1027
-;;(setq use-package-always-defer t
-;;      use-package-always-ensure t
-;;      )
+(setq use-package-always-ensure t
+      ;; use-package-always-defer t
+      )
 
 (provide 'init-package)

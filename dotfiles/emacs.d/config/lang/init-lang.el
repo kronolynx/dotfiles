@@ -1,5 +1,12 @@
+(require 'init-haskell)
+(require 'init-json)
 (require 'init-lsp)
-(require 'init-scala)
+(require 'init-lua)
 (require 'init-markdown)
+(require 'init-scala)
+(require 'init-web)
+(require 'init-yaml)
+(require 'init-sh)
+(require 'init-docker)
 
 (provide 'init-lang)

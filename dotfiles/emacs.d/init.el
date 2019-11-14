@@ -143,9 +143,12 @@
 (use-package company                    ; Graphical (auto-)completion
   :diminish company-mode
   :custom
+  (company-begin-commands '(self-insert-command))
+  (company-idle-delay .1)
   (company-tooltip-align-annotations t)
   (company-tooltip-flip-when-above t)
   (company-show-numbers t)
+  (company-dabbrev-downcase nil)
   :init (global-company-mode)
   :bind
   (:map company-active-map
@@ -156,6 +159,11 @@
         ("C-p" . company-select-previous)
         ("C-n" . company-select-next))
   )
+
+(use-package company-box
+  :after company
+  :diminish
+  :hook (company-mode . company-box-mode))
 
 (use-package projectile
   :diminish
@@ -193,6 +201,8 @@
   :custom
   (neo-smart-open t)
   (neo-theme 'icons)
+  (neo-window-fixed-size nil)
+  (neo-reset-size-on-open t)
   (projectile-switch-project-action 'neotree-projectile-action)
   :init
   (evil-set-initial-state 'neotree-mode 'normal)
