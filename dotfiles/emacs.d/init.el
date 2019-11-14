@@ -229,19 +229,111 @@
               (neotree-find file-name))))))
   )
 
-(use-package dashboard
-  :disabled
-  :diminish
-  (dashboard-mode page-break-lines-mode)
-  :custom
-  (dashboard-center-content t)
-  (dashboard-startup-banner 4)
-  (dashboard-items '((recents . 15)
-                     (projects . 5)
-                     (bookmarks . 5)))
-  :custom-face
-  (dashboard-heading ((t (:foreground "#f1fa8c" :weight bold))))
-  :hook
-  (after-init . dashboard-setup-startup-hook))
 
 (use-package docker-tramp)
+
+(use-package browse-url
+  :ensure nil
+  :custom
+  (browse-url-browser-function 'browse-url-generic)
+  (browse-url-generic-program "firefox"))
+
+(use-package engine-mode
+  :defer 3
+  :config
+  (defengine amazon
+    "http://www.amazon.es/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=%s"
+    :keybinding "a")
+
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :keybinding "d")
+
+  (defengine github
+    "https://github.com/search?ref=simplesearch&q=%s"
+    :keybinding "g")
+
+  (defengine google-images
+    "http://www.google.com/images?hl=en&source=hp&biw=1440&bih=795&gbv=2&aq=f&aqi=&aql=&oq=&q=%s"
+    :keybinding "i")
+
+  (defengine google-maps
+    "http://maps.google.com/maps?q=%s"
+    :keybinding "m"
+    :docstring "Mappin' it up.")
+
+  (defengine stack-overflow
+    "https://stackoverflow.com/search?q=%s"
+    :keybinding "s")
+
+  (defengine youtube
+    "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
+    :keybinding "y")
+
+  (defengine wikipedia
+    "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
+    :keybinding "w"
+    :docstring "Searchin' the wikis.")
+  (engine-mode t))
+
+(use-package calc
+  :defer t
+  :custom
+  (math-additional-units
+   '((GiB "1024 * MiB" "Giga Byte")
+     (MiB "1024 * KiB" "Mega Byte")
+     (KiB "1024 * B" "Kilo Byte")
+     (B nil "Byte")
+     (Gib "1024 * Mib" "Giga Bit")
+     (Mib "1024 * Kib" "Mega Bit")
+     (Kib "1024 * b" "Kilo Bit")
+     (b "B / 8" "Bit")))
+  (math-units-table nil))
+
+
+(use-package savehist
+  :ensure nil
+  :custom
+  (history-delete-duplicates t)
+  (history-length t)
+  (savehist-additional-variables '(kill-ring search-ring regexp-search-ring))
+  ;; (savehist-file (expand-file-name (format "%s/emacs/history" xdg-cache)))
+  (savehist-save-minibuffer-history 1)
+  :config (savehist-mode 1))
+
+(use-package aggressive-indent
+  :hook ((css-mode . aggressive-indent-mode)
+         (emacs-lisp-mode . aggressive-indent-mode)
+         (js-mode . aggressive-indent-mode)
+         (lisp-mode . aggressive-indent-mode))
+  :custom (aggressive-indent-comments-too))
+
+(use-package electric-operator
+  :delight
+  :hook (python-mode . electric-operator-mode))
+
+(use-package wiki-summary
+  :defer 1
+  :preface
+  (defun my/format-summary-in-buffer (summary)
+    "Given a summary, sticks it in the *wiki-summary* buffer and displays
+     the buffer."
+    (let ((buf (generate-new-buffer "*wiki-summary*")))
+      (with-current-buffer buf
+        (princ summary buf)
+        (fill-paragraph)
+        (goto-char (point-min))
+        (view-mode))
+      (pop-to-buffer buf))))
+
+(advice-add 'wiki-summary/format-summary-in-buffer :override #'my/format-summary-in-buffer)
+
+(use-package faces
+  :ensure nil
+  :custom (show-paren-delay 0)
+  :config
+  (set-face-background 'show-paren-match "#262b36")
+  (set-face-bold 'show-paren-match t)
+  (set-face-foreground 'show-paren-match "#ffffff"))
+
+(use-package webpaste :defer 1)

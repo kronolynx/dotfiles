@@ -5,8 +5,9 @@
       vc-follow-symlinks t       ; don't ask for confirmation when opening symlinked file
       auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ;transform backups file name
       sentence-end-double-space nil ; sentence SHOULD end with only a point.
-      custom-safe-themes t
-      )
+      indent-tabs-mode nil ; Prefers spaces over tabs
+      view-read-only t                             ; Always open read-only buffers in view-mode
+      custom-safe-themes t)
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
@@ -40,9 +41,8 @@
 (setq inhibit-startup-echo-area-message t)
 (setq initial-scratch-message nil)
                                         ; Deleting files go to OS's trash folder
-(setq delete-by-moving-to-trash t)    
-; use space
-(setq-default indent-tabs-mode nil)   
+(setq delete-by-moving-to-trash t)
+                                        ; use space
 ;; remember last position in file
 (save-place-mode 1)
 

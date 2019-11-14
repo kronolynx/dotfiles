@@ -4,7 +4,7 @@
   (lsp-auto-guess-root t)
   (lsp-prefer-flymake nil)
   :hook
-  ((scala-mode) . lsp)
+  ((scala-mode c-mode c++-mode python-mode) . lsp)
   :config
   (require 'lsp-clients)
   )
@@ -15,5 +15,11 @@
 (use-package company-lsp
   :after company
   )
+
+(use-package dap-mode
+  :after lsp-mode
+  :config
+  (dap-mode t)
+  (dap-ui-mode t))
 
 (provide 'init-lsp)
