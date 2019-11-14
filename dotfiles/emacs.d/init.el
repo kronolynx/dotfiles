@@ -14,7 +14,6 @@
 (require 'init-gui)
 (require 'init-evil)
 (require 'init-color)
-(require 'init-prog-lang)
 (require 'init-lang)
 
 ;; copy to clipboard for -nw

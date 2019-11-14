@@ -49,8 +49,10 @@
 
    ;; buffers
    "t" '(:ignore t :which-key "buffer")
-   "tl" '(counsel-buffer-or-recentf :which-key "switch or recent")
+   "tr" '(counsel-buffer-or-recentf :which-key "switch or recent")
    "to" '(counsel-switch-buffer-other-window :which-key "other window")
+   "tl" '(next-buffer :which-key "next")
+   "th" '(previous-buffer :which-key "previous")
 
    ;; files
    "f" '(:ignore t :which-key "files")
