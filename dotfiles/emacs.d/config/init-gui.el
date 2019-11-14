@@ -1,6 +1,5 @@
-
 (scroll-bar-mode -1)
-(tool-bar-mode -1)  
+(tool-bar-mode -1)
 (blink-cursor-mode -1)
 (transient-mark-mode -1)
 (delete-selection-mode)
@@ -16,7 +15,7 @@
  'after-init-hook
  (defun my/set-faces ()
    (custom-set-faces
-    '(default ((t (:height 130 :family "SauceCodePro Nerd Font" :weight normal)))))
+    '(default ((t (:height 110 :family "SauceCodePro Nerd Font" :weight normal)))))
    ))
 
 
