@@ -12,6 +12,12 @@
    "C->" '(evil-window-decrease-width :which-key "decrease width")
    "C-<" '(evil-window-increase-width :which-key "increase width")
    )
+  (general-define-key
+   :states '(org-mode)
+   :prefix "SPC"
+   :non-normal-prefix "C-SPC"
+   "oi" '(org-insert-structure-template :which-key "insert template")
+   )
   (general-def 'normal 'neotree-mode-map
     "z"   'neotree-toggle
     "j"   'neotree-next-line

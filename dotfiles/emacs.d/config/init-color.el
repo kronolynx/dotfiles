@@ -44,6 +44,15 @@
     ;; Enable in all programming-related modes
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
+;; matching parentheses
+(use-package faces
+  :ensure nil
+  :custom (show-paren-delay 0)
+  :config
+  (set-face-background 'show-paren-match "#262b36")
+  (set-face-bold 'show-paren-match t)
+  (set-face-foreground 'show-paren-match "#ffffff"))
+
 (use-package emojify
   :commands emojify-mode
   :custom
