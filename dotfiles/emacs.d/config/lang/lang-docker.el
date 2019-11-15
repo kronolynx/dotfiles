@@ -1,4 +1,4 @@
 (use-package dockerfile-mode
   :mode "Dockerfile\\'")
 
-(provide 'init-docker)
+(provide 'lang-docker)

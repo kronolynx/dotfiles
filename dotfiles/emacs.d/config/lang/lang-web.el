@@ -34,4 +34,4 @@
   :disabled
   :mode "\\.less\\'")
 
-(provide 'init-web)
+(provide 'lang-web)

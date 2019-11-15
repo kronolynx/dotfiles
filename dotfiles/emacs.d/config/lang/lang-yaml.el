@@ -8,4 +8,4 @@
               (setq-local paragraph-start paragraph-separate)
               (run-hooks 'prog-mode-hook))))
 
-(provide 'init-yaml)
+(provide 'lang-yaml)

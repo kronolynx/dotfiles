@@ -19,4 +19,4 @@
   :defer t
   :bind (("C-c x j" . json-reformat-region)))
 
-(provide 'init-json)
+(provide 'lang-json)

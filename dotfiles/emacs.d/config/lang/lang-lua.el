@@ -7,4 +7,4 @@
   (lua-indent-string-contents t)
   )
 
-(provide 'init-lua)
+(provide 'lang-lua)

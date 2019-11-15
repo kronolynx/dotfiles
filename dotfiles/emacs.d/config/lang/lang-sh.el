@@ -22,4 +22,4 @@
   (sh-mode . (lambda () (add-to-list (make-local-variable 'company-backends) '(company-shell company-shell-env company-fish-shell))))
   )
 
-(provide 'init-sh)
+(provide 'lang-sh)

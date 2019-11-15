@@ -15,4 +15,4 @@
   (setq sbt:program-options '("-Dsbt.supershell=false"))
   )
 
-(provide 'init-scala)
+(provide 'lang-scala)

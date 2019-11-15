@@ -25,4 +25,4 @@
   :init (cmake-ide-setup)
   :config (advice-add 'cmake-ide-compile :after #'my/switch-to-compilation-window))
 
-(provide 'init-cmake)
+(provide 'lang-cmake)

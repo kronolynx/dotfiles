@@ -9,4 +9,4 @@
   :bind (("M-[" . python-nav-backward-block)
          ("M-]" . python-nav-forward-block)))
 
-(provide 'init-py)
+(provide 'lang-py)

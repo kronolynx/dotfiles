@@ -5,4 +5,4 @@
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
 
-(provide 'init-markdown)
+(provide 'lang-markdown)
