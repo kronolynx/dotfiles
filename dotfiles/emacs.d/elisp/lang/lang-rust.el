@@ -3,8 +3,9 @@
 ;; rust-mode
 ;; https://github.com/rust-lang/rust-mode
 (use-package rust-mode
-  :bind ( :map rust-mode-map
-         (("C-c C-t" . racer-describe)))
+  ;; TODO redefine using general
+  ;; :bind ( :map rust-mode-map
+  ;; 	(("C-c C-t" . racer-describe)))
   :config
   (progn
     ;; add flycheck support for rust
@@ -15,8 +16,10 @@
     ;; https://github.com/kwrooijen/cargo.el
     (use-package cargo
       :hook (rust-mode . cargo-minor-mode)
-      :bind
-      ("C-c C-c C-n" . cargo-process-new))
+      ;; TODO redefine using general
+      ;; :bind
+      ;; ("C-c C-c C-n" . cargo-process-new)
+      )
 
     ;; racer-mode for getting IDE like features for rust-mode
     ;; https://github.com/racer-rust/emacs-racer

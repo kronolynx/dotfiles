@@ -36,17 +36,19 @@
 	      (when (derived-mode-p 'c-mode 'c++-mode 'java-mode 'asm-mode)
 		(ggtags-mode 1))))
 
-  (dolist (map (list ggtags-mode-map))
-    (define-key map (kbd "C-c g s") 'ggtags-find-other-symbol)
-    (define-key map (kbd "C-c g h") 'ggtags-view-tag-history)
-    (define-key map (kbd "C-c g r") 'ggtags-find-reference)
-    (define-key map (kbd "C-c g f") 'ggtags-find-file)
-    (define-key map (kbd "C-c g c") 'ggtags-create-tags)
-    (define-key map (kbd "C-c g u") 'ggtags-update-tags)
-    (define-key map (kbd "M-.")     'ggtags-find-tag-dwim)
-    (define-key map (kbd "M-,")     'pop-tag-mark)
-    (define-key map (kbd "C-c <")   'ggtags-prev-mark)
-    (define-key map (kbd "C-c >")   'ggtags-next-mark)))
+  ;; TODO add to general
+  ;; (dolist (map (list ggtags-mode-map))
+  ;;   (define-key map (kbd "C-c g s") 'ggtags-find-other-symbol)
+  ;;   (define-key map (kbd "C-c g h") 'ggtags-view-tag-history)
+  ;;   (define-key map (kbd "C-c g r") 'ggtags-find-reference)
+  ;;   (define-key map (kbd "C-c g f") 'ggtags-find-file)
+  ;;   (define-key map (kbd "C-c g c") 'ggtags-create-tags)
+  ;;   (define-key map (kbd "C-c g u") 'ggtags-update-tags)
+  ;;   (define-key map (kbd "M-.")     'ggtags-find-tag-dwim)
+  ;;   (define-key map (kbd "M-,")     'pop-tag-mark)
+  ;;   (define-key map (kbd "C-c <")   'ggtags-prev-mark)
+  ;;   (define-key map (kbd "C-c >")   'ggtags-next-mark))
+  )
 
 ;; company-c-headers
 (use-package company-c-headers
@@ -59,22 +61,24 @@
   (define-key c++-mode-map  [(tab)] 'company-complete))
 
 ;; git@github.com:syohex/emacs-counsel-gtags.git
-;(use-package counsel-gtags
-;  :load-path "vendor/emacs-counsel-gtags/"
-;  :ensure nil
-;  :config
-;  (add-hook 'c-mode-hook 'counsel-gtags-mode)
-;  (add-hook 'c++-mode-hook counsel-gtags-mode)
-;
-;  (with-eval-after-load 'counsel-gtags
-;    (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
-;    ;(define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-;    ;(define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-;    (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack)))
+					;(use-package counsel-gtags
+					;  :load-path "vendor/emacs-counsel-gtags/"
+					;  :ensure nil
+					;  :config
+					;  (add-hook 'c-mode-hook 'counsel-gtags-mode)
+					;  (add-hook 'c++-mode-hook counsel-gtags-mode)
+					;
+					;  (with-eval-after-load 'counsel-gtags
+					;    (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
+					;    ;(define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
+					;    ;(define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+					;    (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack)))
 
+;; TODO redefine cedet-hook using general
 (defun alexott/cedet-hook ()
   (local-set-key (kbd "C-c C-j") 'semantic-ia-fast-jump)
-  (local-set-key (kbd "C-c C-s") 'semantic-ia-show-summary))
+  (local-set-key (kbd "C-c C-s") 'semantic-ia-show-summary)
+  )
 
 ;; hs-minor-mode for folding source code
 (add-hook 'c-mode-common-hook 'hs-minor-mode)

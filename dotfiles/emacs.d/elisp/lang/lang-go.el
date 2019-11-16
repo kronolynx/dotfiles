@@ -1,16 +1,17 @@
 (use-package go-mode
   :config
-  ; Use goimports instead of go-fmt
+  ;; Use goimports instead of go-fmt
   (setq gofmt-command "goimports")
   (add-hook 'go-mode-hook 'company-mode)
   ;; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
   (add-hook 'go-mode-hook 'setup-go-mode-compile)
   (add-hook 'go-mode-hook #'smartparens-mode)
-  (add-hook 'go-mode-hook '(lambda ()
-			     (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
-  (add-hook 'go-mode-hook '(lambda ()
-			     (local-set-key (kbd "C-c C-g") 'go-goto-imports)))
+  ;; TODO redefine using general
+  ;; (add-hook 'go-mode-hook '(lambda ()
+  ;; 			     (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)))
+  ;; (add-hook 'go-mode-hook '(lambda ()
+  ;; 			     (local-set-key (kbd "C-c C-g") 'go-goto-imports)))
   (add-hook 'go-mode-hook (lambda ()
 			    (set (make-local-variable 'company-backends) '(company-go))
 			    (company-mode))))

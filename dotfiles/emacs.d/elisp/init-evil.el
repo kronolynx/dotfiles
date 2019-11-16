@@ -6,8 +6,8 @@
   :defer .1 ;; don't block emacs when starting, load evil immediately after startup
   :init ;; tweak evil's configuration before loading it
   (setq evil-ex-complete-emacs-commands nil
-        evil-search-module 'evil-search 
-        evil-shift-round nil 
+        evil-search-module 'evil-search
+        evil-shift-round nil
         evil-split-window-below t
         evil-vsplit-window-right t
         evil-want-C-u-scroll t
@@ -16,9 +16,7 @@
         evil-want-keybinding nil)
   :config ;; tweak evil after loading it
   (evil-mode 1)
-
-  ;; example how to map a command in normal mode (called 'normal state' in evil)
-  (define-key evil-normal-state-map (kbd ", w") 'evil-window-vsplit))
+  )
 
 (use-package evil-collection
   :after evil

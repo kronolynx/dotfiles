@@ -4,6 +4,7 @@
   (progn                                ; https://github.com/skeeto/.emacs.d
     (setf json-reformat:pretty-string? t
           json-reformat:indent-width 2)
+    ;; TODO redefine using general
     (define-key json-mode-map (kbd "M-q")
       (lambda ()
         (interactive)
@@ -17,6 +18,8 @@
 
 (use-package json-reformat              ; Reformat JSON
   :defer t
-  :bind (("C-c x j" . json-reformat-region)))
+  ;; TODO redefine using general
+  ;; :bind (("C-c x j" . json-reformat-region))
+  )
 
 (provide 'lang-json)

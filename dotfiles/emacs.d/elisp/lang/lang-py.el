@@ -6,7 +6,9 @@
 
 (use-package python
   :delight "π "
-  :bind (("M-[" . python-nav-backward-block)
-         ("M-]" . python-nav-forward-block)))
+  ;; TODO redefine using general
+  ;; :bind (("M-[" . python-nav-backward-block)
+  ;;        ("M-]" . python-nav-forward-block))
+  )
 
 (provide 'lang-py)

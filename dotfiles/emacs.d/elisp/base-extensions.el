@@ -151,6 +151,7 @@
   (company-dabbrev-downcase nil)
   :init (global-company-mode)
   :bind
+  ;; TODO move to general with evil bindings
   (:map company-active-map
         ("C-n" . company-select-next)
         ("C-p" . company-select-previous)
@@ -357,6 +358,7 @@
   (global-undo-tree-mode 1))
 
 (use-package multiple-cursors
+  ;; TODO add to general
   ;; :bind
   ;; ("C-S-c C-S-c" . mc/edit-lines)
   ;; ("C->" . mc/mark-next-like-this)
