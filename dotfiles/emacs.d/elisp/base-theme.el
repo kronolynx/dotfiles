@@ -60,4 +60,4 @@
   (emojify-display-style 'unicode)
   :hook ((after-init . global-emojify-mode)))
 
-(provide 'init-color)
+(provide 'base-theme)

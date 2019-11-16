@@ -35,6 +35,7 @@
   :custom
   (org-src-fontify-natively t)
   (org-directory "~/Dropbox/org")
+  (org-default-notes-file (concat org-directory "/todo.org"))
   (org-mobile-inbox-for-pull "~/Dropbox/org/flagged.org")
   (org-mobile-directory "~/Dropbox/MobileOrg")
   (org-blank-before-new-entry '((heading . t)
@@ -104,5 +105,12 @@
   :hook (org-mode . org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("●" "►" "▸")))
+
+(use-package org-projectile
+  :config
+  (org-projectile-per-project)
+  (setq org-projectile-per-project-filepath "todo.org"
+        org-agenda-files (append org-agenda-files (org-projectile-todo-files))))
+
 
 (provide 'init-org)
