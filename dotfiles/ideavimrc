@@ -70,6 +70,7 @@ vnoremap <leader><tab>    <Esc>:action VimFilePrevious<CR>
 " }}}
 
 " editor {{{
+map <A-n> :action GotoAction<cr>
 nnoremap <leader>ea :action GotoAction<cr>
 vnoremap <leader>ea <Esc>:action GotoAction<cr>
 
@@ -109,7 +110,7 @@ nnoremap <leader>el :action RecentLocations<cr>
 vnoremap <leader>el <Esc>:action RecentLocations<cr>
 
 " multiple cursors
-nnoremap <leader>m <A-N>
+nnoremap <leader>c <A-N>
 
 
 
@@ -125,6 +126,16 @@ vnoremap <leader>*    <Esc>:action ShowUsages<CR>
 nnoremap <leader><leader> :action emacsIDEAs.AceJumpWord<cr>
 vnoremap <leader><leader> <Esc>:action emacsIDEAs.AceJumpWord<cr>
 " }}}
+
+" applications {{{
+nnoremap <leader>ar :action ActivateFileManagerToolWindow<cr>
+vnoremap <leader>ar <Esc>:action ActivateFileManagerToolWindow<cr>
+
+nnoremap <leader>at :action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
+vnoremap <leader>at <Esc>:action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
+nnoremap <leader>aT :action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
+vnoremap <leader>aT <Esc>:action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
+"}}}
 
 " file {{{
 " Find file
