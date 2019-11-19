@@ -10,6 +10,8 @@
 (use-package no-littering
   :demand t)
 
+(use-package origami)
+
 (use-package ivy
   :delight
   :demand t

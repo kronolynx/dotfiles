@@ -25,6 +25,13 @@
   (line-number-mode nil)
   (set-cursor-color "cyan")
   (doom-modeline-minor-modes t)
+  :config
+  (progn
+    (defun enable-doom-modeline-icons (_frame)
+      (setq doom-modeline-icon t))
+    (add-hook 'after-make-frame-functions
+	      #'enable-doom-modeline-icons)
+    )
   :hook
   (after-init . doom-modeline-mode)
   )
@@ -62,5 +69,7 @@
   (emojify-emoji-styles '(unicode github))
   (emojify-display-style 'unicode)
   :hook ((after-init . global-emojify-mode)))
+
+
 
 (provide 'base-theme)
