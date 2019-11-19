@@ -76,14 +76,6 @@
     (define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
     (define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)))
 
-;; visual hints while editing
-;; TODO is it working ???
-(use-package evil-goggles
-  :config
-  (evil-goggles-use-diff-faces)
-  (evil-goggles-mode))
-
-
 (use-package evil-magit
   :requires magit
   :after (magit)

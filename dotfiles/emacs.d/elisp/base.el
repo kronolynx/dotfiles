@@ -135,11 +135,12 @@
 ;; remember last position in file
 (save-place-mode 1)
 
-;;;; Quiet Startup
-;;(setq inhibit-startup-screen t)
-;;(setq inhibit-startup-message t)
-;;(setq inhibit-startup-echo-area-message t)
-;;(setq initial-scratch-message nil)
+(setq ad-redefinition-action 'accept)
+;; Quiet Startup
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-message t)
+(setq inhibit-startup-echo-area-message t)
+(setq initial-scratch-message nil)
 
 (scroll-bar-mode -1)
 (tool-bar-mode -1)

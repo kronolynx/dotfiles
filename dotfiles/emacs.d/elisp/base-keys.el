@@ -73,6 +73,8 @@
    "to" '(counsel-switch-buffer-other-window :which-key "other window")
    "tl" '(next-buffer :which-key "next")
    "th" '(previous-buffer :which-key "previous")
+   "tk" '(kill-buffer :which-key "kill tab from list")
+   "tc" '(kill-this-buffer :which-key "close")
 
    ;; files
    "f" '(:ignore t :which-key "files")
