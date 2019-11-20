@@ -165,6 +165,15 @@
   (company-show-numbers t)
   (company-dabbrev-downcase nil)
   :init (global-company-mode)
+  :config
+  (setq company-backends
+	'((company-files          ; files & directory
+	   company-keywords       ; keywords
+	   company-capf
+	   company-yasnippet
+	   )
+	  (company-abbrev company-dabbrev)
+	  ))
   :bind
   ;; TODO move to general with evil bindings
   (:map company-active-map
@@ -227,13 +236,16 @@
   (neo-smart-open t)
   (neo-theme 'icons)
   (neo-window-fixed-size nil)
+  (neo-window-width 33)
   (neo-reset-size-on-open t)
   (projectile-switch-project-action 'neotree-projectile-action)
   :init
   (evil-set-initial-state 'neotree-mode 'normal)
   :bind
-  (("<f8>" . neotree-toggle)
-   ("<f9>" . neotree-projectile-toggle)
+  (
+   ("M-1" . neotree-current-dir-toggle)
+   ("M-2" . neotree-projectile-toggle)
+   ("M-3" . neotree-dir)
    )
   :preface
   (defun neotree-projectile-toggle ()
@@ -254,18 +266,39 @@
               (neotree-dir project-dir))
           (if file-name
               (neotree-find file-name))))))
+  (defun neotree-current-dir-toggle ()
+    (interactive)
+    (let ((project-dir
+           (ignore-errors
+             (ffip-project-root)
+             ))
+          (file-name (buffer-file-name))
+          (neo-smart-open t))
+      (if (and (fboundp 'neo-global--window-exists-p)
+               (neo-global--window-exists-p))
+          (neotree-hide)
+        (progn
+          (neotree-show)
+          (if project-dir
+              (neotree-dir project-dir))
+          (if file-name
+              (neotree-find file-name))))))
   (defun neo-open-file-hide (full-path &optional arg)
     "Open a file node and hides tree."
     (neo-global--select-mru-window arg)
     (find-file full-path)
     (neotree-hide))
 
+  (defun neo-open-dir-change-root (full-path &optional arg)
+    (neo-open-dir arg)
+    (neotree-change-root)
+    )
+
   (defun neotree-enter-hide (&optional arg)
     "Enters file and hides neotree directly"
     (interactive "P")
-    (neo-buffer--execute arg 'neo-open-file-hide 'neo-open-dir))
+    (neo-buffer--execute arg 'neo-open-file-hide 'neo-open-dir-change-root))
   )
-
 
 (use-package docker-tramp)
 
