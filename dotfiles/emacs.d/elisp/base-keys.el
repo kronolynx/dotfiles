@@ -21,7 +21,6 @@
    "C-s" 'save-all
    "C-/" 'evilnc-comment-or-uncomment-lines
    "M-/" 'evilnc-comment-or-uncomment-lines
-   "M-1" 'neotree-toggle
    "M-n" 'counsel-M-x
    "C->" '(evil-window-decrease-width :which-key "decrease width")
    "C-<" '(evil-window-increase-width :which-key "increase width")
@@ -33,20 +32,25 @@
    "oi" '(org-insert-structure-template :which-key "insert template")
    )
   (general-def 'normal 'neotree-mode-map
-    "z"   'neotree-toggle
+    "c"   'neotree-change-root
+    "d"   'neotree-delete-node
+    "g"   'neotree-refresh
+    "h"   'neotree-select-up-node
     "j"   'neotree-next-line
     "k"   'neotree-previous-line
-    "RET" 'neotree-enter-hide ;; TODO find out how to override RET
-    "n"   'neotree-create-node
-    "r"   'neotree-rename-node
-    "d"   'neotree-delete-node
-    "m"   'make-directory
-    "SPC" 'neotree-change-root
-    "q"   'neotree-hide
     "l"   'neotree-enter-hide
-    "g"   'neotree-refresh
+    "m"   'make-directory
+    "n"   'neotree-create-node
+    "q"   'neotree-hide
+    "r"   'neotree-rename-node
+    "z"   'neotree-toggle
     "A"   'neotree-stretch-toggle
     "H"   'neotree-hidden-file-toggle
+    "N"   'neotree-select-next-sibling-node
+    "P"   'neotree-select-previous-sibling-node
+    "v"   'neotree-enter-vertical-split
+    "RET" 'neotree-enter-hide ;; TODO find out how to override RET
+    "SPC" 'neotree-quick-look
     )
   (general-define-key
    :states '(scala-mode)
