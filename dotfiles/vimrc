@@ -23,26 +23,22 @@ set nocompatible              " be iMproved, required
 " autosave
 :au FocusLost * :wa
 
-map <F6> :setlocal spell! spelllang=en_us<CR>
 
-"set foldenable " Enable folding
-"set foldlevel=0 " Close all folds by default
+" indentation
 set autoindent      "Keep indentation from previous line
-set autowrite     " Automatically :write before running commands
-set backspace=indent,eol,start
-set cmdheight=2 " Height of the command bar
-set colorcolumn=+1 " Make it obvious where 80 characters is
-set complete+=kspell "word completion
-set cursorline " Highlight current line
-set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
-set diffopt=filler " Add vertical spaces to keep right and left aligned
-set encoding=utf-8 nobomb " BOM often causes trouble     "
-set encoding=utf8
 set expandtab " Expand tabs to spaces
-set foldcolumn=0 " Column to show folds
-set foldmethod=syntax " Syntax are used to specify folds
-set foldminlines=0 " Allow folding single lines
-set foldnestmax=5 " Set max fold nesting level "
+set shiftround "When shifting lines, round the indentation to the nearest multiple of “shiftwidth.
+set shiftwidth=2   "Indent by 2 spaces when using >>, <<, == etc.
+set softtabstop=2  "Indent by 2 spaces when pressing <TAB>
+set smartindent     "Automatically inserts indentation in some cases"
+
+" seach
+set hlsearch " Highlight searches
+set ignorecase " Ignore case of searches
+set incsearch " Highlight dynamically as pattern is typed
+set smartcase " if search has uppercase then use case sensitive search
+
+" format
 set formatoptions+=1 " Break before 1-letter words        "
 set formatoptions+=2 " Use indent from 2nd line of a paragraph
 set formatoptions+=c " Format comments
@@ -51,36 +47,64 @@ set formatoptions+=n " Recognize numbered lists
 set formatoptions+=o " Make comment when using o or O from comment line
 set formatoptions+=q " Format comments with gq
 set formatoptions+=r " Continue comments by default
+
+" performance
+set lazyredraw " Don’t update screen during macro and script execution.
+
+" text rendering
+set display+=lastline " Always try to show a paragraph’s last line.
+set encoding=utf-8 nobomb " BOM often causes trouble  BOM( byte order mark)
+set linebreak " Avoid wrapping a line in the middle of a word.
+set scrolloff=1 " The number of screen lines to keep above and below the cursor.
+set sidescrolloff=5 " The number of screen columns to keep to the left and right of the cursor.
+set wrap " Enable line wrapping.
+
+" interface
+set background=dark " Use colors that suit a dark background.
+set cmdheight=2 " Height of the command bar
+set colorcolumn=+1 " Make it obvious where 80 characters is
+set cursorline " Highlight current line
 set guifont=SauceCodePro\ Nerd\ Font\ 11
-set hid " A buffer becomes hidden when it is abandoned
-set history=1000 " Increase history from 20 default to 1000
-set hlsearch " Highlight searches
-set ignorecase " Ignore case of searches
-set incsearch " Highlight dynamically as pattern is typed
-set incsearch " Highlight dynamically as pattern is typed
-set iskeyword+=:
 set laststatus=2 " Always show the status line
-set lazyredraw " Don't redraw when we don't have to      "
-set matchpairs+=<:> " match between a pair of characters with % " to add more separate with , and add : between the characters
-set mouse=a " Enable mouse in all modes
-set nofoldenable " disable folding
+set mouse=a " Enable mouse for scrolling and resizing.
+set noerrorbells " Disable beep on errors.
 set nostartofline " Don’t reset cursor to start of line when moving around.
-set noswapfile
-set number relativenumber
-set path+=** " Provides tab-completion for all file-related tasks (Search down into subfolders)
+set number relativenumber " sidebar numbersShow line numbers on the sidebar.
 set ruler "Always show current position
-set shiftround
-set shiftwidth=2   "Indent by 2 spaces when using >>, <<, == etc.
 set shortmess=atI " Don’t show the intro message when starting Vim
 set showcmd " Show the (partial) command as it’s being typed
-set smartcase " if search has uppercase then use case sensitive search
-set smartindent     "Automatically inserts indentation in some cases"
-set softtabstop=2  "Indent by 2 spaces when pressing <TAB>
-set sw=2
+set showmatch " Show matching brackets when text indicator is over them
 set t_Co=256 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set tabpagemax=50 " Maximum number of tab pages that can be opened from the command line.
 set textwidth=80 " Make it obvious where 80 characters is
 set title " Show the filename in the window titlebar
-set undofile " Persistent Undo
+
+" folding
+set foldmethod=syntax " Syntax are used to specify folds
+set foldminlines=0 " Allow folding single lines
+set foldnestmax=5 " Set max fold nesting level "
+set nofoldenable " disable folding
+set foldcolumn=0 " Column to show folds
+
+" diff
+set diffopt+=iwhite " Ignore whitespace changes (focus on code changes)
+set diffopt=filler " Add vertical spaces to keep right and left aligned
+
+" misc
+set autoread " Set to auto read when a file is changed from the outside
+au FocusGained,BufEnter * checktime " for autoread
+set autowrite     " Automatically :write before running commands
+set backspace=indent,eol,start " Allow backspacing over indention, line breaks and insertion start.
+set complete+=i,b "word completion  "kspell for current language
+set confirm " Display a confirmation dialog when closing an unsaved file.
+set hidden " Hide files in the background instead of closing them
+set history=1000 " Increase history from 20 default to 1000
+set iskeyword+=:
+set magic " For regular expressions turn magic on
+set matchpairs+=<:> " match between a pair of characters with % " to add more separate with , and add : between the characters
+set nomodeline " Ignore file’s mode lines; use vimrc configurations instead.
+set noswapfile
+set path+=** " Provides tab-completion for all file-related tasks (Search down into subfolders)
 set wildmenu " Enhance command-line completion
 " }}}
 
@@ -100,38 +124,13 @@ noremap <leader>P "*P
 
 " custom keybindings {{{
 " Sudo write 
-nnoremap <leader>W :w !sudo tee %<CR>
-" prepend space
-nnoremap <leader>ii i<space><esc>
-" apend space
-nnoremap <leader>aa a<space><esc>
-" preprend new line
-nmap <S-Enter> O<esc>j
-" append new line
-nmap <CR> o<esc>k
+nnoremap <leader>xs :w !sudo tee %<CR>
 " Clear last search (,qs)
 map <silent> <BS> :nohlsearch<CR>
-" save on escape not working  :(
-inoremap <CAPSLOCK> <CAPSLOCK>:w<CR>
 " Fast saving
-nmap <leader>ss :w!<cr>
-" indent current line
-noremap <leader>in v=
-" indent current line in visual mode
-vnoremap <leader>in =
-" delete all lines
-noremap <leader>da :1,$d<cr>
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+nmap <leader>es :w!<cr>
 " Yank from cursor to end of line
 map Y y$
-" copy and paste
-"vmap <C-c> "+yi
-"vmap <C-x> "+c
-"vmap <C-v> c<esc>"+p
-"imap <C-v> <esc>"+pa
-" select all
-"map <C-S-A> <esc>ggVG<CR>
 " save
 map <C-s> <esc>:w!<cr>
 " escape
@@ -156,7 +155,7 @@ map <leader>tm :tabmove<cr>
 map <leader>tn :tabnew<cr>
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
+nmap <Leader><tab> :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -215,9 +214,22 @@ set spellfile=$HOME/Dropbox/vim/spell/es.utf-8.add
 " }}}
 
 " Local directories {{{
-set backupdir=~/.vim/backup
-" set directory=~/.vim/swaps
+" if !isdirectory("~/.vim/backupd")
+"     call mkdir("~/.vim/backupd", "p")
+" endif
+" set backupdir=~/.vim/backupd
+
+set backup
+if !isdirectory($HOME."/.vim/backupdir")
+    call mkdir($HOME."/.vim/backupdir", "p")
+endif
+set backupdir=~/.vim/backupdir
+
+if !isdirectory($HOME."/.vim/undo")
+    call mkdir($HOME."/.vim/undo", "p")
+endif
 set undodir=~/.vim/undo
+set undofile " Persistent Undo
 " }}}
 
 " Auto commands {{{
@@ -237,9 +249,6 @@ function! HasPaste()
     return ''
 endfunction
 
-if filereadable(expand("~/.vim/bundles"))
-  source ~/.vim/bundles
-endif
 " }}}
 
 " ctags {{{
@@ -259,7 +268,84 @@ let g:netrw_list_hide=netrw_gitignore#Hide()
 let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 " }}}
 
-" Templates {{{
-nnoremap ,sh :-1read $HOME/.vim/templates/script<CR>
-nnoremap ,html :-1read $HOME/.vim/templates/html<CR>3jwf>a
+
+" Plugins -------------------------------------------------------------
+
+" install vim plug if not installed
+if has('nvim')
+  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !echo '[Downloading vim-plug for neovim] ...'
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs 
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+else
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !echo '[Downloading vim-plug for vim] ...'
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+endif
+
+
+" Load plugins {{{
+call plug#begin('~/.vim/plugged')
+Plug 'airblade/vim-gitgutter'
+Plug 'chiel92/vim-autoformat'
+Plug 'easymotion/vim-easymotion'
+Plug 'mbbill/undotree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'sheerun/vim-polyglot'
+Plug 'terryma/vim-multiple-cursors'
+" fugitive git wrapper :GCommit, :Gpush, :Gpull :Gblame :Gdiff :Git add %
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'frazrepo/vim-rainbow'
+Plug 'itchyny/lightline.vim'
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'tomasr/molokai'
+" fuzy finder :FZF :Files :GFiles :Buffers
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" search :Ack
+Plug 'mileszs/ack.vim'
+" fuzzy file finder :CtrlP :CtrlPBuffer :CtrlPMixed
+Plug 'ctrlpvim/ctrlp.vim'
+" C-tags integration --- requires ctags system package :Tagbar
+Plug 'majutsushi/tagbar'
+
+" intelligent completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" language support
+Plug 'sheerun/vim-polyglot'
+call plug#end()
 " }}}
+"
+
+" vim rainbow global
+let g:rainbow_active = 1
+" {{{ nerd tree
+map <M-1> :NERDTreeToggle<CR>
+
+" if last window open is nerd tree close vim
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" }}}
+
+nnoremap <F5> :UndotreeToggle<cr>
+
+" Turn tags
+nmap <F8> :TagbarToggle<CR>
+
+" theme {{{
+try
+  "colorscheme solarized
+  colorscheme molokai
+catch
+endtry
+" }}}
+
