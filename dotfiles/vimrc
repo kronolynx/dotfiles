@@ -77,7 +77,6 @@ set showmatch " Show matching brackets when text indicator is over them
 set t_Co=256 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set tabpagemax=50 " Maximum number of tab pages that can be opened from the command line.
 set textwidth=80 " Make it obvious where 80 characters is
-set title " Show the filename in the window titlebar
 
 " folding
 set foldmethod=syntax " Syntax are used to specify folds
@@ -305,10 +304,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'frazrepo/vim-rainbow'
-Plug 'itchyny/lightline.vim'
 
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomasr/molokai'
 " fuzy finder :FZF :Files :GFiles :Buffers
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -323,6 +319,12 @@ Plug 'majutsushi/tagbar'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " language support
 Plug 'sheerun/vim-polyglot'
+
+" theme
+Plug 'joshdick/onedark.vim'
+Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
+Plug 'itchyny/lightline.vim'
 call plug#end()
 " }}}
 "
@@ -344,7 +346,8 @@ nmap <F8> :TagbarToggle<CR>
 " theme {{{
 try
   "colorscheme solarized
-  colorscheme molokai
+  "colorscheme molokai
+  colorscheme onedark
 catch
 endtry
 " }}}

@@ -3,7 +3,7 @@
 [core]
   editor = nvim
   pager = less
-  excludesfile = /home/jortiz/.gitignore
+  excludesfile = ~/.gitignore
 [alias]
   amend = commit --amend --no-edit
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
@@ -24,6 +24,7 @@
   cam = commit -am
   count = "!git ls-files | xargs wc -l"
   cw = "!f() { git commit -m \"WIP $1\"; }; f" # prepend WIP to commit message
+  d = difftool # example git d HEAD~2 # to diff the current index with 2 commits ago
   delb = branch -D #delete specified branch e.g. git del test-branch
   diffc = diff --cached
   diffs = diff --staged
@@ -130,8 +131,8 @@
   prune = true
 [diff]
   compactionHeuristic = true
-#[remote "origin"]
-#  fetch = +refs/heads/*:refs/remotes/origin/*
+[difftool]
+  prompt = false
 [stash]
   showPatch = true
 [push]
