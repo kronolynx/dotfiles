@@ -8,6 +8,7 @@ patches=(
 alpha/st-alpha-0.8.2
 scrollback/st-scrollback-0.8.2
 scrollback/st-scrollback-mouse-0.8.2
+scrollback/st-scrollback-mouse-altscreen-0.8
 vertcenter/st-vertcenter-20180320-6ac8c8a
 )
 

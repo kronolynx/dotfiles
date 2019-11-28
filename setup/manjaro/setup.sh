@@ -91,6 +91,10 @@ cli=(
   ripgrep
   # command-line fuzzy finder
   fzf
+  # replacement for ls
+  exa
+  # tab apps
+  tabbed
 )
 
 cli_media=(
@@ -129,7 +133,7 @@ coding=(
 
 install_tmux() {
   $SCRIPTPATH/helpers/install-app.sh tmux
-  
+
   if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   fi
