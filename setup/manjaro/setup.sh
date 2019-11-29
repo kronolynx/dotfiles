@@ -93,8 +93,8 @@ cli=(
   fzf
   # replacement for ls
   exa
-  # tab apps
-  tabbed
+  # run commands when file changes
+  entr
 )
 
 cli_media=(
