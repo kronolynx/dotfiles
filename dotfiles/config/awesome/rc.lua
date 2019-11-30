@@ -66,4 +66,4 @@ require("signals")
 require("rules")
 
 -- autorun
---awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+awful.spawn.with_shell("~/.config/awesome/autorun.sh")
