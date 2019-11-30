@@ -114,10 +114,10 @@ globalkeys     = gears.table.join(
     -- Urgent or Undo:
     -- Jump to urgent client or (if there is no such client) go back
     -- to the last tag
-    awful.key({ modkey }, "u", function() 
-      if awful.client.urgent.get() then 
+    awful.key({ modkey }, "u", function()
+      if awful.client.urgent.get() then
         awful.client.urgent.jumpto()
-      else 
+      else
         awful.tag.history.restore()
       end
     end, { description = "jump to urgent client/last window", group = "client" }
@@ -178,6 +178,9 @@ globalkeys     = gears.table.join(
     ),
     awful.key({ modkey, ctrlkey, shiftkey }, "Return", function() awful.spawn(file2) end,
         { description = "open secondary file manager", group = "apps" }
+    ),
+    awful.key({ modkey, ctrlkey }, "Return", function() awful.spawn(editor) end,
+        { description = "open editor", group = "apps" }
     ),
 -- Awesome actions
     awful.key({ modkey, ctrlkey }, "r", awesome.restart,
@@ -306,9 +309,12 @@ clientkeys     = gears.table.join(
         end,
         { description = "toggle fullscreen", group = "client" }
     ),
-    awful.key({ modkey }, "f", function(c)
-      c.maximized = not c.maximized
-      c:raise()
+    awful.key({ modkey }, "f", function(cc)
+      local clients = awful.screen.focused().clients
+      for _, c in pairs(clients) do
+	c.maximized = not c.maximized
+      end
+      cc:raise()
     end,
         { description = "(un)maximize", group = "client" }
     ),
