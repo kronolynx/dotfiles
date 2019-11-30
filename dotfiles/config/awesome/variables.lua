@@ -1,11 +1,12 @@
 local awful          = require("awful")
 local utils          = require("utils")
 
-terminal             = "urxvtc"
-browser1             = "firefox"
+terminal             = os.getenv("TERMINAL") or "urxvt"
+browser1             = os.getenv("BROWSER") or "firefox"
 browser2             = "chrome"
-editor               = os.getenv("EDITOR") or "nvim"
+editor               = os.getenv("EDITOR") or "emacs -nw"
 editor_cmd           = terminal .. " -e " .. editor
+
 file1                = "thunar"
 file2                = terminal .. " -e " .. "ranger"
 music                = terminal .. " -e ncmpcpp"

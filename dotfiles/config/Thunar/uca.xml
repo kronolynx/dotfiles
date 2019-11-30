@@ -4,7 +4,7 @@
 	<icon>Terminal</icon>
 	<name>Open in terminal</name>
 	<unique-id>1546342368585267-4</unique-id>
-	<command>sh -c &apos;cd  %f; urxvtc&apos;</command>
+	<command>sh -c &apos;cd  %f; $TERMINAL&apos;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -13,7 +13,7 @@
 	<icon>gnome-xterm</icon>
 	<name>Run in terminal</name>
 	<unique-id>1546343694771926-14</unique-id>
-	<command>urxvtc -e %f --hold</command>
+	<command>$TERMINAL -e %f --hold</command>
 	<description></description>
 	<patterns>*</patterns>
 	<other-files/>
@@ -31,7 +31,7 @@
 	<icon>bash</icon>
 	<name>Open in ranger</name>
 	<unique-id>1546342636246662-6</unique-id>
-	<command>sh -c &apos;cd %f;urxvtc -e ranger&apos;</command>
+	<command>sh -c &apos;cd %f;$TERMINAL -e ranger&apos;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -49,7 +49,7 @@
 	<icon>gvim</icon>
 	<name>Vim edit</name>
 	<unique-id>1546345110665097-23</unique-id>
-	<command>urxvtc -e vim %f</command>
+	<command>$TERMINAL -e vim %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -71,7 +71,7 @@
 	<icon>gvim</icon>
 	<name>Edit as root (Vim)</name>
 	<unique-id>1546345136260384-24</unique-id>
-	<command>urxvtc -e sudo vim %f</command>
+	<command>$TERMINAL -e sudo vim %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<startup-notify/>
@@ -82,7 +82,7 @@
 	<icon>gvim</icon>
 	<name>Vim diff files</name>
 	<unique-id>1546345387864888-29</unique-id>
-	<command>urxvtc -e vim -d %F</command>
+	<command>$TERMINAL -e vim -d %F</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
@@ -107,7 +107,7 @@
 	<icon>disk-usage-analyzer</icon>
 	<name>Disk usage</name>
 	<unique-id>1546345308024122-27</unique-id>
-	<command>urxvtc -e ncdu %f</command>
+	<command>$TERMINAL -e ncdu %f</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>
