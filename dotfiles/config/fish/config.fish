@@ -6,6 +6,7 @@ fish_vi_key_bindings
 set fish_plugins autojump vi-mode
 set -gx TERM rxvt-256color
 set -gx PATH ~/.local/bin $PATH
+set -gx EDITOR "emacs -nw"
 
 
 ##########################################################
@@ -27,6 +28,7 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lp="lsof -i :" # e.g. lp 8080 # which app is using a port
+alias ls=exa # improved ls
 alias lt='ls --tree'
 alias o='a -e xdg-open'
 alias r='ranger --choosedir=$HOME/.rangerdir; set LASTDIR (cat $HOME/.rangerdir); cd "$LASTDIR"'
@@ -106,15 +108,11 @@ function md
 end
 
 function cd
-  if count $argv > /dev/null
-    if ! test -d "$argv" && test -d "$HOME/$argv"
-      builtin cd "$HOME/$argv" && ls -G
+    if count $argv > /dev/null
+        builtin cd "$argv"; and ls -G
     else
-      builtin cd "$argv" && ls -G
+        builtin cd ~; and ls -G
     end
-  else
-    builtin cd ~ && ls -G
-  end
 end
 
 # make ammonite work with fish
