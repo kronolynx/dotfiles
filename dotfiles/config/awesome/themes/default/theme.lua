@@ -48,6 +48,12 @@ theme.border_width                              = dpi(3)
 theme.border_normal                             = theme.xcolor5
 theme.border_focus                              = theme.xcolor2
 
+-- Calendar
+theme.calendar_normal_border_color = theme.bg_normal
+theme.calendar_focus_border_color = theme.border_focus
+theme.calendar_header_border_color = theme.bg_normal
+theme.calendar_weekday_border_color = theme.bg_normal
+
 -- Taglist
 theme.taglist_bg_focus                          = theme.bg_normal
 theme.taglist_fg_focus                          = theme.xcolor7
