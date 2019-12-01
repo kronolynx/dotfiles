@@ -307,12 +307,13 @@ clientkeys     = gears.table.join(
           c.fullscreen = not c.fullscreen
           c:raise()
         end,
-        { description = "toggle fullscreen", group = "client" }
+        { description = "toggle clients fullscreen", group = "client" }
     ),
     awful.key({ modkey }, "f", function(cc)
       local clients = awful.screen.focused().clients
+      local not_max = not cc.maximized
       for _, c in pairs(clients) do
-	c.maximized = not c.maximized
+	c.maximized = not_max
       end
       cc:raise()
     end,
