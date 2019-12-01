@@ -1,21 +1,23 @@
-local awful          = require("awful")
-local utils          = require("utils")
+local awful              = require("awful")
+local utils              = require("utils")
 
-terminal             = os.getenv("TERMINAL") or "urxvt"
-browser1             = os.getenv("BROWSER") or "firefox"
-browser2             = "chrome"
-editor               = os.getenv("EDITOR") or "emacsclient -t"
-editor_cmd           = terminal .. " -e " .. editor
+terminal                 = os.getenv("TERMINAL") or "urxvt"
+browser1                 = os.getenv("BROWSER") or "firefox"
+browser2                 = "chrome"
+editor                   = os.getenv("EDITOR") or "emacsclient -t"
+editor_cmd               = terminal .. " -e " .. editor
 
-file1                = "thunar"
-file2                = terminal .. " -e " .. "ranger"
-music                = terminal .. " -e ncmpcpp"
-my_screen_capture    = "scrot '%F-%H%M%S.png' -e 'mv $f ~/Pictures/'"
-my_launcher          = "rofi -show drun -no-plugins"
-lockscreen           = "$HOME/.scripts/i3lock.sh lock"
-logmenu              = "$HOME/.scripts/logmenu.sh"
+file1                    = "thunar"
+file2                    = terminal .. " -e " .. "ranger"
+music                    = terminal .. " -e ncmpcpp"
+my_screen_capture_window = "$HOME/.scripts/screen_shot.sh window"
+my_screen_capture_area   = "$HOME/.scripts/screen_shot.sh area"
+my_screen_capture_root   = "$HOME/.scripts/screen_shot.sh root"
+logmenu                  = "$HOME/.scripts/logmenu.sh"
+lockscreen               = "$HOME/.scripts/i3lock.sh lock"
+my_launcher              = "rofi -show drun -no-plugins"
 
-awful.util.terminal  = terminal
+awful.util.terminal      = terminal
 
 awful.layout.layouts = {
   awful.layout.suit.tile,

@@ -285,17 +285,17 @@ globalkeys     = gears.table.join(
     ),
 -- Screenshot
     awful.key({}, "Print", function()
-      awful.spawn.with_shell(my_screen_capture .. " && notify-send 'Desktop captured'")
+      awful.spawn.with_shell(my_screen_capture_root .. " && notify-send 'Desktop captured'")
     end,
         { description = "take a screenshot of entire screen", group = "screenshot" }
     ),
     awful.key({ ctrlkey }, "Print", function()
-      awful.spawn.with_shell(my_screen_capture .. " -u && notify-send 'Focused window captured'")
+      awful.spawn.with_shell(my_screen_capture_window .. " && notify-send 'Focused window captured'")
     end,
         { description = "take a screenshot of focused window", group = "screenshot" }
     ),
     awful.key({ shiftkey }, "Print", function()
-      awful.spawn.with_shell("notify-send 'Select Area';sleep 0.2;" .. my_screen_capture .. " -s && notify-send 'Area captured'")
+      awful.spawn.with_shell("notify-send 'Select Area';sleep 0.2;" .. my_screen_capture_area .. " && notify-send 'Area captured'")
     end,
         { description = "take a screenshot of selected area", group = "screenshot" }
     )
