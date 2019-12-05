@@ -1,24 +1,59 @@
 fish_vi_key_bindings
 
 ##########################################################
+########## Plugins
+##########################################################
+
+if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install);
+end
+
+# plugin necessary to work with tmux-zen
+fundle plugin 'decors/fish-colored-man'
+fundle plugin 'fisherman/gitignore'
+fundle plugin 'fishpkg/fish-spin'
+fundle plugin 'jethrokuan/fzf'
+fundle plugin 'jethrokuan/z'
+fundle plugin 'jhillyerd/plugin-git'
+fundle plugin 'jorgebucaran/fish-getopts'
+fundle plugin 'jorgebucaran/fish-nvm'
+fundle plugin 'oh-my-fish/plugin-bang-bang'
+fundle plugin 'oh-my-fish/plugin-config'
+fundle plugin 'oh-my-fish/plugin-extract'
+# fundle plugin 'sagebind/tmux-zen'
+
+fundle init
+
+##########################################################
 ##########
 ##########################################################
 set fish_plugins autojump vi-mode
 set -gx TERM rxvt-256color
 set -gx PATH ~/.local/bin $PATH
 set -gx EDITOR "emacs -nw"
+set fish_greeting ''
 
 
 ##########################################################
 ##########    Aliases
 ##########################################################
+
+#replace system tools
+alias old_cat=bat
+alias cat=bat # replace cat with bat
+alias old_ls=ls
+alias ls=exa # improved ls
+#alias old_find=find
+#alias find=fd
+alias old_vim=vim
 alias vim=nvim
+alias old_vi=vi
 alias vi=vim
+
+
 alias emx="emacsclient -t"
 alias emc="emacsclient -c -a emacs"
 alias cm="cmus"
 alias co="code ."
-alias cat=bat # replace cat with bat
 alias chmox='chmod +x'
 alias d="cd ~/Dropbox"
 alias dl="cd ~/Downloads"
@@ -28,7 +63,6 @@ alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lp="lsof -i :" # e.g. lp 8080 # which app is using a port
-alias ls=exa # improved ls
 alias lt='ls --tree'
 alias o='a -e xdg-open'
 alias r='ranger --choosedir=$HOME/.rangerdir; set LASTDIR (cat $HOME/.rangerdir); cd "$LASTDIR"'
@@ -44,6 +78,7 @@ alias gts='git status'
 alias gtl='git log'
 alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias bashi='bash -s interactive'
+
 
 # to create more alias for different distro operations
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
@@ -92,6 +127,9 @@ alias fs="stat -f \"%z bytes\""
 alias ping='ping -c 5'
 alias rm-broken-symlinks="find . -xtype l -delete"
 
+# urxvt clean screen
+alias cls="echo -ne '\033c'"
+
 
 ##########################################################
 ##########    Functions
@@ -113,6 +151,10 @@ function cd
     else
         builtin cd ~; and ls -G
     end
+end
+
+function fishcognito
+   env fish_history='' fish
 end
 
 # make ammonite work with fish
@@ -142,7 +184,6 @@ end
 ##########################################################
 ##########    Theme
 ##########################################################
-
-# bobthefish
-set -g theme_nerd_fonts yes
-set -g theme_color_scheme solarized
+if command -v starship >/dev/null 2>&1
+    starship init fish | source
+end

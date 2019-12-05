@@ -95,6 +95,8 @@ cli=(
   exa
   # run commands when file changes
   entr
+  # cross shell prompt
+  starship
 )
 
 cli_media=(
