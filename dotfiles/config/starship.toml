@@ -1,0 +1,4 @@
+# Replace the "❯" symbol in the prompt
+[character]      # The name of the module
+symbol = "⮞ "     # The "symbol" segment is being set to "➜"
+vicmd_symbol = "⮝ "

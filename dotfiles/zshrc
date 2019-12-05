@@ -1,7 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
-# jump around 
+# jump around
 if [ -f ~/.z.sh ]; then
     source ~/.z.sh
 fi
@@ -41,7 +41,7 @@ fi
 if [ -f ~/.zsh/work ]; then
     source ~/.zsh/work
 fi
-# Test and then source the wretched rest 
+# Test and then source the wretched rest
 if [ -f ~/.zsh/misc ]; then
     source ~/.zsh/misc
 fi
@@ -50,15 +50,20 @@ fi
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(git up vi-mode extract zsh-history-substring-search zsh-syntax-highlighting zsh-autosuggestions)
 
-source $ZSH/oh-my-zsh.sh
+if [ -f $ZSH/oh-my-zsh.sh ]; then
+    source $ZSH/oh-my-zsh.sh
 
-# Test and then source zsh highlight (Must be sourced after oh-my-zsh)
-if [ -f ~/.zsh/stylehighlight ]; then
-    source ~/.zsh/stylehighlight
+    # Test and then source zsh highlight (Must be sourced after oh-my-zsh)
+    if [ -f ~/.zsh/stylehighlight ]; then
+	source ~/.zsh/stylehighlight
+    fi
 fi
-
 
 # Test and then source some options
 if [ -f ~/.zsh/options ]; then
     source ~/.zsh/options
+fi
+
+if command -v starship >/dev/null 2>&1; then
+    eval "$(starship init zsh)"
 fi

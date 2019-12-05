@@ -2,7 +2,7 @@
 function cd() {
     if ! test -d $@ && test -d "$HOME/$@"; then
       builtin cd "$HOME/$@" && ls -G
-    else 
+    else
       builtin cd "$@" && ls -G
     fi
 }
@@ -63,7 +63,7 @@ function mp3download {
     then
 	youtube-dl -xi --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $1
     elif [ "$#" -eq 2 ]
-    then 
+    then
 	youtube-dl -xi -u $1 --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $2
     else
 	echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
@@ -76,7 +76,7 @@ function videodownload {
     then
 	youtube-dl -i -o "%(title)s.%(ext)s" $1
     elif [ "$#" -eq 2 ]
-    then 
+    then
 	youtube-dl -iu $1 -o "%(title)s.%(ext)s" $2
     else
 	echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
@@ -133,7 +133,7 @@ lsd() { ls -d ${^~*:-*}(/) }
 # printf '%-20s %s\n' ${(kv)options}
 showoptions() {
     local k
-    zmodload -i zsh/parameter                                                                                                                                                                                         
+    zmodload -i zsh/parameter
     for k in ${(ok)options}; do
         printf "%-20s\t%s\n" $k ${options[$k]}
     done
@@ -226,7 +226,7 @@ function urlencode() {
 }
 
 
-# MISC: Globbing is simple? Sure .. See zshexpn(1) /Glob Qualifiers for details and come back ;) 
+# MISC: Globbing is simple? Sure .. See zshexpn(1) /Glob Qualifiers for details and come back ;)
 function H-Glob()
 {
     echo -e "
@@ -286,7 +286,7 @@ then
 fi
 
 # SYS: /gitize/ $PWD
-function gitize() { git init && git add . && git commit -a -m"Initial commit" && git gc } 
+function gitize() { git init && git add . && git commit -a -m"Initial commit" && git gc }
 
 # LOCA: print current settings of LC_*
 function plocale()
@@ -371,7 +371,7 @@ function dirsize()
         dir=$1
     fi
     find $dir -type d -maxdepth 1 -mindepth 1 -exec du -sh '{}' \; 2>/dev/null \
-        | perl -pe "s/\t.*\/(.*)$/\t$(echo '\033[01;32m')\1$(echo '\033[0m')/gi" 
+        | perl -pe "s/\t.*\/(.*)$/\t$(echo '\033[01;32m')\1$(echo '\033[0m')/gi"
     echo
     echo "Total: " $(du -sh $dir 2>/dev/null | awk '{print $1}')
 }
@@ -388,7 +388,6 @@ function create-archive()
     tar cvfz "$archive_name" "$1"
     echo "Created archive $archive_name"
 }
-compdef _directories create-archive
 
 # SEARCH: Show the path from a symlink to its ultimate source.
 function folsym() {
@@ -471,7 +470,7 @@ function e()
     fi
 }
 
-# nconvert()    convert numbers between different bases 
+# nconvert()    convert numbers between different bases
 function nconvert() {
     if (( ${#@} < 2 )) ; then
         printf 'usage: nconvert CONVERSION_CODE NUMBER\n'
