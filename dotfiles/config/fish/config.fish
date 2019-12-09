@@ -180,6 +180,10 @@ if test -e "$HOME/.config/fish/custom/work.fish"
   source $HOME/.config/fish/custom/work.fish
 end
 
+if test -e "$HOME/.anaconda"
+  set -gx PATH $PATH $HOME/.anaconda/bin
+  eval $HOME/.anaconda/bin/conda "shell.fish" "hook" $argv | source
+end
 
 ##########################################################
 ##########    Theme

@@ -1,0 +1,3 @@
+changeps1: false
+# run conda activate to activate base
+auto_activate_base: false
