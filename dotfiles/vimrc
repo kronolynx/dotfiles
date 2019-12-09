@@ -315,8 +315,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 " C-tags integration --- requires ctags system package :Tagbar
 Plug 'majutsushi/tagbar'
 
-" intelligent completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " language support
 Plug 'sheerun/vim-polyglot'
 
