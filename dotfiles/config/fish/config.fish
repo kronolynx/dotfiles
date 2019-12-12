@@ -55,8 +55,6 @@ alias emc="emacsclient -c -a emacs"
 alias cm="cmus"
 alias co="code ."
 alias chmox='chmod +x'
-alias d="cd ~/Dropbox"
-alias dl="cd ~/Downloads"
 alias fv='f -e vim'
 alias h="htop"
 alias l='ls -l'
@@ -93,6 +91,7 @@ alias Iy="yay -S --noconfirm " # install no confirm
 alias R="sudo pacman -Rs " # remove with dependcies
 alias Rd="sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
 alias which="pacman -Qo "
+alias downgrade-fix="sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
 
 ## Ubuntu
 # alias S="apt search "
@@ -130,10 +129,44 @@ alias rm-broken-symlinks="find . -xtype l -delete"
 # urxvt clean screen
 alias cls="echo -ne '\033c'"
 
+# json manipulation
+# https://github.com/tomnomnom/gron
+alias norg="gron --ungron"
+alias ungron="gron --ungron"
+
+function jsondiff
+  if set -q argv[1] and set -q argv[2]
+    diff <(gron $argv[1]) <(gron $argv[2])
+  end
+end
 
 ##########################################################
 ##########    Functions
 ##########################################################
+
+# retry command
+function retry
+  $argv
+  while [ $status -ne 0 ]
+    $argv
+  end
+end
+
+# usage
+# news :help
+# news china
+# news trump+huawei
+# news category=technology
+function news
+    curl "us.getnews.tech/$argv"
+end
+function newsfr
+    curl "fr.getnews.tech/$argv"
+end
+function newsde
+    curl "gr.getnews.tech/$argv"
+end
+
 
 # kill any process listening on the port given e.g: kp 8080
 function kp
@@ -183,6 +216,10 @@ end
 if test -e "$HOME/.anaconda"
   set -gx PATH $PATH $HOME/.anaconda/bin
   eval $HOME/.anaconda/bin/conda "shell.fish" "hook" $argv | source
+end
+
+if command -v thefuck >/dev/null 2>&1
+  thefuck --alias pls | source
 end
 
 ##########################################################
