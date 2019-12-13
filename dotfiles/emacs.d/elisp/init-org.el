@@ -1,5 +1,5 @@
 (use-package org
-  :ensure org-plus-contrib
+  :requires org-plus-contrib
   :preface
   (defun my/org-compare-times (clocked estimated)
     "Gets the ratio between the timed time and the estimated time."
