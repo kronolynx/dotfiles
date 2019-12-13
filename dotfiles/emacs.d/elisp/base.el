@@ -2,33 +2,21 @@
 ;; Package
 ;;----------------------------------------------------------------------------
 
-(eval-and-compile
-  (setq load-prefer-newer t
-        package--init-file-ensured t
-        package-enable-at-startup nil)
-  )
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(eval-when-compile
-  (require 'package)
-  (package-initialize)
-  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/") t)
-  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package)
-    (package-install 'diminish)
-    (package-install 'bind-key)))
-
-(eval-when-compile
-  (require 'use-package)
-  (require 'diminish))
-
-;; global ensure
-(require 'use-package-ensure)
-(setq use-package-always-ensure t
-      ;; use-package-always-defer t
-      )
+(straight-use-package 'use-package)
+(setq straight-use-package-by-default t)
 
 (defconst private-dir  (expand-file-name "private" user-emacs-directory))
 (defconst temp-dir (format "%s/cache" private-dir)
@@ -67,8 +55,7 @@
       indent-tabs-mode                   nil
       inhibit-startup-message            t
       fringes-outside-margins            t
-      x-select-enable-clipboard          t
-      use-package-always-ensure          t)
+      x-select-enable-clipboard          t)
 
 ;; Bookmarks
 (setq
@@ -164,6 +151,13 @@
     (abort-recursive-edit)))
 
 (add-hook 'mouse-leave-buffer-hook 'stop-using-minibuffer)
+
+(require 'server)
+(if (not (server-running-p)) (server-start))
+
+;; When two buffers are open with the same name, this makes it easier to tell them apart.
+(require 'uniquify)
+(setq uniquify-buffer-name-style 'forward)
 
 (provide 'base)
 ;;; base ends here

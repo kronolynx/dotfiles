@@ -12,7 +12,7 @@
   (evil-insert-state-cursor '(bar "White"))
   (evil-emacs-state-cursor '(bar "Red"))
   (evil-visual-state-cursor '(box "#F86155"))
-  (global-subword-mode)
+  (global-subword-mode 1)
   :init ;; tweak evil's configuration before loading it
   (setq evil-ex-complete-emacs-commands nil
 	evil-ex-search-persistent-highlight nil

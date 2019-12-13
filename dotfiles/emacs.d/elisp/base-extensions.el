@@ -56,16 +56,17 @@
   (smex-initialize))
 
 (use-package recentf
+  :init
+  (recentf-mode 1)
+  :custom
+  (recentf-max-menu-items 100)
+  (recentf-auto-cleanup 'never)
   :config
-  (recentf-mode)
-  (setq  recentf-max-saved-items 1000
-         recentf-exclude '("^/var/folders\\.*"
-			   "COMMIT_EDITMSG\\'"
-			   ".*-autoloads\\.el\\'"
-			   "[/\\]\\.elpa/"
-			   "/feeds/.*"
-			   "~/.emacs.d/feeds/"
-			   ))
+  ;; Increase limit
+  (add-to-list 'recentf-exclude (format "%s/\\.emacs\\.d/.*" (getenv "HOME")))
+  (add-to-list 'recentf-exclude (format "%s/\\.recentf" (getenv "HOME")))
+  ;; elfeed
+  (add-to-list 'recentf-exclude (format "%s/\\.elfeed/.*" (getenv "HOME")))
   )
 
 ;; display help for key usage
@@ -146,14 +147,14 @@
         auto-revert-verbose nil))
 
 
-(use-package yasnippet                  ; Snippets
-  :defer 3
-  :diminish yas-minor-mode
-  :hook (after-init . yas-global-mode))
+;; TODO fix slow loading
+;; (use-package yasnippet
+;;   :diminish yas-minor-mode
+;;   :config
+;;   (use-package yasnippet-snippets)
 
-(use-package yasnippet-snippets
-  :after yasnippet
-  :demand t)
+;;   (yas-global-mode 1)
+;;   )
 
 (use-package company                    ; Graphical (auto-)completion
   :diminish company-mode
@@ -360,7 +361,6 @@
 
 
 (use-package savehist
-  :ensure nil
   :custom
   (history-delete-duplicates t)
   (history-length t)
@@ -395,14 +395,6 @@
       (pop-to-buffer buf))))
 
 (advice-add 'wiki-summary/format-summary-in-buffer :override #'my/format-summary-in-buffer)
-
-(use-package faces
-  :ensure nil
-  :custom (show-paren-delay 0)
-  :config
-  (set-face-background 'show-paren-match "#262b36")
-  (set-face-bold 'show-paren-match t)
-  (set-face-foreground 'show-paren-match "#ffffff"))
 
 (use-package webpaste :defer 1)
 
