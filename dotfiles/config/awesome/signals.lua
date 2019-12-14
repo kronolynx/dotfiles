@@ -17,6 +17,11 @@ client.connect_signal("manage", function(c)
     -- Prevent clients from being unreachable after screen count changes.
     awful.placement.no_offscreen(c, { honor_padding = true })
   end
+
+  if c.type == 'dialog' then
+    local t = awful.screen.focused().selected_tag
+    c:move_to_tag(t)
+  end
 end)
 
 -- Force minimized clients to unminimize.
@@ -39,7 +44,7 @@ end)
 --         awful.mouse.client.resize(c)
 --       end)
 --   )
--- 
+--
 --   awful.titlebar(c):setup {
 --     { -- Left
 --       awful.titlebar.widget.iconwidget(c),
