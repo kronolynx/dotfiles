@@ -1,3 +1,7 @@
+(use-package benchmark-init
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
 ;; copy to clipboard for -nw
 (use-package xclip
   :init
@@ -405,6 +409,10 @@
    undo-tree-auto-save-history nil
    undo-tree-history-directory-alist `(("." . ,(concat temp-dir "/undo/"))))
   (global-undo-tree-mode 1))
+
+(use-package imenu-anywhere
+  :bind
+  ("M-i" . ivy-imenu-anywhere))
 
 (use-package multiple-cursors
   ;; TODO add to general

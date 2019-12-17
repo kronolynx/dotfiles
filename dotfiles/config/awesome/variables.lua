@@ -4,9 +4,8 @@ local utils              = require("utils")
 terminal                 = os.getenv("TERMINAL") or "urxvt"
 browser1                 = os.getenv("BROWSER") or "firefox"
 browser2                 = "chrome"
-editor                   = os.getenv("EDITOR") or "emacsclient -t"
+editor                   = os.getenv("EDITOR") or "emacsclient -t -a emacs"
 editor_cmd               = terminal .. " -e " .. editor
-
 file1                    = "thunar"
 file2                    = terminal .. " -e " .. "ranger"
 music                    = terminal .. " -e ncmpcpp"

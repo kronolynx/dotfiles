@@ -33,6 +33,8 @@
     `(lambda (&rest _rest)
        (funcall ,fnc)))
   :custom
+  (org-startup-indented t)
+  (org-hide-emphasis-markers t)
   (org-src-fontify-natively t)
   (org-directory "~/Dropbox/org")
   (org-default-notes-file (concat org-directory "/todo.org"))
