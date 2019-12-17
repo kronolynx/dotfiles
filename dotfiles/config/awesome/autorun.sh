@@ -8,7 +8,7 @@ if (! pgrep thunar); then
     thunar --daemon &
 fi
 
-if (! pgrep daemon); then
+if (! pgrep emacs); then
     emacs --daemon &
 fi
 if (! pgrep urxvtd); then

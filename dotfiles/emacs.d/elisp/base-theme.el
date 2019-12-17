@@ -6,14 +6,15 @@
   (doom-themes-enable-bold t)    ; if nil, bold is universally disabled
   (doom-themes-enable-italic t) ;if nil, italics is universally disabled
   :config
+  (load-theme 'doom-one t)
   ;; (load-theme 'doom-molokai t)
-  (load-theme 'doom-dracula t)
+  ;; (load-theme 'doom-dracula t)
   (with-eval-after-load 'org
     (doom-themes-org-config))
   )
 
 (use-package doom-modeline
-  :after (evil doom-themes)
+  :after evil
   :custom
   (column-number-mode nil)
   (doom-modeline-buffer-encoding nil)
