@@ -52,25 +52,12 @@
         "command": "cursorUp",
         "when": "textInputFocus"
     },
-    // smart move between windows
     {
-        "key": "ctrl+k",
-        "command": "workbench.action.navigateUp",
-        "when": "editorTextFocus"
+        "key": "alt+f",
+        "command": "workbench.action.navigateForward"
     },
     {
-        "key": "ctrl+j",
-        "command": "workbench.action.navigateDown",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+h",
-        "command": "workbench.action.navigateLeft",
-        "when": "editorTextFocus"
-    },
-    {
-        "key": "ctrl+l",
-        "command": "workbench.action.navigateRight",
-        "when": "editorTextFocus"
+        "key": "alt+b",
+        "command": "workbench.action.navigateBack"
     },
 ]

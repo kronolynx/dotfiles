@@ -5,21 +5,20 @@
     "vim.camelCaseMotion.enable": false,
     "vim.easymotion": true,
     "vim.easymotionMarkerBackgroundColor": "yellow",
-    "vim.leader": "<space>",
-    "vim.sneak": true,
+    "vim.leader": "<Space>",
     "vim.smartcase": true,
     "vim.useSystemClipboard": true,
     "vim.useCtrlKeys": true,
     "vim.visualstar": true,
     "vim.highlightedyank.enable": true,
     "vim.highlightedyank.duration": 200,
-    "vim.insertModeKeyBindings": [
+    "vim.insertModeKeyBindingsNonRecursive": [
         {
             "before": [ "u", "u" ],
             "after": [ "<Esc>" ]
         }
     ],
-    "vim.normalModeKeyBindings": [
+    "vim.normalModeKeyBindingsNonRecursive": [
         {
             "before": [ "Y" ],
             "after": [ "y", "$" ]
@@ -158,13 +157,7 @@
         },
         {
             "before": [ "<leader>", "t", "o" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
+            "commands": [ ":tabo" ]
         },
         {
             "before": [ "<leader>", "t", "r" ],
@@ -500,8 +493,89 @@
                 }
             ]
         },
+        {
+            "before": [
+                "u"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "undo"
+                }
+            ]
+        },
+        {
+            "before": [
+                "<C-r>"
+            ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "redo"
+                }
+            ]
+        },
+        {
+            "before": [
+                "<Return>"
+            ],
+            "commands": [
+                ":nohl"
+            ]
+        },
+        {
+            "before": [ "Z", "Z" ],
+            "commands": [
+                ":wq"
+            ]
+        },
+        {
+            "before": [
+                "J"
+            ],
+            "after": [
+                "5",
+                "j"
+            ]
+        },
+        {
+            "before": [
+                "K"
+            ],
+            "after": [
+                "5",
+                "k"
+            ]
+        },
+        // keep join lines
+        {
+            "before": [
+                "<Leader>",
+                "j"
+            ],
+            "after": [
+                "J"
+            ]
+        },
+        // smart move between windows
+        {
+            "before": ["<C-k>"],
+            "commands": ["workbench.action.navigateUp"],
+        },
+        {
+            "before": ["<C-j>"],
+            "commands": ["workbench.action.navigateDown"],
+        },
+        {
+            "before": ["<C-h>"],
+            "commands": ["workbench.action.navigateLeft"],
+        },
+        {
+            "before": ["<C-l>"],
+            "commands": ["workbench.action.navigateRight"],
+        },
      ],
-    "vim.visualModeKeyBindings": [
+    "vim.visualModeKeyBindingsNonRecursive": [
         {
             "before": [ "<leader>", "e", "=" ],
             "after": [],
@@ -549,46 +623,7 @@
             ]
         },
      ],
-     // Non-recursive keybinding overrides to use for insert, normal, and visual modes
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "u"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "undo"
-                }
-            ]
-        },
-        {
-            "before": [
-                "<C-r>"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "redo"
-                }
-            ]
-        },
-        {
-            "before": [
-                "<C-n>"
-            ],
-            "commands": [
-                ":nohl"
-            ]
-        },
-        {
-            "before": [ "Z", "Z" ],
-            "commands": [
-                ":wq"
-            ]
-        }
-    ],
-    "editor.fontFamily": "Fira Code",
+    "editor.fontFamily": "'FiraCode Nerd Font'",
     "editor.fontLigatures": true,
     "editor.minimap.enabled": false,
     "window.zoomLevel": 0,
@@ -626,4 +661,6 @@
         "**/.settings": true,
         "**/.factorypath": true
     },
+    "keyboard.dispatch": "keyCode",
+    "vim.sneak": false 
 }
