@@ -1,5 +1,5 @@
-set runtimepath^=/.vim runtimepath+=~/.vim/after
-
-let &packpath = &runtimepath
-
-source ~/.vimrc
+runtime! plugins.vim
+runtime! general.vim
+runtime! mappings/**/*.vim
+runtime! plugins/themes.vim
+runtime! status-line.vim
