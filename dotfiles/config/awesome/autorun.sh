@@ -23,7 +23,7 @@ if (! pgrep compton); then
 fi
 
 if (! pgrep xautolock); then
-    xautolock -time 7 -locker lock &
+    xautolock -time 7 -corners -000 -locker lock &
 fi
 
 if [ -f ~/.scripts/autostart_work.sh ]; then
