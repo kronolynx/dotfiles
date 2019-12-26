@@ -64,7 +64,7 @@ set background=dark " Use colors that suit a dark background.
 set cmdheight=2 " Height of the command bar
 set colorcolumn=+1 " Make it obvious where 80 characters is
 set cursorline " Highlight current line
-set guifont=SauceCodePro\ Nerd\ Font\ 11
+set guifont=FantasqueSansMono\ Nerd\ Font\ 11
 set laststatus=2 " Always show the status line
 set mouse=a " Enable mouse for scrolling and resizing.
 set noerrorbells " Disable beep on errors.
@@ -77,6 +77,9 @@ set showmatch " Show matching brackets when text indicator is over them
 set t_Co=256 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set tabpagemax=50 " Maximum number of tab pages that can be opened from the command line.
 set textwidth=80 " Make it obvious where 80 characters is
+set noshowmode " lightline shows the status not vim
+" Give us a realtime preview of substitution before we send it
+set inccommand=nosplit
 
 " folding
 set foldmethod=syntax " Syntax are used to specify folds
@@ -95,6 +98,7 @@ au FocusGained,BufEnter * checktime " for autoread
 set autowrite     " Automatically :write before running commands
 set backspace=indent,eol,start " Allow backspacing over indention, line breaks and insertion start.
 set complete+=i,b "word completion  "kspell for current language
+set completeopt=menu,menuone,preview,noselect,noinsert
 set confirm " Display a confirmation dialog when closing an unsaved file.
 set hidden " Hide files in the background instead of closing them
 set history=1000 " Increase history from 20 default to 1000
@@ -114,6 +118,90 @@ set wildignore+=*/node_modules/*
 set wildignore+=*/smarty/*,*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,*/log/*,*/tmp/*,*/build/*,*/ckeditor/*,*/doc/*,*/source_maps/*,*/dist/*,*/targer/*
 " }}}
 
+" Plugins -------------------------------------------------------------
+
+" install vim plug if not installed
+if has('nvim')
+  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !echo '[Downloading vim-plug for neovim] ...'
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+else
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !echo '[Downloading vim-plug for vim] ...'
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
+endif
+
+
+" Load plugins {{{
+call plug#begin('~/.vim/plugged')
+
+" Languages
+Plug 'sheerun/vim-polyglot' " language support
+
+" Utility Things
+Plug 'SirVer/ultisnips'
+Plug 'janko/vim-test'
+Plug 'jiangmiao/auto-pairs'
+Plug 'kana/vim-textobj-user'
+Plug 'machakann/vim-highlightedyank'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-projectionist'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'yuttie/comfortable-motion.vim'
+" Fixers, completion and navigation
+Plug 'ctrlpvim/ctrlp.vim' " fuzzy file finder :CtrlP :CtrlPBuffer :CtrlPMixed
+Plug 'easymotion/vim-easymotion'
+Plug 'ervandew/supertab'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " installs fzf
+Plug 'junegunn/fzf.vim' " fuzy finder :FZF :Files :GFiles :Buffers
+Plug 'liuchengxu/vim-clap'
+Plug 'liuchengxu/vista.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neomake/neomake'
+Plug 'w0rp/ale'
+" Status and UI
+Plug 'itchyny/calendar.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'itchyny/lightline.vim'
+Plug 'ryanoasis/vim-devicons' " should load after nerdTree and lightline
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
+" Git
+Plug 'airblade/vim-gitgutter'
+Plug 'justinmk/vim-sneak'
+Plug 'rhysd/git-messenger.vim'
+Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'tpope/vim-fugitive' " git wrapper :GCommit, :Gpush, :Gpull :Gblame :Gdiff :Git add %
+"   _____ _
+"  |_   _| |__   ___ _ __ ___   ___  ___
+"    | | | '_ \ / _ \ '_ ` _ \ / _ \/ __|
+"    | | | | | |  __/ | | | | |  __/\__ \
+"    |_| |_| |_|\___|_| |_| |_|\___||___/
+"
+Plug 'arcticicestudio/nord-vim'
+Plug 'ayu-theme/ayu-vim'
+Plug 'challenger-deep-theme/vim'
+Plug 'dracula/vim'
+Plug 'drewtempelmeyer/palenight.vim'
+Plug 'frazrepo/vim-rainbow'
+Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-two-firewatch'
+Plug 'sainnhe/lightline_foobar.vim'
+Plug 'tomasr/molokai'
+
+call plug#end()
+" }}}
+
 " easy clipboard copy/paste {{{
 noremap <leader>y "*y
 noremap <leader>Y "*Y
@@ -122,7 +210,7 @@ noremap <leader>P "*P
 " }}}
 
 " custom keybindings {{{
-" Sudo write 
+" Sudo write
 nnoremap <leader>xs :w !sudo tee %<CR>
 " Clear last search (,qs)
 map <silent> <BS> :nohlsearch<CR>
@@ -144,6 +232,9 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+" When vimwindow is resized resize splits
+au VimResized * exe "normal! \<c-w>="
 " }}}
 
 " tabs {{{
@@ -188,8 +279,34 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " }}}
+"
+" Language server {{{
+nmap <leader>ld <Plug>(coc-definition)zz
+nnoremap <leader>lD :call CocAction('jumpDefinition', 'vsplit')<CR>zz
+nmap <leader>la <Plug>(coc-references)
+nmap <leader>lr <Plug>(coc-rename)
+noremap <leader>lh :call CocAction('doHover')<CR>
+noremap <leader>lo :CocList outline<CR>
+nnoremap <leader>lO :Vista<CR>
+noremap <leader>lp :CocList diagnostics<CR>
 
-"This unsets the "last search pattern" register by hitting return
+" Quickfix
+nnoremap <silent> <UP> :cope<CR>
+nnoremap <silent> <DOWN> :cclose<CR>
+nnoremap <silent> <leader>cn :cnext<CR>
+nnoremap <silent> <leader>cp :cprev<CR>
+nnoremap <silent> <RIGHT> :cnext<CR>
+nnoremap <silent> <LEFT> :cprev<CR>
+" }}}
+"
+" Make many of the jump commands also center on search term
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap <C-o> <C-o>zz
+nnoremap <C-i> <C-i>zz
+nnoremap * *zz
+nnoremap # #zz
+" This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
 " Terminal {{{
@@ -198,7 +315,7 @@ if executable ('/usr/bin/zsh')
   set shell=/usr/bin/zsh
 endif
 " open terminal
-nnoremap <A-s> :te<cr> 
+nnoremap <A-s> :te<cr>
 " }}}
 
 " spellcheck {{{
@@ -213,11 +330,6 @@ set spellfile=$HOME/Dropbox/vim/spell/es.utf-8.add
 " }}}
 
 " Local directories {{{
-" if !isdirectory("~/.vim/backupd")
-"     call mkdir("~/.vim/backupd", "p")
-" endif
-" set backupdir=~/.vim/backupd
-
 set backup
 if !isdirectory($HOME."/.vim/backupdir")
     call mkdir($HOME."/.vim/backupdir", "p")
@@ -252,7 +364,7 @@ endfunction
 
 " ctags {{{
 " Create the `tags` file (may need to install ctags first)
-command! MakeTags !ctags -R .  
+command! MakeTags !ctags -R .
 " NOW WE CAN:
 " - Use ^] to jump to tag under cursor
 " - Use g^] for ambiguous tags
@@ -268,85 +380,234 @@ let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
 " }}}
 
 
-" Plugins -------------------------------------------------------------
-
-" install vim plug if not installed
-if has('nvim')
-  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-    silent !echo '[Downloading vim-plug for neovim] ...'
-    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs 
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  endif
-else
-  if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !echo '[Downloading vim-plug for vim] ...'
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs 
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-  endif
-endif
-
-
-" Load plugins {{{
-call plug#begin('~/.vim/plugged')
-Plug 'airblade/vim-gitgutter'
-Plug 'chiel92/vim-autoformat'
-Plug 'easymotion/vim-easymotion'
-Plug 'mbbill/undotree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'sheerun/vim-polyglot'
-Plug 'terryma/vim-multiple-cursors'
-" fugitive git wrapper :GCommit, :Gpush, :Gpull :Gblame :Gdiff :Git add %
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-surround'
-Plug 'frazrepo/vim-rainbow'
-
-" fuzy finder :FZF :Files :GFiles :Buffers
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-" search :Ack
-Plug 'mileszs/ack.vim'
-" fuzzy file finder :CtrlP :CtrlPBuffer :CtrlPMixed
-Plug 'ctrlpvim/ctrlp.vim'
-" C-tags integration --- requires ctags system package :Tagbar
-Plug 'majutsushi/tagbar'
-
-" language support
-Plug 'sheerun/vim-polyglot'
-
-" theme
-Plug 'joshdick/onedark.vim'
-Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
-Plug 'itchyny/lightline.vim'
-call plug#end()
-" }}}
 "
 
 " vim rainbow global
 let g:rainbow_active = 1
+
 " {{{ nerd tree
 map <M-1> :NERDTreeToggle<CR>
 
 " if last window open is nerd tree close vim
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:webdevicons_conceal_nerdtree_brackets = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1 " enable folder glyph flag
+let g:webdevicons_enable_ctrlp = 1
+" Force extra padding in NERDTree so that the filetype icons line up vertically
+let g:WebDevIconsNerdTreeGitPluginForceVAlign = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ' '
+let g:DevIconsDefaultFolderOpenSymbol = ' '
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:DevIconsEnableFolderExtensionPatternMatching = 1
+
+let g:NERDTreeHighlightFoldersFullName = 1
+
+" Basically disable nerdtree markers
+let g:NERDTreeDirArrowExpandable = ' '
+let g:NERDTreeDirArrowCollapsible = ' '
+
+
+let NERDTreeStatusline="%8*%=%7*NERD%8*%="
 " }}}
 
-nnoremap <F5> :UndotreeToggle<cr>
+" ctrlp {{
+"  Put ctrl p at the bottom ordererf from top to bottom
+let g:ctrlp_match_window='bottom,order:ttb,min:1,max:20,results:20'
+" use rg as our ctrlp finder
+let g:ctrlp_user_command = 'rg %s --files --hidden --color=never --glob ""'
+" rg is fast enough we don't need no stinking cache
+let g:ctrlp_use_caching=0
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
 
-" Turn tags
-nmap <F8> :TagbarToggle<CR>
+" }}
 
 " theme {{{
-try
-  "colorscheme solarized
-  "colorscheme molokai
-  colorscheme onedark
-catch
-endtry
+function! FileNameWithIcon() abort
+  return winwidth(0) > 70  ?  WebDevIconsGetFileTypeSymbol() . ' ' . expand('%:t') : ''
+endfunction
+
+function! FileNameWithParent(f) abort
+  if expand('%:t') ==# ''
+    return expand('%:p:h:t')
+  else
+    return expand('%:p:h:t') . "/" . expand("%:t")
+  endif
+endfunction
+
+function! Git_branch() abort
+  if fugitive#head() !=# ''
+    return  fugitive#head() . " "
+  else
+    return "\uf468"
+  endif
+endfunction
+
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+
+  if get(info, 'error', 0)
+    return "\uf46f"
+  endif
+
+  if get(info, 'warning', 0)
+    return info['warning'] . "\uf421"
+  endif
+
+  return "\uf42e "
+endfunction
+
+let g:lightline = {}
+let g:lightline.active = {
+      \ 'left': [ ['mode', 'readonly'], ['filename_with_icon', 'modified']],
+      \ 'right': [['lineinfo'], ['testing_status', 'status_diagnostic'] ]
+      \ }
+let g:lightline.separator = { 'left': " ", 'right': " " }
+let g:lightline.tabline_separator = { 'left': " ", 'right': "" }
+let g:lightline.tabline_subseparator = { 'left': "/", 'right': "/" }
+let g:lightline.subseparator = { 'left': '\\', 'right': '\\' }
+
+let g:lightline.tabline = {
+            \ 'left': [ [ 'vim_logo'], [ 'tabs' ] ],
+            \ 'right': [ [ 'git_branch' ]]
+            \ }
+let g:lightline.tab = {
+        \ 'active': ['filename_with_parent'],
+        \ 'inactive': ['filename']
+        \ }
+
+let g:lightline.tab_component = {}
+let g:lightline.tab_component_function = {
+            \ 'artify_filename': 'lightline_tab_filename',
+            \ 'filename': 'lightline#tab#filename',
+            \ 'modified': 'lightline#tab#modified',
+            \ 'readonly': 'lightline#tab#readonly',
+            \ 'tabnum': 'lightline#tab#tabnum',
+            \ 'filename_with_parent': 'FileNameWithParent'
+            \ }
+
+let g:lightline.component = {
+        \ 'filename_with_icon': '%{FileNameWithIcon()}',
+        \ 'vim_logo': "\ue7c5 ",
+        \ 'git_branch': '%{Git_branch()}',
+        \ 'filename_with_parent': '%t',
+        \ 'status_diagnostic': '%{StatusDiagnostic()}'
+        \ }
+
+"
+" Dynamically switch color scheme and have things respect it
+function SwitchColorScheme(name)
+  let g:VIM_COLOR_SCHEME = a:name
+  call ColorScheme()
+  call lightline#init()
+  call lightline#colorscheme()
+  call lightline#update()
+endfunction
+
+function! ColorScheme()
+  if g:VIM_COLOR_SCHEME ==# 'palenight'
+    " Lazy load theme in
+    let g:palenight_terminal_italics=1
+    colorscheme palenight
+    let g:lightline.colorscheme = 'palenight_alter'
+  endif
+
+  if g:VIM_COLOR_SCHEME ==# 'nord'
+    " Lazy load theme in
+    let g:nord_underline = 1
+    let g:nord_italic_comments = 1
+    let g:nord_italic = 1
+    let g:nord_cursor_line_number_background = 1
+    colorscheme nord
+    let g:lightline.colorscheme = 'nord'
+  endif
+
+  if g:VIM_COLOR_SCHEME ==# 'dracula'
+    set background=dark
+    colorscheme dracula
+    let g:lightline.colorscheme = 'dracula'
+  endif
+
+  if g:VIM_COLOR_SCHEME ==# 'ayu-light'
+    let g:ayucolor="light"
+    set background=light
+    colorscheme ayu
+    let g:lightline.colorscheme = 'ayu_light'
+  endif
+
+  if g:VIM_COLOR_SCHEME ==# 'ayu-mirage'
+    set background=dark
+    let g:ayucolor="mirage"
+    colorscheme ayu
+
+    let g:lightline.colorscheme = 'ayu_mirage'
+  endif
+
+endfunction
+
+" The Defaults
+:call SwitchColorScheme('dracula')
 " }}}
 
+" whichkey {{{
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+set timeoutlen=500
+let g:which_key_map =  {}
+
+let g:which_key_map['w'] = {
+      \ 'name' : '+windows' ,
+      \ 'w' : ['<C-W>w'     , 'other-window']          ,
+      \ 'd' : ['<C-W>c'     , 'delete-window']         ,
+      \ '-' : ['<C-W>s'     , 'split-window-below']    ,
+      \ '|' : ['<C-W>v'     , 'split-window-right']    ,
+      \ '2' : ['<C-W>v'     , 'layout-double-columns'] ,
+      \ 'h' : ['<C-W>h'     , 'window-left']           ,
+      \ 'j' : ['<C-W>j'     , 'window-below']          ,
+      \ 'l' : ['<C-W>l'     , 'window-right']          ,
+      \ 'k' : ['<C-W>k'     , 'window-up']             ,
+      \ 'H' : ['<C-W>5<'    , 'expand-window-left']    ,
+      \ 'J' : ['resize +5'  , 'expand-window-below']   ,
+      \ 'L' : ['<C-W>5>'    , 'expand-window-right']   ,
+      \ 'K' : ['resize -5'  , 'expand-window-up']      ,
+      \ '=' : ['<C-W>='     , 'balance-window']        ,
+      \ 's' : ['<C-W>s'     , 'split-window-below']    ,
+      \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
+      \ '?' : ['Windows'    , 'fzf-window']            ,
+      \ }
+" }}}"
+"
+" supertab {{{
+" supertab completions
+" This is how I got it so that tabbing moves down the completion list
+" from top to bottom instead of upwards
+let g:SuperTabMappingForward = '<s-tab>'
+let g:SuperTabMappingBackward = '<tab>'
+" }}}
+"
+" vista {{{
+nnoremap <BS> :b#<CR>
+let g:vista_sidebar_width = 45
+let g:vista_disable_statusline = 1
+
+" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
+let g:vista#renderer#enable_icon = 1
+
+let g:vista_icon_indent = ["▸ ", ""]
+
+" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
+let g:vista#renderer#icons = {
+\   "function": "ﬦ",
+\   "module": " ",
+\   "variable": "\ufb18 ",
+\   "constant": ""
+\  }
+
+let g:vista_default_executive = 'coc'
+" }}}
+
+" File management {{{
+nnoremap <silent><leader>\ :NERDTreeToggle<CR>
+nnoremap <silent><leader>p :CtrlP<CR>
+nnoremap <silent><leader>b :CtrlPBuffer<CR>
+"" }}}
