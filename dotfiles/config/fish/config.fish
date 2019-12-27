@@ -29,7 +29,6 @@ fundle init
 set fish_plugins autojump vi-mode
 set -gx TERM rxvt-256color
 set -gx PATH ~/.local/bin $PATH
-set -gx EDITOR "emacs -nw"
 set fish_greeting ''
 
 
@@ -50,7 +49,7 @@ alias old_vi=vi
 alias vi=vim
 
 
-alias emx="emacsclient -t"
+alias emx="emacsclient -t --alternate-editor='nvim'"
 alias emc="emacsclient -c -a emacs"
 alias cm="cmus"
 alias co="code ."
@@ -204,7 +203,21 @@ function ..... ; cd ../../../.. ; end
 # utilities.
 function g        ; git $argv ; end
 function grep     ; command grep --color=auto $argv ; end
+function decode64
+  echo "$argv" | base64 -d ; echo
+end
 
+function prettyjson_s
+  echo "$argv" | python -mjson.tool
+end
+
+function decodeJwt
+  set TOKEN (string split '.' "$argv")
+  echo "header:"
+  prettyjson_s (decode64 "$TOKEN[1]=")
+  echo "payload:"
+  prettyjson_s (decode64 "$TOKEN[2]==")
+end
 
 ##########################################################
 ##########    Source
