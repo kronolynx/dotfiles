@@ -1,5 +1,6 @@
 CoenraadS.bracket-pair-colorizer
 dbaeumer.vscode-eslint
+dracula-theme.theme-dracula
 eamodio.gitlens
 Equinusocio.vsc-material-theme
 formulahendry.auto-close-tag
@@ -8,15 +9,8 @@ justusadam.language-haskell
 keyring.Lua
 ms-python.python
 PKief.material-icon-theme
-redhat.java
 scala-lang.scala
 scalameta.metals
 trixnz.vscode-lua
 UCL.haskelly
-VisualStudioExptTeam.vscodeintellicode
-vscjava.vscode-java-debug
-vscjava.vscode-java-dependency
-vscjava.vscode-java-pack
-vscjava.vscode-java-test
-vscjava.vscode-maven
 vscodevim.vim

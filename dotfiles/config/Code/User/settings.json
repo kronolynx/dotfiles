@@ -623,6 +623,7 @@
             ]
         },
      ],
+    "vim.sneak": false,
     "editor.fontFamily": "'FiraCode Nerd Font'",
     "editor.fontLigatures": true,
     "editor.minimap.enabled": false,
@@ -662,5 +663,5 @@
         "**/.factorypath": true
     },
     "keyboard.dispatch": "keyCode",
-    "vim.sneak": false 
+    "editor.scrollbar.verticalScrollbarSize": 0
 }
