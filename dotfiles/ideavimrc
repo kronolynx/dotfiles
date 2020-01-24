@@ -28,10 +28,10 @@ nmap <leader>cc :%s/\s\+$<CR><Paste>
 vmap <leader>cc <Esc>:%s/\s\+$<CR><Paste>
 
 map <C-n> :action <cr>
-vap <C-n> <Esc>:action <cr>
+vmap <C-n> <Esc>:action <cr>
 
 map <C-p> :action <cr>
-vap <C-p> <Esc>:action <cr>
+vmap <C-p> <Esc>:action <cr>
 
 " }}}
 
@@ -50,7 +50,7 @@ nnoremap <leader>to :action MoveEditorToOppositeTabGroup<cr>
 vnoremap <leader>to <Esc>:action MoveEditorToOppositeTabGroup<cr>
 
 noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
-voremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
+vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
 " undo (reopen)
 nnoremap <leader>tu :action Reopenclosedtab<cr>
@@ -90,11 +90,11 @@ vnoremap <leader>ec <Esc>:action CompileProject<cr>
 nnoremap <leader>ee :action EvaluateExpression<CR>
 vnoremap <leader>ee <Esc>:action EvaluateExpression<CR>
 
-nnoremap <leader>ei :action ImplicitArgumentsMenu.ShowImplicits<cr>
-vnoremap <leader>ei <Esc>:action ImplicitArgumentsMenu.ShowImplicits<cr>
+nnoremap <leader>ei :action Scala.ShowImplicits<cr>
+vnoremap <leader>ei <Esc>:action Scala.ShowImplicits<cr>
 
-nnoremap <leader>eI :action ImplicitArgumentsMenu.ExpandImplicits<cr>
-vnoremap <leader>eI <Esc>:action ImplicitArgumentsMenu.ExpandImplicits<cr>
+nnoremap <leader>eI :action Scala.ExpandImplicits<cr>
+vnoremap <leader>eI <Esc>:action Scala.ExpandImplicits<cr>
 
 nnoremap <leader>ep :action ParameterInfo<cr>
 vnoremap <leader>ep <Esc>:action ParameterInfo<cr>
@@ -231,6 +231,8 @@ vnoremap <leader>mu <Esc>:action Git.Unstash<cr>
 " Show local changes window (git status)
 nnoremap <leader>mw    :action Vcs.Show.Local.Changes<CR>
 vnoremap <leader>mw    <Esc>:action Vcs.Show.Local.Changes<CR>
+nnoremap <leader>md    :action Vcs.Show.Local.Changes<CR>
+vnoremap <leader>md    <Esc>:action Vcs.Show.Local.Changes<CR>
 
 nnoremap <leader>ms :action Git.Stash<cr>
 vnoremap <leader>ms <Esc>:action Git.Stash<cr>
@@ -292,7 +294,7 @@ nnoremap <leader>wj <C-w>j
 nnoremap <leader>wk <C-w>k
 
 noremap  <A-z> :action HideAllWindows<cr>
-voremap  <A-z> <Esc>:action HideAllWindows<cr>
+vnoremap  <A-z> <Esc>:action HideAllWindows<cr>
 
 
 nnoremap <C-l> <C-w>l

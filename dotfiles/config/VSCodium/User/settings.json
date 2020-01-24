@@ -663,5 +663,13 @@
         "**/.factorypath": true
     },
     "keyboard.dispatch": "keyCode",
-    "editor.scrollbar.verticalScrollbarSize": 0
+    "editor.scrollbar.verticalScrollbarSize": 0,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "rest-client.enableTelemetry": false,
+    "rest-client.previewOption": "exchange",
+    "rest-client.requestNameAsResponseTabTitle": true,
+    "workbench.editor.tabSizing": "shrink",
+    "editor.wordWrap": "bounded"
 }
