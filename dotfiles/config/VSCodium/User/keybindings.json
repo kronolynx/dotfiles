@@ -17,7 +17,7 @@
     {
         "key": "alt+1",
         "command": "workbench.view.explorer",
-        "when": "editorTextFocus && !explorerViewletVisible"
+        "when": "!explorerViewletVisible"
     },
     {
         "key": "alt+1",

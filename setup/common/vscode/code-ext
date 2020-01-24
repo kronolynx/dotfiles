@@ -1,12 +1,17 @@
+alefragnani.project-manager
 CoenraadS.bracket-pair-colorizer
 dbaeumer.vscode-eslint
 dracula-theme.theme-dracula
 eamodio.gitlens
+Equinusocio.vsc-community-material-theme
 Equinusocio.vsc-material-theme
+equinusocio.vsc-material-theme-icons
 formulahendry.auto-close-tag
 HookyQR.beautify
+humao.rest-client
 justusadam.language-haskell
 keyring.Lua
+kisstkondoros.vscode-gutter-preview
 ms-python.python
 PKief.material-icon-theme
 scala-lang.scala
@@ -14,3 +19,4 @@ scalameta.metals
 trixnz.vscode-lua
 UCL.haskelly
 vscodevim.vim
+vsls-contrib.gistfs
