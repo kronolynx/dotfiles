@@ -166,7 +166,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " installs fzf
 Plug 'junegunn/fzf.vim' " fuzy finder :FZF :Files :GFiles :Buffers
 Plug 'liuchengxu/vim-clap'
 Plug 'liuchengxu/vista.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neomake/neomake'
 Plug 'w0rp/ale'
 " Status and UI
@@ -315,7 +315,7 @@ if executable ('/usr/bin/zsh')
   set shell=/usr/bin/zsh
 endif
 " open terminal
-nnoremap <A-s> :te<cr>
+nnoremap <M-s> :te<cr>
 " }}}
 
 " spellcheck {{{
@@ -611,3 +611,9 @@ nnoremap <silent><leader>\ :NERDTreeToggle<CR>
 nnoremap <silent><leader>p :CtrlP<CR>
 nnoremap <silent><leader>b :CtrlPBuffer<CR>
 "" }}}
+
+" Comment {{
+vnoremap <M-/> :Commentary<CR>j
+nnoremap <M-/> V:Commentary<CR>j
+" }}
+
