@@ -180,7 +180,7 @@ wibar.setup = function(s)
       s.mytasklist,
       widgets.space
     },
-    widgets.mpris,
+    nil, --widgets.mpris,
     {
       -- Right widgets
       layout = wibox.layout.fixed.horizontal,
