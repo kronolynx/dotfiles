@@ -1,14 +1,14 @@
 Config {
-      font               = "xft:FantasqueSansMono Nerd Font:pixelsize=19,Noto Sans CJK SC:pixelsize=18,Noto Sans CJK TC:pixelsize=18,Noto Sans CJK JP:pixelsize=18"
+      font               = "xft:FantasqueSansMono Nerd Font:pixelsize=15,Noto Sans CJK SC:pixelsize=15,Noto Sans CJK TC:pixelsize=15,Noto Sans CJK JP:pixelsize=15,gameFont:pixelsize=15"
     , additionalFonts = [
       "xft:Noto Sans:size=10:style=Bold"
-      ,"xft:FontAwesome:style=Regular:size=16"
+      ,"xft:FontAwesome:style=Regular:size=14"
       ]
-    , bgColor            = "#2F343F"
+    , bgColor            = "#1D1F28"
     , alpha              = 255
-    , fgColor            = "silver"
+    , fgColor            = "#FDFDFD"
     , iconOffset = -8
-    , position = TopSize C 100 30
+    , position = TopSize C 100 28
     , textOffset = -1
     , border = BottomB
     , borderWidth      = 0
@@ -21,7 +21,7 @@ Config {
     , persistent         = False
     , alignSep           = "}{"
     , sepChar            = "%"
-    , template = "%StdinReader% } %mpris2% { %locks% %kbd% %mad% <action=`pavucontrol` button=3><action=`~/.scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
+    , template = "%StdinReader% } %mpris2% { %mad% %locks% %kbd%  <action=`pavucontrol` button=3><action=`~/.scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
     -- plugins
     --   Numbers can be automatically colored according to their value. xmobar
     --   decides color based on a three-tier/two-cutoff system, controlled by
@@ -43,13 +43,13 @@ Config {
             , "--Low"     , "10"
             , "--High"    , "80"
             , "--low"     , "red"
-            , "--normal"  , "darkorange"
-            , "--high"    , "purple"
+            , "--normal"  , "#FDFDFD"
+            , "--high"    , "#FDFDFD"
             , "-f"        , "AC/online"
             , "--"
             , "-o"        , "<fc=#00e64d> <left></fc>"
-            , "-O"        , "<fc=#00e64d> <left></fc>"
-            , "-i"        , "<fc=#66FF99></fc>"
+            , "-O"        , "<fc=#FDFDFD> <left></fc>"
+            , "-i"        , "<fc=#FDFDFD> </fc>"
             ] 60
         -- cpu core temperature monitor
         , Run CoreTemp       
@@ -67,8 +67,8 @@ Config {
             , "-x", ""
             , "-a", "r"
             , "-H", "10000"
-            , "-h", "#BF616A"
-            , "-n", "#81A1C1"
+            , "-h", "#FDFDFD"
+            , "-n", "#FDFDFD"
             , "--"
             , "--rx-icon-pattern", "<fn=1>\x2595<rxvbar>\x258F</fn>"
             , "--tx-icon-pattern", "<fn=1>\x2595<txvbar>\x258F</fn>"
@@ -76,16 +76,16 @@ Config {
         -- LEMD is the ICAO code for Madrid/Barajas
         , Run Weather "LEMD" ["-t","<tempC>°C <skyCondition>","-L","16","-H","30","-n","#CEFFAC","-h","#FFB6B0","-l","#96CBFE"] 36000
         , Run Com "sh" ["-c", "mpc | head -n -2 | sed 's,.*/,,' | cut -c-40"] "mpd" 50
-        , Run Date "<action=`~/.scripts/calendar.sh` button=1><fc=#00ff00> %a %b %d</fc></action><fc=#00a1f1> %H:%M:%S</fc>" "date" 10
+        , Run Date "<action=`~/.scripts/calendar.sh` button=1><fc=#FDFDFD> %a %b %d</fc></action><fc=#FDFDFD> %H:%M:%S</fc>" "date" 10
         , Run Com "/bin/bash" ["-c", "~/.scripts/XMgetvolume.sh"]  "XVol" 10
         , Run Mpris2 "spotify" ["-t", "<artist> - <title>", "-x", ""] 10
         , Run Com "/bin/bash" ["-c", "~/.scripts/trayerpad.sh"]  "trayerpad" 10
         , Run Com "/bin/bash" ["-c", "~/.scripts/weather3.sh madrid"] "mad" 36000
         -- keyboard layout indicator
         , Run Kbd            
-              [ ("us(dvorak)" , "<fc=#cc00ff> DV</fc>")
-              , ("us"         , "<fc=#cc00ff> US</fc>")
-              , ("es"         , "<fc=#cc00ff> ES</fc>")
+              [ ("us(dvorak)" , "<fc=#FDFDFD>  DV</fc>")
+              , ("us"         , "<fc=#FDFDFD>  US</fc>")
+              , ("es"         , "<fc=#FDFDFD>  ES</fc>")
               ]
         , Run Locks
         , Run StdinReader

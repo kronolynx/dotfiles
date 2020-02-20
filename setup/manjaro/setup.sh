@@ -116,7 +116,7 @@ misc=(
 
 coding=(
   visual-studio-code-bin
-  intellij-idea-community-edition
+  intellij-idea-community-edition-jre
   # code documentation
   zeal
   # code color higlight
@@ -172,10 +172,10 @@ xmonad=(
   xmonad
   xmonad-contrib
   xmobar
-  # STAnd-aLONE sysTRAY.
-  stalonetray
+  trayer
   # Lightweight GTK+ clipboard manager
   clipit
+  dzen2
 )
 
 i3=(
@@ -194,6 +194,12 @@ i3=(
 )
 
 
+# set here the name of the window manager (awesome, xmonad or i3)
+wm="xmonad"
+# wm="awesome"
+
+window_manager=$wm[*]
+$SCRIPTPATH/helpers/install-app.sh ${!window_manager}
 
 $SCRIPTPATH/helpers/pprint.sh "Setting Desktop"
 $SCRIPTPATH/helpers/install-app.sh ${base[*]}
@@ -205,11 +211,5 @@ $SCRIPTPATH/helpers/install-app.sh ${coding[*]}
 $SCRIPTPATH/helpers/install-app.sh ${tilling_common_apps[*]}
 
 install_tmux
-$SCRIPTPATH/apps/fish-shell.sh
 $SCRIPTPATH/apps/thunar.sh
-
-# set here the name of the window manager (awesome, xmonad or i3)
-wm="awesome"
-
-window_manager=$wm[*]
-$SCRIPTPATH/helpers/install-app.sh ${!window_manager}
+$SCRIPTPATH/apps/fish-shell.sh # TODO fix fish-shell
