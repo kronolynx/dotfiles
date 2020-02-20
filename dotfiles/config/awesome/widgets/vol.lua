@@ -51,13 +51,14 @@ local vol            = awful.widget.watch(
       {
         id     = 'current_icon',
         widget = wibox.widget.textbox,
+	forced_width = 12
       },
       {
         id     = 'current_vol',
         widget = wibox.widget.textbox,
       },
       layout     = wibox.layout.fixed.horizontal,
-      spacing    = 5,
+      spacing    = 3,
       set_markup = function(self, icon, percentage)
         self.current_icon.markup = icon
         self.current_vol.markup  = percentage
@@ -85,4 +86,3 @@ vol:buttons(awful.util.table.join(
 ))
 
 return vol
-

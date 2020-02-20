@@ -62,7 +62,10 @@ awful.rules.rules = {
         "ConfigManager", -- Thunderbird's about:config.
         "pop-up", -- e.g. Google Chrome's (detached) Developer Tools.
       }
-    }, properties = { floating = true }
+    }, properties = { floating = true },
+    callback = function (c)
+      awful.placement.centered(c,nil)
+    end
   },
 
   -- Steam Rules
@@ -162,7 +165,7 @@ awful.rules.rules = {
         "Slack",
       },
     },
-    properties = { screen = function () return screen.count () >= 2 and screen[2] or screen[1] end, tag = awful.screen.focused().tags[5], floating = false }
+    properties = { screen = function () return screen.count() >= 2 and screen[2] or screen[1] end, tag = awful.screen.focused().tags[10], floating = false }
   },
   {
     rule_any   = {
@@ -170,6 +173,6 @@ awful.rules.rules = {
         "Spotify",
       },
     },
-    properties = { screen = function () return screen.count () >= 2 and screen[2] or screen[1] end, tag = awful.screen.focused().tags[6], floating = false }
+    properties = { screen = function () return screen.count() >= 2 and screen[2] or screen[1] end, tag = awful.screen.focused().tags[10], floating = false }
   }
 }

@@ -4,13 +4,14 @@ local wibox = require("wibox")
 local kb    = wibox.widget {
   {
     markup = '<span color="' .. awful.util.my_colors.dark.magenta .. '"></span>',
-    widget = wibox.widget.textbox
+    widget = wibox.widget.textbox,
+    forced_width = 22
   },
   {
     id     = "cur_layout",
     widget = wibox.widget.textbox,
   },
-  spacing    = 5,
+  spacing    = 0,
   layout     = wibox.layout.fixed.horizontal,
   set_markup = function(self, layout)
     self.cur_layout.markup = layout
