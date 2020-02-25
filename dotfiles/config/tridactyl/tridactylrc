@@ -11,7 +11,7 @@ sanitize tridactyllocal tridactylsync
 
 " Just use a blank page for new tab. It would be nicer to use the standard
 " Firefox homepage, but Tridactyl doesn't support this yet.
-set newtab www.google.com
+" set newtab www.google.com
 
 " Ctrl-F should use the browser's native 'find' functionality.
 unbind <C-f>
@@ -60,3 +60,8 @@ bind ,s source
 set searchurls.r   https://old.reddit.com/r/%s
 set searchurls.w   https://en.wikipedia.org/w/index.php?search=%s
 set searchurls.wd  https://en.wiktionary.org/wiki/?search=%s
+
+bind ;C composite hint -pipe a href | tabopen -c banking
+bind ;W composite hint -pipe a href | tabopen -c work
+bind ;D composite hint -pipe a href | tabopen -c dev
+
