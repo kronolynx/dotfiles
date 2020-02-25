@@ -27,12 +27,6 @@ nnoremap <leader>w :action SaveAll<cr>
 nmap <leader>cc :%s/\s\+$<CR><Paste>
 vmap <leader>cc <Esc>:%s/\s\+$<CR><Paste>
 
-map <C-n> :action <cr>
-vmap <C-n> <Esc>:action <cr>
-
-map <C-p> :action <cr>
-vmap <C-p> <Esc>:action <cr>
-
 " }}}
 
 " tab {{{
@@ -51,6 +45,9 @@ vnoremap <leader>to <Esc>:action MoveEditorToOppositeTabGroup<cr>
 
 noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
 vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
+
+noremap yt :action OpenEditorInOppositeTabGroup<cr>
+vnoremap yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
 " undo (reopen)
 nnoremap <leader>tu :action Reopenclosedtab<cr>
@@ -212,6 +209,9 @@ vnoremap g.    :action JumpToLastChange<CR>
 " git (m from magit) {{{
 nnoremap <leader>ma :action Git.Add<cr>
 vnoremap <leader>ma <Esc>:action Git.Add<cr>
+
+nnoremap <leader>mm :action Git.Menu<cr>
+vnoremap <leader>mm <Esc>:action Git.Menu<cr>
 
 nnoremap <leader>mp :action Git.Pull<cr>
 vnoremap <leader>mp <Esc>:action Git.Pull<cr>
@@ -393,3 +393,8 @@ vnoremap <leader>qQ    <Esc>:action Exit<CR>
 nnoremap <leader>qs    :action SaveAll<CR>:action CloseProject<CR>
 vnoremap <leader>qs    <Esc>:action SaveAll<CR>:action CloseProject<CR>
 " }}}
+"
+"
+" relative line numbers
+set nu
+set rnu
