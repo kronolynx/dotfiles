@@ -63,7 +63,7 @@ import qualified XMonad.Prompt.Window          as WPrompt
 import qualified XMonad.Actions.CycleWS        as CycleWS
 import           XMonad.Actions.CycleWindows    ( cycleRecentWindows )
 import qualified XMonad.Actions.GridSelect     as GS
-import           XMonad.Actions.UpdatePointer   ( updatePointer )
+import           XMonad.Actions.Warp            ( warpToWindow )
 import           XMonad.Actions.WorkspaceNames  ( swapWithCurrent )
 import           XMonad.Actions.Submap          ( submap )
 
@@ -76,6 +76,7 @@ import           Data.List.Split                ( chunksOf )
 import qualified Data.Map                      as M
 import qualified Data.Text                     as T
 import           Data.Char                      ( toLower )
+import           Data.Ratio                     ( (%) )
 import           System.Exit                    ( ExitCode(ExitSuccess)
                                                 , exitWith
                                                 )
@@ -91,13 +92,12 @@ main :: IO ()
 main = do
     xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
     xmonad $ ewmh $ UH.withUrgencyHook UH.NoUrgencyHook $ myConfig
-        { logHook = myLogHook xmproc
-        }
+        { logHook = myLogHook xmproc }
 
 ------------------------------------------------------------------------
 -- Config
 --
-myConfig = def { borderWidth        = myBorderWidth
+myConfig = desktopConfig { borderWidth        = myBorderWidth
                , normalBorderColor  = myNormalBorderColor
                , focusedBorderColor = myFocusedBorderColor
                , focusFollowsMouse  = myFocusFollowsMouse
@@ -252,16 +252,16 @@ myLayout =
 --
 myLogHook :: Handle -> X ()
 myLogHook b =
-    DL.dynamicLogWithPP (myXmobarPP b) >> updatePointer (0.5, 0.5) (0, 0)
+    DL.dynamicLogWithPP (myXmobarPP b) -- >> updatePointer (0.5, 0.5) (0, 0)
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-    [ ManageDocks.manageDocks
+    [ 
+     ManageDocks.manageDocks
     , floatNextHook
-    , manageHook desktopConfig
     , myManageHook'
-    ]
-
+    ] 
+    
 --
 -- https://wiki.haskell.org/Xmonad/Frequently_asked_questions
 -- xprop fields used in manage hook:
@@ -277,16 +277,10 @@ myManageHook' =
           , [ className =? c --> doFloat | c <- myClassFloats ]
           , [ className =? c --> ManageHelpers.doFullFloat | c <- myFullFloats ]
           , [ title =? t --> doFloat | t <- myTitleFloats ]
-          , [ className =? c --> ManageHelpers.doCenterFloat
-            | c <- myCenterFloats
-            ]
-          , [ title =? t --> ManageHelpers.doCenterFloat
-            | t <- myTitleCenterFloats
-            ]
-          , [ className =? c --> doShift (myWorkspaces !! ws)
-            | (c, ws) <- myShifts
-            ]
-    -- , [ManageHelpers.isDialog --> ManageHelpers.doCenterFloat]
+          , [ className =? c --> ManageHelpers.doCenterFloat | c <- myCenterFloats ]
+          , [ title =? t --> ManageHelpers.doCenterFloat | t <- myTitleCenterFloats ]
+          , [ className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts ]
+          -- , [ManageHelpers.isDialog --> ManageHelpers.doCenterFloat]
           ]
   where
     myCenterFloats = ["zenity", "Arandr", "Galculator", "Yad", "albert"]
@@ -305,9 +299,9 @@ myManageHook' =
         , ("telegram-desktop", 4)
         , ("TelegramDesktop" , 4)
         , ("Thunderbird"     , 4)
-        , ("Slack"           , 5)
-        , ("Spotify"         , 5)
-        , ("Odio"            , 5)
+        , ("Slack"           , 8)
+        , ("Spotify"         , 8)
+        , ("Odio"            , 8)
         ]
 
 myStartupHook :: X ()
@@ -791,7 +785,7 @@ myWorkspaceMovementKeys' =
 myScreenMovementKeys :: [(String, X (), String)]
 myScreenMovementKeys =
     [ ( "M-s"
-      , CycleWS.nextScreen
+      , sequence_ [CycleWS.nextScreen, warpToWindow (1 % 2) (1 % 2)]
       , "Next screen"
       ) -- Move the focus to next screen (multi screen)
     , ("M-o"  , CycleWS.swapNextScreen , "Swap next screen")
