@@ -1,0 +1,23 @@
+name: xmonad-kronolynx
+version: 0.1.0
+synopsis: xmonad setting
+author: kronolynx
+copyright: © kronolynx
+license: MIT
+dependencies:
+  - X11
+  - base
+  - xmonad
+  - xmonad-contrib
+  - containers
+  - text
+  - split
+executables:
+  xmonad:
+    main: xmonad.hs
+    ghc-options:
+      - -Wall
+      - -fwarn-tabs
+      - -threaded
+      - -O2
+      - -with-rtsopts=-N4
