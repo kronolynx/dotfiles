@@ -1,0 +1,31 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 09767654db04d75c89350afcafe485d895ce2a4bb1efffcb56981dbe3c547d05
+
+name:           xmonad-kronolynx
+version:        0.1.0
+synopsis:       xmonad setting
+author:         kronolynx
+maintainer:     kronolynx
+copyright:      © kronolynx
+license:        MIT
+build-type:     Simple
+
+executable xmonad
+  main-is: xmonad.hs
+  other-modules:
+      Paths_xmonad_kronolynx
+  ghc-options: -Wall -fwarn-tabs -threaded -O2 -with-rtsopts=-N4
+  build-depends:
+      X11
+    , base
+    , containers
+    , split
+    , text
+    , xmonad
+    , xmonad-contrib
+  default-language: Haskell2010

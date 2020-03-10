@@ -77,6 +77,7 @@ import qualified Data.Map                      as M
 import qualified Data.Text                     as T
 import           Data.Char                      ( toLower )
 import           Data.Ratio                     ( (%) )
+import           Data.Monoid                    ( All )
 import           System.Exit                    ( ExitCode(ExitSuccess)
                                                 , exitWith
                                                 )
@@ -310,6 +311,7 @@ myStartupHook = do
     Cursor.setDefaultCursor Cursor.xC_left_ptr
     spawn "$HOME/.xmonad/autorun.sh"
 
+myHandleEventHook :: Event -> X All
 myHandleEventHook =
     ManageDocks.docksEventHook <+> handleEventHook desktopConfig
 

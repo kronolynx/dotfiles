@@ -75,6 +75,16 @@
             ]
         },
         {
+            "before": [ "<leader>", "e", "t" ],
+            "after": [],
+            "commands": [
+                {
+                    "command": "editor.action.peekTypeDefinition",
+                    "args": []
+                }
+            ]
+        },
+        {
             "before": [ "<leader>", "e", "u" ],
             "after": [],
             "commands": [
@@ -529,34 +539,6 @@
                 ":wq"
             ]
         },
-        {
-            "before": [
-                "J"
-            ],
-            "after": [
-                "5",
-                "j"
-            ]
-        },
-        {
-            "before": [
-                "K"
-            ],
-            "after": [
-                "5",
-                "k"
-            ]
-        },
-        // keep join lines
-        {
-            "before": [
-                "<Leader>",
-                "j"
-            ],
-            "after": [
-                "J"
-            ]
-        },
         // smart move between windows
         {
             "before": ["<C-k>"],
@@ -574,6 +556,15 @@
             "before": ["<C-l>"],
             "commands": ["workbench.action.navigateRight"],
         },
+        {
+            "before": [
+                "<C+/>"
+            ],
+            "after": [
+                "<C+/>",
+                "j"
+            ]
+        }
      ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
@@ -624,7 +615,7 @@
         },
      ],
     "vim.sneak": false,
-    "editor.fontFamily": "'FiraCode Nerd Font'",
+    "editor.fontFamily": "'Fantasque Sans Mono'",
     "editor.fontLigatures": true,
     "editor.minimap.enabled": false,
     "window.zoomLevel": 0,
@@ -639,7 +630,6 @@
     },
     "window.menuBarVisibility": "toggle",
     "workbench.activityBar.visible": false,
-    "editor.fontSize": 13,
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
     },
@@ -671,5 +661,7 @@
     "rest-client.previewOption": "exchange",
     "rest-client.requestNameAsResponseTabTitle": true,
     "workbench.editor.tabSizing": "shrink",
-    "editor.wordWrap": "bounded"
+    "editor.wordWrap": "bounded",
+    "editor.tabSize": 2,
+    "editor.wordWrapColumn": 120
 }

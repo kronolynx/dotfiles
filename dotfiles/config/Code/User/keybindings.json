@@ -60,4 +60,9 @@
         "key": "alt+b",
         "command": "workbench.action.navigateBack"
     },
+    {
+        "key": "ctrl+/",
+        "command": "-editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly"
+    },
 ]

@@ -46,8 +46,8 @@ vnoremap <leader>to <Esc>:action MoveEditorToOppositeTabGroup<cr>
 noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
 vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
-noremap yt :action OpenEditorInOppositeTabGroup<cr>
-vnoremap yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
+noremap <leader>yt :action OpenEditorInOppositeTabGroup<cr>
+vnoremap <leader>yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
 " undo (reopen)
 nnoremap <leader>tu :action Reopenclosedtab<cr>
@@ -84,8 +84,10 @@ vnoremap <leader>e= <Esc>:action ShowReformatFileDialog<cr>
 nnoremap <leader>ec :action CompileProject<cr>
 vnoremap <leader>ec <Esc>:action CompileProject<cr>
 
-nnoremap <leader>ee :action EvaluateExpression<CR>
-vnoremap <leader>ee <Esc>:action EvaluateExpression<CR>
+vnoremap <leader>ee :action EvaluateExpression<CR>
+
+nnoremap <leader>et :action Scala.TypeInfo<CR>
+vnoremap <leader>et :action Scala.TypeInfo<CR>
 
 nnoremap <leader>ei :action Scala.ShowImplicits<cr>
 vnoremap <leader>ei <Esc>:action Scala.ShowImplicits<cr>
@@ -259,8 +261,8 @@ vnoremap <leader>sf <Esc>:action FindUsagesInFile<cr>
 nnoremap <leader>sh    :action HighlightUsagesInFile<CR>
 vnoremap <leader>sh    <Esc>:action HighlightUsagesInFile<CR>
 
-nnoremap * :action FindWordAtCaret<cr>
-vnoremap * <Esc>:action FindWordAtCaret<cr>
+" nnoremap * :action FindWordAtCaret<cr>
+" vnoremap * <Esc>:action FindWordAtCaret<cr>
 
 " }}}
 

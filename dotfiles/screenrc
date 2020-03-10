@@ -1,0 +1,5 @@
+shell "/usr/bin/fish"
+startup_message off
+altscreen on
+term screen-256color
+defscrollback 100000                    # large scroll back

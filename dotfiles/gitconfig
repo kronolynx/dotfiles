@@ -39,7 +39,7 @@
   ls = branch -v # list branches
   lsr = remote -v # list remotes
   ls-stash="!git stash list | awk -F: '{ print "\n\n\n\n"; print $0; print "\n\n"; system("git stash show -p " $1); }'"
-  mema ="!f() { git ck master && git merge --ff-only $1 && git push origin master && git branch -d $1 && git push origin --delete $1;}; f" # merge branch into master and push then clean
+  mema ="!f() { git ck master && git merge --ff-only $1 && git push origin master && git push origin --delete $1;}; f" # merge branch into master and push then clean
   mem ="!f() { git ck master && git merge --ff-only $1 && git push origin master && git push origin --delete $1;}; f" # merge branch into master and push then clean
   mecuma ="!git mema $(git branch-name)" # merge current branch into master and push then clean
   #meup ="!f() {git branch | grep \* | cut -d ' ' -f2 | xargs git push upstream $1:master; }; f"

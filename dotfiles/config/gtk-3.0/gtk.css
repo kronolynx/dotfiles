@@ -1,0 +1,40 @@
+.terminator-terminal-window notebook tab {
+    background-color: #222;
+    padding: 0.2em;
+    border: 0;
+    border-color: #444;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.terminator-terminal-window notebook tab:checked {
+    background-color: #000;
+    background-image: none;
+}
+
+.terminator-terminal-window notebook tab label {
+    color: #ddd;
+}
+
+.terminator-terminal-window notebook tab:checked label {
+    color: #76C802;
+    font-weight: 500;
+}
+
+.terminator-terminal-window notebook tab button {
+    padding: 0;
+    background-color: transparent;
+    color: #ccc;
+}
+
+.terminator-terminal-window notebook header {
+    background-color: #444;
+}
+
+.terminator-terminal-window notebook tab button:hover {
+    border: 0;
+    background-image: none;
+    border-color: #444;
+    border-style: solid;
+    border-width: 1px;
+}
