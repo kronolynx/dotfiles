@@ -1,11 +1,9 @@
 [Default Applications]
 application/octet-stream=nvim.desktop
 application/pdf=qpdfview.desktop
-application/pdf=qpdfview.desktop
 application/x-gettext-translation=nvim.desktop
 application/xml=nvim.desktop
 application/x-wine-extension-ini=nvim.desktop
-image/gif=viewnior.desktop;gimp.desktop
 image/gif=viewnior.desktop;gimp.desktop
 image/jpeg=viewnior.desktop;gimp.desktop
 image/png=viewnior.desktop;gimp.desktop
@@ -16,3 +14,10 @@ video/x-flv=vlc.desktop
 video/x-ms-wmv=vlc.desktop
 video/x-ogm+ogg=vlc.desktop
 video/x-theora+ogg=vlc.desktop
+x-scheme-handler/postman=Postman.desktop
+x-scheme-handler/mailto=exo-mail-reader.desktop
+inode/directory=Thunar.desktop
+
+[Added Associations]
+application/json=emacsclient.desktop;visual-studio-code.desktop;nvim.desktop;
+text/x-log=emacsclient.desktop;emacs.desktop;nvim.desktop;visual-studio-code.desktop;
