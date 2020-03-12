@@ -207,6 +207,8 @@ myWorkspaces =
     , "\xE932" -- 
     , "\xE97D" -- 
     , "\xE982" -- 
+    , "\xE922" -- 
+    , "\xE942" -- 
     ]
 
 ------------------------------------------------------------------------
@@ -296,12 +298,12 @@ myManageHook' =
       -- workspace numbers start at 0
     myShifts =
         [ ("keepassxc"       , 6)
-        , ("telegram-desktop", 4)
-        , ("TelegramDesktop" , 4)
+        , ("telegram-desktop", 10)
+        , ("TelegramDesktop" , 10)
         , ("Thunderbird"     , 4)
-        , ("Slack"           , 8)
-        , ("Spotify"         , 8)
-        , ("Odio"            , 8)
+        , ("Slack"           , 9)
+        , ("Spotify"         , 10)
+        , ("Odio"            , 10)
         ]
 
 myStartupHook :: X ()
@@ -705,7 +707,7 @@ myKeys :: XConfig l -> M.Map (KeyMask, KeySym) (X ())
 myKeys config = mkKeymap config $ myKeymap ++ rmDesc myKeymapH
 
 myKeymap :: [(String, X ())]
-myKeymap = myFloatKeys ++ myWorkspaceMovementKeys
+myKeymap = myWorkspaceMovementKeys
 
 -- Keys with hints
 myKeymapH :: [(String, X (), String)]
@@ -716,6 +718,7 @@ myKeymapH = concat
     , myWorkspaceKeys
     , myMovementKeys
     , myMediaKeys
+    , myFloatKeys
     ]
 
 myWorkspaceMovementKeys :: [(String, X ())]
@@ -736,7 +739,7 @@ myWorkspaceMovementKeys =
     , (key   , ws  ) <- zip keys' myWorkspaces
     ]
   where
-    keys'      = fmap return $ ['1' .. '9'] ++ ['-', '=']
+    keys'      = fmap return $ ['1' .. '9'] ++ ['0', '-', '=']
     viewShift = liftM2 (.) W.greedyView W.shift
 
 myMovementKeys :: [(String, X (), String)]
@@ -872,13 +875,13 @@ myWorkspaceKeys =
     , ("M-<Tab>", CycleWS.toggleWS, "Toggle last workspace") -- toggle last workspace
     ]
 
-myFloatKeys :: [(String, X ())]
+myFloatKeys :: [(String, X (), String)]
 myFloatKeys =
-    [ ("M-t s", withFocused $ windows . W.sink)
-    , ("M-t b", withFocused $ windows . flip W.float bigCenterR)
-    , ("M-t c", withFocused $ windows . flip W.float centerR)
-    , ("M-t l", withFocused $ windows . flip W.float leftR)
-    , ("M-t r", withFocused $ windows . flip W.float rightR)
+    [ ("M-t s", withFocused $ windows . W.sink, "Sink floating")
+    , ("M-t b", withFocused $ windows . flip W.float bigCenterR, "Float big center")
+    , ("M-t c", withFocused $ windows . flip W.float centerR, "Float center")
+    , ("M-t l", withFocused $ windows . flip W.float leftR, "Float left")
+    , ("M-t r", withFocused $ windows . flip W.float rightR, "Float right")
     ]
 
 myLauncherKeys :: [(String, X (), String)]

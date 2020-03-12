@@ -17,7 +17,7 @@ MiscTabPosition=GTK_POS_TOP
 MiscHighlightUrls=TRUE
 ScrollingLines=999999
 ScrollingOnOutput=FALSE
-FontName=FiraCode Nerd Font weight=453 11
+FontName=FantasqueSansMono Nerd Font Mono 13
 MiscBellUrgent=FALSE
 MiscMouseWheelZoom=TRUE
 MiscMiddleClickOpensUri=FALSE
