@@ -40,7 +40,6 @@ media=(
   smplayer
   # Cast Audio/Video to your Google Cast and Sonos Devices
   mkchromecast
-  spotify
   # Free radio streaming software with more than 20,000 radio stations
   odio-appimage
 )
@@ -112,6 +111,13 @@ misc=(
   # yubico U2F (2 factor authentication)
   libu2f-host
   dropbox
+  thunar-dropbox
+  slack-desktop
+  docker
+  docker-compose
+  socat
+  # Small commandline tool to configure devices (set elecom buttons)
+  xorg-xinput
 )
 
 coding=(
@@ -130,6 +136,10 @@ coding=(
   # The Glasgow Haskell Compiler
   ghc
   # The Haskell Tool Stack
+  stack
+  # rest client
+  postman-bin
+  # haskell
   stack
 )
 
@@ -161,6 +171,8 @@ tilling_common_apps=(
   # X compositor that may fix tearing issues
   compton
   i3lock
+  # image viewer (set background image)
+  feh
 )
 
 awesome=(
