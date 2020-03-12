@@ -145,7 +145,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'sheerun/vim-polyglot' " language support
 
 " Utility Things
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'janko/vim-test'
 Plug 'jiangmiao/auto-pairs'
 Plug 'kana/vim-textobj-user'
