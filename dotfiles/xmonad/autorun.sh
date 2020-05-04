@@ -24,10 +24,11 @@ fi
 
 if ! pgrep "trayer" > /dev/null
 then
-  trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut false --transparent true --alpha 0 --tint 0x1D1F28 --expand true --heighttype pixel --height 22 --monitor 0 --padding 1 --distance 2 --distancefrom top &
+  trayer --edge top --align right --widthtype request --expand true --SetDockType true --SetPartialStrut false --transparent true --alpha 0 --tint 0x1D1F28 --expand true --heighttype pixel --height 23 --monitor 0 --padding 1 --distance 2 --distancefrom top &
 fi
 
 run thunar --daemon
+run emacs --daemon
 run urxvtd -q -o -f
 run feh --bg-scale ~/.wallpapers/girl-anime.jpg
 

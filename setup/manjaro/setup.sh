@@ -105,6 +105,8 @@ cli_media=(
   mps-youtube
   # download youtube videos
   youtube-dl
+  # Simple screen recorder with an easy to use interface (gif)
+  peek
 )
 
 misc=(
@@ -118,6 +120,11 @@ misc=(
   socat
   # Small commandline tool to configure devices (set elecom buttons)
   xorg-xinput
+  # chinese input
+  fcitx
+  fcitx-im
+  fcitx-googlepinyin
+  fcitx-configtool
 )
 
 coding=(

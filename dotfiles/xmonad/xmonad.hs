@@ -625,7 +625,7 @@ textAlign fAlign n = T.unpack . fAlign n ' ' . T.pack
 
 colDesc ::  String -> String -> String -> Int -> [(String, a, Label, String)] -> [String]
 colDesc colorBinding colorDesc colorTitle colSize bindings=
-    (colStr colorTitle ++ rAlign colSize (getLabel bindings) ++ lAlign colSize "") :
+    (colStr colorTitle ++ rAlign colSize (getLabel bindings) ++ lAlign (colSize + 1) "") :
     [ colStr colorBinding 
           ++ rAlign colSize key
           ++ " "
