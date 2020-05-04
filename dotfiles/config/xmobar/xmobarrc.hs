@@ -1,5 +1,5 @@
 Config {
-      font               = "xft:FantasqueSansMono Nerd Font:pixelsize=15,Noto Sans CJK SC:pixelsize=15,Noto Sans CJK TC:pixelsize=15,Noto Sans CJK JP:pixelsize=15,gameFont:pixelsize=15"
+      font               = "xft:FantasqueSansMono Nerd Font:pixelsize=16,Noto Sans CJK SC:pixelsize=16,Noto Sans CJK TC:pixelsize=16,Noto Sans CJK JP:pixelsize=16,gameFont:pixelsize=16"
     , additionalFonts = [
       "xft:Noto Sans:size=10:style=Bold"
       ,"xft:FontAwesome:style=Regular:size=14"
@@ -21,7 +21,7 @@ Config {
     , persistent         = False
     , alignSep           = "}{"
     , sepChar            = "%"
-    , template = "%StdinReader% } %mpris2% { %mad% %locks% %kbd%  <action=`pavucontrol` button=3><action=`~/.scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
+    , template = "%StdinReader% } %mpris2% { %mad% %locks% <action=`pavucontrol` button=3><action=`~/.scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
     -- plugins
     --   Numbers can be automatically colored according to their value. xmobar
     --   decides color based on a three-tier/two-cutoff system, controlled by
@@ -82,11 +82,11 @@ Config {
         , Run Com "/bin/bash" ["-c", "~/.scripts/trayerpad.sh"]  "trayerpad" 10
         , Run Com "/bin/bash" ["-c", "~/.scripts/weather3.sh madrid"] "mad" 36000
         -- keyboard layout indicator
-        , Run Kbd            
-              [ ("us(dvorak)" , "<fc=#FDFDFD>  DV</fc>")
-              , ("us"         , "<fc=#FDFDFD>  US</fc>")
-              , ("es"         , "<fc=#FDFDFD>  ES</fc>")
-              ]
+        -- , Run Kbd            
+        --       [ ("us(dvorak)" , "<fc=#FDFDFD>  DV</fc>")
+        --       , ("us"         , "<fc=#FDFDFD>  US</fc>")
+        --       , ("es"         , "<fc=#FDFDFD>  ES</fc>")
+        --       ]
         , Run Locks
         , Run StdinReader
         ]
