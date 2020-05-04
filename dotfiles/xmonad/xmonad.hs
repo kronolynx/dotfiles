@@ -5,7 +5,7 @@
 -- If a type has only one constructor it is imported implicitly with (..)
 --
 --
-import           XMonad                  hiding ( (|||) )
+import           XMonad                  hiding ( (|||), Layout )
 
 -- hooks
 import qualified XMonad.Hooks.DynamicLog       as DL
@@ -551,19 +551,19 @@ myGridSelectConfig = def { GS.gs_navigate  = myNavigation
 -- Keybinding hints
 --
 
-rmDesc :: [(a, b, c)] -> [(a, b)]
-rmDesc x = [ (t1, t2) | (t1, t2, _) <- x ]
+rmHint :: [(a, b, c, d)] -> [(a, b)]
+rmHint x = [ (t1, t2) | (t1, t2, _, _) <- x ]
 
-fmtDesc :: String -> [(String, a, String)] -> Int -> String -> String -> String
-fmtDesc name map rows fg hl
+fmtDesc :: String -> [(String, a, Label, String)] -> Int -> String -> String -> String
+fmtDesc name keyMap rows fg hl
     | name == "" = "\"" ++ "\\n" ++ list ++ "\""
     | otherwise  = "\"" ++ colStr hl ++ name ++ "\\n\\n" ++ list ++ "\""
   where
     list         = L.intercalate "\\n" (foldr (zipWithMore (++)) [""] col)
-    col          = chunksOf nRows $ colDesc map
+    col          = chunksOf nRows $ colDesc keyMap
     --sortKeys  = L.sortBy (\(a,_,_) (b,_,_) -> compare a b)
     maxChars     = 220
-    lMap         = length map
+    lMap         = length keyMap
     nRows        = min rows lMap
     nCol         = max 1 $ ceiling $ fromIntegral lMap / fromIntegral nRows
     charsPerCol  = quot maxChars nCol
@@ -572,14 +572,14 @@ fmtDesc name map rows fg hl
     descAlign    = charsPerICol
     keyAlign     = charsPerICol
 
-    colDesc :: [(String, a, String)] -> [String]
+    colDesc :: [(String, a, Label, String)] -> [String]
     colDesc x =
         [ colStr hl
               ++ rAlign keyAlign key
               ++ " "
               ++ colStr fg
               ++ lAlign descAlign desc
-        | (key, _, desc) <- x
+        | (key, _, _, desc) <- x
         ]
 
     colStr :: String -> String
@@ -599,66 +599,77 @@ fmtDesc name map rows fg hl
     zipWithMore _ []       bs       = bs -- if there's more in bs, use that
     zipWithMore _ as       []       = as -- if there's more in as, use that
 
-inputDoc :: String -> String -> String -> X Handle
-inputDoc name fg bg =
-  -- focused screen location/size
-                      spawnPipe $ unwords
-    [ "$HOME/.scripts/showHintForInputMode.sh"
-    , show name
-    , show fg
-    , show bg
-    , "22"
+
+-------------------------
+fmtHint :: [(String, a, Label, String)] -> String -> String -> String -> Int -> String
+fmtHint keyMap colorBinding colorDesc colorTitle maxChars =
+   "\"\\n" ++ L.intercalate "\\n" listKeyMap ++ "\""
+  where 
+    colSize = charsPerCol maxChars
+    emptyColRow = rAlign colSize "" ++ lAlign colSize ""
+    sortedKeymap = sortKeymap keyMap
+    colDescription = colDesc colorBinding colorDesc colorTitle colSize
+    listKeyMap = buildKeyMap (buildColumns (map colDescription sortedKeymap)) emptyColRow
+
+charsPerCol :: Int -> Int
+charsPerCol maxChars = quot (quot maxChars 3) 2 -- 3 columns by 2 (key, description)
+
+getLabel :: [(a, b, Label, c)] -> String
+getLabel ((_, _, label, _):xs) =  show label
+
+colStr :: String -> String
+colStr col = "^fg(" ++ col ++ ")"
+
+textAlign :: (Int -> Char -> T.Text -> T.Text) -> Int -> (String -> String)
+textAlign fAlign n = T.unpack . fAlign n ' ' . T.pack
+
+colDesc ::  String -> String -> String -> Int -> [(String, a, Label, String)] -> [String]
+colDesc colorBinding colorDesc colorTitle colSize bindings=
+    (colStr colorTitle ++ rAlign colSize (getLabel bindings) ++ lAlign colSize "") :
+    [ colStr colorBinding 
+          ++ rAlign colSize key
+          ++ " "
+          ++ colStr colorDesc
+          ++ lAlign colSize desc
+    | (key, _, _, desc) <- bindings
     ]
 
-keyMapDoc :: String -> String -> String -> Int -> X Handle
-keyMapDoc desc keyId color delay =
-  -- focused screen location/size
-                                spawnPipe $ unwords
-    [ "$HOME/.scripts/showHintForKeymap.sh"
-    , desc
-    , keyId
-    , "22"
-    , show delay
-    , show color
-    , show 0
-    ]
+rAlign :: Int -> String -> String
+rAlign = textAlign T.justifyRight
+
+lAlign :: Int -> String -> String
+lAlign = textAlign T.justifyLeft
+
+trd :: (a, b, c, d) -> c
+trd (_, _, c, _) =  c
+
+buildColumns :: [[String]] -> [[String]]
+buildColumns keyGroups = columns
+  where 
+    keyCol = concat keyGroups
+    columnsLength = ceiling (fromIntegral(length keyCol) / 3) 
+    columns = chunksOf columnsLength keyCol
 
 
-toSubmapP :: XConfig l -> String -> [(String, X (), String)] -> X ()
-toSubmapP c name kMap = do
-    p1 <- inputDoc name lightCyan lightRed
-    p2 <- keyMapDoc desc "dzen_xmonad_p" background 1
-    inputMode p2 $ getKeymap c keyMap
-    io $ hClose p1
-  where
-    desc   = fmtDesc "" kMap 4 lightCyan lightRed
-    keyMap = rmDesc kMap
-    getKeymap c' m = M.toList (mkKeymap c' m)
+buildKeyMap :: [[String]] -> String -> [String]
+buildKeyMap [a] filler = buildSection a [] [] filler
+buildKeyMap [a,b] filler = buildSection a b [] filler
+buildKeyMap [a,b,c] filler = buildSection a b c filler
+buildKeyMap (a:b:c:xs) filler = buildSection a b c filler ++ buildKeyMap xs filler
 
-toSubmap :: XConfig l -> String -> [(String, X (), String)] -> X ()
-toSubmap c name kMap = do
-    pipe <- keyMapDoc desc "dzen_xmonad" background 1
-    submap $ mkKeymap c keyMap
-    io $ hClose pipe
-  where
-    desc   = fmtDesc name kMap 5 lightBlue lightYellow
-    keyMap = rmDesc kMap
+buildSection :: [String] -> [String] -> [String] -> String -> [String]
+buildSection a b c filler = zipWith3 (\x y z -> x ++ y ++ z) (fillColumn a)  (fillColumn b)  (fillColumn c) 
+  where rows = max (length a) $ max (length b) (length c)
+        fillColumn col = col ++ replicate (rows - length col) filler
 
--- | Given a list of key bindings, return an action that temporay modifies
---   your bindings. Hit `Escape` to switch back to normal key bindings.
-inputMode :: Handle -> [((KeyMask, KeySym), X ())] -> X ()
-inputMode handle bindings = submap modeMap
-  where
-    modeMap =
-        M.fromList
-            $ ((0, xK_Escape), inputModeAction handle $ return ())
-            : [ (maskedKey, inputModeAction handle action >> submap modeMap)
-              | (maskedKey, action) <- bindings
-              ]
-      where
-        inputModeAction handle action = do
-            io $ hClose handle
-            action
+sortKeymap :: [(String, a, Label, String)] -> [[(String, a, Label, String)]]
+sortKeymap = map sortByKeyBinding . groupByLabel
+
+sortByKeyBinding :: [(String, a, Label, String)] -> [(String, a , Label, String)] 
+sortByKeyBinding = L.sortBy (\(a, _, _, _) (b, _, _ ,_ ) -> compare a b)
+
+groupByLabel :: [(String, a, Label, String)] -> [[(String, a, Label, String)]] -- TODO wrong
+groupByLabel = L.groupBy (\a b -> trd a == trd b) . L.sortBy (\a b -> compare (trd a)  (trd b))
 
 showHelp :: X ()
 showHelp = spawn $ unwords
@@ -670,8 +681,19 @@ showHelp = spawn $ unwords
     , show background
     , "1"
     ]
-    where desc = fmtDesc "Help" myKeymapH 25 lightBlue lightGreen
+    where desc = fmtHint myKeymapH lightBlue lightGreen lightRed 220
 
+-- Order displayed
+data Label =
+  Client
+  | Layout
+  | Tag
+  | Screen
+  | Launcher
+  | Media
+  | Capture
+  | Misc
+  deriving (Show, Eq, Ord)
 
 ------------------------------------------------------------------------
 -- Mouse bindings
@@ -683,10 +705,10 @@ myFocusFollowsMouse = True
 
 myMouseBindings XConfig { XMonad.modMask = modMask } = M.fromList
     [ ( (modMask, button1)
-      , \w -> focus w >> windows W.swapMaster
+      , \w -> focus w >>  windows W.swapMaster >>  mouseMoveWindow w
       ) -- mod-button1, Raise the window to the top of the stack
     , ( (modMask, button2)
-      , \w -> focus w >> mouseMoveWindow w
+      , \w -> focus w >> windows W.swapMaster
       ) -- mod-button2, Set the window to floating mode and move by dragging
     , ((modMask, button3), \w -> focus w >> mouseResizeWindow w) -- mod-button3, Set the window to floating mode and resize by dragging
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
@@ -704,13 +726,13 @@ myModMask :: KeyMask
 myModMask = mod4Mask
 
 myKeys :: XConfig l -> M.Map (KeyMask, KeySym) (X ())
-myKeys config = mkKeymap config $ myKeymap ++ rmDesc myKeymapH
+myKeys config = mkKeymap config $ myKeymap ++ rmHint myKeymapH 
 
 myKeymap :: [(String, X ())]
 myKeymap = myWorkspaceMovementKeys
 
 -- Keys with hints
-myKeymapH :: [(String, X (), String)]
+myKeymapH :: [(String, X (), Label, String)]
 myKeymapH = concat
     [ myControlKeys
     , myLauncherKeys
@@ -742,199 +764,222 @@ myWorkspaceMovementKeys =
     keys'      = fmap return $ ['1' .. '9'] ++ ['0', '-', '=']
     viewShift = liftM2 (.) W.greedyView W.shift
 
-myMovementKeys :: [(String, X (), String)]
+myMovementKeys :: [(String, X (), Label, String)]
 myMovementKeys =
     myWindowMovementKeys
         ++ myWorkspaceMovementKeys'
         ++ myScreenMovementKeys
         ++ myGotoLayoutKeys
 
-myWindowMovementKeys :: [(String, X (), String)]
+myWindowMovementKeys :: [(String, X (), Label, String)]
 myWindowMovementKeys =
-    [ ("M-<D>", windowGo Nav.D, "Focus down")
-    , ("M-<U>", windowGo Nav.U, "Focus up")
-    , ("M-<L>", windowGo Nav.L, "Focus left")
-    , ("M-<R>", windowGo Nav.R, "Focus right")
-    , ("M-j"  , windowGo Nav.D, "Focus down")
-    , ("M-k"  , windowGo Nav.U, "Focus up")
-    , ("M-h"  , windowGo Nav.L, "Focus left")
-    , ("M-l"  , windowGo Nav.R, "Focus right")
+    [ ("M-<D>", windowGo Nav.D, Client, "Focus down")
+    , ("M-<U>", windowGo Nav.U, Client, "Focus up")
+    , ("M-<L>", windowGo Nav.L, Client, "Focus left")
+    , ("M-<R>", windowGo Nav.R, Client, "Focus right")
+    , ("M-t"  , windowGo Nav.D, Client, "Focus down")
+    , ("M-n"  , windowGo Nav.U, Client, "Focus up")
+    , ("M-h"  , windowGo Nav.L, Client, "Focus left")
+    , ("M-l"  , windowGo Nav.R, Client, "Focus right")
     , ( "M-S-m"
-      , windows W.focusMaster
+      , windows W.focusMaster, Client
       , "Focus master"
       ) -- Focus master
     , ( "M1-<Tab>"
-      , cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab
+      , cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab, Client
       , "Cycle recent windows"
       )
     ]
     where windowGo = sendMessage . Nav.Go
-myWorkspaceMovementKeys' :: [(String, X (), String)]
+myWorkspaceMovementKeys' :: [(String, X (), Label, String)]
 myWorkspaceMovementKeys' =
     [ ( "M-C-<R>"
       , CycleWS.nextWS
+      , Tag
       , "Next workspace"
       ) -- Go to the next
     , ( "M-C-<L>"
       , CycleWS.prevWS
+      , Tag
       , "Previos workspace"
       ) --  Go to previous workspace
     , ( "M-C-l"
       , CycleWS.nextWS
+      , Tag
       , "Next workspace"
       ) -- Go to the next
-    , ("M-C-h", CycleWS.prevWS, "Previous workspace") --  Go to previous workspace
+    , ("M-C-h", CycleWS.prevWS, Tag, "Previous workspace") --  Go to previous workspace
     ]
-myScreenMovementKeys :: [(String, X (), String)]
+myScreenMovementKeys :: [(String, X (), Label, String)]
 myScreenMovementKeys =
     [ ( "M-s"
       , sequence_ [CycleWS.nextScreen, warpToWindow (1 % 2) (1 % 2)]
+      , Screen
       , "Next screen"
       ) -- Move the focus to next screen (multi screen)
-    , ("M-o"  , CycleWS.swapNextScreen , "Swap next screen")
-    , ("M-S-o", CycleWS.shiftNextScreen, "Shift next screen")
+    , ("M-o"  , CycleWS.swapNextScreen , Screen, "Swap next screen")
+    , ("M-S-o", CycleWS.shiftNextScreen, Screen, "Shift next screen")
     ]
-myGotoLayoutKeys :: [(String, X (), String)]
+myGotoLayoutKeys :: [(String, X (), Label, String)]
 myGotoLayoutKeys =
-    [ ("M-g 1", jumpToLayout "Tall"      , "Layout Tall")
-    , ("M-g 2", jumpToLayout "HintedGrid", "Layout HintedGrid")
-    , ("M-g 3", jumpToLayout "OneBig"    , "Layout OneBig")
-    , ("M-g 4", jumpToLayout "Circle"    , "Layout Circle")
-    , ("M-g 5", jumpToLayout "Mosaic"    , "Layout Mosaic")
-    , ("M-g 6", jumpToLayout "ThreeCol"  , "Layout Threecol")
-    , ("M-g 7", jumpToLayout "Spiral"    , "Layout spiral")
+    [ ("M-g 1", jumpToLayout "Tall"      , Layout, "Tall")
+    , ("M-g 2", jumpToLayout "HintedGrid", Layout, "HintedGrid")
+    , ("M-g 3", jumpToLayout "OneBig"    , Layout, "OneBig")
+    , ("M-g 4", jumpToLayout "Circle"    , Layout, "Circle")
+    , ("M-g 5", jumpToLayout "Mosaic"    , Layout, "Mosaic")
+    , ("M-g 6", jumpToLayout "ThreeCol"  , Layout, "Threecol")
+    , ("M-g 7", jumpToLayout "Spiral"    , Layout, "spiral")
     ]
     where jumpToLayout = sendMessage . JumpToLayout
 
-myLayoutKeys :: [(String, X (), String)]
+myLayoutKeys :: [(String, X (), Label, String)]
 myLayoutKeys = myLayoutKeys' ++ myLayoutSwapKeys ++ myLayoutTransformKeys
 
-myLayoutSwapKeys :: [(String, X (), String)]
+myLayoutSwapKeys :: [(String, X (), Label, String)]
 myLayoutSwapKeys =
-    [ ("M-S-<D>", layoutSwap Nav.D, "Swap client down")
-    , ("M-S-<U>", layoutSwap Nav.U, "Swap client up")
-    , ("M-S-<L>", layoutSwap Nav.L, "Swap client left")
-    , ("M-S-<R>", layoutSwap Nav.R, "Swap client right")
-    , ("M-S-j"  , layoutSwap Nav.D, "Swap client down")
-    , ("M-S-k"  , layoutSwap Nav.U, "Swap client up")
-    , ("M-S-h"  , layoutSwap Nav.L, "Swap client left")
-    , ("M-S-l"  , layoutSwap Nav.R, "Swap client right")
+    [ ("M-S-<D>", layoutSwap Nav.D, Client, "Swap down")
+    , ("M-S-<U>", layoutSwap Nav.U, Client, "Swap up")
+    , ("M-S-<L>", layoutSwap Nav.L, Client, "Swap left")
+    , ("M-S-<R>", layoutSwap Nav.R, Client, "Swap right")
+    , ("M-S-j"  , layoutSwap Nav.D, Client, "Swap down")
+    , ("M-S-k"  , layoutSwap Nav.U, Client, "Swap up")
+    , ("M-S-h"  , layoutSwap Nav.L, Client, "Swap left")
+    , ("M-S-l"  , layoutSwap Nav.R, Client, "Swap right")
     ]
     where layoutSwap = sendMessage . Nav.Swap
 
-myLayoutKeys' :: [(String, X (), String)]
+myLayoutKeys' :: [(String, X (), Label, String)]
 myLayoutKeys' =
     [ ( "M-f"
       , sendMessage $ Toggle NBFULL
+      , Client
       , "Toggle full screen"
       ) -- Toggle Fullscreen mode
     , ( "M-C-,"
       , sendMessage $ IncMasterN (-1)
+      , Layout
       , "Decrease master"
       ) -- Decrease the number of master pane
     , ( "M-C-."
       , sendMessage $ IncMasterN 1
+      , Layout
       , "Increase master"
       ) -- Increase the number of master pane
     , ( "M-<Space>"
       , sendMessage NextLayout
+      , Layout
       , "Next layout"
       ) -- Rotate through the available layout algorithms
-    , ("M-m", windows W.shiftMaster, "Shift with master") -- Shift the focused window to the master window
+    , ("M-m", windows W.shiftMaster, Client, "Shift with master") -- Shift the focused window to the master window
     ]
 
-myLayoutTransformKeys :: [(String, X (), String)]
+myLayoutTransformKeys :: [(String, X (), Label, String)]
 myLayoutTransformKeys =
-    [ ("M-,"  , sendMessage Shrink            , "Decrease horizontally")
-    , ("M-."  , sendMessage Expand            , "Increase vertically")
-    , ("M-S-.", sendMessage RTile.MirrorShrink, "Decrease vertically")
-    , ("M-S-,", sendMessage RTile.MirrorExpand, "Increase vertically")
-    , ("M-g x", sendMessage $ Toggle REFLECTX , "Reflect horizontally")
-    , ("M-g y", sendMessage $ Toggle REFLECTY , "Reflect vertically")
-    , ("M-g m", sendMessage $ Toggle MIRROR   , "Toggle mirror") -- Toggle Mirror layout
+    [ ("M-,"  , sendMessage Shrink            , Layout, "Decrease horizontally")
+    , ("M-."  , sendMessage Expand            , Layout, "Increase vertically")
+    , ("M-S-.", sendMessage RTile.MirrorShrink, Layout, "Decrease vertically")
+    , ("M-S-,", sendMessage RTile.MirrorExpand, Layout, "Increase vertically")
+    , ("M-g x", sendMessage $ Toggle REFLECTX , Layout, "Reflect horizontally")
+    , ("M-g y", sendMessage $ Toggle REFLECTY , Layout, "Reflect vertically")
+    , ("M-g m", sendMessage $ Toggle MIRROR   , Layout, "Toggle mirror") -- Toggle Mirror layout
     ]
 
-myWorkspaceKeys :: [(String, X (), String)]
+myWorkspaceKeys :: [(String, X (), Label, String)]
 myWorkspaceKeys =
     [ ( "M-C-S-<R>"
       , CycleWS.shiftToNext
+      , Tag
       , "Shift to next workspace"
       ) -- Shift the focused window to the next workspace
     , ( "M-C-S-<L>"
       , CycleWS.shiftToPrev
+      , Tag
       , "Shift to previous workspace"
       ) -- Shift the focused window to the previous workspace
     , ( "M-C-S-l"
       , CycleWS.shiftToNext
+      , Tag
       , "Shift to next workspace"
       ) -- Shift the focused window to the next workspace
     , ( "M-C-S-h"
       , CycleWS.shiftToPrev
+      , Tag
       , "Shift to previous workspace"
       ) -- Shift the focused window to the previous workspace
-    , ("M-<Tab>", CycleWS.toggleWS, "Toggle last workspace") -- toggle last workspace
+    , ("M-<Tab>", CycleWS.toggleWS, Tag, "Toggle last workspace") -- toggle last workspace
     ]
 
-myFloatKeys :: [(String, X (), String)]
+myFloatKeys :: [(String, X (), Label, String)]
 myFloatKeys =
-    [ ("M-t s", withFocused $ windows . W.sink, "Sink floating")
-    , ("M-t b", withFocused $ windows . flip W.float bigCenterR, "Float big center")
-    , ("M-t c", withFocused $ windows . flip W.float centerR, "Float center")
-    , ("M-t l", withFocused $ windows . flip W.float leftR, "Float left")
-    , ("M-t r", withFocused $ windows . flip W.float rightR, "Float right")
+    [ ("M-c s", withFocused $ windows . W.sink, Client, "Sink floating")
+    , ("M-c b", withFocused $ windows . flip W.float bigCenterR, Client, "Float big center")
+    , ("M-c c", withFocused $ windows . flip W.float centerR, Client, "Float center")
+    , ("M-c l", withFocused $ windows . flip W.float leftR, Client, "Float left")
+    , ("M-c r", withFocused $ windows . flip W.float rightR, Client, "Float right")
     ]
 
-myLauncherKeys :: [(String, X (), String)]
+myLauncherKeys :: [(String, X (), Label, String)]
 myLauncherKeys = myLauncherKeys' ++ myScreenCaptureKeys
 
-myLauncherKeys' :: [(String, X (), String)]
+myLauncherKeys' :: [(String, X (), Label, String)]
 myLauncherKeys' =
     [ ( "M-<Return>"
       , spawn myTerminal
+      , Launcher
       , "Terminal"
       ) -- Launch terminal
     , ( "M-S-<Return>"
       , spawn myFileManager
+      , Launcher
       , "File Manager"
       ) -- Launch FileManager
     , ( "M-' b"
       , spawn myBrowser
+      , Launcher
       , "Browser"
       ) -- Launch browser
     , ( "M-' e"
       , spawn myTextEditor
+      , Launcher
       , "Text Editor"
       ) -- Launch text editor
     , ( "M-' f"
       , spawn myFileManager
+      , Launcher
       , "File Manager"
       ) -- Launch File Manager 
     , ( "M-' k"
       , spawn "xkill"
+      , Launcher
       , "Kill Window"
       ) -- Kill window
     , ( "M-' r"
       , spawn myConsoleFileManager
+      , Launcher
       , "Ranger"
       ) -- Launch text editor
     , ( "M-' t"
       , spawn myTmuxTerminal
+      , Launcher
       , "Tmux"
       ) -- Launch tmux terminal
     , ( "M-' v"
       , spawn "nvim"
+      , Launcher
       , "Neovim"
       ) -- Launch text editor
     , ( "M-S-C-="
       , spawn "$HOME/.scripts/xbacklight-toggle.sh"
+      , Launcher
       , "Toggle backlight"
       )
     ]
 
-myScreenCaptureKeys :: [(String, X (), String)]
+myScreenCaptureKeys :: [(String, X (), Label, String)]
 myScreenCaptureKeys =
     [ ( "<Print>"
       , spawn $ myScreenCapture ++ " root && notify-send 'Desktop captured'"
+      , Capture
       , "Take a screenshot (desktop)"
       )
     , ( "S-<Print>"
@@ -942,119 +987,139 @@ myScreenCaptureKeys =
           $  "notify-send 'Select Area';sleep 0.2;"
           ++ myScreenCapture
           ++ " area && notify-send 'Area captured'"
+      , Capture
       , "Take a screenshot (area)"
       )
     , ( "C-<Print>" -- 
       , spawn
           $  myScreenCapture
           ++ " window && notify-send 'Focused window captured'"
+      , Capture
       , "Take a screenshot (window)"
       )
     ]
 
-myMediaKeys :: [(String, X (), String)]
+myMediaKeys :: [(String, X (), Label, String)]
 myMediaKeys =
     -- Play / Pause media
-    [ ("<XF86AudioPlay>", spawn "playerctl play-pause", "Media play/pause")
-    , ("<XF86AudioStop>", spawn "playerctl pause"     , "Media pause")
-    , ("<XF86AudioPrev>", spawn "playerctl previous"  , "Media previous")
+    [ ("<XF86AudioPlay>", spawn "playerctl play-pause", Media, "Media play/pause")
+    , ("<XF86AudioStop>", spawn "playerctl pause"     , Media, "Media pause")
+    , ("<XF86AudioPrev>", spawn "playerctl previous"  , Media, "Media previous")
     , ( "<XF86AudioNext>"
       , spawn "playerctl next"
+      , Media
       , "Media next"
       )
   -- Volume
     , ( "<XF86AudioRaiseVolume>"
       , spawn "$HOME/.scripts/VolControl.sh up"
+      , Media
       , "Volume up"
       )
     , ( "<XF86AudioLowerVolume>"
       , spawn "$HOME/.scripts/VolControl.sh down"
+      , Media
       , "Volume down"
       )
     , ( "<XF86AudioMute>"
       , spawn "$HOME/.scripts/XMMute.sh"
+      , Media
       , "Mute"
       )
   -- Brightness
     , ( "<XF86MonBrightnessUp>"
       , spawn
           "xbacklight + 5 -time 100 -steps 1 && notify-send \"brightness up $(xbacklight -get)\""
+      , Misc
       , "Brightness up"
       )
     , ( "<XF86MonBrightnessDown>"
       , spawn
           "xbacklight - 5 -time 100 -steps 1 && notify-send \"brightness down $(xbacklight -get)\""
+      , Misc
       , "Brightness down"
       )
   -- Touchpad
     , ( "<XF86TouchpadToggle>"
       , spawn "$HOME/.scripts/touchpad_toggle.sh"
+      , Misc
       , "Toggle touchpad"
       ) -- Touch pad
   -- Browser
-    , ("<XF86Explorer>", spawn myBrowser, "Browser") -- Browser
+    , ("<XF86Explorer>", spawn myBrowser, Launcher, "Browser") -- Browser
     ]
 
-myControlKeys :: [(String, X (), String)]
+myControlKeys :: [(String, X (), Label, String)]
 myControlKeys =
     [ ( "M-S-q"
       , kill
+      , Client
       , "Kill focused"
       ) -- Close the focused window
        -- Toggle struts
     , ( "M-b"
       , sendMessage ManageDocks.ToggleStruts
+      , Misc
       , "Toggle statusbar"
       )
        -- grid selection
     , ( "M-g s"
       , GS.goToSelected myGridSelectConfig
+      , Misc
       , "Grid selection"
       )
        -- Search a window and focus into the window
     , ( "M-g g"
       , WPrompt.windowPrompt myPromptInfix WPrompt.Goto WPrompt.allWindows
+      , Misc
       , "Search and go to client"
       )
        -- Search a window and bring to the current workspace
     , ( "M-g b"
       , WPrompt.windowPrompt myPromptInfix WPrompt.Bring WPrompt.allWindows
+      , Misc
       , "Search and bring client"
       )
     , ( "M-g l"
       , myLayoutPrompt
+      , Misc
       , "Layout menu"
       )
        -- Resize viewed windows to the correct size
-  --, ("M-n", refresh)
+  --, ("M-r", refresh)
     --  Reset the layouts on the current workspace to default
     --, ("M-S-<Space>", setLayout $ XMonad.layoutHook conf)
     , ( "M-C-r" -- Restart xmonad
       , spawn
           "xmonad --recompile && xmonad --restart && notify-send 'Xmonad restarted' || notify-send 'Xmonad failed to restart'"
+      , Misc
       , "Compile and restart"
       )
     , ( "M-S-r"
       , spawn "xmonad --restart"
+      , Misc
       , "Restart"
       ) -- restart xmonad w/o recompiling
     , ( "M-d"
       , shellPrompt myPrompt
+      , Misc
       , "Shell launcher"
       ) -- launch apps
     , ( "M1-d"
       , spawn myLauncher
+      , Misc
       , "Launcher"
       ) -- launch apps
-    , ("M-?"    , unGrab >> showHelp, "Help")
-    , ("M-<Esc>", mySessionPrompt   , "Log menu")
+    , ("M-<Esc>", mySessionPrompt   ,  Misc, "Log menu")
     , ( "M-u"
       , UH.focusUrgent
+      , Client
       , "Focus urgent"
       ) -- focus urgent window
     , ( "M-S-u"
       , UH.clearUrgents
+      , Client
       , "Clear urgent"
       ) -- clear urgents 
-    , ("M-<F1>", unGrab >> showHelp, "Show help")
+    , ("M-<F1>", unGrab >> showHelp, Misc, "Show help")
     ]
