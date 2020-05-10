@@ -285,7 +285,7 @@ myManageHook' =
           -- , [ManageHelpers.isDialog --> ManageHelpers.doCenterFloat]
           ]
   where
-    myCenterFloats = ["zenity", "Arandr", "Galculator", "Yad", "albert"]
+    myCenterFloats = ["zenity", "Arandr", "Galculator", "albert"]
     myTitleCenterFloats =
         [ "File Operation Progress"
         , "Downloads"

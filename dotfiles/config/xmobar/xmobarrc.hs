@@ -21,7 +21,7 @@ Config {
     , persistent         = False
     , alignSep           = "}{"
     , sepChar            = "%"
-    , template = "%StdinReader% } %mpris2% { %mad% %locks% <action=`pavucontrol` button=3><action=`~/.scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
+    , template = "%StdinReader% } %mpris2% { %mad% <action=`pavucontrol` button=3><action=`~/.scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
     -- plugins
     --   Numbers can be automatically colored according to their value. xmobar
     --   decides color based on a three-tier/two-cutoff system, controlled by
@@ -87,7 +87,7 @@ Config {
         --       , ("us"         , "<fc=#FDFDFD>  US</fc>")
         --       , ("es"         , "<fc=#FDFDFD>  ES</fc>")
         --       ]
-        , Run Locks
+        -- , Run Locks
         , Run StdinReader
         ]
 }

@@ -32,5 +32,4 @@ yad --calendar \
     --close-on-unfocus --no-buttons \
     --posx=$posX --posy=$posY
 	    
-esac
 date "$datefmt"
