@@ -125,6 +125,8 @@ misc=(
   fcitx-im
   fcitx-googlepinyin
   fcitx-configtool
+  # senity fork (used in xmobar calendar)
+  yad
 )
 
 coding=(
