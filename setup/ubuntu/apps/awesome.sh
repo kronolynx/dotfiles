@@ -29,8 +29,10 @@ EOF
 
     sudo echo "$DESKTOP" > /usr/share/xsessions/awesome_session.desktop
 
+    SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+    COMMON="$(dirname $SCRIPTPATH)/common"
     echo ""
-    $SCRIPTPATH/helpers/pprint.sh "awesome session created"
+    $COMMON/helpers/pprint.sh "awesome session created"
     echo ""
 }
 

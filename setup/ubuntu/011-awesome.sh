@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+COMMON="$(dirname $SCRIPTPATH)/common"
 
 awesome=(
   awesome 
@@ -71,7 +72,7 @@ theme() {
   rm -rf compass-icon-theme
 }
 
-$SCRIPTPATH/helpers/pprint.sh "Setting up awesome" 
+$COMMON/helpers/pprint.sh "Setting up awesome" 
 $SCRIPTPATH/apps/awesome.sh # to install version v4.3 from github in ubuntu
 # $SCRIPTPATH/helpers/install-app.sh ${awesome[*]} # uncomment this line to install the version offered by ubuntu (must comment the line that calls to apps/awesome.sh)
 $SCRIPTPATH/helpers/install-app.sh ${file_manager[*]}

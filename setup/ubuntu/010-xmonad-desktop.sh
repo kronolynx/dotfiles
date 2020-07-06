@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+COMMON="$(dirname $SCRIPTPATH)/common"
 
 xmonad=(
   xmonad
@@ -128,7 +129,7 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
-$SCRIPTPATH/helpers/pprint.sh "Setting up xmonad" 
+$COMMON/helpers/pprint.sh "Setting up xmonad" 
 $SCRIPTPATH/helpers/install-app.sh ${xmonad[*]}
 $SCRIPTPATH/helpers/install-app.sh ${file_manager[*]}
 $SCRIPTPATH/helpers/install-app.sh ${apps[*]}

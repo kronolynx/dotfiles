@@ -2,6 +2,7 @@
 #!/bin/bash
 
 SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+COMMON="$(dirname $SCRIPTPATH)/common"
 
 apps=(
   lightdm
@@ -9,7 +10,7 @@ apps=(
   lightdm-gtk-greeter-settings
 )
 
-$SCRIPTPATH/helpers/pprint.sh "Setting up logging manager" 
+$COMMON/helpers/pprint.sh "Setting up logging manager" 
 $SCRIPTPATH/helpers/install-app.sh ${apps[*]}
 
 sudo systemctl enable lightdm.service -f

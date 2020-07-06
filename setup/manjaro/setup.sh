@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+COMMON="$(dirname $SCRIPTPATH)/common"
 
 # make scripts in current directory executable
 find $SCRIPTPATH -type f -iname "*.sh" -exec chmod +x {} \;
@@ -130,7 +131,6 @@ misc=(
 )
 
 coding=(
-  visual-studio-code-bin
   intellij-idea-community-edition-jre
   # code documentation
   zeal
@@ -145,10 +145,6 @@ coding=(
   # The Glasgow Haskell Compiler
   ghc
   # The Haskell Tool Stack
-  stack
-  # rest client
-  postman-bin
-  # haskell
   stack
 )
 
@@ -222,7 +218,7 @@ wm="xmonad"
 window_manager=$wm[*]
 $SCRIPTPATH/helpers/install-app.sh ${!window_manager}
 
-$SCRIPTPATH/helpers/pprint.sh "Setting Desktop"
+$COMMON/helpers/pprint.sh "Setting Desktop"
 $SCRIPTPATH/helpers/install-app.sh ${base[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli_media[*]}

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relative path calls
+COMMON="$(dirname $SCRIPTPATH)/common"
 
 declare -A debs=(
   ["jwilm/alacritty"]="Alacritty.*amd64.deb" # terminal
@@ -10,7 +11,7 @@ declare -A debs=(
   ["altdesktop/playerctl"]="playerctl.*amd64.deb"
 )
 
-$SCRIPTPATH/helpers/pprint.sh "Installing debs from github"
+$COMMON/helpers/pprint.sh "Installing debs from github"
 
 mkdir -p temp
 (cd temp
@@ -24,7 +25,7 @@ do
 done
 
 for f in *.deb; do
-    $SCRIPTPATH/helpers/pprint.sh "Intalling $f" "blue"
+    $COMMON/helpers/pprint.sh "Intalling $f" "blue"
 
     sudo dpkg -i "$f"
     sudo apt install -fy
