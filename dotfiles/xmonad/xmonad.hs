@@ -30,17 +30,22 @@ import           XMonad.Layout.MultiToggle.Instances
                                                     , NBFULL
                                                     )
                                                 )
+
+import           XMonad.Layout.NoBorders        ( noBorders )
 import           XMonad.Layout.OneBig           ( OneBig(OneBig) )
 import           XMonad.Layout.Reflect          ( REFLECTX(..)
                                                 , REFLECTY(..)
                                                 )
 import           XMonad.Layout.Renamed          ( Rename(Replace) , renamed)
 import qualified XMonad.Layout.ResizableTile   as RTile
+import           XMonad.Layout.SimpleDecoration ( shrinkText )
 import           XMonad.Layout.Spacing          ( spacing )
 import           XMonad.Layout.Spiral           ( spiral )
+import qualified XMonad.Layout.Tabbed          as TB
 import           XMonad.Layout.ThreeColumns     ( ThreeCol(ThreeColMid) )
 import qualified XMonad.Layout.WindowNavigation
                                                as Nav
+
 
 -- utils
 import qualified XMonad.Util.Cursor            as Cursor
@@ -63,6 +68,7 @@ import qualified XMonad.Prompt.Window          as WPrompt
 import qualified XMonad.Actions.CycleWS        as CycleWS
 import           XMonad.Actions.CycleWindows    ( cycleRecentWindows )
 import qualified XMonad.Actions.GridSelect     as GS
+import           XMonad.Actions.GroupNavigation ( historyHook )
 import           XMonad.Actions.Warp            ( warpToWindow )
 import           XMonad.Actions.WorkspaceNames  ( swapWithCurrent )
 import           XMonad.Actions.Submap          ( submap )
@@ -92,7 +98,7 @@ main :: IO ()
 main = do
     xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
     xmonad $ ewmh $ UH.withUrgencyHook UH.NoUrgencyHook $ myConfig
-        { logHook = myLogHook xmproc }
+        { logHook =  myLogHook xmproc >> historyHook }
 
 ------------------------------------------------------------------------
 -- Config
@@ -145,6 +151,20 @@ myXmobarPP h = DL.xmobarPP
     }
 
 ------------------------------------------------------------------------
+-- tabs
+--
+myTabConfig = def { TB.activeColor         = "#556064"
+                  , TB.inactiveColor       = "#2F3D44"
+                  , TB.urgentColor         = "#FDF6E3"
+                  , TB.activeBorderColor   = "#454948"
+                  , TB.inactiveBorderColor = "#454948"
+                  , TB.urgentBorderColor   = "#268BD2"
+                  , TB.activeTextColor     = "#80FFF9"
+                  , TB.inactiveTextColor   = "#1ABC9C"
+                  , TB.urgentTextColor     = "#1ABC9C"
+                  , TB.fontName = "xft:Noto Sans CJK:size=10:antialias=true"
+                  }
+------------------------------------------------------------------------
 -- Default Apps
 --
 -- Capture Screen
@@ -159,11 +179,12 @@ myTmuxTerminal = myTerminal ++ " -e tmux attach"
 
 -- Launcher
 myLauncher :: String
-myLauncher = "rofi -show drun -no-plugins"
+myLauncher = "rofi -show"
 
 -- Editor
 myTextEditor :: String
-myTextEditor = "emacsclient -c -a emacs"
+-- myTextEditor = "emacsclient -c -a emacs"
+myTextEditor = "emacs"
 
 -- Browser
 myBrowser :: String
@@ -224,17 +245,17 @@ myWorkspaces =
 --
 myLayout =
     ManageDocks.avoidStruts
-        $
   -- Toggles
-            mkToggle1 NBFULL
+        $   mkToggle1 NBFULL
         $   mkToggle1 REFLECTX
         $   mkToggle1 REFLECTY
         $   mkToggle1 MIRROR
         $   Nav.configurableNavigation (Nav.navigateColor myNormalBorderColor)
-        $
+        $   
   -- Layouts
             name "Tall"       myTile
         ||| name "HintedGrid" myHintedGrid
+        ||| name "Tabbed"     myTabbed
         ||| name "OneBig"     myOneBig
         ||| name "Circle"     Circle
         ||| name "Mosaic"     myMosaic
@@ -248,6 +269,7 @@ myLayout =
     myMosaic     = mosaic 2 [3, 2]
     myHintedGrid = GridRatio (4 / 3) False
     myOneBig     = OneBig (4 / 6) (4 / 6)
+    myTabbed     = noBorders ( TB.tabbed shrinkText myTabConfig)
 
 ------------------------------------------------------------------------
 -- Manage Hooks
@@ -668,7 +690,7 @@ sortKeymap = map sortByKeyBinding . groupByLabel
 sortByKeyBinding :: [(String, a, Label, String)] -> [(String, a , Label, String)] 
 sortByKeyBinding = L.sortBy (\(a, _, _, _) (b, _, _ ,_ ) -> compare a b)
 
-groupByLabel :: [(String, a, Label, String)] -> [[(String, a, Label, String)]] -- TODO wrong
+groupByLabel :: [(String, a, Label, String)] -> [[(String, a, Label, String)]] 
 groupByLabel = L.groupBy (\a b -> trd a == trd b) . L.sortBy (\a b -> compare (trd a)  (trd b))
 
 showHelp :: X ()
@@ -705,10 +727,13 @@ myFocusFollowsMouse = True
 
 myMouseBindings XConfig { XMonad.modMask = modMask } = M.fromList
     [ ( (modMask, button1)
-      , \w -> focus w >>  windows W.swapMaster >>  mouseMoveWindow w
-      ) -- mod-button1, Raise the window to the top of the stack
+      ,  \w -> focus w >> windows W.swapMaster -- 
+      ), -- mod-button1, Raise the window to the top of the stack
+      ((modMask .|. controlMask, button1), \w -> focus w >> mouseMoveWindow w
+                                          >> windows W.shiftMaster
+      ) -- Set the window to floating mode and move by dragging
     , ( (modMask, button2)
-      , \w -> focus w >> windows W.swapMaster
+      , \w -> focus w >> windows W.swapMaster >>  mouseMoveWindow w
       ) -- mod-button2, Set the window to floating mode and move by dragging
     , ((modMask, button3), \w -> focus w >> mouseResizeWindow w) -- mod-button3, Set the window to floating mode and resize by dragging
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
