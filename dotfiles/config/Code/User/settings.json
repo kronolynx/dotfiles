@@ -529,34 +529,6 @@
                 ":wq"
             ]
         },
-        {
-            "before": [
-                "J"
-            ],
-            "after": [
-                "5",
-                "j"
-            ]
-        },
-        {
-            "before": [
-                "K"
-            ],
-            "after": [
-                "5",
-                "k"
-            ]
-        },
-        // keep join lines
-        {
-            "before": [
-                "<Leader>",
-                "j"
-            ],
-            "after": [
-                "J"
-            ]
-        },
         // smart move between windows
         {
             "before": ["<C-k>"],
@@ -624,12 +596,12 @@
         },
      ],
     "vim.sneak": false,
-    "editor.fontFamily": "'FiraCode Nerd Font'",
+    "editor.fontFamily": "'Fantasque Sans Mono'",
     "editor.fontLigatures": true,
     "editor.minimap.enabled": false,
     "window.zoomLevel": 0,
     "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "Material Theme Darker High Contrast",
+    "workbench.colorTheme": "One Monokai",
     "workbench.colorCustomizations": {
         // "activityBar.background": "#80af80",
         // "activityBar.foreground": "#463c33",
@@ -639,7 +611,6 @@
     },
     "window.menuBarVisibility": "toggle",
     "workbench.activityBar.visible": false,
-    "editor.fontSize": 13,
     "[html]": {
         "editor.defaultFormatter": "vscode.html-language-features"
     },
@@ -671,5 +642,15 @@
     "rest-client.previewOption": "exchange",
     "rest-client.requestNameAsResponseTabTitle": true,
     "workbench.editor.tabSizing": "shrink",
-    "editor.wordWrap": "bounded"
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "editor.tabSize": 2,
+    "editor.fontSize": 16,
+    "gitlens.currentLine.enabled": false,
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "rest-client.largeResponseBodySizeLimitInMB": 100,
+    "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
+    "python.languageServer": "Microsoft"
 }

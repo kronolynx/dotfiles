@@ -11,7 +11,7 @@
    blackselect:      #00152b;
    lightblue:        #bbdded;
    scrollbarcolor:   #505050;
-   font: "SauceCodePro Nerd Font Bold 10";
+   font: "FantasqueSansMono Nerd Font Bold 10";
    background-color: @bluedarkest;
 }
 

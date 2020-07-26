@@ -8,7 +8,7 @@
 //----------------------
 
 configuration {
-	modi: 			"drun,run";
+	modi: 			"drun,window,run";
 	width: 			750;
 	lines: 			12;
 	show-match: 		false;

@@ -32,7 +32,7 @@ run emacs --daemon
 run urxvtd -q -o -f
 run feh --bg-scale ~/.wallpapers/girl-anime.jpg
 
-run compton --shadow-exclude '!focused'
+run picom --shadow-exclude '!focused'
 
 # set x cursor
 # https://wiki.haskell.org/Xmonad/Frequently_asked_questions#Setting_the_X_cursor
