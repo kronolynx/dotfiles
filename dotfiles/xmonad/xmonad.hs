@@ -151,20 +151,6 @@ myXmobarPP h = DL.xmobarPP
     }
 
 ------------------------------------------------------------------------
--- tabs
---
-myTabConfig = def { TB.activeColor         = "#556064"
-                  , TB.inactiveColor       = "#2F3D44"
-                  , TB.urgentColor         = "#FDF6E3"
-                  , TB.activeBorderColor   = "#454948"
-                  , TB.inactiveBorderColor = "#454948"
-                  , TB.urgentBorderColor   = "#268BD2"
-                  , TB.activeTextColor     = "#80FFF9"
-                  , TB.inactiveTextColor   = "#1ABC9C"
-                  , TB.urgentTextColor     = "#1ABC9C"
-                  , TB.fontName = "xft:Noto Sans CJK:size=10:antialias=true"
-                  }
-------------------------------------------------------------------------
 -- Default Apps
 --
 -- Capture Screen
@@ -319,13 +305,12 @@ myManageHook' =
     myFullFloats  = []
       -- workspace numbers start at 0
     myShifts =
-        [ ("keepassxc"       , 6)
-        , ("telegram-desktop", 10)
-        , ("TelegramDesktop" , 10)
-        , ("Thunderbird"     , 4)
-        , ("Slack"           , 9)
-        , ("Spotify"         , 10)
-        , ("Odio"            , 10)
+        [ ("telegram-desktop"  , 10)
+        , ("TelegramDesktop"   , 10)
+        , ("Slack"             , 9)
+        , ("Postman"           , 6)
+        , ("DevCenter"         , 6)
+        , ("jetbrains-idea-ce" , 2)
         ]
 
 myStartupHook :: X ()
@@ -337,6 +322,20 @@ myStartupHook = do
 myHandleEventHook =
     ManageDocks.docksEventHook <+> handleEventHook desktopConfig
 
+------------------------------------------------------------------------
+-- tabs
+--
+myTabConfig = def { TB.activeColor         = "#556064"
+                  , TB.inactiveColor       = "#2F3D44"
+                  , TB.urgentColor         = "#FDF6E3"
+                  , TB.activeBorderColor   = "#454948"
+                  , TB.inactiveBorderColor = "#454948"
+                  , TB.urgentBorderColor   = "#268BD2"
+                  , TB.activeTextColor     = "#80FFF9"
+                  , TB.inactiveTextColor   = "#1ABC9C"
+                  , TB.urgentTextColor     = "#1ABC9C"
+                  , TB.fontName = "xft:Noto Sans CJK:size=10:antialias=true"
+                  }
 ------------------------------------------------------------------------
 -- Prompt
 --
@@ -849,11 +848,12 @@ myGotoLayoutKeys :: [(String, X (), Label, String)]
 myGotoLayoutKeys =
     [ ("M-g 1", jumpToLayout "Tall"      , Layout, "Tall")
     , ("M-g 2", jumpToLayout "HintedGrid", Layout, "HintedGrid")
-    , ("M-g 3", jumpToLayout "OneBig"    , Layout, "OneBig")
-    , ("M-g 4", jumpToLayout "Circle"    , Layout, "Circle")
-    , ("M-g 5", jumpToLayout "Mosaic"    , Layout, "Mosaic")
-    , ("M-g 6", jumpToLayout "ThreeCol"  , Layout, "Threecol")
-    , ("M-g 7", jumpToLayout "Spiral"    , Layout, "spiral")
+    , ("M-g 3", jumpToLayout "Tabbed"    , Layout, "Tabbed")
+    , ("M-g 4", jumpToLayout "OneBig"    , Layout, "OneBig")
+    , ("M-g 5", jumpToLayout "Circle"    , Layout, "Circle")
+    , ("M-g 6", jumpToLayout "Mosaic"    , Layout, "Mosaic")
+    , ("M-g 7", jumpToLayout "ThreeCol"  , Layout, "Threecol")
+    , ("M-g 8", jumpToLayout "Spiral"    , Layout, "spiral")
     ]
     where jumpToLayout = sendMessage . JumpToLayout
 
@@ -895,6 +895,11 @@ myLayoutKeys' =
       , Layout
       , "Next layout"
       ) -- Rotate through the available layout algorithms
+    , ( "M-S-<Space>"
+      , sendMessage FirstLayout
+      , Layout
+      , "First layout"
+      ) 
     , ("M-m", windows W.shiftMaster, Client, "Shift with master") -- Shift the focused window to the master window
     ]
 

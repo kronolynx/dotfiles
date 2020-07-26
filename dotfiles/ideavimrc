@@ -1,9 +1,17 @@
 "actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
+" :actionlist
+
 let mapleader=" "
 " source ~/.vimrc
 
 set showmode
 set history=1000
+
+" copy to clipboard
+set clipboard+=unnamed
+
+" number of lines above and below the cursor
+set scrolloff=7
 
 " Search as characters are entered
 set incsearch
@@ -16,9 +24,17 @@ set hlsearch
 set ignorecase
 set smartcase
 
+"This unsets the "last search pattern" register by hitting return
+nnoremap <CR> :noh<CR><CR>
+
 " Plugins {{{
-set surround
-set multiple-cursors
+set surround            " Commands: ys, cs, ds, S
+set multiple-cursors    " Commands <A-n>, <A-x>, <A-p>, g<A-n>
+set commentary          " Commands: gcc, gc + motion, v_gc
+set ReplaceWithRegister " Commands: gr, grr
+set exchange            " Commands: cx, cxx, X, cxc
+set textobj-entire      " Additional text objects: ae, ie
+set easymotion          " Requieres plugins IdeaVim-EasyMotion and AceJump
 " }}}
 
 " other {{{
@@ -29,9 +45,18 @@ vmap <leader>cc <Esc>:%s/\s\+$<CR><Paste>
 
 " }}}
 
+
+
+" Leader bindings
 " tab {{{
 nnoremap <leader>tl :action NextTab<cr>
 vnoremap <leader>tl <Esc>:action NextTab<cr>
+
+nnoremap <leader>tc :action CloseContent<cr>
+vnoremap <leader>tc <Esc>:action CloseContent<cr>
+
+nnoremap <leader>ts :action FileStructurePopup<cr>
+vnoremap <leader>ts <Esc>:action FileStructurePopup<cr>
 
 nnoremap <leader>th :action PreviousTab<cr>
 vnoremap <leader>th <Esc>:action PreviousTab<cr>
@@ -46,8 +71,8 @@ vnoremap <leader>to <Esc>:action MoveEditorToOppositeTabGroup<cr>
 noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
 vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
-noremap yt :action OpenEditorInOppositeTabGroup<cr>
-vnoremap yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
+noremap <leader>yt :action OpenEditorInOppositeTabGroup<cr>
+vnoremap <leader>yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
 " undo (reopen)
 nnoremap <leader>tu :action Reopenclosedtab<cr>
@@ -67,7 +92,11 @@ vnoremap <leader><tab>    <Esc>:action VimFilePrevious<CR>
 " }}}
 
 " editor {{{
-map <A-n> :action GotoAction<cr>
+
+" yank to end of line
+nnoremap Y y$ 
+
+map <A-h> :action GotoAction<cr>
 nnoremap <leader>ea :action GotoAction<cr>
 vnoremap <leader>ea <Esc>:action GotoAction<cr>
 
@@ -106,6 +135,9 @@ vnoremap <leader>es    <Esc>:action InsertLiveTemplate<CR>
 nnoremap <leader>el :action RecentLocations<cr>
 vnoremap <leader>el <Esc>:action RecentLocations<cr>
 
+nnoremap <leader>en :action EditorGutterToggleGlobalLineNumbers<cr>
+vnoremap <leader>en <Esc>:action EditorGutterToggleGlobalLineNumbers<cr>
+
 " multiple cursors
 nnoremap <leader>c <A-N>
 
@@ -117,11 +149,6 @@ nnoremap <leader>c <A-N>
 nnoremap <leader>*    :action ShowUsages<CR>
 vnoremap <leader>*    <Esc>:action ShowUsages<CR>
 
-" }}}
-
-" jump {{{
-nnoremap <leader><leader> :action emacsIDEAs.AceJumpWord<cr>
-vnoremap <leader><leader> <Esc>:action emacsIDEAs.AceJumpWord<cr>
 " }}}
 
 " applications {{{
@@ -188,6 +215,12 @@ vnoremap <leader>gf <Esc>:action GotoFile<cr>
 nnoremap <leader>gc :action GotoClass<cr>
 vnoremap <leader>gc <Esc>:action GotoClass<cr>
 
+nnoremap <leader>gt :action GotoTest<cr>
+vnoremap <leader>gt <Esc>:action GotoTest<cr>
+
+nnoremap <leader>gu :action FindUsages<cr>
+vnoremap <leader>gu <Esc>:action FindUsages<cr>
+
 " Go to code block start
 nnoremap <leader>g[    :action EditorCodeBlockStart<CR>
 vnoremap <leader>g[    <Esc>:action EditorCodeBlockStart<CR>
@@ -249,8 +282,8 @@ vnoremap <leader>sp <Esc>:action FindInPath<cr>
 nnoremap <leader>se :action SearchEverywhere<cr>
 vnoremap <leader>se <Esc>:action SearchEverywhere<cr>
 
-nnoremap <leader>sm :action SearchModal<cr>
-vnoremap <leader>sm <Esc>:action SearchModal<cr>
+nnoremap <leader>ss :action Find<cr>
+vnoremap <leader>ss <Esc>:action Find<cr>
 
 nnoremap <leader>sf :action FindUsagesInFile<cr>
 vnoremap <leader>sf <Esc>:action FindUsagesInFile<cr>
@@ -296,6 +329,11 @@ nnoremap <leader>wk <C-w>k
 noremap  <A-z> :action HideAllWindows<cr>
 vnoremap  <A-z> <Esc>:action HideAllWindows<cr>
 
+" noremap  <A-1> :action <cr>
+" vnoremap  <A-1> <Esc>:action <cr>
+map  <A-2> :action Switcher<cr>
+
+
 
 nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
@@ -330,8 +368,8 @@ nnoremap <leader>xtc    xhP
 vnoremap <leader>xtc    <Esc>xhP
 
 " Delete all spaces except one
-nnoremap <leader>xd<Space>    wh:action EditorHungryBackSpace<CR>
-vnoremap <leader>xd<Space>    <Esc>wh:action EditorHungryBackSpace<CR>
+nnoremap <leader>xd    wh:action EditorHungryBackSpace<CR>
+vnoremap <leader>xd    <Esc>wh:action EditorHungryBackSpace<CR>
 
 " Transpose lines
 nnoremap <leader>xt    ddkP
@@ -393,8 +431,5 @@ vnoremap <leader>qQ    <Esc>:action Exit<CR>
 nnoremap <leader>qs    :action SaveAll<CR>:action CloseProject<CR>
 vnoremap <leader>qs    <Esc>:action SaveAll<CR>:action CloseProject<CR>
 " }}}
-"
-"
-" relative line numbers
-set nu
-set rnu
+
+

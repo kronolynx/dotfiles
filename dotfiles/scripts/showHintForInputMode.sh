@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 mode_name=$1
 fg_color=$2
 bg_color=$3
