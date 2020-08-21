@@ -2,7 +2,6 @@
 " :actionlist
 
 let mapleader=" "
-" source ~/.vimrc
 
 set showmode
 set history=1000
@@ -35,6 +34,7 @@ set ReplaceWithRegister " Commands: gr, grr
 set exchange            " Commands: cx, cxx, X, cxc
 set textobj-entire      " Additional text objects: ae, ie
 set easymotion          " Requieres plugins IdeaVim-EasyMotion and AceJump
+set highlightedyank     " 
 " }}}
 
 " other {{{
@@ -43,9 +43,12 @@ nnoremap <leader>w :action SaveAll<cr>
 nmap <leader>cc :%s/\s\+$<CR><Paste>
 vmap <leader>cc <Esc>:%s/\s\+$<CR><Paste>
 
+
+nnoremap ff <Esc> 
+vnoremap ff <Esc> 
+inoremap ff <Esc> 
+
 " }}}
-
-
 
 " Leader bindings
 " tab {{{
@@ -55,14 +58,20 @@ vnoremap <leader>tl <Esc>:action NextTab<cr>
 nnoremap <leader>tc :action CloseContent<cr>
 vnoremap <leader>tc <Esc>:action CloseContent<cr>
 
-nnoremap <leader>ts :action FileStructurePopup<cr>
-vnoremap <leader>ts <Esc>:action FileStructurePopup<cr>
+nnoremap <leader>tp :action FileStructurePopup<cr>
+vnoremap <leader>tp <Esc>:action FileStructurePopup<cr>
 
 nnoremap <leader>th :action PreviousTab<cr>
 vnoremap <leader>th <Esc>:action PreviousTab<cr>
 
-nnoremap <leader>tr :action Switcher<cr>
-vnoremap <leader>tr <Esc>:action Switcher<cr>
+nnoremap <leader>ts :action Switcher<cr>
+vnoremap <leader>ts <Esc>:action Switcher<cr>
+
+nnoremap <leader>tr :action RecentFiles<cr>
+vnoremap <leader>tr <Esc>:action RecentFiles<cr>
+
+nnoremap <leader>tt    :action VimFilePrevious<CR>
+vnoremap <leader>tt   <Esc>:action VimFilePrevious<CR>
 
 " duplicate tab opossite group (yank)
 nnoremap <leader>to :action MoveEditorToOppositeTabGroup<cr>
@@ -75,8 +84,8 @@ noremap <leader>yt :action OpenEditorInOppositeTabGroup<cr>
 vnoremap <leader>yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
 " undo (reopen)
-nnoremap <leader>tu :action Reopenclosedtab<cr>
-nnoremap <leader>tu <Esc>:action Reopenclosedtab<cr>
+nnoremap <leader>tu :action ReopenClosedTab<cr>
+nnoremap <leader>tu <Esc>:action ReopenClosedTab<cr>
 
 " cycle tabs
 nnoremap <C-s-tab> NextTab
@@ -97,46 +106,32 @@ vnoremap <leader><tab>    <Esc>:action VimFilePrevious<CR>
 nnoremap Y y$ 
 
 map <A-h> :action GotoAction<cr>
+
 nnoremap <leader>ea :action GotoAction<cr>
-vnoremap <leader>ea <Esc>:action GotoAction<cr>
 
 nnoremap <leader>eb :action Back<cr>
-vnoremap <leader>eb <Esc>:action Back<cr>
 
 nnoremap <leader>ef :action Forward<cr>
-vnoremap <leader>ef <Esc>:action Forward<cr>
-
-"nnoremap <leader>e= :action ReformatCode<cr>
-nnoremap <leader>e= :action ShowReformatFileDialog<cr>
-vnoremap <leader>e= <Esc>:action ShowReformatFileDialog<cr>
 
 nnoremap <leader>ec :action CompileProject<cr>
-vnoremap <leader>ec <Esc>:action CompileProject<cr>
 
 nnoremap <leader>ee :action EvaluateExpression<CR>
 vnoremap <leader>ee <Esc>:action EvaluateExpression<CR>
 
-nnoremap <leader>ei :action Scala.ShowImplicits<cr>
-vnoremap <leader>ei <Esc>:action Scala.ShowImplicits<cr>
 
-nnoremap <leader>eI :action Scala.ExpandImplicits<cr>
-vnoremap <leader>eI <Esc>:action Scala.ExpandImplicits<cr>
-
-nnoremap <leader>ep :action ParameterInfo<cr>
-vnoremap <leader>ep <Esc>:action ParameterInfo<cr>
-
-nnoremap <leader>er :action RenameElement<cr>
-vnoremap <leader>er <Esc>:action RenameElement<cr>
 
 " Insert snippet
 nnoremap <leader>es    :action InsertLiveTemplate<CR>
-vnoremap <leader>es    <Esc>:action InsertLiveTemplate<CR>
 
-nnoremap <leader>el :action RecentLocations<cr>
-vnoremap <leader>el <Esc>:action RecentLocations<cr>
 
 nnoremap <leader>en :action EditorGutterToggleGlobalLineNumbers<cr>
-vnoremap <leader>en <Esc>:action EditorGutterToggleGlobalLineNumbers<cr>
+
+" Pasting from yank history
+nnoremap <leader>ey :action PasteMultiple<CR>
+
+nnoremap <leader>eo :action OptimizeImports<CR>
+
+nnoremap <leader>e= :action ReformatCode<cr>
 
 " multiple cursors
 nnoremap <leader>c <A-N>
@@ -150,56 +145,86 @@ nnoremap <leader>*    :action ShowUsages<CR>
 vnoremap <leader>*    <Esc>:action ShowUsages<CR>
 
 " }}}
+" view {{{
+nnoremap <leader>va :action ShowIntentionActions<CR>
+
+nnoremap <leader>via :action Scala.ShowImplicitArguments<CR>
+vnoremap <leader>via <Esc>:action Scala.ShowImplicitArguments<cr>
+
+nnoremap <leader>vis :action Scala.ShowImplicits<cr>
+vnoremap <leader>vis <Esc>:action Scala.ShowImplicits<cr>
+
+nnoremap <leader>vie :action Scala.ExpandImplicits<cr>
+vnoremap <leader>vie <Esc>:action Scala.ExpandImplicits<cr>
+
+nnoremap <leader>vp :action ParameterInfo<cr>
+vnoremap <leader>vp <Esc>:action ParameterInfo<cr>
+
+" Types
+nnoremap <leader>vt :action Scala.TypeInfo<CR>
+vnoremap <leader>vt <Esc>:action Scala.TypeInfo<CR>
+
+nnoremap <leader>vr :action RecentLocations<cr>
+
+" display variable definition in a popup window
+nnoremap <leader>vq :action QuickImplementations<CR> 
+
+" Undo
+nnoremap <leader>vh :action LocalHistory.ShowHistory<CR>
+" }}}
+
+" refactor {{
+nnoremap <leader>rm :action ExtractMethod<CR>
+nnoremap <leader>rq :action Refactorings.QuickListPopupAction<CR>
+nnoremap <leader>rp :action IntroduceParameter<CR>
+" inline current variable (opossite of introduce variable)
+nnoremap <leader>ri :action Inline<CR>
+nnoremap <leader>rv :action IntroduceVariable<CR>
+nnoremap <leader>ro :action OverrideMethods<CR>
+
+nnoremap <leader>rr :action RenameElement<cr>
+vnoremap <leader>rr <Esc>:action RenameElement<cr>
+" }}
 
 " applications {{{
 nnoremap <leader>ar :action ActivateFileManagerToolWindow<cr>
-vnoremap <leader>ar <Esc>:action ActivateFileManagerToolWindow<cr>
-
 nnoremap <leader>at :action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
-vnoremap <leader>at <Esc>:action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
 nnoremap <leader>aT :action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
-vnoremap <leader>aT <Esc>:action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
 "}}}
 
 " file {{{
 " Find file
-nnoremap <leader>ff    :action GotoFile<CR>
-vnoremap <leader>ff    <Esc>:action GotoFile<CR>
-
 nnoremap <leader>fe :action <cr>
-vnoremap <leader>fe <Esc>:action <cr>
 
 nnoremap <leader>fu :action <cr>
-vnoremap <leader>fu <Esc>:action <cr>
 
 nnoremap <leader>fl :action Recentfiles<cr>
 vnoremap <leader>fl <Esc>:action Recentfiles<cr>
 
 nnoremap <leader>fc :action RecentChangedFiles<cr>
-vnoremap <leader>fc <Esc>:action RecentChangedFiles<cr>
 
 nnoremap <leader>fo :action OpenFile<cr>
-vnoremap <leader>fo <Esc>:action OpenFile<cr>
 
 " Recent files
 nnoremap <leader>fr    :action RecentFiles<CR>
-vnoremap <leader>fr    <Esc>:action RecentFiles<CR>
+
+" find in project window
+nnoremap <leader>ff    :action SelectInProjectView<CR>
 
 " Rename file
 nnoremap <leader>fR    :action RenameFile<CR>
-vnoremap <leader>fR    <Esc>:action RenameFile<CR>
 
 " New file
 nnoremap <leader>fN :action NewFile<cr>
-vnoremap <leader>fN <Esc>:action NewFile<cr>
 
 " Copy file path
 nnoremap <leader>fy    :action CopyPaths<CR>
-vnoremap <leader>fy    <Esc>:action CopyPaths<CR>
 
 " }}}
 
 " goto {{{
+nnoremap <leader>gg :action ActivateProjectToolWindow<cr>
+
 nnoremap <leader>gd :action GotoTypeDeclaration<cr>
 vnoremap <leader>gd <Esc>:action GotoTypeDeclaration<cr>
 
@@ -210,10 +235,8 @@ nnoremap <leader>gs :action GotoSuperMethod<cr>
 vnoremap <leader>gs <Esc>:action GotoSuperMethod<cr>
 
 nnoremap <leader>gf :action GotoFile<cr>
-vnoremap <leader>gf <Esc>:action GotoFile<cr>
 
 nnoremap <leader>gc :action GotoClass<cr>
-vnoremap <leader>gc <Esc>:action GotoClass<cr>
 
 nnoremap <leader>gt :action GotoTest<cr>
 vnoremap <leader>gt <Esc>:action GotoTest<cr>
@@ -241,34 +264,24 @@ vnoremap g.    :action JumpToLastChange<CR>
 
 " git (m from magit) {{{
 nnoremap <leader>ma :action Git.Add<cr>
-vnoremap <leader>ma <Esc>:action Git.Add<cr>
 
 nnoremap <leader>mm :action Git.Menu<cr>
-vnoremap <leader>mm <Esc>:action Git.Menu<cr>
 
 nnoremap <leader>mp :action Git.Pull<cr>
-vnoremap <leader>mp <Esc>:action Git.Pull<cr>
 
 nnoremap <leader>mf :action Git.Fetch<cr>
-vnoremap <leader>mf <Esc>:action Git.Fetch<cr>
 
 nnoremap <leader>mi :action Git.Init<cr>
-vnoremap <leader>mi <Esc>:action Git.Init<cr>
 
 nnoremap <leader>ml :action Git.Log<cr>
-vnoremap <leader>ml <Esc>:action Git.Log<cr>
 
 nnoremap <leader>mu :action Git.Unstash<cr>
-vnoremap <leader>mu <Esc>:action Git.Unstash<cr>
 
 " Show local changes window (git status)
 nnoremap <leader>mw    :action Vcs.Show.Local.Changes<CR>
-vnoremap <leader>mw    <Esc>:action Vcs.Show.Local.Changes<CR>
 nnoremap <leader>md    :action Vcs.Show.Local.Changes<CR>
-vnoremap <leader>md    <Esc>:action Vcs.Show.Local.Changes<CR>
 
 nnoremap <leader>ms :action Git.Stash<cr>
-vnoremap <leader>ms <Esc>:action Git.Stash<cr>
 
 " }}}
 
@@ -277,13 +290,10 @@ nnoremap <leader>su :action FindUsages<cr>
 vnoremap <leader>su <Esc>:action FindUsages<cr>
 
 nnoremap <leader>sp :action FindInPath<cr>
-vnoremap <leader>sp <Esc>:action FindInPath<cr>
 
 nnoremap <leader>se :action SearchEverywhere<cr>
-vnoremap <leader>se <Esc>:action SearchEverywhere<cr>
 
 nnoremap <leader>ss :action Find<cr>
-vnoremap <leader>ss <Esc>:action Find<cr>
 
 nnoremap <leader>sf :action FindUsagesInFile<cr>
 vnoremap <leader>sf <Esc>:action FindUsagesInFile<cr>
@@ -305,7 +315,6 @@ nnoremap <leader>wo :action CloseAllEditorsButActive<cr>
 vnoremap <leader>wo <Esc>:action CloseAllEditorsButActive<cr>
 
 nnoremap <leader>wr :action <cr>
-vnoremap <leader>wr <Esc>:action <cr>
 
 nnoremap <leader>wv :action SplitVertically<cr>
 vnoremap <leader>wv <Esc>:action SplitVertically<cr>
@@ -361,7 +370,6 @@ vnoremap <leader>hk     <Esc>:map<CR>
 
 " Show kill ring
 nnoremap <leader>xy    :action PasteMultiple<CR>
-vnoremap <leader>xy    :action PasteMultiple<CR>
 
 " Transpose characters
 nnoremap <leader>xtc    xhP
@@ -383,18 +391,27 @@ vnoremap <leader>xw    <Esc>:action EditorToggleShowWhitespaces<CR>
 nnoremap <leader>xi    :action EditorToggleShowIndentLines<CR>
 vnoremap <leader>xi    <Esc>:action EditorToggleShowIndentLines<CR>
 
+
+" External GVim
+nmap <leader>xv :action Tool_External Tools_gvim<cr>
+
 " Toggle view truncate lines
-nnoremap <leader>xv    :action EditorGutterToggleGlobalSoftWraps<CR>
-vnoremap <leader>xv    <Esc>:action EditorGutterToggleGlobalSoftWraps<CR>
+nnoremap <leader>xg    :action EditorGutterToggleGlobalSoftWraps<CR>
+vnoremap <leader>xg    <Esc>:action EditorGutterToggleGlobalSoftWraps<CR>
 
 " Toggle distraction free mode
 nnoremap <leader>xf    :action ToggleDistractionFreeMode<CR>
 vnoremap <leader>xf    <Esc>:action ToggleDistractionFreeMode<CR>
 
 " Reload .ideavimrc
-nnoremap <leader>xr    :source ~/.ideavimrc<CR>
-vnoremap <leader>xr    <Esc>:source ~/.ideavimrc<CR>
-
+nnoremap <leader>xR    :source ~/.ideavimrc<CR>
+vnoremap <leader>xR    <Esc>:source ~/.ideavimrc<CR>
+" open recent project
+nnoremap <leader>xr    :action RecentProjectListGroup<CR>
+vnoremap <leader>xr    <Esc>:action RecentProjectListGroup<CR>
+" open in file manader
+nnoremap <leader>xo    :action RevealIn<CR>
+vnoremap <leader>xo    <Esc>:action RevealIn<CR>
 " Show settings
 nnoremap <leader>xs :action ShowSettings<cr>
 vnoremap <leader>xs <Esc>:action ShowSettings<cr>
@@ -432,4 +449,6 @@ nnoremap <leader>qs    :action SaveAll<CR>:action CloseProject<CR>
 vnoremap <leader>qs    <Esc>:action SaveAll<CR>:action CloseProject<CR>
 " }}}
 
-
+""" todo 
+" RevealIn    (opens thunar where the current file is located)
+" RevealGroup    (ask what to open where the current file is located)
