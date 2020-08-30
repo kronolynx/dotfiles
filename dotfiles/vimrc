@@ -23,7 +23,8 @@ set nocompatible              " be iMproved, required
 " autosave
 :au FocusLost * :wa
 
-
+" copy to clipboard
+set clipboard+=unnamedplus
 " indentation
 set autoindent      "Keep indentation from previous line
 set expandtab " Expand tabs to spaces
@@ -78,8 +79,6 @@ set t_Co=256 " Use 256 colours (Use this setting only if your terminal supports 
 set tabpagemax=50 " Maximum number of tab pages that can be opened from the command line.
 set textwidth=80 " Make it obvious where 80 characters is
 set noshowmode " lightline shows the status not vim
-" Give us a realtime preview of substitution before we send it
-set inccommand=nosplit
 
 " folding
 set foldmethod=syntax " Syntax are used to specify folds
@@ -118,6 +117,11 @@ set wildignore+=*/node_modules/*
 set wildignore+=*/smarty/*,*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,*/log/*,*/tmp/*,*/build/*,*/ckeditor/*,*/doc/*,*/source_maps/*,*/dist/*,*/targer/*
 " }}}
 
+if has("nvim") 
+  " Realtime preview of substitution
+  set inccommand=nosplit
+endif
+
 " Plugins -------------------------------------------------------------
 
 " install vim plug if not installed
@@ -125,14 +129,14 @@ if has('nvim')
   if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     silent !echo '[Downloading vim-plug for neovim] ...'
     silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
 else
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !echo '[Downloading vim-plug for vim] ...'
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   endif
 endif
@@ -160,15 +164,15 @@ Plug 'tpope/vim-surround'
 Plug 'yuttie/comfortable-motion.vim'
 " Fixers, completion and navigation
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy file finder :CtrlP :CtrlPBuffer :CtrlPMixed
-Plug 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion' " <leader><leader>w|b|W|B|e|E
 Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " installs fzf
 Plug 'junegunn/fzf.vim' " fuzy finder :FZF :Files :GFiles :Buffers
 Plug 'liuchengxu/vim-clap'
 Plug 'liuchengxu/vista.vim'
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neomake/neomake'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 " Status and UI
 Plug 'itchyny/calendar.vim'
 Plug 'scrooloose/nerdtree'
@@ -202,14 +206,28 @@ Plug 'tomasr/molokai'
 call plug#end()
 " }}}
 
+" coc {{
+let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
+" }}
+
+
+" custom keybindings {{{
+"
 " easy clipboard copy/paste {{{
 noremap <leader>y "*y
 noremap <leader>Y "*Y
 noremap <leader>p "*p
 noremap <leader>P "*P
 " }}}
+"
+" search {{
+noremap <leader>gf :FZF<CR>
+" }}
+" tabs {{
+" recent files
+nnoremap <leader>tr :CtrlPBuffer<CR> 
+" }}
 
-" custom keybindings {{{
 " Sudo write
 nnoremap <leader>xs :w !sudo tee %<CR>
 " Clear last search (,qs)
@@ -221,7 +239,9 @@ map Y y$
 " save
 map <C-s> <esc>:w!<cr>
 " escape
-:imap yy <Esc>
+:imap ff <Esc>
+:nmap ff <Esc>
+:vmap ff <Esc>
 " Change selected text from NameLikeThis to name_like_this.
 "vnoremap <leader>sc :s/\<\@!\([A-Z]\)/\_\l\1/g<CR>gul
 " }}}
@@ -279,6 +299,9 @@ endtry
 " Return to last edit position when opening files (You want this!)
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 " }}}
+"
+
+
 "
 " Language server {{{
 nmap <leader>ld <Plug>(coc-definition)zz
@@ -607,9 +630,9 @@ let g:vista_default_executive = 'coc'
 " }}}
 
 " File management {{{
-nnoremap <silent><leader>\ :NERDTreeToggle<CR>
-nnoremap <silent><leader>p :CtrlP<CR>
-nnoremap <silent><leader>b :CtrlPBuffer<CR>
+"nnoremap <silent><leader>\ :NERDTreeToggle<CR>
+"nnoremap <silent><leader>p :CtrlP<CR>
+"nnoremap <silent><leader>b :CtrlPBuffer<CR>
 "" }}}
 
 " Comment {{
@@ -617,3 +640,12 @@ vnoremap <M-/> :Commentary<CR>j
 nnoremap <M-/> V:Commentary<CR>j
 " }}
 
+"" fuzzyfinder {{
+nnoremap <C-p> :FZF<CR>
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-s': 'split',
+  \ 'ctrl-v': 'vsplit'
+  \}
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+" {{

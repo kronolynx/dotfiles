@@ -4,7 +4,7 @@
     "vim.enableNeovim": true,
     "vim.camelCaseMotion.enable": false,
     "vim.easymotion": true,
-    "vim.easymotionMarkerBackgroundColor": "yellow",
+    "vim.easymotionMarkerBackgroundColor": "purple",
     "vim.leader": "<Space>",
     "vim.smartcase": true,
     "vim.useSystemClipboard": true,
@@ -652,5 +652,6 @@
     },
     "rest-client.largeResponseBodySizeLimitInMB": 100,
     "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
-    "python.languageServer": "Microsoft"
+    "python.languageServer": "Microsoft",
+    "beautify.config": ""
 }

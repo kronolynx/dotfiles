@@ -2,3 +2,7 @@
 [character]      # The name of the module
 symbol = "⮞ "     # The "symbol" segment is being set to "➜"
 vicmd_symbol = "⮝ "
+[time]
+disabled = false
+style = "bold green"
+format = "%T"

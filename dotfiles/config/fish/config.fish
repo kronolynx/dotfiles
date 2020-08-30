@@ -76,6 +76,8 @@ alias gtl='git log'
 alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias bashi='bash -s interactive'
 
+alias tstamp='date "+%F-%H%M"'
+
 
 # to create more alias for different distro operations
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
@@ -113,6 +115,11 @@ alias LF="cat ~/.config/fish/custom/aliases.fish | grep -v '^#' | grep 'alias'"
 alias SF="source ~/.config/fish/config.fish"
 alias SV="source ~/.vimrc"
 alias SX="xrdb ~/.Xresources"
+
+alias screenOff="xset dpms force off"
+
+alias nordc="nordvpn c p2p && nordvpn s killswitch on && nordvpn s autoconnect on"
+alias nordd="nordvpn s killswitch off && nordvpn s autoconnect off && nordvpn d"
 
 # networking. ip address, dig, dns
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"

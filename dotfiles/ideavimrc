@@ -7,7 +7,7 @@ set showmode
 set history=1000
 
 " copy to clipboard
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 
 " number of lines above and below the cursor
 set scrolloff=7
@@ -237,6 +237,8 @@ vnoremap <leader>gs <Esc>:action GotoSuperMethod<cr>
 nnoremap <leader>gf :action GotoFile<cr>
 
 nnoremap <leader>gc :action GotoClass<cr>
+
+nnoremap <leader>gc :action GotoAction<cr>
 
 nnoremap <leader>gt :action GotoTest<cr>
 vnoremap <leader>gt <Esc>:action GotoTest<cr>

@@ -1,8 +1,8 @@
 export EDITOR=/usr/bin/vim
 # fix "xdg-open fork-bomb" export your preferred browser from here
 export BROWSER=/usr/bin/firefox
-export EDITOR=/usr/bin/emacs -nw
-export TERMINAL=/usr/bin/xfce4-terminal
+export EDITOR=/usr/bin/nvim
+export TERMINAL=/usr/bin/alacritty
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"

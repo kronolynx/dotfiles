@@ -7,14 +7,17 @@ bierner.markdown-checkbox
 bierner.markdown-emoji
 bierner.markdown-preview-github-styles
 bierner.markdown-yaml-preamble
+christian-kohler.path-intellisense
 CoenraadS.bracket-pair-colorizer
 darkriszty.markdown-table-prettify
 dbaeumer.vscode-eslint
+DotJoshJohnson.xml
 dracula-theme.theme-dracula
 eamodio.gitlens
 Equinusocio.vsc-community-material-theme
 Equinusocio.vsc-material-theme
 equinusocio.vsc-material-theme-icons
+esbenp.prettier-vscode
 formulahendry.auto-close-tag
 golang.go
 HookyQR.beautify

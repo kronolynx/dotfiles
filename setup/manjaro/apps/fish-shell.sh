@@ -5,7 +5,7 @@ COMMON="$(dirname $(dirname $SCRIPTPATH))/common"
 
 apps=(
   fish
-  fisherman
+  fisher
 )
 
 $COMMON/helpers/install-app.sh ${apps[*]}
