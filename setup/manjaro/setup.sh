@@ -21,11 +21,6 @@ base=(
   cups
   # sound server
   pulseaudio
-  # terminal emulator
-  rxvt-unicode
-  # tabs for urxvt
-  urxvt-tabbedex
-  # touchpad
   xf86-input-synaptics
   # code editor
   neovim
@@ -34,6 +29,10 @@ base=(
   # zip
   p7zip
   xarchiver
+  # clip manager required by vim to copy to clipboad
+  xclip
+  # terminal emulator
+  alacritty
 )
 
 media=(
@@ -43,6 +42,8 @@ media=(
   mkchromecast
   # Free radio streaming software with more than 20,000 radio stations
   odio-appimage
+  # ebook management
+  calibre
 )
 
 
@@ -97,6 +98,8 @@ cli=(
   entr
   # cross shell prompt
   starship
+  # git pager
+  git-delta
 )
 
 cli_media=(
@@ -143,9 +146,15 @@ coding=(
   # re-implementation of the Scala REPL from first principles.
   ammonite
   # The Glasgow Haskell Compiler
-  ghc
+  #ghc
   # The Haskell Tool Stack
-  stack
+  #stack
+  # git pager
+  git-delta
+  # connection manager
+  asbru-cm
+  # Cat clone with syntax highlighting and git integration
+  bat
 )
 
 install_tmux() {
@@ -178,10 +187,13 @@ tilling_common_apps=(
   i3lock
   # image viewer (set background image)
   feh
+  # Command-line X11 automation tool 
+  xdotool
+  # GTK+ clipboard manager
+  clipit
 )
 
 awesome=(
-  bat
   awesome
 )
 
@@ -191,8 +203,15 @@ xmonad=(
   xmobar
   trayer
   # Lightweight GTK+ clipboard manager
-  clipit
   dzen2
+)
+
+openbox=(
+ tint2
+ openbox
+ obmenu-generator
+ obconf
+ obkey
 )
 
 i3=(

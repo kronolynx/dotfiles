@@ -17,6 +17,9 @@ media=(
 
 )
 
+office=(
+
+)
 
 cli=(
 
@@ -38,6 +41,7 @@ coding=(
 $COMMON/helpers/pprint.sh "Installing Snaps"
 $SCRIPTPATH/helpers/install-app.sh ${base[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli[*]}
+$SCRIPTPATH/helpers/install-app.sh ${office[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli_media[*]}
 $SCRIPTPATH/helpers/install-app.sh ${media[*]}
 $SCRIPTPATH/helpers/install-app.sh ${misc[*]}

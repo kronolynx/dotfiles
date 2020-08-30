@@ -20,7 +20,7 @@
 (gtk_accel_path "<Actions>/terminal-window/close-window" "")
 ; (gtk_accel_path "<Actions>/terminal-window/reset" "")
 ; (gtk_accel_path "<Actions>/terminal-window/save-contents" "")
-(gtk_accel_path "<Actions>/terminal-window/toggle-menubar" "F10")
+; (gtk_accel_path "<Actions>/terminal-window/toggle-menubar" "")
 ; (gtk_accel_path "<Actions>/terminal-window/copy" "<Primary><Shift>c")
 ; (gtk_accel_path "<Actions>/terminal-window/copy-html" "")
 ; (gtk_accel_path "<Actions>/terminal-window/last-active-tab" "")

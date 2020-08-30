@@ -2,8 +2,67 @@
   gpgsign = true
 [core]
   editor = nvim
-  pager = less
+  pager = delta
   excludesfile = ~/.gitignore
+[status]
+  submoduleSummary = true
+[diff]
+  submodule = log
+#so much color
+[color]
+  ui = auto
+[color "diff"]
+  meta = yellow bold
+  commit = green bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = "red bold 52"
+  newNormal = "green bold"
+  newHighlight = "green bold 22"
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+# git mergetool
+[merge]
+  tool = opendiff
+  renameLimit = 0
+# use separate file for username / github token
+[include]
+  path = ~/.gitconfig.local
+
+[filter "lfs"]
+  clean = git-lfs clean %f
+  smudge = git-lfs smudge %f
+  required = true
+
+[fetch]
+  prune = true
+[diff]
+  compactionHeuristic = true
+[difftool]
+  prompt = false
+[stash]
+  showPatch = true
+[push]
+  default = current
+[github]
+  user = kronolynx
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  decorations = true
+  line-numbers = true
+  syntax-theme = Dracula
 [alias]
   amend = commit --amend --no-edit
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
@@ -86,56 +145,3 @@
   wipa = !git add -A && git commit -m 'WIP (save all changes)' # commits tracked changes
   wips = commit -am "WIP (save staged changes)"
 #  cleanr = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\///' | xargs -n 1 git push --delete origin"
-[status]
-  submoduleSummary = true
-[diff]
-  submodule = log
-#so much color
-[color]
-  ui = auto
-[color "diff"]
-  meta = yellow bold
-  commit = green bold
-  frag = magenta bold
-  old = red bold
-  new = green bold
-  whitespace = red reverse
-[color "diff-highlight"]
-  oldNormal = red bold
-  oldHighlight = "red bold 52"
-  newNormal = "green bold"
-  newHighlight = "green bold 22"
-[color "branch"]
-  current = yellow reverse
-  local = yellow
-  remote = green
-[color "status"]
-  added = yellow
-  changed = green
-  untracked = cyan
-
-# git mergetool
-[merge]
-  tool = opendiff
-  renameLimit = 0
-# use separate file for username / github token
-[include]
-  path = ~/.gitconfig.local
-
-[filter "lfs"]
-  clean = git-lfs clean %f
-  smudge = git-lfs smudge %f
-  required = true
-
-[fetch]
-  prune = true
-[diff]
-  compactionHeuristic = true
-[difftool]
-  prompt = false
-[stash]
-  showPatch = true
-[push]
-  default = current
-[github]
-  user = kronolynx

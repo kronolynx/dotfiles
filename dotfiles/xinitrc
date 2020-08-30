@@ -67,7 +67,7 @@ get_session(){
     lxqt) dbus_args+=(lxqt-session) ;;
     mate*) dbus_args+=(mate-session) ;;
     xfce*) dbus_args+=(xfce4-session) ;;
-    openbox) dbus_args+=(openbox-session) ;;
+    openbox*) dbus_args+=(openbox-session) ;;
     xmonad-krono) 
       dbus_args+=(xmonad-krono) 
       export _JAVA_AWT_WM_NONREPARENTING=1

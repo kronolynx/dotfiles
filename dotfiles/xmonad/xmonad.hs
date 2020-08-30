@@ -158,7 +158,8 @@ myScreenCapture :: String
 myScreenCapture = "$HOME/.scripts/screen_shot.sh"
 
 myTerminal :: String
-myTerminal = "xfce4-terminal"
+myTerminal = "alacritty"
+-- myTerminal = "xfce4-terminal"
 
 myTmuxTerminal :: String
 myTmuxTerminal = myTerminal ++ " -e tmux attach"
@@ -290,6 +291,7 @@ myManageHook' =
           , [ className =? c --> ManageHelpers.doCenterFloat | c <- myCenterFloats ]
           , [ title =? t --> ManageHelpers.doCenterFloat | t <- myTitleCenterFloats ]
           , [ className =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myShifts ]
+          , [ title =? c --> doShift (myWorkspaces !! ws) | (c, ws) <- myTitleShifts ]
           -- , [ManageHelpers.isDialog --> ManageHelpers.doCenterFloat]
           ]
   where
@@ -305,12 +307,19 @@ myManageHook' =
     myFullFloats  = []
       -- workspace numbers start at 0
     myShifts =
-        [ ("telegram-desktop"  , 10)
-        , ("TelegramDesktop"   , 10)
+        [ ("telegram-desktop"  , 9)
+        , ("TelegramDesktop"   , 9)
         , ("Slack"             , 9)
         , ("Postman"           , 6)
         , ("DevCenter"         , 6)
         , ("jetbrains-idea-ce" , 2)
+        , ("firefox"           , 0)
+        , ("Chromium"          , 11)
+        , ("Joplin"            , 5)
+        , ("Transmission-gtk"  , 11)
+        ]
+    myTitleShifts =
+        [ ("DevCenter"         , 6)
         ]
 
 myStartupHook :: X ()
