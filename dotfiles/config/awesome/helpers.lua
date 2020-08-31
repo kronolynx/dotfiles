@@ -112,16 +112,54 @@ function helpers.colorize_text(txt, fg)
   return "<span foreground='" .. fg .."'>" .. txt .. "</span>"
 end
 -- Create rounded rectangle shape (in one line)
-helpers.rrect = function(radius)
+function helpers.rrect (radius)
   return function(cr, width, height)
       gears.shape.rounded_rect(cr, width, height, radius)
   end
 end
 
-helpers.prrect = function(radius, tl, tr, br, bl)
+function helpers.prrect(radius, tl, tr, br, bl)
   return function(cr, width, height)
       gears.shape.partially_rounded_rect(cr, width, height, tl, tr, br, bl, radius)
   end
+end
+
+local double_tap_timer = nil
+function  helpers.single_double_tap(single_tap_function, double_tap_function)
+    if double_tap_timer then
+        double_tap_timer:stop()
+        double_tap_timer = nil
+        double_tap_function()
+        -- naughty.notify({text = "We got a double tap"})
+        return
+    end
+
+    double_tap_timer =
+        gears.timer.start_new(0.20, function()
+            double_tap_timer = nil
+            -- naughty.notify({text = "We got a single tap"})
+            if single_tap_function then
+                single_tap_function()
+            end
+            return false
+        end)
+end
+
+-- maximize all windows in a tag or restore layout used before maximizing
+local previous_layout = {}
+function helpers.toggle_full(c)
+  if c == nil then return end
+  local layout = awful.layout.get(c.screen) 
+  local tag = awful.screen.focused().selected_tag
+  if layout.name == layouts.max.name then
+    local previous = previous_layout[tag.name] or layouts.tile.name
+    local set_layout = layouts[previous] or layouts.tile
+    awful.layout.set(layouts[previous])
+  else
+    previous_layout[tag.name] = layout.name
+    awful.layout.set(layouts.max)
+  end
+  c:raise()
 end
 
 return helpers

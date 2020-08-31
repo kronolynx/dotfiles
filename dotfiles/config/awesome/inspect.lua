@@ -338,11 +338,11 @@ local naughty = require("naughty")
 local function my_debug(val, title)
   naughty.notify({
     preset = {
-      bg      = "#0000ff",
-      fg      = "#ffffff",
+      bg      = x.color8,
+      fg      = x.color7,
       timeout = 0,
     },
-    title  = string.format("Debug %s -- Have you tried to symlink ???", (title or "")),
+    title  = string.format("%s", (title or "Debug")),
     text   = inspect(val)
   })
 end
@@ -350,4 +350,3 @@ end
 -- local inspect   = require('inspect')
 -- inspect("some data", "Message title")
 return my_debug
-
