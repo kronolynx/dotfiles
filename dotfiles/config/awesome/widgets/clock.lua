@@ -3,7 +3,7 @@ local wibox          = require("wibox")
 
 local textclock      = wibox.widget {
   {
-    markup = ' <span color="' .. awful.util.my_colors.dark.magenta .. '"></span>',
+    markup = ' <span color="' .. x.color13 .. '"></span>',
     widget = wibox.widget.textbox,
     forced_width = 23
   },

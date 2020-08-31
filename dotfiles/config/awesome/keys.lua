@@ -1,10 +1,12 @@
 local awful         = require("awful")
 local gears         = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
---require("awful.hotkeys_popup.keys")
+
 require("variables")
+local helpers   = require("helpers")
+local inspect   = require('inspect')
+
+local keys = {}
 
 local modkey   = "Mod4" -- Super
 local altkey   = "Mod1" -- Alt
@@ -13,7 +15,7 @@ local shiftkey = "Shift"
 
 
 -- {{{ Key bindings
-globalkeys     = gears.table.join(
+keys.globalkeys     = gears.table.join(
 -- Move between tags
     awful.key({ modkey }, "Tab", awful.tag.history.restore, { description = "go back", group = "tag" }),
 -- Focus clients by direction
@@ -87,30 +89,30 @@ globalkeys     = gears.table.join(
         { description = "cycle through clients", group = "client" }
     ),
 -- Layout manipulation
-    awful.key({ modkey, shiftkey }, "Left", function() awful.client.swap.global_bydirection("left") end,
-        { description = "swap with direction left", group = "client" }
-    ),
-    awful.key({ modkey, shiftkey }, "Right", function() awful.client.swap.global_bydirection("right") end,
-        { description = "swap with direction right", group = "client" }
-    ),
-    awful.key({ modkey, shiftkey }, "Up", function() awful.client.swap.global_bydirection("up") end,
-        { description = "swap with direction up", group = "client" }
-    ),
-    awful.key({ modkey, shiftkey }, "Down", function() awful.client.swap.global_bydirection("down") end,
-        { description = "swap with direction down", group = "client" }
-    ),
-    awful.key({ modkey, shiftkey }, "h", function() awful.client.swap.global_bydirection("left") end,
-        { description = "swap with direction left", group = "client" }
-    ),
-    awful.key({ modkey, shiftkey }, "l", function() awful.client.swap.global_bydirection("right") end,
-        { description = "swap with direction right", group = "client" }
-    ),
-    awful.key({ modkey, shiftkey }, "k", function() awful.client.swap.global_bydirection("up") end,
-        { description = "swap with direction up", group = "client" }
-    ),
-    awful.key({ modkey, shiftkey }, "j", function() awful.client.swap.global_bydirection("down") end,
-        { description = "swap with direction down", group = "client" }
-    ),
+    -- awful.key({ modkey, shiftkey }, "Left", function() awful.client.swap.global_bydirection("left") end,
+    --     { description = "swap with direction left", group = "client" }
+    -- ),
+    -- awful.key({ modkey, shiftkey }, "Right", function() awful.client.swap.global_bydirection("right") end,
+    --     { description = "swap with direction right", group = "client" }
+    -- ),
+    -- awful.key({ modkey, shiftkey }, "Up", function() awful.client.swap.global_bydirection("up") end,
+    --     { description = "swap with direction up", group = "client" }
+    -- ),
+    -- awful.key({ modkey, shiftkey }, "Down", function() awful.client.swap.global_bydirection("down") end,
+    --     { description = "swap with direction down", group = "client" }
+    -- ),
+    -- awful.key({ modkey, shiftkey }, "h", function() awful.client.swap.global_bydirection("left") end,
+    --     { description = "swap with direction left", group = "client" }
+    -- ),
+    -- awful.key({ modkey, shiftkey }, "l", function() awful.client.swap.global_bydirection("right") end,
+    --     { description = "swap with direction right", group = "client" }
+    -- ),
+    -- awful.key({ modkey, shiftkey }, "k", function() awful.client.swap.global_bydirection("up") end,
+    --     { description = "swap with direction up", group = "client" }
+    -- ),
+    -- awful.key({ modkey, shiftkey }, "j", function() awful.client.swap.global_bydirection("down") end,
+    --     { description = "swap with direction down", group = "client" }
+    -- ),
     -- Urgent or Undo:
     -- Jump to urgent client or (if there is no such client) go back
     -- to the last tag
@@ -130,6 +132,12 @@ globalkeys     = gears.table.join(
           s.mybottomwibox.visible = not s.mybottomwibox.visible
         end
       end
+    end,
+        { description = "toggle wibox", group = "awesome" }
+    ),
+-- Show/Hide tray
+    awful.key({ modkey, shiftkey }, "b", function()
+        awful.screen.focused().systray.visible = not awful.screen.focused().systray.visible
     end,
         { description = "toggle wibox", group = "awesome" }
     ),
@@ -167,19 +175,19 @@ globalkeys     = gears.table.join(
        { description = "swap tag clients with the tag on the next screen", group = "tag" }
     ),
 -- Standard program
-    awful.key({ modkey }, "Return", function() awful.spawn(terminal) end,
+    awful.key({ modkey }, "Return", function() awful.spawn(user.terminal) end,
         { description = "open a terminal", group = "apps" }
     ),
-    awful.key({ modkey }, "F3", function() awful.spawn(browser1) end,
-        { description = "open " .. browser1, group = "apps" }
+    awful.key({ modkey }, "F3", function() awful.spawn(user.browser) end,
+        { description = "open " .. user.browser, group = "apps" }
     ),
-    awful.key({ modkey, shiftkey }, "Return", function() awful.spawn(file1) end,
+    awful.key({ modkey, shiftkey }, "Return", function() awful.spawn(user.file1) end,
         { description = "open main file manager", group = "apps" }
     ),
-    awful.key({ modkey, ctrlkey, shiftkey }, "Return", function() awful.spawn(file2) end,
+    awful.key({ modkey, ctrlkey, shiftkey }, "Return", function() awful.spawn(user.file2) end,
         { description = "open secondary file manager", group = "apps" }
     ),
-    awful.key({ modkey, ctrlkey }, "Return", function() awful.spawn(editor) end,
+    awful.key({ modkey, ctrlkey }, "Return", function() awful.spawn(user.editor) end,
         { description = "open editor", group = "apps" }
     ),
 -- Awesome actions
@@ -189,10 +197,10 @@ globalkeys     = gears.table.join(
     awful.key({ modkey, shiftkey }, "s", hotkeys_popup.show_help,
         { description = "show help", group = "awesome" }
     ),
-    awful.key({ modkey, }, ".", function() awful.tag.incmwfact(0.05) end,
+    awful.key({ modkey, }, ",", function() awful.tag.incmwfact(0.05) end,
         { description = "increase master width factor", group = "layout" }
     ),
-    awful.key({ modkey, }, ",", function() awful.tag.incmwfact(-0.05) end,
+    awful.key({ modkey, }, ".", function() awful.tag.incmwfact(-0.05) end,
         { description = "decrease master width factor", group = "layout" }
     ),
     awful.key({ modkey, ctrlkey }, ".", function() awful.tag.incnmaster(1, nil, true) end,
@@ -222,6 +230,11 @@ globalkeys     = gears.table.join(
     end,
         {description = "logout menu", group = "awesome"}
     ),
+    awful.key({ modkey }, "g", function ()
+        awful.spawn.with_shell(user.window_selector)
+    end,
+        {description = "logout menu", group = "awesome"}
+    ),
     awful.key({ modkey }, "x", function()
       awful.prompt.run {
         prompt       = "Run Lua code: ",
@@ -244,8 +257,10 @@ globalkeys     = gears.table.join(
     end,
         { description = "kill all visible clients for the current tag", group = "client" }
     ),
+
+    
 -- Launcher
-    awful.key({ altkey }, "d", function() awful.spawn.with_shell(my_launcher) end,
+    awful.key({ altkey }, "d", function() awful.spawn.with_shell(user.launcher) end,
         { description = "run launcher", group = "launcher" }
     ),
 
@@ -285,23 +300,23 @@ globalkeys     = gears.table.join(
     ),
 -- Screenshot
     awful.key({}, "Print", function()
-      awful.spawn.with_shell(my_screen_capture_root .. " && notify-send 'Desktop captured'")
+      awful.spawn.with_shell(user.screen_capture_root .. " && notify-send 'Desktop captured'")
     end,
         { description = "take a screenshot of entire screen", group = "screenshot" }
     ),
     awful.key({ ctrlkey }, "Print", function()
-      awful.spawn.with_shell(my_screen_capture_window .. " && notify-send 'Focused window captured'")
+      awful.spawn.with_shell(user.screen_capture_window .. " && notify-send 'Focused window captured'")
     end,
         { description = "take a screenshot of focused window", group = "screenshot" }
     ),
     awful.key({ shiftkey }, "Print", function()
-      awful.spawn.with_shell("notify-send 'Select Area';sleep 0.2;" .. my_screen_capture_area .. " && notify-send 'Area captured'")
+      awful.spawn.with_shell("notify-send 'Select Area';sleep 0.2;" .. user.screen_capture_area .. " && notify-send 'Area captured'")
     end,
         { description = "take a screenshot of selected area", group = "screenshot" }
     )
 )
 
-clientkeys     = gears.table.join(
+keys.clientkeys     = gears.table.join(
     awful.key(
         { modkey, shiftkey }, "f", function(c)
           c.fullscreen = not c.fullscreen
@@ -309,13 +324,8 @@ clientkeys     = gears.table.join(
         end,
         { description = "toggle clients fullscreen", group = "client" }
     ),
-    awful.key({ modkey }, "f", function(cc)
-      local clients = awful.screen.focused().clients
-      local not_max = not cc.maximized
-      for _, c in pairs(clients) do
-	c.maximized = not_max
-      end
-      cc:raise()
+    awful.key({ modkey }, "f", function(c)
+      helpers.toggle_full(c)
     end,
         { description = "(un)maximize", group = "client" }
     ),
@@ -331,10 +341,12 @@ clientkeys     = gears.table.join(
     awful.key({ modkey }, "o", function(c) c:move_to_screen() end,
         { description = "move to screen", group = "client" }
     ),
-    awful.key({ modkey }, "t", function(c) c.ontop = not c.ontop end,
+    awful.key({ modkey, ctrlkey }, "t", function(c) c.ontop = not c.ontop end,
         { description = "toggle keep on top", group = "client" }
     ),
-    awful.key({ modkey, ctrlkey }, "t", function(c) awful.titlebar.toggle(c) end,
+    awful.key({ modkey, shiftkey  }, "t", function(c) 
+            awful.titlebar.toggle(c) 
+        end,
         { description = "toggle title bar", group = "client" }
     ),
 -- Slave client resize
@@ -358,20 +370,106 @@ clientkeys     = gears.table.join(
         c:emit_signal("request::activate", "key.unminimize", { raise = true })
       end
     end,
-        { description = "restore minimized", group = "client" })
+        { description = "restore minimized", group = "client" }),
+
+-- Single tap: Center client 
+    -- Double tap: Center client + Floating + Resize
+    awful.key({ modkey, }, "c", function (c)
+        awful.placement.centered(c, {honor_workarea = true, honor_padding = true})
+        helpers.single_double_tap(
+            nil,
+            function ()
+                helpers.float_and_resize(c, screen_width * 0.65, screen_height * 0.9)
+            end)
+    end),
+
+    -- Move to edge or swap by direction
+    awful.key({ modkey, shiftkey }, "Down", function (c) helpers.move_client_dwim(c, "down") end, 
+        {description = "move down", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey }, "Up", function (c) helpers.move_client_dwim(c, "up") end,
+        {description = "move up", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey }, "Left", function (c) helpers.move_client_dwim(c, "left") end,
+        {description = "move left", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey }, "Right", function (c) helpers.move_client_dwim(c, "right") end,
+        {description = "move right", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey }, "j", function (c) helpers.move_client_dwim(c, "down") end,
+        {description = "move down", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey }, "k", function (c) helpers.move_client_dwim(c, "up") end,
+        {description = "move up", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey }, "h", function (c) helpers.move_client_dwim(c, "left") end,
+        {description = "move left", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey }, "l", function (c) helpers.move_client_dwim(c, "right") end,
+        {description = "move right", group = "client"}
+    ),
+
+    -- Single tap: Center client 
+    -- Double tap: Center client + Floating + Resize
+    awful.key({ modkey }, "c", function (c)
+        awful.placement.centered(c, {honor_workarea = true, honor_padding = true})
+        helpers.single_double_tap(
+            nil,
+            function ()
+                helpers.float_and_resize(c, screen_width * 0.65, screen_height * 0.9)
+            end)
+    end),
+
+    -- Relative move client
+    awful.key({ modkey, shiftkey, ctrlkey }, "j", function (c) c:relative_move(0,  dpi(20), 0, 0) end,
+        {description = "move relative down", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey, ctrlkey }, "k", function (c) c:relative_move(0, dpi(-20), 0, 0) end,
+        {description = "move relative up", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey, ctrlkey }, "h", function (c) c:relative_move(dpi(-20), 0, 0, 0) end,
+        {description = "move relative left", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey, ctrlkey }, "l", function (c) c:relative_move(dpi( 20), 0, 0, 0) end,
+        {description = "move relative right", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey, ctrlkey }, "Down", function (c) c:relative_move(0,  dpi(20), 0, 0) end,
+        {description = "move relative down", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey, ctrlkey }, "Up", function (c) c:relative_move(0, dpi(-20), 0, 0) end,
+        {description = "move relative up", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey, ctrlkey }, "Left", function (c) c:relative_move(dpi(-20), 0, 0, 0) end,
+        {description = "move relative left", group = "client"}
+    ),
+    awful.key({ modkey, shiftkey, ctrlkey }, "Right", function (c) c:relative_move(dpi( 20), 0, 0, 0) end,
+        {description = "move relative right", group = "client"}
+    )
+
+    ---- testing
+    -- awful.key({ altkey }, "h", function(c)
+
+    --   inspect(c, "bindA ")
+    --   appBindings()
+    -- end,
+    --     { description = "resize", group = "client" }),
+    -- awful.key({ altkey }, "g", function(c)
+
+    --   inspect(c, "bindB")
+    --   appBindingsB()
+    -- end,
+    --     { description = "resize", group = "client" })
+
 )
 
 
--- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it work on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 10 do
-  globalkeys = gears.table.join(
-      globalkeys,
+local function addTagKey(tagKey, tagNumber, keys)
+    return gears.table.join(
+      keys,
   -- View tag only.
-      awful.key({ modkey }, "#" .. i + 9, function()
+      awful.key({ modkey }, tagKey, function()
         local screen = awful.screen.focused()
-        local tag    = screen.tags[i]
+        local tag    = screen.tags[tagNumber]
         if tag then
           tag:view_only()
         end
@@ -379,9 +477,9 @@ for i = 1, 10 do
           { description = "view tag", group = "tag" }
       ),
   -- Move client to tag.
-      awful.key({ modkey, ctrlkey }, "#" .. i + 9, function()
+      awful.key({ modkey, ctrlkey }, tagKey, function()
         if client.focus then
-          local tag = client.focus.screen.tags[i]
+          local tag = client.focus.screen.tags[tagNumber]
           if tag then
             client.focus:move_to_tag(tag)
           end
@@ -390,9 +488,9 @@ for i = 1, 10 do
           { description = "move focused client to tag", group = "tag" }
       ),
   -- Toggle tag display.
-      awful.key({ modkey, altkey }, "#" .. i + 9, function()
+      awful.key({ modkey, altkey }, tagKey, function()
         local screen = awful.screen.focused()
-        local tag    = screen.tags[i]
+        local tag    = screen.tags[tagNumber]
         if tag then
           awful.tag.viewtoggle(tag)
         end
@@ -400,8 +498,8 @@ for i = 1, 10 do
           { description = "toggle tag", group = "tag" }
       ),
   -- Move all visible clients to tag and focus that tag
-      awful.key({ modkey, shiftkey, altkey }, "#" .. i + 9, function()
-        local tag     = client.focus.screen.tags[i]
+      awful.key({ modkey, shiftkey, altkey }, tagKey, function()
+        local tag     = client.focus.screen.tags[tagNumber]
         local clients = awful.screen.focused().clients
         if tag then
           for _, c in pairs(clients) do
@@ -413,9 +511,9 @@ for i = 1, 10 do
           { description = "move all visible clients to tag", group = "tag" }
       ),
   -- Greedy view ,Move client to tag and view tag
-      awful.key({ modkey, shiftkey }, "#" .. i + 9, function()
+      awful.key({ modkey, shiftkey }, tagKey, function()
         if client.focus then
-          local tag = client.focus.screen.tags[i]
+          local tag = client.focus.screen.tags[tagNumber]
           if tag then
             client.focus:move_to_tag(tag)
             tag:view_only()
@@ -425,9 +523,9 @@ for i = 1, 10 do
           { description = "move focused client to tag and view tag", group = "tag" }
       ),
   -- Toggle tag on focused client.
-      awful.key({ modkey, shiftkey, ctrlkey }, "#" .. i + 9, function()
+      awful.key({ modkey, shiftkey, ctrlkey }, tagKey, function()
         if client.focus then
-          local tag = client.focus.screen.tags[i]
+          local tag = client.focus.screen.tags[tagNumber]
           if tag then
             client.focus:toggle_tag(tag)
           end
@@ -435,9 +533,9 @@ for i = 1, 10 do
       end,
           { description = "toggle focused client on tag", group = "tag" }
       ),
-      awful.key({ altkey, shiftkey }, "#" .. i + 9, function()
+      awful.key({ altkey, shiftkey }, tagKey, function()
         local current_screen = awful.screen.focused()
-        local tag            = current_screen.tags[i]
+        local tag            = current_screen.tags[tagNumber]
         local clients        = current_screen.clients
         local current_tag    = current_screen.selected_tag
         if tag then
@@ -456,16 +554,31 @@ for i = 1, 10 do
       )
   )
 end
+
+-- Bind all key numbers to tags.
+-- Be careful: we use keycodes to make it work on any keyboard layout.
+-- This should map on the top row of your keyboard, usually 1 to 9.
+for i = 1, 10 do
+  keys.globalkeys = addTagKey("#".. i + 9, i, keys.globalkeys)
+end
+
+keys.globalkeys = addTagKey("=", 11, keys.globalkeys)
+keys.globalkeys = addTagKey("-", 12, keys.globalkeys)
 -- }}}
 
-clientbuttons              = gears.table.join(
+keys.clientbuttons              = gears.table.join(
     awful.button({ }, 1, function(c)
       c:emit_signal("request::activate", "mouse_click", { raise = true })
     end),
     awful.button({ modkey }, 1, function(c)
       -- left click
-      c:emit_signal("request::activate", "mouse_click", { raise = true })
-      awful.mouse.client.move(c)
+      if c.floating == true then
+        c:emit_signal("request::activate", "mouse_click", { raise = true })
+        if c.maximized == true then   c.maximized = false end 
+        awful.mouse.client.move(c)
+      else
+        c:swap(awful.client.getmaster())
+      end
     end),
     awful.button({ modkey }, 3, function(c)
       -- right click
@@ -485,4 +598,6 @@ clientbuttons_jetbrains    = gears.table.join(
 )
 -- }}
 
-root.keys(globalkeys)
+root.keys(keys.globalkeys)
+
+return keys

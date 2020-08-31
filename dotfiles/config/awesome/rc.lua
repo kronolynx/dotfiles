@@ -10,6 +10,8 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty   = require("naughty")
 
+local gears = require("gears")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -37,27 +39,28 @@ end
 
 -- global variable definitions
 require("variables")
+
 -- Themes define colours, icons, font and wallpapers. (must be loaded before widgets)
-beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
+beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), theme))
 
 -- ----------------------------------------------------------------------------------------
 -- --    Start customization here
 
 -- -- imports
-local helpers                    = require("helpers")
-local wibar                      = require("wibar")
+helpers                    = require("helpers")
+
+-- >> Elements - Desktop components
+-- Statusbar(s)
+require("elemental.bar."..bar_theme)
+-- Exit screen
+require("elemental.exit_screen."..exit_screen_theme)
 
 -- -- notifications icon size
 -- -- naughty.config.defaults['icon_size'] = 100 -- for older awesome versions
 beautiful.notification_icon_size = 100 -- for awesome 4.3+
 
--- Screen
-awful.screen.connect_for_each_screen(function(s)
-  wibar.setup(s)
-end)
-
 -- -- keys
-require("keys")
+keys = require("keys")
 
 -- -- Signals
 require("signals")
@@ -67,3 +70,5 @@ require("rules")
 
 -- autorun
 awful.spawn.with_shell("~/.config/awesome/autorun.sh")
+
+gears.timer.start_new(10, function() collectgarbage("step", 20000) return true end)
