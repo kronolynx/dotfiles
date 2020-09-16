@@ -1,11 +1,12 @@
 [options]
-font = FantasqueSansMono Nerd Font 12
+font = FantasqueSansMono Nerd Font 12.5
 #font = FuraCode Nerd Font Mono 11
 #font = DejavuSansMono Nerd Font 11
 #font = SauceCodePro Nerd Font Mono 11
 dynamic_title = true
 icon_name = terminal
-browser = google-chrome-stable
+browser = firefox
+scrollback_lines = 1000000
 
 
 [colors]
