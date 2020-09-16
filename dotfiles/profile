@@ -1,7 +1,7 @@
 # fix "xdg-open fork-bomb" export your preferred browser from here
 export BROWSER=/usr/bin/firefox
 export EDITOR=/usr/bin/nvim
-export TERMINAL=/usr/bin/alacritty
+export TERMINAL=/usr/bin/termite
 export SETTINGS=/usr/bin/nvim ~/.config/awesome/keys.lua
 export FILE_MANAGER=/usr/bin/thunar
 
