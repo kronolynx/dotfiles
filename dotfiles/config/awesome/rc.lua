@@ -46,6 +46,10 @@ beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv
 -- ----------------------------------------------------------------------------------------
 -- --    Start customization here
 
+-- ===================================================================
+-- Initialize icons array and load icon theme
+local icons = require("icons")
+icons.init(icon_theme)
 -- -- imports
 helpers                    = require("helpers")
 
@@ -54,6 +58,8 @@ helpers                    = require("helpers")
 require("elemental.bar."..bar_theme)
 -- Exit screen
 require("elemental.exit_screen."..exit_screen_theme)
+-- Window switcher
+require("elemental.window_switcher")
 
 -- -- notifications icon size
 -- -- naughty.config.defaults['icon_size'] = 100 -- for older awesome versions
