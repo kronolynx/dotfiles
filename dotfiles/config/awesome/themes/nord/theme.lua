@@ -33,19 +33,65 @@ theme.nord13 = "#EBCB8B"
 theme.nord14 = "#A3BE8C"
 theme.nord15 = "#B48EAD"
 
+-- screen edge the bars / notifications should be.
+theme.screen_margin = dpi(5)
+
 theme.font          = "Roboto 10"
 theme.transparent   = "#00000000"
 
+theme.bg_dark       = x.background
 theme.bg_normal     = theme.nord0
 theme.bg_focus      = theme.bg_normal
 theme.bg_urgent     = theme.bg_normal
 theme.bg_minimize   = theme.bg_normal
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = theme.nord4
-theme.fg_focus      = theme.fg_normal
-theme.fg_urgent     = theme.fg_normal
+theme.fg_normal     = theme.nord3
+theme.fg_focus      = theme.nord4
+theme.fg_urgent     = theme.nord11
 theme.fg_minimize   = theme.fg_normal
+
+theme.prefix_fg = x.color8
+
+-- Exit screen
+theme.exit_screen_bg = x.color0 .. "CC"
+theme.exit_screen_fg = x.color7
+theme.exit_screen_font = "sans 20"
+theme.exit_screen_icon_size = dpi(180)
+
+-- Titlebars
+-- (Titlebar items can be customized in titlebars.lua)
+theme.titlebar_bg = theme.bg_focus
+-- theme.titlebar_bg_focus = x.color12
+-- theme.titlebar_bg_normal = x.color8
+theme.titlebar_fg_focus = theme.fg_focus
+theme.titlebar_fg_normal = theme.fg_normal
+
+
+-- Notifications
+-- ============================
+-- Note: Some of these options are ignored by my custom
+-- notification widget_template
+-- ============================
+-- Position: bottom_left, bottom_right, bottom_middle,
+--         top_left, top_right, top_middle
+theme.notification_position = "top_right"
+theme.notification_border_width = dpi(0)
+theme.notification_border_radius = theme.border_radius
+theme.notification_border_color = x.color10
+theme.notification_bg = x.background
+-- theme.notification_bg = x.color8
+theme.notification_fg = x.foreground
+theme.notification_crit_bg = x.background
+theme.notification_crit_fg = x.color1
+theme.notification_icon_size = dpi(60)
+-- theme.notification_height = dpi(80)
+-- theme.notification_width = dpi(300)
+theme.notification_margin = dpi(16)
+theme.notification_opacity = 1
+theme.notification_font = "sans 11"
+theme.notification_padding = theme.screen_margin * 2
+theme.notification_spacing = theme.screen_margin * 4
 
 theme.useless_gap   = dpi(3)
 theme.border_width  = dpi(3)
@@ -182,5 +228,8 @@ theme.layout_cornernw = layout_icon_path .. "cornernw.png"
 theme.layout_cornerne = layout_icon_path .. "cornerne.png"
 theme.layout_cornersw = layout_icon_path .. "cornersw.png"
 theme.layout_cornerse = layout_icon_path .. "cornerse.png"
+
+-- Prompt
+theme.prompt_fg = x.color12
 
 return theme

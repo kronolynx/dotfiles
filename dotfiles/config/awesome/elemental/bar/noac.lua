@@ -5,9 +5,6 @@ require("awful.autofocus")
 local wibox = require("wibox")
 -- Theme handling library
 local beautiful = require("beautiful")
-local widgets = require("widgets")
-
-local inspect = require("inspect")
 
 
 -- Helper function that updates a taglist item

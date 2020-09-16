@@ -88,18 +88,29 @@ local themes = {
   "lena", -- 1
   "nord"
 }
-
 theme = themes[2]
 
+-- ===================================================================
+-- Statusbar themes. Multiple bars can be declared in each theme.
 local bar_themes = {
   "ray", -- 1
   "noac"
 }
-
 bar_theme = bar_themes[2]
 
+-- ===================================================================
 local exit_screen_themes = {
-    "ray",      -- 1 
+    "lovelace",      -- 1 -- Uses image icons
+    "ephemeral",     -- 2 -- Uses text-generated icons (consumes less RAM)
+    "ray",           -- 3 -- WIP 
 }
-
 exit_screen_theme = exit_screen_themes[1]
+
+-- ===================================================================
+-- Affects which icon theme will be used by widgets that display image icons.
+local icon_themes = {
+    "linebit",        -- 1 -- Neon + outline
+    "drops",          -- 2 -- Pastel + filled
+}
+icon_theme = icon_themes[2]
+-- ===================================================================

@@ -1,14 +1,10 @@
--- from https://github.com/elenapan/dotfiles/blob/master/config/awesome/noodle/exit_screen_v2.lua
 local awful = require("awful")
 local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 -- local naughty = require("naughty")
-local xresources                                = require("beautiful.xresources")
-local dpi                                       = xresources.apply_dpi
 
 local helpers = require("helpers")
-local pad = helpers.pad
 
 -- Appearance
 -- icomoon symbols
@@ -113,10 +109,10 @@ local exit = create_button(exit_text_icon, x.color4, "Exit", exit_command)
 local lock = create_button(lock_text_icon, x.color5, "Lock", lock_command)
 
 -- Create the exit screen wibox
-local exit_screen = wibox({visible = false, ontop = true, type = "dock"})
+exit_screen = wibox({visible = false, ontop = true, type = "dock"})
 awful.placement.maximize(exit_screen)
 
-exit_screen.bg = beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111CC"
+exit_screen.bg = beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111"
 exit_screen.fg = beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
 local exit_screen_grabber
@@ -124,6 +120,25 @@ function exit_screen_hide()
     awful.keygrabber.stop(exit_screen_grabber)
     exit_screen.visible = false
 end
+
+local keybinds = {
+    ['escape'] = exit_screen_hide,
+    ['q'] = exit_screen_hide,
+    ['x'] = exit_screen_hide,
+    ['s'] = function () suspend_command(); exit_screen_hide() end,
+    ['e'] = exit_command,
+    ['p'] = poweroff_command,
+    ['r'] = reboot_command,
+    ['l'] = function ()
+        lock_command()
+        -- Kinda fixes the "white" (undimmed) flash that appears between
+        -- exit screen disappearing and lock screen appearing
+        gears.timer.delayed_call(function()
+            exit_screen_hide()
+        end)
+    end
+}
+
 function exit_screen_show()
     exit_screen_grabber = awful.keygrabber.run(function(_, key, event)
         -- Ignore case
@@ -131,20 +146,8 @@ function exit_screen_show()
 
         if event == "release" then return end
 
-        if key == 's' then
-            suspend_command()
-            exit_screen_hide()
-        elseif key == 'e' then
-            exit_command()
-        elseif key == 'l' then
-            exit_screen_hide()
-            lock_command()
-        elseif key == 'p' then
-            poweroff_command()
-        elseif key == 'r' then
-            reboot_command()
-        elseif key == 'escape' or key == 'q' or key == 'x' then
-            exit_screen_hide()
+        if keybinds[key] then
+            keybinds[key]()
         end
     end)
     exit_screen.visible = true
@@ -185,5 +188,3 @@ exit_screen:setup {
     expand = "none",
     layout = wibox.layout.align.vertical
 }
-
-return exit_screen

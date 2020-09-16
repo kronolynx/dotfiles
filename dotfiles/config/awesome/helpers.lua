@@ -19,8 +19,8 @@ end
 -- message at tag 2 and coming back to your work at tag 1 with the same
 -- keypress
 function helpers.tag_back_and_forth(tag_index)
-  local s = mouse.screen
-  local tag = s.tags[tag_index]
+  local s = awful.screen.focused()
+  local tag    = s.tags[tag_index]
   if tag then
     if tag == s.selected_tag then
       awful.tag.history.restore()
