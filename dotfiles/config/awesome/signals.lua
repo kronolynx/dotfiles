@@ -135,6 +135,18 @@ client.connect_signal('property::floating', function(c)
     end
 end)
 
+-- Remove the border for maximized windows
+client.connect_signal("property::maximized", function(client)
+    if client.maximized then
+        client.border_width = 0
+        client.shape = nil
+    else
+        -- Restore it again
+        client.border_width = beautiful.border_width
+        client.shape = beautiful.border_shape
+    end
+end)
+
 -- When switching to a tag with urgent clients, raise them.
 -- This fixes the issue (visual mismatch) where after switching to
 -- a tag which includes an urgent client, the urgent client is
