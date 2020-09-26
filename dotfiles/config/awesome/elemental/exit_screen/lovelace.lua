@@ -3,7 +3,6 @@ local gears = require("gears")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
 local icons = require("icons")
--- local naughty = require("naughty")
 
 local helpers = require("helpers")
 
@@ -20,6 +19,7 @@ local reboot_command = function()
 end
 local suspend_command = function()
     awful.spawn.with_shell(user.logmenu .. " suspend")
+    exit_screen_hide()
 end
 local exit_command = function()
     awesome.quit()
@@ -30,160 +30,72 @@ end
 
 local username = os.getenv("USER")
 -- Capitalize username
-local goodbye_widget = wibox.widget.textbox("Goodbye " .. username:sub(1,1):upper()..username:sub(2))
+local goodbye_widget = wibox.widget.textbox("Goodbye " .. username:sub(1, 1):upper() .. username:sub(2))
 goodbye_widget.font = "sans 70"
 
-local poweroff_icon = wibox.widget.imagebox(icons.image.poweroff)
-poweroff_icon.resize = true
-poweroff_icon.forced_width = icon_size
-poweroff_icon.forced_height = icon_size
-local poweroff_text = wibox.widget.textbox("Poweroff")
-poweroff_text.font = text_font
+local create_button = function(image, button_text, hover_color, command)
+    local button_icon = wibox.widget.imagebox(image)
+    button_icon.resize = true
+    button_icon.forced_width = icon_size
+    button_icon.forced_height = icon_size
+    local button_text = wibox.widget.textbox(button_text)
+    button_text.font = text_font
 
-local poweroff = wibox.widget{
-    {
-        nil,
-        poweroff_icon,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    {
-        nil,
-        poweroff_text,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    -- forced_width = 100,
-    layout = wibox.layout.fixed.vertical
-}
-poweroff:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        poweroff_command()
-    end)
-))
+    local button =
+        wibox.widget {
+        {
+            nil,
+            button_icon,
+            expand = "none",
+            layout = wibox.layout.align.horizontal
+        },
+        {
+            nil,
+            button_text,
+            expand = "none",
+            layout = wibox.layout.align.horizontal
+        },
+        layout = wibox.layout.fixed.vertical
+    }
+    button:buttons(
+        gears.table.join(
+            awful.button(
+                {},
+                1,
+                function()
+                    command()
+                end
+            )
+        )
+    )
 
-local reboot_icon = wibox.widget.imagebox(icons.image.reboot)
-reboot_icon.resize = true
-reboot_icon.forced_width = icon_size
-reboot_icon.forced_height = icon_size
-local reboot_text = wibox.widget.textbox("Reboot")
-reboot_text.font = text_font
+    -- Change color on hover
+    button:connect_signal(
+        "mouse::enter",
+        function()
+            button_text.markup = helpers.colorize_text(button_text.text, hover_color)
+            button.border_color = hover_color
+        end
+    )
+    button:connect_signal(
+        "mouse::leave",
+        function()
+            button_text.markup = helpers.colorize_text(button_text.text, x.foreground)
+            button.border_color = button_bg
+        end
+    )
 
-local reboot = wibox.widget{
-    {
-        nil,
-        reboot_icon,
-        nil,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    {
-        nil,
-        reboot_text,
-        nil,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    -- forced_width = 100,
-    layout = wibox.layout.fixed.vertical
-}
-reboot:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        reboot_command()
-    end)
-))
+    -- Use helper function to change the cursor on hover
+    helpers.add_hover_cursor(button, "hand1")
 
-local suspend_icon = wibox.widget.imagebox(icons.image.suspend)
-suspend_icon.resize = true
-suspend_icon.forced_width = icon_size
-suspend_icon.forced_height = icon_size
-local suspend_text = wibox.widget.textbox("Suspend")
-suspend_text.font = text_font
+    return button
+end
 
-local suspend = wibox.widget{
-    {
-        nil,
-        suspend_icon,
-        nil,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    {
-        nil,
-        suspend_text,
-        nil,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    -- forced_width = 100,
-    layout = wibox.layout.fixed.vertical
-}
-suspend:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        suspend_command()
-    end)
-))
-
-
-local exit_icon = wibox.widget.imagebox(icons.image.exit)
-exit_icon.resize = true
-exit_icon.forced_width = icon_size
-exit_icon.forced_height = icon_size
-local exit_text = wibox.widget.textbox("Exit")
-exit_text.font = text_font
-
-local exit = wibox.widget{
-    {
-        nil,
-        exit_icon,
-        nil,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    {
-        nil,
-        exit_text,
-        nil,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    -- forced_width = 100,
-    layout = wibox.layout.fixed.vertical
-}
-exit:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        exit_command()
-    end)
-))
-
-local lock_icon = wibox.widget.imagebox(icons.image.lock)
-lock_icon.resize = true
-lock_icon.forced_width = icon_size
-lock_icon.forced_height = icon_size
-local lock_text = wibox.widget.textbox("Lock")
-lock_text.font = text_font
-
-local lock = wibox.widget{
-    {
-        nil,
-        lock_icon,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    {
-        nil,
-        lock_text,
-        expand = "none",
-        layout = wibox.layout.align.horizontal
-    },
-    -- forced_width = 100,
-    layout = wibox.layout.fixed.vertical
-}
-lock:buttons(gears.table.join(
-    awful.button({ }, 1, function ()
-        lock_command()
-    end)
-))
+local poweroff = create_button(icons.image.poweroff, "Poweroff", x.color1, poweroff_command)
+local reboot = create_button(icons.image.reboot, "Reboot", x.color2, reboot_command)
+local suspend = create_button(icons.image.suspend, "Suspend", x.color3, suspend_command)
+local exit = create_button(icons.image.exit, "Exit", x.color4, exit_command)
+local lock = create_button(icons.image.lock, "Lock", x.color5, lock_command)
 
 -- Create the widget
 exit_screen = wibox({visible = false, ontop = true, type = "dock"})
@@ -192,12 +104,6 @@ awful.placement.maximize(exit_screen)
 exit_screen.bg = beautiful.exit_screen_bg or beautiful.wibar_bg or "#111111CC"
 exit_screen.fg = beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
--- Create an container box
--- local exit_screen_box = wibox.container.background()
--- exit_screen_box.bg = exit_screen.bg
--- exit_screen_box.shape = gears.shape.rounded_rect
--- exit_screen_box.shape_border_radius = 20
-
 local exit_screen_grabber
 function exit_screen_hide()
     awful.keygrabber.stop(exit_screen_grabber)
@@ -205,48 +111,75 @@ function exit_screen_hide()
 end
 
 local keybinds = {
-    ['escape'] = exit_screen_hide,
-    ['q'] = exit_screen_hide,
-    ['x'] = exit_screen_hide,
-    ['s'] = function () suspend_command(); exit_screen_hide() end,
-    ['e'] = exit_command,
-    ['p'] = poweroff_command,
-    ['r'] = reboot_command,
-    ['l'] = function ()
+    ["escape"] = exit_screen_hide,
+    ["q"] = exit_screen_hide,
+    ["x"] = exit_screen_hide,
+    ["s"] = function()
+        suspend_command()
+        exit_screen_hide()
+    end,
+    ["e"] = exit_command,
+    ["p"] = poweroff_command,
+    ["r"] = reboot_command,
+    ["l"] = function()
         lock_command()
         -- Kinda fixes the "white" (undimmed) flash that appears between
         -- exit screen disappearing and lock screen appearing
-        gears.timer.delayed_call(function()
-            exit_screen_hide()
-        end)
+        gears.timer.delayed_call(
+            function()
+                exit_screen_hide()
+            end
+        )
     end
 }
 
 function exit_screen_show()
-    -- naughty.notify({text = "starting the keygrabber"})
-    exit_screen_grabber = awful.keygrabber.run(function(_, key, event)
-        -- Ignore case
-        key = key:lower()
+    exit_screen_grabber =
+        awful.keygrabber.run(
+        function(_, key, event)
+            -- Ignore case
+            key = key:lower()
 
-        if event == "release" then return end
+            if event == "release" then
+                return
+            end
 
-        if keybinds[key] then
-            keybinds[key]()
+            if keybinds[key] then
+                keybinds[key]()
+            end
         end
-    end)
+    )
     exit_screen.visible = true
 end
 
-exit_screen:buttons(gears.table.join(
-    -- Middle click - Hide exit_screen
-    awful.button({ }, 2, function ()
-        exit_screen_hide()
-    end),
-    -- Right click - Hide exit_screen
-    awful.button({ }, 3, function ()
-        exit_screen_hide()
-    end)
-))
+exit_screen:buttons(
+    gears.table.join(
+        -- Left click - Hide exit_screen
+        awful.button(
+            {},
+            1,
+            function()
+                exit_screen_hide()
+            end
+        ),
+        -- Middle click - Hide exit_screen
+        awful.button(
+            {},
+            2,
+            function()
+                exit_screen_hide()
+            end
+        ),
+        -- Right click - Hide exit_screen
+        awful.button(
+            {},
+            3,
+            function()
+                exit_screen_hide()
+            end
+        )
+    )
+)
 
 -- Item placement
 exit_screen:setup {
