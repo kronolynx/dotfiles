@@ -8,7 +8,7 @@ require("awful.autofocus")
 -- Theme handling library
 local beautiful = require("beautiful")
 -- Notification library
-local naughty   = require("naughty")
+local naughty = require("naughty")
 
 local gears = require("gears")
 
@@ -16,24 +16,37 @@ local gears = require("gears")
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
-  naughty.notify({ preset = naughty.config.presets.critical,
-                   title  = "Oops, there were errors during startup!",
-                   text   = awesome.startup_errors })
+  naughty.notify(
+    {
+      preset = naughty.config.presets.critical,
+      title = "Oops, there were errors during startup!",
+      text = awesome.startup_errors
+    }
+  )
 end
 
 -- Handle runtime errors after startup
 do
   local in_error = false
-  awesome.connect_signal("debug::error", function(err)
-    -- Make sure we don't go into an endless error loop
-    if in_error then return end
-    in_error = true
+  awesome.connect_signal(
+    "debug::error",
+    function(err)
+      -- Make sure we don't go into an endless error loop
+      if in_error then
+        return
+      end
+      in_error = true
 
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title  = "Oops, an error happened!",
-                     text   = tostring(err) })
-    in_error = false
-  end)
+      naughty.notify(
+        {
+          preset = naughty.config.presets.critical,
+          title = "Oops, an error happened!",
+          text = tostring(err)
+        }
+      )
+      in_error = false
+    end
+  )
 end
 -- }}}
 
@@ -51,13 +64,13 @@ beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv
 local icons = require("icons")
 icons.init(icon_theme)
 -- -- imports
-helpers                    = require("helpers")
+helpers = require("helpers")
 
 -- >> Elements - Desktop components
 -- Statusbar(s)
-require("elemental.bar."..bar_theme)
+require("elemental.bar." .. bar_theme)
 -- Exit screen
-require("elemental.exit_screen."..exit_screen_theme)
+require("elemental.exit_screen." .. exit_screen_theme)
 -- Window switcher
 require("elemental.window_switcher")
 
@@ -77,4 +90,10 @@ require("rules")
 -- autorun
 awful.spawn.with_shell("~/.config/awesome/autorun.sh")
 
-gears.timer.start_new(10, function() collectgarbage("step", 20000) return true end)
+gears.timer.start_new(
+  10,
+  function()
+    collectgarbage("step", 20000)
+    return true
+  end
+)
