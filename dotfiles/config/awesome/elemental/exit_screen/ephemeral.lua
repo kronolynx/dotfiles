@@ -31,74 +31,87 @@ local lock_text_icon = ""
 local button_bg = x.color0
 local button_size = dpi(120)
 
-
 -- Commands
 local poweroff_command = function()
-    awful.spawn.with_shell(user.logmenu .. " shutdown")
+  awful.spawn.with_shell(user.logmenu .. " shutdown")
 end
 local reboot_command = function()
-    awful.spawn.with_shell(user.logmenu .. " reboot")
+  awful.spawn.with_shell(user.logmenu .. " reboot")
 end
 local suspend_command = function()
-    awful.spawn.with_shell(user.logmenu .. " suspend")
+  awful.spawn.with_shell(user.logmenu .. " suspend")
 end
 local exit_command = function()
-    awesome.quit()
+  awesome.quit()
 end
 local lock_command = function()
-    awful.spawn.with_shell(user.logmenu .. " lock")
+  awful.spawn.with_shell(user.logmenu .. " lock")
 end
 
 -- Helper function that generates the clickable buttons
 local create_button = function(symbol, hover_color, text, command)
-    local icon = wibox.widget {
-        forced_height = button_size,
-        forced_width = button_size,
-        align = "center",
-        valign = "center",
-        font = icon_font,
-        text = symbol,
-        -- markup = helpers.colorize_text(symbol, color),
-        widget = wibox.widget.textbox()
-    }
+  local icon =
+    wibox.widget {
+    forced_height = button_size,
+    forced_width = button_size,
+    align = "center",
+    valign = "center",
+    font = icon_font,
+    text = symbol,
+    -- markup = helpers.colorize_text(symbol, color),
+    widget = wibox.widget.textbox()
+  }
 
-    local button = wibox.widget {
-        {
-            nil,
-            icon,
-            expand = "none",
-            layout = wibox.layout.align.horizontal
-        },
-        forced_height = button_size,
-        forced_width = button_size,
-        border_width = dpi(8),
-        border_color = button_bg,
-        shape = helpers.rrect(dpi(20)),
-        bg = button_bg,
-        widget = wibox.container.background
-    }
+  local button =
+    wibox.widget {
+    {
+      nil,
+      icon,
+      expand = "none",
+      layout = wibox.layout.align.horizontal
+    },
+    forced_height = button_size,
+    forced_width = button_size,
+    border_width = dpi(8),
+    border_color = button_bg,
+    shape = helpers.rrect(dpi(20)),
+    bg = button_bg,
+    widget = wibox.container.background
+  }
 
-    -- Bind left click to run the command
-    button:buttons(gears.table.join(
-        awful.button({ }, 1, function ()
-            command()
-        end)
-    ))
+  -- Bind left click to run the command
+  button:buttons(
+    gears.table.join(
+      awful.button(
+        {},
+        1,
+        function()
+          command()
+        end
+      )
+    )
+  )
 
-    -- Change color on hover
-    button:connect_signal("mouse::enter", function ()
-        icon.markup = helpers.colorize_text(icon.text, hover_color)
-        button.border_color = hover_color
-    end)
-    button:connect_signal("mouse::leave", function ()
-        icon.markup = helpers.colorize_text(icon.text, x.foreground)
-        button.border_color = button_bg
-    end)
+  -- Change color on hover
+  button:connect_signal(
+    "mouse::enter",
+    function()
+      icon.markup = helpers.colorize_text(icon.text, hover_color)
+      button.border_color = hover_color
+    end
+  )
+  button:connect_signal(
+    "mouse::leave",
+    function()
+      icon.markup = helpers.colorize_text(icon.text, x.foreground)
+      button.border_color = button_bg
+    end
+  )
 
-    -- Use helper function to change the cursor on hover
-    helpers.add_hover_cursor(button, "hand1")
+  -- Use helper function to change the cursor on hover
+  helpers.add_hover_cursor(button, "hand1")
 
-    return button
+  return button
 end
 
 -- Create the buttons
@@ -117,74 +130,98 @@ exit_screen.fg = beautiful.exit_screen_fg or beautiful.wibar_fg or "#FEFEFE"
 
 local exit_screen_grabber
 function exit_screen_hide()
-    awful.keygrabber.stop(exit_screen_grabber)
-    exit_screen.visible = false
+  awful.keygrabber.stop(exit_screen_grabber)
+  exit_screen.visible = false
 end
 
 local keybinds = {
-    ['escape'] = exit_screen_hide,
-    ['q'] = exit_screen_hide,
-    ['x'] = exit_screen_hide,
-    ['s'] = function () suspend_command(); exit_screen_hide() end,
-    ['e'] = exit_command,
-    ['p'] = poweroff_command,
-    ['r'] = reboot_command,
-    ['l'] = function ()
-        lock_command()
-        -- Kinda fixes the "white" (undimmed) flash that appears between
-        -- exit screen disappearing and lock screen appearing
-        gears.timer.delayed_call(function()
-            exit_screen_hide()
-        end)
-    end
+  ["escape"] = exit_screen_hide,
+  ["q"] = exit_screen_hide,
+  ["x"] = exit_screen_hide,
+  ["s"] = function()
+    suspend_command()
+    exit_screen_hide()
+  end,
+  ["e"] = exit_command,
+  ["p"] = poweroff_command,
+  ["r"] = reboot_command,
+  ["l"] = function()
+    lock_command()
+    -- Kinda fixes the "white" (undimmed) flash that appears between
+    -- exit screen disappearing and lock screen appearing
+    gears.timer.delayed_call(
+      function()
+        exit_screen_hide()
+      end
+    )
+  end
 }
 
 function exit_screen_show()
-    exit_screen_grabber = awful.keygrabber.run(function(_, key, event)
-        -- Ignore case
-        key = key:lower()
+  exit_screen_grabber =
+    awful.keygrabber.run(
+    function(_, key, event)
+      -- Ignore case
+      key = key:lower()
 
-        if event == "release" then return end
+      if event == "release" then
+        return
+      end
 
-        if keybinds[key] then
-            keybinds[key]()
-        end
-    end)
-    exit_screen.visible = true
+      if keybinds[key] then
+        keybinds[key]()
+      end
+    end
+  )
+  exit_screen.visible = true
 end
 
-exit_screen:buttons(gears.table.join(
+exit_screen:buttons(
+  gears.table.join(
     -- Left click - Hide exit_screen
-    awful.button({ }, 1, function ()
+    awful.button(
+      {},
+      1,
+      function()
         exit_screen_hide()
-    end),
+      end
+    ),
     -- Middle click - Hide exit_screen
-    awful.button({ }, 2, function ()
+    awful.button(
+      {},
+      2,
+      function()
         exit_screen_hide()
-    end),
+      end
+    ),
     -- Right click - Hide exit_screen
-    awful.button({ }, 3, function ()
+    awful.button(
+      {},
+      3,
+      function()
         exit_screen_hide()
-    end)
-))
+      end
+    )
+  )
+)
 
 -- Item placement
 exit_screen:setup {
+  nil,
+  {
     nil,
     {
-        nil,
-        {
-            poweroff,
-            reboot,
-            suspend,
-            exit,
-            lock,
-            spacing = dpi(50),
-            layout = wibox.layout.fixed.horizontal
-        },
-        expand = "none",
-        layout = wibox.layout.align.horizontal
+      poweroff,
+      reboot,
+      suspend,
+      exit,
+      lock,
+      spacing = dpi(50),
+      layout = wibox.layout.fixed.horizontal
     },
     expand = "none",
-    layout = wibox.layout.align.vertical
+    layout = wibox.layout.align.horizontal
+  },
+  expand = "none",
+  layout = wibox.layout.align.vertical
 }
