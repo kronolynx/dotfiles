@@ -22,14 +22,14 @@ awful.rules.rules = {
       buttons = keys.clientbuttons,
       -- screen           = awful.screen.preferred,
       screen = awful.screen.focused,
-      size_hints_honor = false,
+      size_hints_honor = true,
       honor_workarea = true,
       honor_padding = true,
       maximized = false,
       titlebars_enabled = beautiful.titlebars_enabled,
       maximized_horizontal = false,
       maximized_vertical = false,
-      placement = awful.placement.centered + awful.placement.no_overlap
+      placement = awful.placement.centered + awful.placement.no_overlap + awful.placement.no_offscreen
     }
   },
   -- Floating clients
@@ -146,9 +146,7 @@ awful.rules.rules = {
   {
     rule_any = {
       class = {
-        "firefox",
-        "Nightly"
-        -- "qutebrowser",
+        "firefox"
       }
     },
     except_any = {
