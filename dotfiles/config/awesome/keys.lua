@@ -508,8 +508,33 @@ keys.globalkeys =
       )
     end,
     {description = "take a screenshot of selected area", group = "screenshot"}
+  ),
+  awful.key( {modkey}, "'", function()
+      local grabber
+      grabber =
+        awful.keygrabber.run(
+        function(_, key, event)
+          if event == "release" then return end
+
+          if key == "b" then awful.spawn(user.browser)
+          elseif key == "e" then awful.spawn(user.editor)
+          elseif key == "f" then awful.spawn("firefox")
+          elseif key == "g" then awful.spawn("google-chrome-stable")
+          elseif key == "j" then awful.spawn("joplin")
+          elseif key == "k" then awful.spawn("xkill")
+          elseif key == "m" then awful.spawn(user.music)
+          elseif key == "p" then awful.spawn("postman")
+          elseif key == "r" then awful.spawn(user.terminal .. " -e ranger")
+          elseif key == "s" then awful.spawn("slack")
+          end
+          awful.keygrabber.stop(grabber)
+        end
+      )
+    end,
+    {description = "launchers", group = "misc"}
   )
 )
+
 
 keys.clientkeys =
   gears.table.join(
@@ -914,6 +939,8 @@ end
 
 keys.globalkeys = addTagKey("=", 11, keys.globalkeys)
 keys.globalkeys = addTagKey("-", 12, keys.globalkeys)
+keys.globalkeys = addTagKey("[", 13, keys.globalkeys)
+keys.globalkeys = addTagKey("]", 14, keys.globalkeys)
 -- }}}
 
 keys.clientbuttons =
@@ -930,9 +957,9 @@ keys.clientbuttons =
     1,
     function(c)
       -- left click
-      if c.floating == true then
+      if c.floating then
         c:emit_signal("request::activate", "mouse_click", {raise = true})
-        if c.maximized == true then
+        if c.maximized then
           c.maximized = false
         end
         awful.mouse.client.move(c)

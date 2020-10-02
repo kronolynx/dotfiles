@@ -40,13 +40,13 @@ client.connect_signal(
   end
 )
 
--- Force minimized clients to unminimize.
-client.connect_signal(
-  "property::minimized",
-  function(c)
-    c.minimized = false
-  end
-)
+-- -- Force minimized clients to unminimize.
+-- client.connect_signal(
+--   "property::minimized",
+--   function(c)
+--     c.minimized = false
+--   end
+-- )
 
 client.connect_signal(
   "property::maximized",
@@ -82,14 +82,18 @@ client.connect_signal(
 client.connect_signal(
   "focus",
   function(c)
-    c.border_color = beautiful.border_focus
+    if beautiful.border_width > 0 then
+      c.border_color = beautiful.border_focus
+    end
   end
 )
 
 client.connect_signal(
   "unfocus",
   function(c)
-    c.border_color = beautiful.border_normal
+    if beautiful.border_width > 0 then
+      c.border_color = beautiful.border_normal
+    end
   end
 )
 
@@ -113,7 +117,7 @@ tag.connect_signal(
       if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
         local cgeo = awful.client.property.get(c, "floating_geometry")
         if cgeo then
-          c:geometry(awful.client.property.get(c, "floating_geometry"))
+          c:geometry(cgeo)
         end
       end
     end
