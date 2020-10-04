@@ -1,8 +1,15 @@
 # Replace the "❯" symbol in the prompt
 [character]      # The name of the module
-symbol = "⮞ "     # The "symbol" segment is being set to "➜"
-vicmd_symbol = "⮝ "
+success_symbol = "[⮞](bold green)"     # The "symbol" segment is being set to "➜"
+error_symbol = "[⮞](bold red)"     # The "symbol" segment is being set to "➜"
+vicmd_symbol = "[⮝](bold green)"
 [time]
 disabled = false
 style = "bold green"
-format = "%T"
+time_format = "%T"
+format = "[$time]($style) "
+
+[python]
+symbol = "🐍 "
+[java]
+symbol = "⚔️  "
