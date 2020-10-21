@@ -81,10 +81,10 @@ beautiful.notification_icon_size = 100 -- for awesome 4.3+
 -- -- keys
 keys = require("keys")
 
--- -- Signals
+-- Signals
 require("signals")
 
--- -- rules
+-- rules
 require("rules")
 
 -- autorun

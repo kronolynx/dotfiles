@@ -77,12 +77,10 @@ awful.rules.rules = {
         "Steam",
         "discord",
         "music",
-        "markdown_input",
         "scratchpad"
       },
       instance = {
         "music",
-        "markdown_input",
         "scratchpad"
       },
       role = {
