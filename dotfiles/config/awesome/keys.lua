@@ -233,6 +233,17 @@ keys.globalkeys =
     end,
     {description = "swap tag clients with the tag on the next screen", group = "tag"}
   ),
+  awful.key(
+    {modkey},
+    "t",
+    function()
+      local clients = awful.screen.focused().clients
+      for _, c in pairs(clients) do
+        awful.titlebar.toggle(c)
+      end
+    end,
+    {description = "toggle title bars for clients in current tag", group = "client"}
+  ),
   -- Standard program
   awful.key(
     {modkey},
@@ -279,7 +290,7 @@ keys.globalkeys =
   awful.key({modkey, shiftkey}, "s", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
   awful.key(
     {modkey},
-    ",",
+    ".",
     function()
       awful.tag.incmwfact(0.05)
     end,
@@ -287,7 +298,7 @@ keys.globalkeys =
   ),
   awful.key(
     {modkey},
-    ".",
+    ",",
     function()
       awful.tag.incmwfact(-0.05)
     end,
@@ -586,14 +597,6 @@ keys.clientkeys =
     {description = "move to screen", group = "client"}
   ),
   awful.key(
-    {modkey, ctrlkey},
-    "t",
-    function(c)
-      c.ontop = not c.ontop
-    end,
-    {description = "toggle keep on top", group = "client"}
-  ),
-  awful.key(
     {modkey, shiftkey},
     "t",
     function(c)
@@ -601,10 +604,18 @@ keys.clientkeys =
     end,
     {description = "toggle title bar", group = "client"}
   ),
+  awful.key(
+    {modkey, ctrlkey},
+    "t",
+    function(c)
+      c.ontop = not c.ontop
+    end,
+    {description = "toggle keep on top", group = "client"}
+  ),
   -- Slave client resize
   awful.key(
     {modkey, shiftkey},
-    ",",
+    ".",
     function(c)
       awful.client.incwfact(0.05, c)
     end,
@@ -612,7 +623,7 @@ keys.clientkeys =
   ),
   awful.key(
     {modkey, shiftkey},
-    ".",
+    ",",
     function(c)
       awful.client.incwfact(-0.05, c)
     end,

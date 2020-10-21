@@ -48,14 +48,6 @@ client.connect_signal(
 --   end
 -- )
 
-client.connect_signal(
-  "property::maximized",
-  function(c)
-    awful.titlebar.hide(c)
-    -- c.border_width = 0
-  end
-)
-
 -- screen.connect_signal("arrange", function (s)
 --     local max = s.selected_tag.layout.name == "max"
 --     local only_one = #s.tiled_clients == 1 -- use tiled_clients so that other floating windows don't affect the count
@@ -149,14 +141,6 @@ client.connect_signal(
     else
       c.restore_ontop = c.ontop
       c.ontop = false
-    end
-    -- Titlebars only on floating windows
-    if c.floating then
-      awful.titlebar.show(c)
-      c.border_width = 0
-    else
-      awful.titlebar.hide(c)
-      c.border_width = beautiful.border_width
     end
   end
 )
