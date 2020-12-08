@@ -1,71 +1,75 @@
-# Path to your oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
+# If not running interactively, don't do anything
+[[ -o interactive ]] || return
 
-# jump around
-if [ -f ~/.z.sh ]; then
-    source ~/.z.sh
-fi
+# install plugin manager if not installed
+[ ! -d ~/.zinit ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
 
-# Test and source exported variables
-if [ -f ~/.zsh/exports ]; then
-    source ~/.zsh/exports
-fi
-# Test and then source alias definitions.
-if [ -f ~/.zsh/aliases ]; then
-    source ~/.zsh/aliases
-fi
-# Test and then source the functions.
-if [ -f ~/.zsh/functions ]; then
-    source ~/.zsh/functions
-fi
-# Test and then source the completionsystem
-if [ -f ~/.zsh/compctl ]; then
-    source ~/.zsh/compctl
-fi
-# Test and then source the zstyles
-if [ -f ~/.zsh/style ]; then
-    source ~/.zsh/style
-fi
-# Test and then source the powerlevel9k ( must be sourced before ohmyzsh if not missing icons)
-if [ -f ~/.zsh/powerlevel9k ]; then
-    source ~/.zsh/powerlevel9k
-    ZSH_THEME="powerlevel9k/powerlevel9k"
-else
-    ZSH_THEME="agnoster"
-fi
-# Test and then source the keybindings
-if [ -f ~/.zsh/bindings ]; then
-    source ~/.zsh/bindings
-fi
-# Test and then source work related
-if [ -f ~/.zsh/work ]; then
-    source ~/.zsh/work
-fi
-# Test and then source the wretched rest
-if [ -f ~/.zsh/misc ]; then
-    source ~/.zsh/misc
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
 fi
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(git up vi-mode extract zsh-history-substring-search zsh-syntax-highlighting zsh-autosuggestions)
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
 
-if [ -f $ZSH/oh-my-zsh.sh ]; then
-    source $ZSH/oh-my-zsh.sh
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-rust \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
 
-    # Test and then source zsh highlight (Must be sourced after oh-my-zsh)
-    if [ -f ~/.zsh/stylehighlight ]; then
-	source ~/.zsh/stylehighlight
-    fi
-fi
+### End of Zinit's installer chunk
 
-# Test and then source some options
-if [ -f ~/.zsh/options ]; then
-    source ~/.zsh/options
-fi
 
+###################################################################################
+# load libaries
+###################################################################################
+for config_file (${HOME}/.config/zsh/*.zsh); do
+    source ${config_file}
+done
+
+###################################################################################
+# load plugins
+###################################################################################
+# fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets, such as zsh-autosuggestions or fast-syntax-highlighting.
+zinit light Aloxaf/fzf-tab
+zinit light zdharma/fast-syntax-highlighting
+#Fish-like fast/unobtrusive autosuggestions for zsh.
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
+# git interactive powered by fzf # https://github.com/wfxr/forgit
+zinit light wfxr/forgit
+
+# Easily access the directories you visit most often.
+# Usage:
+#   $ z work
+#   $ <CTRL-G>work
+zinit light agkozak/zsh-z
+zinit light andrewferrier/fzf-z
+
+# search with rip-grep 
+zinit light simnalamburt/ctrlf
+
+# Automatically expand all aliases
+# zinit light simnalamburt/zsh-expand-all (not working with z)
+
+
+###################################################################################
+# other
+###################################################################################
+
+# starship 
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi
 
+# fzf 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
