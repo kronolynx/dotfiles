@@ -5,3 +5,7 @@ zstyle ':completion:*' rehash true                              # automatically 
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
+
+zstyle ":completion:*:git-checkout:*" sort false
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'

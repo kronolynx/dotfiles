@@ -8,8 +8,15 @@ disabled = false
 style = "bold green"
 time_format = "%T"
 format = "[$time]($style) "
+[status]
+style = "blue"
+symbol = "💣"
+format = "[$symbol]($style) "
+disabled = true
 
 [python]
 symbol = "🐍 "
 [java]
 symbol = "⚔️  "
+[docker_context]
+format = "via [🐋 $context](blue bold)"

@@ -1,8 +1,0 @@
-# Syntax highlighting and tab completion
-autoload -Uz compinit
-
-zmodload zsh/terminfo
-
-autoload bashcompinit
-bashcompinit
-

@@ -7,14 +7,14 @@ COMMON="$(dirname $SCRIPTPATH)/common"
 find $SCRIPTPATH -type f -iname "*.sh" -exec chmod +x {} \;
 
 base=(
-  # base devel
-  # base-devel
+  # base devel (make automake, gcc, binutils, fakeroot)
+  base-devel
   # version control system
   git
   # URL retrieval utility
   curl
   # secure sockets layer (security)
-  openssl
+  #openssl
   # front end for Xrandr (screen related)
   arandr
   # printing system
@@ -33,6 +33,8 @@ base=(
   xclip
   # terminal emulator
   alacritty
+  #fish
+  zsh
 )
 
 media=(
@@ -86,6 +88,8 @@ cli=(
   neofetch
   # RandR-based backlight control application
   xorg-xbacklight
+  # fast and user-friendly alternative to find
+  fd
   # cat replacement with color syntax
   bat
   # Search tool
@@ -100,6 +104,11 @@ cli=(
   starship
   # git pager
   git-delta
+  #battery
+  acpi
+  xfce4-power-manager-settings
+  # font viewer
+  gucharmap
 )
 
 cli_media=(
@@ -131,6 +140,10 @@ misc=(
   fcitx-configtool
   # senity fork (used in xmobar calendar)
   yad
+  # Library implementation of the Media Transfer Protocol
+  libmtp
+  # Virtual filesystem implementation for GIO (MTP backend; Android, media player)
+  gvfs-mtp
 )
 
 coding=(
@@ -153,8 +166,10 @@ coding=(
   git-delta
   # connection manager
   asbru-cm
-  # Cat clone with syntax highlighting and git integration
-  bat
+  java-8-openjdk
+  #cassandra
+  cqlsh
+
 )
 
 install_tmux() {
@@ -169,11 +184,11 @@ tilling_common_apps=(
   # menu for launching applications (replacement for dmenu)
   rofi
   # theme
-  lxappearance
+  #lxappearance
   # Customizable and lightweight notifi��,��,cation-daemon
   dunst
   # gtk notifications
-  xfce4-notifyd
+  #xfce4-notifyd
   # power manager
   xfce4-power-manager
   # autolock e.g xautolock -time 10 -locker xscreensaver
@@ -181,16 +196,20 @@ tilling_common_apps=(
   # Simple command-line screenshot utility for X
   scrot
   # wallpaper
-  nitrogen
+  #nitrogen
   # X compositor that may fix tearing issues
-  compton
-  i3lock
+  picom
+  #i3lock
   # image viewer (set background image)
   feh
   # Command-line X11 automation tool 
   xdotool
   # GTK+ clipboard manager
   clipit
+  volumeicon
+  # X11 Display Manager 
+  lxdm-gtk3
+
 )
 
 awesome=(
@@ -229,10 +248,18 @@ i3=(
   sysstat
 )
 
+themes=(
+  adapta-gtk-theme
+  papirus-icon-theme
+  nerd-fonts-noto-sans-mono
+  ttf-iosevka
+  nerd-fonts-complete
+)
+
 
 # set here the name of the window manager (awesome, xmonad or i3)
-wm="xmonad"
-# wm="awesome"
+#wm="xmonad"
+wm="awesome"
 
 window_manager=$wm[*]
 $SCRIPTPATH/helpers/install-app.sh ${!window_manager}
@@ -245,7 +272,7 @@ $SCRIPTPATH/helpers/install-app.sh ${media[*]}
 $SCRIPTPATH/helpers/install-app.sh ${misc[*]}
 $SCRIPTPATH/helpers/install-app.sh ${coding[*]}
 $SCRIPTPATH/helpers/install-app.sh ${tilling_common_apps[*]}
+$SCRIPTPATH/helpers/install-app.sh ${themes[*]}
 
 install_tmux
 $SCRIPTPATH/apps/thunar.sh
-$SCRIPTPATH/apps/fish-shell.sh # TODO fix fish-shell

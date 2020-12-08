@@ -74,10 +74,10 @@ function mp3download {
 function videodownload {
     if [ "$#" -eq 1 ]
     then
-	youtube-dl -i -o "%(title)s.%(ext)s" $1
+	youtube-dl -i -o "%(title)s.%(ext)s" "$1a"
     elif [ "$#" -eq 2 ]
-    then
-	youtube-dl -iu $1 -o "%(title)s.%(ext)s" $2
+    then # user then video
+	youtube-dl -iu "$1" -o "%(title)s.%(ext)s" $2
     else
 	echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
     fi
