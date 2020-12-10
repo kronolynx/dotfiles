@@ -1,5 +1,66 @@
 {
+    "editor.fontFamily": "'Fantasque Sans Mono'",
+    "editor.fontLigatures": true,
+    "editor.fontWeight": "normal",
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "editor.tabSize": 2,
+    "editor.fontSize": 14,
+    "editor.formatOnType": true,
+    "editor.lineNumbers": "on",
+    "editor.suggestSelection": "first",
+    "window.zoomLevel": 0,
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.colorTheme": "One Monokai",
+    "window.menuBarVisibility": "toggle",
+    "workbench.activityBar.visible": false,
+    "workbench.statusBar.visible": true,
+    "editor.formatOnPaste": true,
+    "workbench.editor.highlightModifiedTabs": true,
+    "explorer.sortOrder": "type",
+    "explorer.autoReveal": false,
+    "files.trimFinalNewlines": true,
+    "workbench.startupEditor": "none",
+    "keyboard.dispatch": "keyCode",
+    "rest-client.enableTelemetry": false,
+    "rest-client.previewOption": "exchange",
+    "rest-client.requestNameAsResponseTabTitle": true,
+    "workbench.editor.tabSizing": "shrink",
+    "gitlens.currentLine.enabled": false,
+    "rest-client.largeResponseBodySizeLimitInMB": 100,
+    "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
+    "python.languageServer": "Microsoft",
+    "zenMode.hideStatusBar": false,
+    "zenMode.silentNotifications": false,
+    "zenMode.hideLineNumbers": false,
+    "zenMode.fullScreen": false,
+    "zenMode.centerLayout": false,
     "files.autoSave": "onFocusChange",
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "vim.sneak": false,
     "vim.neovimPath": "/usr/bin/nvim",
     "vim.enableNeovim": true,
     "vim.camelCaseMotion.enable": false,
@@ -16,6 +77,10 @@
         {
             "before": [ "u", "u" ],
             "after": [ "<Esc>" ]
+        },
+        {
+            "before": [ "j", "j" ],
+            "after": [ "<Esc>" ]
         }
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
@@ -23,137 +88,122 @@
             "before": [ "Y" ],
             "after": [ "y", "$" ]
         },
-        // editor
         {
             "before": [ "<leader>", "e", "b" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.navigateBack",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.navigateBack" ]
         },
         {
             "before": [ "<leader>", "e", "f" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.navigateForward",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.navigateForward" ]
         },
         {
             "before": [ "<leader>", "e", "e" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.debug.action.selectionToRepl",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.debug.action.selectionToRepl" ]
         },
         {
             "before": [ "<leader>", "e", "r" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.rename",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.action.rename" ]
         },
         {
             "before": [ "<leader>", "e", "p" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.triggerParameterHints",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "e", "u" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.action.triggerParameterHints" ]
         },
         {
             "before": [ "<leader>", "e", "c" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.showContextMenu",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.action.showContextMenu" ]
         },
         {
             "before": [ "<leader>", "e", "u" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.referenceSearch.trigger",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.action.referenceSearch.trigger" ]
         },
         {
             "before": [ "<leader>", "e", "l" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.openRecent",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "e", "f" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "actions.find",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.openRecent" ]
         },
         {
             "before": [ "<leader>", "e", "=" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.format",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.action.format" ]
         },
-        // tabs
+        {
+            "before": [ "<leader>", "f", "f" ],
+            "commands": [ "workbench.files.action.showActiveFileInExplorer" ]
+        },
+        {
+            "before": [ "<leader>", "f", "o" ],
+            "commands": [ "workbench.action.quickOpen" ]
+        },
+        {
+            "before": [ "<leader>", "f", "y" ],
+            "commands": [ "copyFilePath" ]
+        },
+        {
+            "before": [ "<leader>", "f", "R" ],
+            "commands": [ "renameFile" ]
+        },
+        {
+            "before": [ "<leader>", "f", "o" ],
+            "commands": [ "workbench.action.files.openFile" ]
+        },
+        {
+            "before": [ "<leader>", "g", "d" ],
+            "commands": [ "editor.action.revealDefinition" ]
+        },
+        {
+            "before": [ "<leader>", "g", "i" ],
+            "commands": [ "editor.action.goToImplementation" ]
+        },
+        {
+            "before": [ "<leader>", "g", "r" ],
+            "commands": [ "editor.action.goToReferences" ]
+        },
+        {
+            "before": [ "<leader>", "g", "s" ],
+            "commands": [ "metals.goto-super-method" ]
+        },
+        {
+            "before": [ "<leader>", "g", "f" ],
+            "commands": [ "workbench.action.quickOpen" ]
+        },
+        {
+            "before": [ "<leader>", "g", "c" ],
+            "commands": [ "workbench.action.showAllSymbols" ]
+        },
+        {
+            "before": [ "<leader>", "r", "r" ],
+            "commands": [ "editor.action.rename" ]
+        },
+        // search
+        {
+            "before": [ "<leader>", "s", "p" ],
+            "commands": [ "workbench.view.search" ]
+        },
+        {
+            "before": [ "<leader>", "s", "e" ],
+            "commands": [ "workbench.action.findInFiles" ]
+        },
+        {
+            "before": [ "<leader>", "s", "f" ],
+            "commands": [ "workbench.action.quickOpen" ]
+        },
+        {
+            "before": [ "<leader>", "s", "c" ],
+            "commands": [ "workbench.action.showAllSymbols" ]
+        },
+        {
+            "before": [ "<leader>", "s", "r" ],
+            "commands": [ "workbench.action.replaceInFiles" ]
+        },
+        {
+            "before": [ "<leader>", "s", "s" ],
+            "commands": [ "workbench.action.showAllSymbols" ]
+        },
         {
             "before": [ "<leader>", "t", "l" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.nextEditorInGroup",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.nextEditorInGroup" ]
         },
         {
             "before": [ "<leader>", "t", "h" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.previousEditorInGroup",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.previousEditorInGroup" ]
         },
         {
             "before": [ "<leader>", "t", "o" ],
@@ -161,373 +211,99 @@
         },
         {
             "before": [ "<leader>", "t", "r" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.quickOpen" ]
+        },
+        {
+            "before": [ "<leader>", "t", "c" ],
+            "commands": [ "workbench.action.closeActiveEditor" ]
         },
         {
             "before": [ "<leader>", "t", "y" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
+            "commands": [ "" ]
+        },
+        {
+            "before": [ "<leader>", "t", "m" ],
+            "commands": [ "workbench.action.moveEditorToLastGroup" ]
         },
         {
             "before": [ "<leader>", "t", "u" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.reopenClosedEditor",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.reopenClosedEditor" ]
         },
         {
             "before": [ "<leader>", "t", "j" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.joinAllGroups",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.joinAllGroups" ]
         },
         {
-            "before": [ "<leader>", "<tab>" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.openPreviousEditor",
-                    "args": []
-                }
-            ]
-        },
-        // files
-        {
-            "before": [ "<leader>", "f", "f" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.quickOpen",
-                    "args": []
-                }
-            ]
+            "before": [ "<leader>", "v", "p" ],
+            "commands": [ "editor.action.triggerParameterHints" ]
         },
         {
-            "before": [ "<leader>", "f", "y" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "copyFilePath",
-                    "args": []
-                }
-            ]
+            "before": [ "<leader>", "v", "h" ],
+            "commands": [ "editor.action.showHover" ]
         },
         {
-            "before": [ "<leader>", "f", "r" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
+            "before": [ "<leader>", "v", "i", "c" ],
+            "commands": [ "metals.toggle-implicit-conversions-and-classes" ]
         },
         {
-            "before": [ "<leader>", "f", "R" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "renameFile",
-                    "args": []
-                }
-            ]
+            "before": [ "<leader>", "v", "i", "p" ],
+            "commands": [ "metals.toggle-implicit-parameters" ]
         },
         {
-            "before": [ "<leader>", "f", "N" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
+            "before": [ "<leader>", "v", "i", "t" ],
+            "commands": [ "metals.toggle-show-inferred-type" ]
         },
-        {
-            "before": [ "<leader>", "f", "D" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "f", "o" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.files.openFile",
-                    "args": []
-                }
-            ]
-        },
-        // go to
-        {
-            "before": [ "<leader>", "g", "d" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.revealDefinition",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "i" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.goToImplementation",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "s" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.goToSymbol",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "f" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "c" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "[" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "]" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "," ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "g", "." ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        // search
-        {
-            "before": [ "<leader>", "s", "u" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "s", "p" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "s", "e" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.findInFiles",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "s", "f" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.quickOpen",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "s", "c" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
-        },
-        {
-            "before": [ "<leader>", "s", "s" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.showAllSymbols",
-                    "args": []
-                }
-            ]
-        },
-        // window
         {
             "before": [ "<leader>", "w", "c" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.closeActiveEditor",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.closeActiveEditor" ]
         },
         {
             "before": [ "<leader>", "w", "o" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.files.action.closeOtherFiles",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.files.action.closeOtherFiles" ]
         },
         {
             "before": [ "<leader>", "w", "r" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.files.revealActiveFileInWindows",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.files.revealActiveFileInWindows" ]
         },
         {
             "before": [ "<leader>", "w", "=" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.evenEditorWidths",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.evenEditorWidths" ]
         },
         {
             "before": [ "<leader>", "w", "h" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.focusLeftGroup",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.focusLeftGroup" ]
         },
         {
             "before": [ "<leader>", "w", "l" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "workbench.action.focusRightGroup",
-                    "args": []
-                }
-            ]
+            "commands": [ "workbench.action.focusRightGroup" ]
         },
         {
-            "before": [
-                "u"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "undo"
-                }
-            ]
+            "before": [ "<leader>", "y", "t" ],
+            "commands": [ "" ]
         },
         {
-            "before": [
-                "<C-r>"
-            ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "redo"
-                }
-            ]
+            "before": [ "<leader>", "y", "p" ],
+            "commands": [ "copyRelativeFilePath" ]
         },
         {
-            "before": [
-                "<Return>"
-            ],
-            "commands": [
-                ":nohl"
-            ]
+            "before": [ "<leader>", "<tab>" ],
+            "commands": [ "workbench.action.openPreviousEditor" ]
+        },
+        {
+            "before": [ "u" ],
+            "commands": [ "undo" ]
+        },
+        {
+            "before": [ "<C-r>" ],
+            "commands": [ "redo" ]
+        },
+        {
+            "before": [ "<Return>" ],
+            "commands": [ ":nohl" ]
         },
         {
             "before": [ "Z", "Z" ],
-            "commands": [
-                ":wq"
-            ]
+            "commands": [ ":wq" ]
         },
         // smart move between windows
         {
@@ -550,108 +326,19 @@
     "vim.visualModeKeyBindingsNonRecursive": [
         {
             "before": [ "<leader>", "e", "=" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.action.format",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.action.format" ]
         },
         {
-            "before": [ "<leader>", "", "" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "",
-                    "args": []
-                }
-            ]
+            "before": [ ">" ],
+            "commands": [ "editor.action.indentLines" ]
         },
         {
-            "before": [
-                ">"
-            ],
-            "commands": [
-                "editor.action.indentLines"
-            ]
-        },
-        {
-            "before": [
-                "<"
-            ],
-            "commands": [
-                "editor.action.outdentLines"
-            ]
+            "before": [ "<" ],
+            "commands": [ "editor.action.outdentLines" ]
         },
         {
             "before": [ "<leader>", "e", "e" ],
-            "after": [],
-            "commands": [
-                {
-                    "command": "editor.debug.action.selectionToRepl",
-                    "args": []
-                }
-            ]
+            "commands": [ "editor.debug.action.selectionToRepl" ]
         },
-     ],
-    "vim.sneak": false,
-    "editor.fontFamily": "'Fantasque Sans Mono'",
-    "editor.fontLigatures": true,
-    "editor.minimap.enabled": false,
-    "window.zoomLevel": 0,
-    "workbench.iconTheme": "material-icon-theme",
-    "workbench.colorTheme": "One Monokai",
-    "workbench.colorCustomizations": {
-        // "activityBar.background": "#80af80",
-        // "activityBar.foreground": "#463c33",
-        "statusBar.background": "#021a18",
-        "statusBar.foreground": "#eaeef3"
-        
-    },
-    "window.menuBarVisibility": "toggle",
-    "workbench.activityBar.visible": false,
-    "[html]": {
-        "editor.defaultFormatter": "vscode.html-language-features"
-    },
-    "[javascript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
-    "python.jediEnabled": false,
-    "workbench.statusBar.visible": true,
-    "editor.formatOnPaste": true,
-    "workbench.editor.highlightModifiedTabs": true,
-    "explorer.sortOrder": "type",
-    "files.trimFinalNewlines": true,
-    "editor.formatOnType": true,
-    "editor.lineNumbers": "relative",
-    "workbench.startupEditor": "newUntitledFile",
-    "editor.suggestSelection": "first",
-    "files.exclude": {
-        "**/.classpath": true,
-        "**/.project": true,
-        "**/.settings": true,
-        "**/.factorypath": true
-    },
-    "keyboard.dispatch": "keyCode",
-    "editor.scrollbar.verticalScrollbarSize": 0,
-    "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "rest-client.enableTelemetry": false,
-    "rest-client.previewOption": "exchange",
-    "rest-client.requestNameAsResponseTabTitle": true,
-    "workbench.editor.tabSizing": "shrink",
-    "editor.wordWrap": "wordWrapColumn",
-    "editor.wordWrapColumn": 120,
-    "editor.tabSize": 2,
-    "editor.fontSize": 16,
-    "gitlens.currentLine.enabled": false,
-    "[jsonc]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
-    },
-    "rest-client.largeResponseBodySizeLimitInMB": 100,
-    "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
-    "python.languageServer": "Microsoft",
-    "beautify.config": ""
+    ]
 }

@@ -1,6 +1,7 @@
-alanz.vscode-hie-server
+aaron-bond.better-comments
 alefragnani.project-manager
 azemoh.one-monokai
+baccata.scaladex-search
 bierner.emojisense
 bierner.github-markdown-preview
 bierner.markdown-checkbox
@@ -19,14 +20,14 @@ Equinusocio.vsc-material-theme
 equinusocio.vsc-material-theme-icons
 esbenp.prettier-vscode
 formulahendry.auto-close-tag
-golang.go
 HookyQR.beautify
 hoovercj.haskell-linter
-humao.rest-client
+ionutvmi.path-autocomplete
 justusadam.language-haskell
 keyring.Lua
 kisstkondoros.vscode-gutter-preview
 ms-python.python
+ms-toolsai.jupyter
 ms-vsliveshare.vsliveshare
 mtxr.sqltools
 naumovs.color-highlight
@@ -35,9 +36,7 @@ scala-lang.scala
 scalameta.metals
 shd101wyy.markdown-preview-enhanced
 trixnz.vscode-lua
-UCL.haskelly
 vscodevim.vim
-vsls-contrib.codetour
 vsls-contrib.gistfs
 yzhang.markdown-all-in-one
 zhuangtongfa.material-theme
