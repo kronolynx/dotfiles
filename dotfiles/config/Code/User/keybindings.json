@@ -60,4 +60,44 @@
         "key": "alt+b",
         "command": "workbench.action.navigateBack"
     },
+    {
+        "key": "alt+enter",
+        "command": "editor.action.quickFix",
+        "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly",
+        "intellij": "Show intention actions and quick-fixes"
+    },
+    {
+        "key": "ctrl+shift+enter",
+        "mac": "cmd+shift+enter",
+        "command": "acceptSelectedSuggestion",
+        "when": "editorFocus && suggestWidgetVisible",
+        "intellij": "Complete statement"
+    },
+    {
+        "key": "ctrl+/",
+        "command": "editor.action.commentLine",
+        "when": "editorTextFocus && !editorReadonly",
+        "intellij": "Comment/uncomment with line comment"
+    },
+    {
+        "key": "ctrl+shift+/",
+        "mac": "cmd+alt+/",
+        "command": "editor.action.blockComment",
+        "when": "editorTextFocus && !editorReadonly",
+        "intellij": "Comment/uncomment with block comment"
+    },
+    {
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "command": "editor.action.formatDocument",
+        "when": "editorHasDocumentFormattingProvider && editorTextFocus && !editorReadonly",
+        "intellij": "Reformat code"
+    },
+    {
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "command": "editor.action.formatSelection",
+        "when": "editorHasDocumentFormattingProvider && editorHasSelection && editorTextFocus && !editorReadonly",
+        "intellij": "Reformat selected code"
+    }
 ]

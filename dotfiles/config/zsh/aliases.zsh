@@ -62,6 +62,9 @@ alias fs="stat -f \"%z bytes\""
 alias ping='ping -c 5'
 alias rm-broken-symlinks="old_find . -xtype l -delete"
 
+# dev
+# scala metals log
+alias smlog='tail -f .metals/metals.log'
 
 # to create more alias for different distro operations
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
