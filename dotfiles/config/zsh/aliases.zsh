@@ -63,36 +63,36 @@ alias ping='ping -c 5'
 alias rm-broken-symlinks="old_find . -xtype l -delete"
 
 # dev
-# scala metals log
-alias smlog='tail -f .metals/metals.log'
 
 # to create more alias for different distro operations
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
 
+if (( $+commands[pacman] )); then
 ## Manjaro
-alias S="yay -Ss " # search
-alias U="sudo pacman -Syu" # update
-alias Ua="yay -Syu" # update including aur packages
-alias Uf="sudo pacman -Syy" # force update
-alias I="yay -S " # install
-alias Iy="yay -S --noconfirm " # install no confirm
-alias R="sudo pacman -Rs " # remove with dependcies
-alias Rd="sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
-alias which="pacman -Qo "
-alias downgrade-fix="sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
-alias mirrors="sudo pacman-mirrors --fasttrack"
+  alias S="yay -Ss " # search
+  alias U="sudo pacman -Syu" # update
+  alias Ua="yay -Syu" # update including aur packages
+  alias Uf="sudo pacman -Syy" # force update
+  alias I="yay -S " # install
+  alias Iy="yay -S --noconfirm " # install no confirm
+  alias R="sudo pacman -Rs " # remove with dependcies
+  alias Rd="sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
+  alias which="pacman -Qo "
+  alias downgrade-fix="sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
+  alias mirrors="sudo pacman-mirrors --fasttrack"
 
-
-# # Ubuntu
-# alias S="apt search "
-# alias U="sudo apt update && sudo apt upgrade"
-# alias I="sudo apt install -y"
-# alias R="sudo apt remove "
-# alias dist-upgrade-available="sudo do-release-upgrade -c"
-# alias dist-upgrade="sudo do-release-upgrade"
-# alias hold="sudo apt-mark hold" # mark package as held back which will prevent the package from being autmotically upgraded
-# alias unhold="sudo apt-mark unhold" # cancel previously set hold package
-# alias showhold="apt-mark showhold" # print a list of packages on hold
+elif (( $+commands[apt-get] )); then
+  # Ubuntu
+  alias S="apt search "
+  alias U="sudo apt update && sudo apt upgrade"
+  alias I="sudo apt install -y"
+  alias R="sudo apt remove "
+  alias dist-upgrade-available="sudo do-release-upgrade -c"
+  alias dist-upgrade="sudo do-release-upgrade"
+  alias hold="sudo apt-mark hold" # mark package as held back which will prevent the package from being autmotically upgraded
+  alias unhold="sudo apt-mark unhold" # cancel previously set hold package
+  alias showhold="apt-mark showhold" # print a list of packages on hold
+fi
 
 # source and edit
 alias EG="vim ~/.gitrc"

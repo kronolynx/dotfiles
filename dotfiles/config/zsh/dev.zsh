@@ -23,8 +23,10 @@ alias sbt-res="mv ~/.sbt/repositories-temp ~/.sbt/repositories"
 alias ccache="rm -rf /root/.ivy2/cache/"
 alias domr="sbt wr-admin-domain-server/run"
 alias apir="sbt wr-admin-api-server/run"
-alias testi="sbt panic compile testInteractive"
-alias testo="sbt testOnly"
+alias testi="sbt panic wr-admin-it/compile wr-admin-it/it:testInteractive"
+alias testo="sbt wr-admin-it/it:testOnly"
 alias rlds="find src/ -name '*.scala' | entr -s " # requires argument e.g 'sbt test'
+# scala metals log
+alias smlog='tail -f .metals/metals.log'
 
 export SBT_OPTS="-Xmx2G -XX:MaxMetaspaceSize=1024m -Dsbt.boot.credentials=$HOME/.sbt/.credentials -Dsbt.override.build.repos=true -Xss2M"
