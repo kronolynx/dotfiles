@@ -30,9 +30,9 @@ zinit light-mode for \
 
 
 ###################################################################################
-# load libaries
+# load config fiels that end in .zsh from ~/.config/zsh/
 ###################################################################################
-for config_file (${HOME}/.config/zsh/*.zsh); do
+for config_file (${HOME}/.config/zsh/**/*.zsh); do
     source ${config_file}
 done
 
@@ -41,12 +41,12 @@ done
 ###################################################################################
 # fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets, such as zsh-autosuggestions or fast-syntax-highlighting.
 zinit light Aloxaf/fzf-tab
-zinit light zdharma/fast-syntax-highlighting
 #Fish-like fast/unobtrusive autosuggestions for zsh.
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
 # git interactive powered by fzf # https://github.com/wfxr/forgit
 zinit light wfxr/forgit
+zinit light zsh-users/zsh-completions
 
 # Easily access the directories you visit most often.
 # Usage:
@@ -61,10 +61,24 @@ zinit light simnalamburt/ctrlf
 # Automatically expand all aliases
 # zinit light simnalamburt/zsh-expand-all (not working with z)
 
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::ssh-agent
+
+# syntax highlight should be sourced at the end
+zinit light zdharma/fast-syntax-highlighting
+
 
 ###################################################################################
 # other
 ###################################################################################
+#
+# Syntax highlighting and tab completion
+autoload -Uz compinit && compinit
+
+# this key must be sourced after syntax highlight
+bindkey '^[[A' fzf-history-widget
+# autoload bashcompinit
+# bashcompinit
 
 # starship 
 if command -v starship >/dev/null 2>&1; then
