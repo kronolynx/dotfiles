@@ -30,7 +30,7 @@ zinit light-mode for \
 
 
 ###################################################################################
-# load config fiels that end in .zsh from ~/.config/zsh/
+# load config files (alias, funcionts) that end in .zsh from ~/.config/zsh/
 ###################################################################################
 for config_file (${HOME}/.config/zsh/**/*.zsh); do
     source ${config_file}
@@ -39,48 +39,94 @@ done
 ###################################################################################
 # load plugins
 ###################################################################################
-# fzf-tab needs to be loaded after compinit, but before plugins which will wrap widgets, such as zsh-autosuggestions or fast-syntax-highlighting.
-zinit light Aloxaf/fzf-tab
-#Fish-like fast/unobtrusive autosuggestions for zsh.
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-completions
-# git interactive powered by fzf # https://github.com/wfxr/forgit
+zinit ice nocompile:! pick:c.zsh atpull:%atclone atclone:'dircolors -b LS_COLORS > c.zsh'
+zinit light trapd00r/LS_COLORS
+zinit light agkozak/zsh-z
+zinit snippet OMZP::ssh-agent
 zinit light wfxr/forgit
 zinit light zsh-users/zsh-completions
 
-# Easily access the directories you visit most often.
-# Usage:
-#   $ z work
-#   $ <CTRL-G>work
-zinit light agkozak/zsh-z
-zinit light andrewferrier/fzf-z
+zinit ice silent wait:1 atload:_zsh_autosuggest_start
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
 
-# search with rip-grep 
-zinit light simnalamburt/ctrlf
+# Use fzf
+if [[ -d /usr/share/fzf ]]; then
+  #source /usr/share/fzf/key-bindings.zsh
+  #source /usr/share/fzf/completion.zsh
+fi
 
-# Automatically expand all aliases
-# zinit light simnalamburt/zsh-expand-all (not working with z)
+## Options section
+setopt correct                                                  # Auto correct mistakes
+setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
+setopt nocaseglob                                               # Case insensitive globbing
+setopt rcexpandparam                                            # Array expension with parameters
+setopt nocheckjobs                                              # Don't warn about running processes when exiting
+setopt numericglobsort                                          # Sort filenames numerically when it makes sense
+setopt nobeep                                                   # No beep
+setopt appendhistory                                            # Immediately append history instead of overwriting
+setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
+setopt autocd                                                   # if only directory path is entered, cd there.
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushdminus
+setopt histignorespace           # Ignore command lines with leading spaces
+setopt incappendhistory          
 
-zinit snippet OMZL::git.zsh
-zinit snippet OMZP::ssh-agent
-
-# syntax highlight should be sourced at the end
-zinit light zdharma/fast-syntax-highlighting
 
 
-###################################################################################
-# other
-###################################################################################
-#
-# Syntax highlighting and tab completion
-autoload -Uz compinit && compinit
+# Completion.
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
+zstyle ':completion:*' rehash true                              # automatically find new executables in path 
+eval "$(dircolors)"
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
+zstyle ':completion:*' completer _expand _complete _ignored _approximate
+zstyle ':completion:*' menu select=2
+zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+zstyle ':completion:*:descriptions' format '%U%F{cyan}%d%f%u'
 
-# this key must be sourced after syntax highlight
-bindkey '^[[A' fzf-history-widget
-# autoload bashcompinit
-# bashcompinit
+# partial completion suggestions
+zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
 
-# starship 
+# color partial completion
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=00}:${(s.:.)LS_COLORS}")';
+
+# Speed up completions
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.cache/zcache
+
+zstyle ':autocomplete:tab:*' insert-unambiguous yes
+zstyle ':autocomplete:tab:*' widget-style menu-complete
+zstyle ':autocomplete:*:no-matches-at-all' message 't'
+
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[function]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[command]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan,underline'
+ZSH_HIGHLIGHT_STYLES[default]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=cyan'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+
+bindkey -v
+
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+
+# automatically load bash completion functions
+autoload -U +X bashcompinit && bashcompinit
+
+HISTFILE=~/.zhistory
+HISTSIZE=50000
+SAVEHIST=10000
+
+# starship
 if command -v starship >/dev/null 2>&1; then
     eval "$(starship init zsh)"
 fi

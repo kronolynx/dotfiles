@@ -29,4 +29,4 @@ alias rlds="find src/ -name '*.scala' | entr -s " # requires argument e.g 'sbt t
 # scala metals log
 alias smlog='tail -f .metals/metals.log'
 
-export SBT_OPTS="-Xmx2G -XX:MaxMetaspaceSize=1024m -Dsbt.boot.credentials=$HOME/.sbt/.credentials -Dsbt.override.build.repos=true -Xss2M"
+# export SBT_OPTS="-Xmx2G -XX:MaxMetaspaceSize=1024m -Dsbt.boot.credentials=$HOME/.sbt/.credentials -Dsbt.override.build.repos=true -Xss2M"

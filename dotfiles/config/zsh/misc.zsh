@@ -1,2 +1,0 @@
-zmodload zsh/terminfo
-
