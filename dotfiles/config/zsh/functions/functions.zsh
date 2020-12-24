@@ -1,8 +1,3 @@
-function temp_test(){
-    for config_file (${HOME}/.config/zsh/**/*.zsh); do
-        echo ${config_file}
-    done
-}
 # ls after cd and if the directory doesn't exist try at home
 function cd() {
     if ! test -d $@ && test -d "$HOME/$@"; then
