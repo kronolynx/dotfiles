@@ -40,7 +40,7 @@
                     'Active' - where the active window is -->
   </placement>
   <theme>
-    <name>Prismatic-Night</name>
+    <name>Adapta-Nokto</name>
     <titleLayout>NL</titleLayout>
     <!--
         available characters are NDSLIMC, each can occur at most once.
@@ -55,7 +55,7 @@
     <keepBorder>yes</keepBorder>
     <animateIconify>no</animateIconify>
     <font place="ActiveWindow">
-      <name>sans</name>
+      <name>Roboto</name>
       <size>10</size>
       <!-- font size in points -->
       <weight>bold</weight>
@@ -64,7 +64,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="InactiveWindow">
-      <name>sans</name>
+      <name>Roboto</name>
       <size>10</size>
       <!-- font size in points -->
       <weight>bold</weight>
@@ -73,7 +73,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuHeader">
-      <name>sans</name>
+      <name>Roboto</name>
       <size>10</size>
       <!-- font size in points -->
       <weight>normal</weight>
@@ -82,7 +82,7 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="MenuItem">
-      <name>sans</name>
+      <name>Roboto</name>
       <size>10</size>
       <!-- font size in points -->
       <weight>normal</weight>
@@ -91,16 +91,16 @@
       <!-- 'italic' or 'normal' -->
     </font>
     <font place="ActiveOnScreenDisplay">
-      <name/>
-      <size>8</size>
-      <weight/>
-      <slant/>
+      <name>Noto Sans</name>
+      <size>10</size>
+      <weight>Normal</weight>
+      <slant>Normal</slant>
     </font>
     <font place="InactiveOnScreenDisplay">
-      <name>Sans</name>
-      <size>8</size>
-      <weight/>
-      <slant/>
+      <name>Noto Sans</name>
+      <size>10</size>
+      <weight>Normal</weight>
+      <slant>Normal</slant>
     </font>
   </theme>
   <desktops>
@@ -144,18 +144,18 @@
        Many programs reserve space automatically, but you can use this in other
        cases. -->
   <margins>
-    <top>10</top>
+    <top>34</top>
     <bottom>10</bottom>
     <left>10</left>
     <right>10</right>
   </margins>
   <dock>
-    <position>TopLeft</position>
+    <position>Top</position>
     <!-- (Top|Bottom)(Left|Right|)|Top|Bottom|Left|Right|Floating -->
     <floatingX>0</floatingX>
     <floatingY>0</floatingY>
-    <noStrut>yes</noStrut>
-    <stacking>Above</stacking>
+    <noStrut>no</noStrut>
+    <stacking>Normal</stacking>
     <!-- 'Above', 'Normal', or 'Below' -->
     <direction>Vertical</direction>
     <!-- 'Vertical' or 'Horizontal' -->
@@ -442,6 +442,113 @@
       </action>
     </keybind>
     <!-- Tiling -->
+    <!-- Keybindings for tiling -->
+    <keybind key="A-KP_5">
+      <action name="ToggleMaximize"/>
+    </keybind>
+    <keybind key="A-KP_0">
+      <action name="Iconify"/>
+    </keybind>
+    <keybind key="A-KP_4">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>0</x>
+        <y>0</y>
+        <width>50%</width>
+        <height>100%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_6">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>-0</x>
+        <y>0</y>
+        <width>50%</width>
+        <height>100%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_8">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>0</x>
+        <y>0</y>
+        <width>100%</width>
+        <height>50%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_2">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>0</x>
+        <y>-0</y>
+        <width>100%</width>
+        <height>50%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_7">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>0</x>
+        <y>0</y>
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_9">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>-0</x>
+        <y>0</y>
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_1">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>0</x>
+        <y>-0</y>
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_3">
+      <action name="Unmaximize"/>
+      <action name="MoveResizeTo">
+        <x>-0</x>
+        <y>-0</y>
+        <width>50%</width>
+        <height>50%</height>
+      </action>
+    </keybind>
+    <keybind key="A-KP_Add">
+      <action name="NextWindow">
+        <dialog>none</dialog>
+        <raise>yes</raise>
+        <linear>yes</linear>
+        <allDesktops>yes</allDesktops>
+        <interactive>no</interactive>
+        <finalactions>
+          <action name="Focus"/>
+          <action name="Raise"/>
+          <action name="Unshade"/>
+        </finalactions>
+      </action>
+    </keybind>
+    <keybind key="A-KP_Subtract">
+      <action name="NextWindow">
+        <dialog>none</dialog>
+        <raise>yes</raise>
+        <linear>yes</linear>
+        <allDesktops>yes</allDesktops>
+        <interactive>no</interactive>
+        <finalactions>
+          <action name="Focus"/>
+          <action name="Raise"/>
+          <action name="Unshade"/>
+        </finalactions>
+      </action>
+    </keybind>
     <!-- split/tile window -->
     <keybind key="W-S-Left">
       <action name="MoveResizeTo">
@@ -698,6 +805,9 @@
     <keybind key="W-f">
       <action name="ToggleMaximize"/>
     </keybind>
+    <keybind key="W-s">
+      <action name="ToggleOmnipresent"/>
+    </keybind>
     <keybind key="W-z">
       <action name="Iconify"/>
     </keybind>
@@ -709,6 +819,28 @@
       <action name="ToggleDecorations"/>
     </keybind>
     <!-- Keybindings for running applications -->
+    <keybind key="W-e">
+      <keybind key="f">
+        <action name="Execute">
+          <command>firefox</command>
+        </action>
+      </keybind>
+      <keybind key="c">
+        <action name="Execute">
+          <command>code</command>
+        </action>
+      </keybind>
+      <keybind key="v">
+        <action name="Execute">
+          <command>nvim</command>
+        </action>
+      </keybind>
+      <keybind key="p">
+        <action name="Execute">
+          <command>postman</command>
+        </action>
+      </keybind>
+    </keybind>
     <keybind key="W-S-r">
       <action name="Reconfigure"/>
     </keybind>
@@ -724,7 +856,12 @@
     </keybind>
     <keybind key="A-d">
       <action name="Execute">
-        <command>rofi -show</command>
+        <command>rofi -show drun</command>
+      </action>
+    </keybind>
+    <keybind key="W-g">
+      <action name="Execute">
+        <command>rofi -show window</command>
       </action>
     </keybind>
     <keybind key="W-p">
@@ -732,18 +869,11 @@
         <command>dmenu_run -nb black</command>
       </action>
     </keybind>
-    <!-- <keybind key="W-e"> <action name="Execute"> <startupnotify> <enabled>true</enabled> <name>PCManFM</name> </startupnotify> <command>pcmanfm</command> </action> </keybind> -->
-    <!-- Keybindings for finding files -->
-    <!-- <keybind key="W-f"> <action name="Execute"> <command>pcmanfm -\-find-files</command> </action> </keybind> -->
-    <!--keybindings for LXPanel -->
-    <!-- <keybind key="W-r"> <action name="Execute"> <command>lxpanelctl run</command> </action> </keybind> -->
-    <!-- File Manager -->
-    <!-- <keybind key="W-e"> <action name="Execute"> <startupnotify> <enabled>true</enabled> <name>PCManFM</name> </startupnotify> <command>pcmanfm</command> </action> </keybind> -->
-    <!-- A Command Runner -->
-    <!-- Open Menu -->
-    <!-- <keybind key="A-F2"> <action name="Execute"> <command>lxpanelctl run</command> </action> </keybind> -->
-    <!-- <keybind key="C-Escape"> <action name="Execute"> <command>lxpanelctl menu</command> </action> -->
-    <!-- </keybind> <keybind key="A-F1"> <action name="Execute"> <command>lxpanelctl menu</command> </action> </keybind> -->
+    <keybind key="W-Escape">
+      <action name="Execute">
+        <command>xkill</command>
+      </action>
+    </keybind>
     <!-- Audio -->
     <keybind key="XF86AudioLowerVolume">
       <action name="Execute">
@@ -1206,6 +1336,7 @@
     </application>
     <application class="jetbrains-idea-ce">
       <desktop>3</desktop>
+      <decor>yes</decor>
       <maximized>yes</maximized>
     </application>
     <!--

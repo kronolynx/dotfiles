@@ -1,5 +1,6 @@
 fish_vi_key_bindings
 
+
 ##########################################################
 ########## Plugins
 ##########################################################
@@ -7,19 +8,16 @@ fish_vi_key_bindings
 if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install);
 end
 
-# plugin necessary to work with tmux-zen
 fundle plugin 'decors/fish-colored-man'
 fundle plugin 'fisherman/gitignore'
-fundle plugin 'fishpkg/fish-spin'
-fundle plugin 'jethrokuan/fzf'
-fundle plugin 'jethrokuan/z'
 fundle plugin 'jhillyerd/plugin-git'
-fundle plugin 'jorgebucaran/fish-getopts'
-fundle plugin 'jorgebucaran/fish-nvm'
-fundle plugin 'oh-my-fish/plugin-bang-bang'
 fundle plugin 'oh-my-fish/plugin-config'
 fundle plugin 'oh-my-fish/plugin-extract'
-# fundle plugin 'sagebind/tmux-zen'
+fundle plugin 'danhper/fish-ssh-agent'
+fundle plugin 'patrickf3139/fzf.fish'
+fundle plugin 'jorgebucaran/replay.fish'
+#fundle plugin 'Gazorby/fish-abbreviation-tips'
+fundle plugin 'jethrokuan/z'
 
 fundle init
 
@@ -41,13 +39,13 @@ alias old_cat=bat
 alias cat=bat # replace cat with bat
 alias old_ls=ls
 alias ls=exa # improved ls
-#alias old_find=find
-#alias find=fd
 alias old_vim=vim
 alias vim=nvim
 alias old_vi=vi
 alias vi=vim
+alias vin="vim -u NONE" # vim no config
 
+alias CAPS="xdotool key Caps_Lock"
 
 alias emx="emacsclient -t --alternate-editor='nvim'"
 alias emc="emacsclient -c -a emacs"
@@ -71,9 +69,9 @@ alias v="vim"
 alias vi="nvim"
 alias vim="nvim"
 alias wget='wget -c '
-alias gts='git status'
+alias gs='git status'
 alias gtl='git log'
-alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
+alias chmodrec='old_find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias bashi='bash -s interactive'
 
 alias tstamp='date "+%F-%H%M"'
@@ -93,6 +91,7 @@ alias R="sudo pacman -Rs " # remove with dependcies
 alias Rd="sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
 alias which="pacman -Qo "
 alias downgrade-fix="sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
+alias mirrors="sudo pacman-mirrors --fasttrack"
 
 ## Ubuntu
 # alias S="apt search "
@@ -122,7 +121,7 @@ alias nordc="nordvpn c p2p && nordvpn s killswitch on && nordvpn s autoconnect o
 alias nordd="nordvpn s killswitch off && nordvpn s autoconnect off && nordvpn d"
 
 # networking. ip address, dig, dns
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias ipdig="dig +short myip.opendns.com @resolver1.opendns.com"
 alias dig="dig +nocmd any +multiline +noall +answer"
 
 # file size
@@ -130,7 +129,7 @@ alias fs="stat -f \"%z bytes\""
 
 # stop ping after 5 requests
 alias ping='ping -c 5'
-alias rm-broken-symlinks="find . -xtype l -delete"
+alias rm-broken-symlinks="old_find . -xtype l -delete"
 
 # urxvt clean screen
 alias cls="echo -ne '\033c'"

@@ -1,5 +1,5 @@
 {
-  "editor": "vim",
+  "editor": "nvim",
   "editorflags": "",
   "makepkgbin": "makepkg",
   "makepkgconf": "",

@@ -2,6 +2,7 @@
 # ~/.bashrc
 #
 
+# # To use fish as interactive shell
 if [[ $- == *i* ]] && which fish &> /dev/null && [ "$1" != "interactive" ]; then
     # drop into fish
     exec fish;

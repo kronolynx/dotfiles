@@ -550,6 +550,14 @@ keys.globalkeys =
 keys.clientkeys =
   gears.table.join(
   awful.key(
+    {modkey},
+    "f",
+    function(c)
+      helpers.toggle_full(c)
+    end,
+    {description = "(un)maximize", group = "client"}
+  ),
+  awful.key(
     {modkey, shiftkey},
     "f",
     function(c)
@@ -557,14 +565,6 @@ keys.clientkeys =
       c:raise()
     end,
     {description = "toggle clients fullscreen", group = "client"}
-  ),
-  awful.key(
-    {modkey},
-    "f",
-    function(c)
-      helpers.toggle_full(c)
-    end,
-    {description = "(un)maximize", group = "client"}
   ),
   awful.key(
     {modkey, shiftkey},

@@ -15,9 +15,9 @@ install_app() {
   else
     # checking which helper is installed
     if pacman -Qi yay &> /dev/null; then
-      yay -S --noconfirm  $package &&
+      yay -S --needed --noconfirm  $package &&
       $COMMON/helpers/pprint.sh "Installed with yay $package" ||
-      $COMMON/helpers/pprint.sh "Failed to install with yay $package" "red"
+      $COMMON/helpers/pprint.sh "Failed to install with yay $package" "red" && echo "$package" >> ~/errors-setup
       
       elif pacman -Qi trizen  &> /dev/null; then
       

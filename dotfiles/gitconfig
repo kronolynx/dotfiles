@@ -2,7 +2,7 @@
   gpgsign = true
 [core]
   editor = nvim
-  pager = delta
+  pager = less
   excludesfile = ~/.gitignore
 [status]
   submoduleSummary = true
@@ -59,10 +59,6 @@
   user = kronolynx
 [interactive]
   diffFilter = delta --color-only
-[delta]
-  decorations = true
-  line-numbers = true
-  syntax-theme = Dracula
 [alias]
   amend = commit --amend --no-edit
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
@@ -145,3 +141,5 @@
   wipa = !git add -A && git commit -m 'WIP (save all changes)' # commits tracked changes
   wips = commit -am "WIP (save staged changes)"
 #  cleanr = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\///' | xargs -n 1 git push --delete origin"
+[gpg]
+	program = gpg2

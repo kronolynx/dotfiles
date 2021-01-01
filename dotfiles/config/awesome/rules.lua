@@ -135,7 +135,7 @@ awful.rules.rules = {
     except_any = {
       type = {"dialog"}
     },
-    properties = {floating = true, width = screen_width * 0.45, height = screen_height * 0.55}
+    properties = {floating = true, width = screen_width * 0.70, height = screen_height * 0.80}
   },
   ---------------------------------------------
   -- Start application on specific workspace --
@@ -176,12 +176,15 @@ awful.rules.rules = {
     rule_any = {
       class = {
         "discord",
-        "TelegramDesktop",
+        -- "TelegramDesktop",
         "Signal",
         "Slack",
         "zoom",
         "weechat"
       }
+    },
+    except_any = {
+      type = {"dialog"}
     },
     properties = {screen = 1, tag = awful.screen.focused().tags[10]}
   },
