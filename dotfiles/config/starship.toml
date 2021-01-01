@@ -20,3 +20,6 @@ symbol = "🐍 "
 symbol = "⚔️  "
 [docker_context]
 format = "via [🐋 $context](blue bold)"
+
+[aws]
+disabled = true

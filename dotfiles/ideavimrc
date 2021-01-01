@@ -1,9 +1,9 @@
 "actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 " :actionlist
+source ~/.vimrc
 
 let mapleader=" "
 
-set showmode
 set history=1000
 
 " copy to clipboard
@@ -17,6 +17,9 @@ set incsearch
 
 " Highlight search results
 set hlsearch
+
+" line numbers
+set nu
 
 " If a pattern contains an uppercase letter, searching is case sensitive,
 " otherwise, it is not.
@@ -36,6 +39,13 @@ set textobj-entire      " Additional text objects: ae, ie
 set easymotion          " Requieres plugins IdeaVim-EasyMotion and AceJump
 set highlightedyank     " 
 " }}}
+" Ideavim commands {{
+set ideajoin            " 
+set showmode            " message on the status line to show current mode
+set showcmd             " show (partial) command in the status bar
+set wrapscan            " searches wrap around the end of file
+
+" }}
 
 " other {{{
 nnoremap <leader>w :action SaveAll<cr>
@@ -44,25 +54,24 @@ nmap <leader>cc :%s/\s\+$<CR><Paste>
 vmap <leader>cc <Esc>:%s/\s\+$<CR><Paste>
 
 
-nnoremap ff <Esc> 
-vnoremap ff <Esc> 
-inoremap ff <Esc> 
+vnoremap uu <Esc> 
+inoremap jj <Esc> 
 
 " }}}
 
 " Leader bindings
 " tab {{{
-nnoremap <leader>tl :action NextTab<cr>
-vnoremap <leader>tl <Esc>:action NextTab<cr>
-
 nnoremap <leader>tc :action CloseContent<cr>
 vnoremap <leader>tc <Esc>:action CloseContent<cr>
 
-nnoremap <leader>tp :action FileStructurePopup<cr>
-vnoremap <leader>tp <Esc>:action FileStructurePopup<cr>
+nnoremap <leader>tf :action FileStructurePopup<cr>
+vnoremap <leader>tf <Esc>:action FileStructurePopup<cr>
 
 nnoremap <leader>th :action PreviousTab<cr>
 vnoremap <leader>th <Esc>:action PreviousTab<cr>
+
+nnoremap <leader>tl :action NextTab<cr>
+vnoremap <leader>tl <Esc>:action NextTab<cr>
 
 nnoremap <leader>ts :action Switcher<cr>
 vnoremap <leader>ts <Esc>:action Switcher<cr>
@@ -74,8 +83,8 @@ nnoremap <leader>tt    :action VimFilePrevious<CR>
 vnoremap <leader>tt   <Esc>:action VimFilePrevious<CR>
 
 " duplicate tab opossite group (yank)
-nnoremap <leader>to :action MoveEditorToOppositeTabGroup<cr>
-vnoremap <leader>to <Esc>:action MoveEditorToOppositeTabGroup<cr>
+nnoremap <leader>tm :action MoveEditorToOppositeTabGroup<cr>
+vnoremap <leader>tm <Esc>:action MoveEditorToOppositeTabGroup<cr>
 
 noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
 vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
@@ -88,15 +97,15 @@ nnoremap <leader>tu :action ReopenClosedTab<cr>
 nnoremap <leader>tu <Esc>:action ReopenClosedTab<cr>
 
 " cycle tabs
-nnoremap <C-s-tab> NextTab
-nnoremap <C-tab> PreviousTab
+nnoremap <C-s-tab> :action NextTab<cr>
+nnoremap <C-tab> :action PreviousTab<cr>
 
 "nnoremap <leader-tab> :action GoToLastTab<cr>
 "nnoremap <leader-tab> <Esc>:action GoToLastTab<cr>
 
 " Focus last tab
-nnoremap <leader><tab>    :action VimFilePrevious<CR>
-vnoremap <leader><tab>    <Esc>:action VimFilePrevious<CR>
+nnoremap <leader><tab>    :action GoToLastTab<CR>
+vnoremap <leader><tab>    <Esc>:action GoToLastTab<CR>
 
 " }}}
 
@@ -160,9 +169,9 @@ vnoremap <leader>vie <Esc>:action Scala.ExpandImplicits<cr>
 nnoremap <leader>vp :action ParameterInfo<cr>
 vnoremap <leader>vp <Esc>:action ParameterInfo<cr>
 
-" Types
-nnoremap <leader>vt :action Scala.TypeInfo<CR>
-vnoremap <leader>vt <Esc>:action Scala.TypeInfo<CR>
+" Types vh = view hover
+nnoremap <leader>vh :action Scala.TypeInfo<CR> 
+vnoremap <leader>vh <Esc>:action Scala.TypeInfo<CR>
 
 nnoremap <leader>vr :action RecentLocations<cr>
 
@@ -238,10 +247,10 @@ nnoremap <leader>gf :action GotoFile<cr>
 
 nnoremap <leader>gc :action GotoClass<cr>
 
-nnoremap <leader>gc :action GotoAction<cr>
+nnoremap <leader>ga :action GotoAction<cr>
 
-nnoremap <leader>gt :action GotoTest<cr>
-vnoremap <leader>gt <Esc>:action GotoTest<cr>
+"nnoremap <leader>gt :action GotoTest<cr>
+"vnoremap <leader>gt <Esc>:action GotoTest<cr>
 
 nnoremap <leader>gu :action FindUsages<cr>
 vnoremap <leader>gu <Esc>:action FindUsages<cr>

@@ -20,7 +20,27 @@ base=(
   # printing system
   cups
   # sound server
-  pulseaudio
+  pavucontrol
+  pulseaudio-equalizer-ladspa
+  paprefs
+  libldac
+  pulseaudio-ctl
+  playerctl
+  pasystray
+  qjackctl
+  pulseaudio-support
+
+  gstreamer-meta
+  networkmanager-support
+  bluetooth-support
+  blueman
+  network-manager-applet
+  # OpenVPN Gui with advanced features and support for multiple providers
+  qomui
+  modem-manager-gui
+  input-devices-support
+  gesture-manager-x-git
+
   xf86-input-synaptics
   # code editor
   neovim
@@ -37,9 +57,18 @@ base=(
   zsh
 )
 
+display_manager=(
+  lightdm
+  lightdm-slick-greeter
+  lightdm-settings
+)
+
 media=(
   vlc
   smplayer
+  smplayer-skins
+  smplayer-themes
+
   # Cast Audio/Video to your Google Cast and Sonos Devices
   mkchromecast
   # Free radio streaming software with more than 20,000 radio stations
@@ -86,8 +115,6 @@ cli=(
   fkill
   # terminal info
   neofetch
-  # RandR-based backlight control application
-  xorg-xbacklight
   # fast and user-friendly alternative to find
   fd
   # cat replacement with color syntax
@@ -106,9 +133,9 @@ cli=(
   git-delta
   #battery
   acpi
-  xfce4-power-manager-settings
   # font viewer
   gucharmap
+
 )
 
 cli_media=(
@@ -132,44 +159,85 @@ misc=(
   docker-compose
   socat
   # Small commandline tool to configure devices (set elecom buttons)
-  xorg-xinput
   # chinese input
-  fcitx
-  fcitx-im
-  fcitx-googlepinyin
-  fcitx-configtool
-  # senity fork (used in xmobar calendar)
-  yad
+  #fcitx
+  #fcitx-im
+  #fcitx-googlepinyin
+  #fcitx-configtool
+  ibus
+  ibus-anthy
+  ibus-libpinyin
   # Library implementation of the Media Transfer Protocol
   libmtp
   # Virtual filesystem implementation for GIO (MTP backend; Android, media player)
+  libgsf
+  libopenraw
+  librsvg
   gvfs-mtp
+  gvfs
+  gvfs-afc
+  gvfs-nfs
+  gvfs-smb
+  gvfs-gphoto2
+  gvfs-google
+  gvfs-goa
+  gnome-keyring
+  # Manage firmware on devices supported by fwupd
+  gnome-firmware
+  # Determine file type, includes mimeopen and mimetype
+  perl-file-mimeinfo
+  xdg-utils
+  xdg-user-dirs
+  xdg-desktop-portal
+  xdg-desktop-portal-gtk
+  
+  ####---->> XORG
+  xorg-server
+  xorg-server-xephyr
+  xorg-xwininfo
+  xorg-xhost
+  xorg-xinit
+  xorg-xinput
+  xorg-xrandr
+  xorg-xprop
+  xorg-xkill
+  xorg-xbacklight
+  xorg-xsetroot
+  
+  ## xorg apps
+  wmctrl
+  numlockx
+  xbindkeys
+  xcape
+  xdotool
+  xautolock
 )
 
 coding=(
-  intellij-idea-community-edition-jre
-  # code documentation
-  zeal
-  # code color higlight
-  highlight
-  # Latex
-  # texlive-most
-  # Scala interactive build tool
-  sbt
-  # re-implementation of the Scala REPL from first principles.
-  ammonite
-  # The Glasgow Haskell Compiler
-  #ghc
-  # The Haskell Tool Stack
-  #stack
-  # git pager
-  git-delta
-  # connection manager
-  asbru-cm
-  java-8-openjdk
-  #cassandra
-  cqlsh
-
+  jdk8-openjdk
+  coursier
+  # intellij-idea-community-edition-jre
+  # # code documentation
+  # zeal
+  # # code color higlight
+  # highlight
+  # # Latex
+  # # texlive-most
+  # # Scala interactive build tool
+  # sbt
+  # # re-implementation of the Scala REPL from first principles.
+  # ammonite
+  # meld
+  # # The Glasgow Haskell Compiler
+  # #ghc
+  # # The Haskell Tool Stack
+  # #stack
+  # # git pager
+  # git-delta
+  # # connection manager
+  # asbru-cm
+  # #cassandra
+  # cqlsh
 )
 
 install_tmux() {
@@ -194,7 +262,7 @@ tilling_common_apps=(
   # autolock e.g xautolock -time 10 -locker xscreensaver
   xautolock
   # Simple command-line screenshot utility for X
-  scrot
+  #scrot
   # wallpaper
   #nitrogen
   # X compositor that may fix tearing issues
@@ -209,11 +277,10 @@ tilling_common_apps=(
   volumeicon
   # X11 Display Manager 
   lxdm-gtk3
-
 )
 
 awesome=(
-  awesome
+  awesome-git
 )
 
 xmonad=(
@@ -223,6 +290,8 @@ xmonad=(
   trayer
   # Lightweight GTK+ clipboard manager
   dzen2
+  # senity fork (used in xmobar calendar)
+  yad
 )
 
 openbox=(
@@ -251,9 +320,19 @@ i3=(
 themes=(
   adapta-gtk-theme
   papirus-icon-theme
+  noto-fonts               
+  noto-fonts-emoji         
+  ttf-liberation
+  ttf-opensans
+  noto-fonts-cjk
+  noto-fonts-extra
+  asian-fonts
   nerd-fonts-noto-sans-mono
   ttf-iosevka
   nerd-fonts-complete
+  gtk-engine-murrine
+  qt5ct
+  kvantum-qt5
 )
 
 
@@ -266,6 +345,7 @@ $SCRIPTPATH/helpers/install-app.sh ${!window_manager}
 
 $COMMON/helpers/pprint.sh "Setting Desktop"
 $SCRIPTPATH/helpers/install-app.sh ${base[*]}
+$SCRIPTPATH/helpers/install-app.sh ${display_manager[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli_media[*]}
 $SCRIPTPATH/helpers/install-app.sh ${media[*]}
@@ -274,5 +354,6 @@ $SCRIPTPATH/helpers/install-app.sh ${coding[*]}
 $SCRIPTPATH/helpers/install-app.sh ${tilling_common_apps[*]}
 $SCRIPTPATH/helpers/install-app.sh ${themes[*]}
 
-install_tmux
-$SCRIPTPATH/apps/thunar.sh
+# install_tmux
+# $SCRIPTPATH/apps/thunar.sh
+$SCRIPTPATH/../common/apps/scala-env.sh

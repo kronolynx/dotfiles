@@ -340,5 +340,13 @@
             "before": [ "<leader>", "e", "e" ],
             "commands": [ "editor.debug.action.selectionToRepl" ]
         },
-    ]
+    ],
+    "editor.defaultFormatter": "scalameta.metals",
+    "editor.gotoLocation.alternativeImplementationCommand": "editor.action.goToImplementation",
+    "editor.gotoLocation.alternativeReferenceCommand": "editor.action.goToReferences",
+    "editor.tabCompletion": "on",
+    "workbench.enableExperiments": false,
+    "workbench.tips.enabled": false,
+    "workbench.editor.showTabs": false,
+    "breadcrumbs.enabled": true
 }

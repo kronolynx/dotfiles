@@ -11,6 +11,6 @@ case $hdmi in
         xbacklight = 60
         ;;
         *)
-        xrandr --output HDMI1 --off --output HDMI2 --off --output eDP1 --auto
-        xbacklight = 30
+        xrandr --output HDMI-0 --off --output DP-0 --mode 1920x1080 --pos 0x0 --rotate normal --output DP-1 --off --output DP-2 --off --output DP-3 --off --output DP-4 --off
+        xbacklight = 2
 esac

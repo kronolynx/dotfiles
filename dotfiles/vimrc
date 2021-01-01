@@ -21,7 +21,7 @@ endif
 set nocompatible              " be iMproved, required
 
 " autosave
-:au FocusLost * :wa
+:au FocusLost * silent! :wa
 
 " copy to clipboard
 set clipboard+=unnamedplus
@@ -70,7 +70,7 @@ set laststatus=2 " Always show the status line
 set mouse=a " Enable mouse for scrolling and resizing.
 set noerrorbells " Disable beep on errors.
 set nostartofline " Don’t reset cursor to start of line when moving around.
-set number relativenumber " sidebar numbersShow line numbers on the sidebar.
+set nu " line number
 set ruler "Always show current position
 set shortmess=atI " Don’t show the intro message when starting Vim
 set showcmd " Show the (partial) command as it’s being typed
@@ -122,6 +122,8 @@ if has("nvim")
   set inccommand=nosplit
 endif
 
+command! Vimrc :vs $MYVIMRC
+
 " Plugins -------------------------------------------------------------
 
 " install vim plug if not installed
@@ -146,35 +148,35 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Languages
-Plug 'sheerun/vim-polyglot' " language support
+" Plug 'sheerun/vim-polyglot' " language support
 
 " Utility Things
 "Plug 'SirVer/ultisnips'
-Plug 'janko/vim-test'
-Plug 'jiangmiao/auto-pairs'
-Plug 'kana/vim-textobj-user'
+" Plug 'janko/vim-test'
+" Plug 'jiangmiao/auto-pairs'
+" Plug 'kana/vim-textobj-user'
 Plug 'machakann/vim-highlightedyank'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-projectionist'
-Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-projectionist'
+" Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'yuttie/comfortable-motion.vim'
 " Fixers, completion and navigation
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy file finder :CtrlP :CtrlPBuffer :CtrlPMixed
 Plug 'easymotion/vim-easymotion' " <leader><leader>w|b|W|B|e|E
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " installs fzf
 Plug 'junegunn/fzf.vim' " fuzy finder :FZF :Files :GFiles :Buffers
-Plug 'liuchengxu/vim-clap'
-Plug 'liuchengxu/vista.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'liuchengxu/vim-clap'
+" Plug 'liuchengxu/vista.vim'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'neomake/neomake'
 " Plug 'w0rp/ale'
 " Status and UI
-Plug 'itchyny/calendar.vim'
+" Plug 'itchyny/calendar.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'itchyny/lightline.vim'
 Plug 'ryanoasis/vim-devicons' " should load after nerdTree and lightline
@@ -212,6 +214,12 @@ let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', '
 
 
 " custom keybindings {{{
+" repeat last macro
+nnoremap Q @@ 
+" delete something without clobbering my unnamed register
+nnoremap s "_d
+" Run the current line as if it were a command. Often more convenient than q: when experimenting.
+nnoremap <leader>ee :exe getline(line('.'))<cr>
 "
 " easy clipboard copy/paste {{{
 noremap <leader>y "*y
@@ -239,9 +247,8 @@ map Y y$
 " save
 map <C-s> <esc>:w!<cr>
 " escape
-:imap ff <Esc>
-:nmap ff <Esc>
-:vmap ff <Esc>
+:imap jj <Esc>
+:vmap uu <Esc>
 " Change selected text from NameLikeThis to name_like_this.
 "vnoremap <leader>sc :s/\<\@!\([A-Z]\)/\_\l\1/g<CR>gul
 " }}}

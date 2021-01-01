@@ -59,4 +59,4 @@ link_dotfiles() {
 
 link_dotfiles
 
-fc-cache -vf ~/.local/share/fonts
+fc-cache -v -f ~/.local/share/fonts

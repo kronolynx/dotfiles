@@ -1,6 +1,6 @@
 #!/bin/bash
 
-setxkbmap -model pc105 -layout dvorak,us
+setxkbmap -model pc105 -layout us
 # man xkeyboard-config for options
 # caps:backspace ->  Make Caps Lock an additional Backspace 
 # gpr:alt_space_toggle -> alt + space to switch to another layout
@@ -11,5 +11,8 @@ setxkbmap -option # remove previous options
 setxkbmap -option caps:backspace,grp:alt_space_toggle,terminate:ctrl_alt_bksp,lv3:ralt_switch_multikey,eurosign:4
 xmodmap -e "clear Lock"
 
-fcitx
 synclient TapButton1=1 TapButton2=3 TapButton3=2
+
+#if (! pgrep fcitx); then
+#  fcitx
+#fi

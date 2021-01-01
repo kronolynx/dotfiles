@@ -1,5 +1,9 @@
-VteTerminal, vte-terminal {
-	padding: 0px 16px 16px 16px;
+@import 'colors.css';
+
+#vim-main-window {
+  background-color: #282828;
 }
 
-/*  padding: top, right, bottom, left*/
+.termite {
+    padding: 2px;
+}

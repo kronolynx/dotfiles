@@ -3,11 +3,19 @@ export BROWSER=/usr/bin/firefox
 export EDITOR=/usr/bin/nvim
 export TERMINAL=/usr/bin/termite
 export SETTINGS=/usr/bin/nvim ~/.config/awesome/keys.lua
-export FILE_MANAGER=/usr/bin/thunar
-
+export FILE_MANAGER=/usr/bin/nemo
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+export GTK_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+
+export COURSIER_BIN_DIR=~/.local/bin
+
+if (! pgrep ibus-daemon); then
+  ibus-daemon -drx
+fi
 
 # Load profiles from /etc/profile.d
 if test -d /etc/profile.d/; then
