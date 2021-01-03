@@ -1,3 +1,15 @@
+--      ██╗  ██╗███████╗██╗   ██╗███████╗
+--      ██║ ██╔╝██╔════╝╚██╗ ██╔╝██╔════╝
+--      █████╔╝ █████╗   ╚████╔╝ ███████╗
+--      ██╔═██╗ ██╔══╝    ╚██╔╝  ╚════██║
+--      ██║  ██╗███████╗   ██║   ███████║
+--      ╚═╝  ╚═╝╚══════╝   ╚═╝   ╚══════╝
+
+
+-- ===================================================================
+-- Initialization
+-- ===================================================================
+
 local awful = require("awful")
 local gears = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
@@ -13,12 +25,22 @@ local altkey = "Mod1" -- Alt
 local ctrlkey = "Control"
 local shiftkey = "Shift"
 
+
+-- ===================================================================
+-- Desktop Key bindings
+-- ===================================================================
+
 -- {{{ Key bindings
 keys.globalkeys =
   gears.table.join(
   -- Move between tags
   awful.key({modkey}, "Tab", awful.tag.history.restore, {description = "go back", group = "tag"}),
-  -- Focus clients by direction
+
+  -- =========================================
+  -- CLIENT FOCUSING
+  -- =========================================
+
+  -- Focus client by direction (arrow keys)
   awful.key(
     {modkey},
     "Down",
@@ -63,7 +85,8 @@ keys.globalkeys =
     end,
     {description = "focus right", group = "client"}
   ),
-  -- By direction client focus
+
+  -- Focus client by direction (hjkl keys)
   awful.key(
     {modkey},
     "j",
@@ -108,7 +131,7 @@ keys.globalkeys =
     end,
     {description = "focus right", group = "client"}
   ),
-  -- Focus client by index (cycle through clients)
+
   -- Window switcher
   awful.key(
     {altkey},
@@ -119,31 +142,6 @@ keys.globalkeys =
     end,
     {description = "cycle through clients", group = "client"}
   ),
-  -- Layout manipulation
-  -- awful.key({ modkey, shiftkey }, "Left", function() awful.client.swap.global_bydirection("left") end,
-  --     { description = "swap with direction left", group = "client" }
-  -- ),
-  -- awful.key({ modkey, shiftkey }, "Right", function() awful.client.swap.global_bydirection("right") end,
-  --     { description = "swap with direction right", group = "client" }
-  -- ),
-  -- awful.key({ modkey, shiftkey }, "Up", function() awful.client.swap.global_bydirection("up") end,
-  --     { description = "swap with direction up", group = "client" }
-  -- ),
-  -- awful.key({ modkey, shiftkey }, "Down", function() awful.client.swap.global_bydirection("down") end,
-  --     { description = "swap with direction down", group = "client" }
-  -- ),
-  -- awful.key({ modkey, shiftkey }, "h", function() awful.client.swap.global_bydirection("left") end,
-  --     { description = "swap with direction left", group = "client" }
-  -- ),
-  -- awful.key({ modkey, shiftkey }, "l", function() awful.client.swap.global_bydirection("right") end,
-  --     { description = "swap with direction right", group = "client" }
-  -- ),
-  -- awful.key({ modkey, shiftkey }, "k", function() awful.client.swap.global_bydirection("up") end,
-  --     { description = "swap with direction up", group = "client" }
-  -- ),
-  -- awful.key({ modkey, shiftkey }, "j", function() awful.client.swap.global_bydirection("down") end,
-  --     { description = "swap with direction down", group = "client" }
-  -- ),
   -- Urgent or Undo:
   -- Jump to urgent client or (if there is no such client) go back
   -- to the last tag
@@ -244,50 +242,12 @@ keys.globalkeys =
     end,
     {description = "toggle title bars for clients in current tag", group = "client"}
   ),
-  -- Standard program
-  awful.key(
-    {modkey},
-    "Return",
-    function()
-      awful.spawn(user.terminal)
-    end,
-    {description = "open a terminal", group = "apps"}
-  ),
-  awful.key(
-    {modkey},
-    "F3",
-    function()
-      awful.spawn(user.browser)
-    end,
-    {description = "open " .. user.browser, group = "apps"}
-  ),
-  awful.key(
-    {modkey, shiftkey},
-    "Return",
-    function()
-      awful.spawn(user.file1)
-    end,
-    {description = "open main file manager", group = "apps"}
-  ),
-  awful.key(
-    {modkey, ctrlkey, shiftkey},
-    "Return",
-    function()
-      awful.spawn(user.file2)
-    end,
-    {description = "open secondary file manager", group = "apps"}
-  ),
-  awful.key(
-    {modkey, ctrlkey},
-    "Return",
-    function()
-      awful.spawn(user.editor)
-    end,
-    {description = "open editor", group = "apps"}
-  ),
   -- Awesome actions
-  awful.key({modkey, ctrlkey}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
   awful.key({modkey, shiftkey}, "s", hotkeys_popup.show_help, {description = "show help", group = "awesome"}),
+
+   -- =========================================
+   -- NUMBER OF MASTER / COLUMN CLIENTS
+   -- =========================================
   awful.key(
     {modkey},
     ".",
@@ -344,38 +304,45 @@ keys.globalkeys =
     end,
     {description = "select next", group = "layout"}
   ),
-  awful.key(
-    {modkey, shiftkey},
-    "space",
+
+  -- =========================================
+  -- GAP CONTROL
+  -- =========================================
+
+  -- Gap control
+  awful.key({modkey, "Shift"}, "minus",
     function()
-      awful.layout.inc(-1)
+        awful.tag.incgap(5, nil)
+    end,
+    {description = "increment gaps size for the current tag", group = "gaps"}
+  ),
+  awful.key({modkey}, "minus",
+    function()
+        awful.tag.incgap(-5, nil)
+    end,
+    {description = "decrement gap size for the current tag", group = "gaps"}
+  ),
+
+  -- =========================================
+  -- LAYOUT SELECTION
+  -- =========================================
+
+  -- select next layout
+  awful.key({modkey}, "space",
+    function()
+        awful.layout.inc(1)
+    end,
+    {description = "select next", group = "layout"}
+  ),
+  -- select previous layout
+  awful.key({modkey, "Shift"}, "space",
+    function()
+        awful.layout.inc(-1)
     end,
     {description = "select previous", group = "layout"}
   ),
-  awful.key(
-    {modkey},
-    "r",
-    function()
-      awful.screen.focused().mypromptbox:run()
-    end,
-    {description = "run prompt", group = "launcher"}
-  ),
-  awful.key(
-    {modkey},
-    "Escape",
-    function()
-      exit_screen_show()
-    end,
-    {description = "logout menu", group = "awesome"}
-  ),
-  awful.key(
-    {modkey},
-    "g",
-    function()
-      awful.spawn.with_shell(user.window_selector)
-    end,
-    {description = "logout menu", group = "awesome"}
-  ),
+
+
   awful.key(
     {modkey},
     "x",
@@ -409,6 +376,92 @@ keys.globalkeys =
     end,
     {description = "kill all visible clients for the current tag", group = "client"}
   ),
+
+  awful.key(
+    {modkey},
+    "r",
+    function()
+      awful.screen.focused().mypromptbox:run()
+    end,
+    {description = "run prompt", group = "launcher"}
+  ),
+
+  -- rofi window selector
+  awful.key(
+    {modkey},
+    "g",
+    function()
+      awful.spawn.with_shell(user.window_selector)
+    end,
+    {description = "window selector", group = "awesome"}
+  ),
+
+  -- =========================================
+  -- RELOAD / QUIT AWESOME
+  -- =========================================
+  awful.key({modkey, ctrlkey}, "r", awesome.restart, {description = "reload awesome", group = "awesome"}),
+  
+  awful.key(
+    {modkey},
+    "Escape",
+    function()
+      exit_screen_show()
+    end,
+    {description = "select window", group = "awesome"}
+  ),
+
+  awful.key({}, "XF86PowerOff",
+    function()
+      exit_screen_show()
+    end,
+    {description = "toggle exit screen", group = "hotkeys"}
+  ),
+
+  -- =========================================
+  -- SPAWN APPLICATION KEY BINDINGS
+  -- =========================================
+
+  -- Standard program
+  awful.key(
+    {modkey},
+    "Return",
+    function()
+      awful.spawn(user.terminal)
+    end,
+    {description = "open a terminal", group = "apps"}
+  ),
+  awful.key(
+    {modkey},
+    "F3",
+    function()
+      awful.spawn(user.browser)
+    end,
+    {description = "open " .. user.browser, group = "apps"}
+  ),
+  awful.key(
+    {modkey, shiftkey},
+    "Return",
+    function()
+      awful.spawn(user.file1)
+    end,
+    {description = "open main file manager", group = "apps"}
+  ),
+  awful.key(
+    {modkey, ctrlkey, shiftkey},
+    "Return",
+    function()
+      awful.spawn(user.file2)
+    end,
+    {description = "open secondary file manager", group = "apps"}
+  ),
+  awful.key(
+    {modkey, ctrlkey},
+    "Return",
+    function()
+      awful.spawn(user.editor)
+    end,
+    {description = "open editor", group = "apps"}
+  ),
   -- Launcher
   awful.key(
     {altkey},
@@ -418,6 +471,11 @@ keys.globalkeys =
     end,
     {description = "run launcher", group = "launcher"}
   ),
+
+  -- =========================================
+  -- FUNCTION KEYS
+  -- =========================================
+
   -- Volume Control
   awful.key(
     {},
@@ -612,23 +670,55 @@ keys.clientkeys =
     end,
     {description = "toggle keep on top", group = "client"}
   ),
-  -- Slave client resize
-  awful.key(
-    {modkey, shiftkey},
-    ".",
+
+  -- =========================================
+  -- CLIENT RESIZING
+  -- =========================================
+
+  awful.key({modkey, "Control"}, "Down",
     function(c)
-      awful.client.incwfact(0.05, c)
-    end,
-    {description = "increase client size", group = "client"}
+        helpers.resize_client(client.focus, "down")
+    end
   ),
-  awful.key(
-    {modkey, shiftkey},
-    ",",
+  awful.key({modkey, "Control"}, "Up",
     function(c)
-      awful.client.incwfact(-0.05, c)
-    end,
-    {description = "decrease client size", group = "client"}
+        helpers.resize_client(client.focus, "up")
+    end
   ),
+  awful.key({modkey, "Control"}, "Left",
+    function(c)
+        helpers.resize_client(client.focus, "left")
+    end
+  ),
+  awful.key({modkey, "Control"}, "Right",
+    function(c)
+        helpers.resize_client(client.focus, "right")
+    end
+  ),
+  awful.key({modkey, "Control"}, "j",
+    function(c)
+        helpers.resize_client(client.focus, "down")
+    end
+  ),
+  awful.key({ modkey, "Control" }, "k",
+    function(c)
+        helpers.resize_client(client.focus, "up")
+    end
+  ),
+  awful.key({modkey, "Control"}, "h",
+    function(c)
+        helpers.resize_client(client.focus, "left")
+    end
+  ),
+  awful.key({modkey, "Control"}, "l",
+    function(c)
+        helpers.resize_client(client.focus, "right")
+    end
+  ),
+
+  -- =========================================
+  -- CLIENT MINIMIZATION
+  -- =========================================
   awful.key(
     {modkey},
     "n",
@@ -811,20 +901,6 @@ keys.clientkeys =
     end,
     {description = "move relative right", group = "client"}
   )
-
-  ---- testing
-  -- awful.key({ altkey }, "h", function(c)
-
-  --   inspect(c, "bindA ")
-  --   appBindings()
-  -- end,
-  --     { description = "resize", group = "client" }),
-  -- awful.key({ altkey }, "g", function(c)
-
-  --   inspect(c, "bindB")
-  --   appBindingsB()
-  -- end,
-  --     { description = "resize", group = "client" })
 )
 
 local function addTagKey(tagKey, tagNumber, keys)
@@ -836,11 +912,6 @@ local function addTagKey(tagKey, tagNumber, keys)
       tagKey,
       function()
         helpers.tag_back_and_forth(tagNumber)
-        -- local screen = awful.screen.focused()
-        -- local tag    = screen.tags[tagNumber]
-        -- if tag then
-        --   tag:view_only()
-        -- end
       end,
       {description = "view tag", group = "tag"}
     ),
@@ -953,6 +1024,22 @@ keys.globalkeys = addTagKey("-", 12, keys.globalkeys)
 keys.globalkeys = addTagKey("[", 13, keys.globalkeys)
 keys.globalkeys = addTagKey("]", 14, keys.globalkeys)
 -- }}}
+
+
+-- ===================================================================
+-- Mouse bindings
+-- ===================================================================
+
+
+-- Mouse buttons on the desktop
+keys.desktopbuttons = gears.table.join(
+   -- left click on desktop to hide notification
+   awful.button({}, 1,
+      function ()
+         naughty.destroy_all_notifications()
+      end
+   )
+)
 
 keys.clientbuttons =
   gears.table.join(

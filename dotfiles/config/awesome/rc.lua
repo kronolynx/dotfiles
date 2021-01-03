@@ -52,6 +52,8 @@ end
 
 -- global variable definitions
 require("variables")
+-- notification appearance
+require("components.notifications")
 
 -- Themes define colours, icons, font and wallpapers. (must be loaded before widgets)
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), theme))
@@ -68,11 +70,11 @@ helpers = require("helpers")
 
 -- >> Elements - Desktop components
 -- Statusbar(s)
-require("elemental.bar." .. bar_theme)
+require("components.bar." .. bar_theme)
 -- Exit screen
-require("elemental.exit_screen." .. exit_screen_theme)
+require("components.exit_screen." .. exit_screen_theme)
 -- Window switcher
-require("elemental.window_switcher")
+require("components.window_switcher")
 
 -- -- notifications icon size
 -- -- naughty.config.defaults['icon_size'] = 100 -- for older awesome versions
@@ -90,10 +92,21 @@ require("rules")
 -- autorun
 awful.spawn.with_shell("~/.config/awesome/autorun.sh")
 
-gears.timer.start_new(
-  10,
-  function()
-    collectgarbage("step", 20000)
-    return true
-  end
-)
+-- ===================================================================
+-- Screen Change Functions (ie multi monitor)
+-- ===================================================================
+
+
+-- Reload config when screen geometry changes
+screen.connect_signal("property::geometry", awesome.restart)
+
+-- gears.timer.start_new(
+--   10,
+--   function()
+--     collectgarbage("step", 20000)
+--     return true
+--   end
+-- )
+
+collectgarbage("setpause", 110)
+collectgarbage("setstepmul", 1000)

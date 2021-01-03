@@ -36,9 +36,11 @@ theme.nord15 = "#B48EAD"
 -- screen edge the bars / notifications should be.
 theme.screen_margin = dpi(5)
 
-theme.font = "Roboto 10"
+-- Font
+theme.font = "FantasqueSansMono Nerd Font Mono 12"
 theme.transparent = "#00000000"
 
+-- Background
 theme.bg_dark = x.background
 theme.bg_normal = theme.nord0
 theme.bg_focus = theme.bg_normal
@@ -46,18 +48,39 @@ theme.bg_urgent = theme.bg_normal
 theme.bg_minimize = theme.bg_normal
 theme.bg_systray = theme.bg_normal
 
-theme.fg_normal = theme.nord3
+-- Foreground
+theme.fg_normal = theme.nord4
 theme.fg_focus = theme.nord4
 theme.fg_urgent = theme.nord11
-theme.fg_minimize = theme.fg_normal
+theme.fg_minimize = theme.nord3
 
 theme.prefix_fg = x.color8
+
+theme.hotkeys_bg = theme.bg_normal
+theme.hotkeys_fg = theme.nord14
+theme.hotkeys_border_width = dpi(1)
+theme.hotkeys_border_color = theme.nord14
+theme.hotkeys_modifiers_fg = theme.nord8
+theme.hotkeys_font = "Noto sans 11"
+theme.hotkeys_description_font = "Noto sans 11"
+theme.hotkeys_group_margin = 7
+
+
+-- Show Gaps if Only One Client is Visible
+theme.gap_single_client = true
 
 -- Exit screen
 theme.exit_screen_bg = x.color0 .. "CC"
 theme.exit_screen_fg = x.color7
 theme.exit_screen_font = "sans 20"
 theme.exit_screen_icon_size = dpi(180)
+
+-- Notification Sizing
+theme.notification_max_width = dpi(350)
+
+-- System Tray
+theme.bg_systray = theme.bg_normal
+theme.systray_icon_spacing = dpi(5)
 
 -- Titlebars
 -- (Titlebar items can be customized in titlebars.lua)
@@ -67,70 +90,52 @@ theme.titlebar_bg = theme.bg_focus
 theme.titlebar_fg_focus = theme.fg_focus
 theme.titlebar_fg_normal = theme.fg_normal
 
--- Notifications
--- ============================
--- Note: Some of these options are ignored by my custom
--- notification widget_template
--- ============================
--- Position: bottom_left, bottom_right, bottom_middle,
---         top_left, top_right, top_middle
-theme.notification_position = "top_right"
-theme.notification_border_width = dpi(0)
-theme.notification_border_radius = theme.border_radius
-theme.notification_border_color = x.color10
-theme.notification_bg = x.background
--- theme.notification_bg = x.color8
-theme.notification_fg = x.foreground
-theme.notification_crit_bg = x.background
-theme.notification_crit_fg = x.color1
-theme.notification_icon_size = dpi(60)
--- theme.notification_height = dpi(80)
--- theme.notification_width = dpi(300)
-theme.notification_margin = dpi(16)
-theme.notification_opacity = 1
-theme.notification_font = "sans 11"
-theme.notification_padding = theme.screen_margin * 2
-theme.notification_spacing = theme.screen_margin * 4
+-- -- Notifications
+-- -- ============================
+-- -- Note: Some of these options are ignored by my custom
+-- -- notification widget_template
+-- -- ============================
+-- -- Position: bottom_left, bottom_right, bottom_middle,
+-- --         top_left, top_right, top_middle
+-- theme.notification_position = "top_right"
+-- theme.notification_border_width = dpi(0)
+-- theme.notification_border_radius = theme.border_radius
+-- theme.notification_border_color = x.color10
+-- theme.notification_bg = x.background
+-- -- theme.notification_bg = x.color8
+-- theme.notification_fg = x.foreground
+-- theme.notification_crit_bg = x.background
+-- theme.notification_crit_fg = x.color1
+-- theme.notification_icon_size = dpi(60)
+-- -- theme.notification_height = dpi(80)
+-- -- theme.notification_width = dpi(300)
+-- theme.notification_margin = dpi(16)
+-- theme.notification_opacity = 1
+-- theme.notification_font = "sans 11"
+-- theme.notification_padding = theme.screen_margin * 2
+-- theme.notification_spacing = theme.screen_margin * 4
 
+-- Window Gap Distance
 theme.useless_gap = dpi(3)
-theme.border_width = dpi(3)
-theme.border_normal = theme.nord0
-theme.border_marked = theme.nord11
-theme.border_focus = theme.nord9
+
+theme.border_width = dpi(2)
+theme.border_normal = theme.bg_normal
+theme.border_marked = theme.nord13
+theme.border_focus = theme.fg_urgent
 -- Rounded corners
 theme.border_radius = dpi(6)
 
+-- Tasklist
 theme.tasklist_bg_focus = theme.nord0
-theme.tasklist_icon_size = dpi(5)
+theme.tasklist_icon_size = dpi(6)
 theme.tasklist_plain_task_name = true
--- There are other variable sets
--- overriding the default one when
--- defined, the sets are:
--- taglist_[bg|fg]_[focus|urgent|occupied|empty|volatile]
--- tasklist_[bg|fg]_[focus|urgent]
--- titlebar_[bg|fg]_[normal|focus]
--- tooltip_[font|opacity|fg_color|bg_color|border_width|border_color]
--- mouse_finder_[color|timeout|animate_timeout|radius|factor]
--- prompt_[fg|bg|fg_cursor|bg_cursor|font]
--- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
--- Example:
---theme.taglist_bg_focus = "#ff0000"
-theme.taglist_spacing = dpi(5)
+
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(taglist_square_size, theme.fg_normal)
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(taglist_square_size, theme.fg_normal)
 
--- Variables set for theming notifications:
--- notification_font
--- notification_[bg|fg]
--- notification_[width|height|margin]
--- notification_[border_color|border_width|shape|opacity]
-
--- Variables set for theming the menu:
--- menu_[bg|fg]_[normal|focus]
--- menu_[border_color|border_width]
 theme.menu_height = dpi(35)
 theme.menu_width = dpi(100)
 theme.background = theme.nord0
@@ -142,6 +147,8 @@ theme.awesome_icon = theme_assets.awesome_icon(theme.menu_height, theme.bg_focus
 -- from /usr/share/icons and /usr/share/icons/hicolor will be used.
 theme.icon_theme = nil
 
+-- Taglist
+theme.taglist_spacing = dpi(5)
 theme.taglist_text_font = "FantasqueSansMono Nerd Font Mono 20"
 
 theme.taglist_text_empty = {"", "", "", "", "", "", "", "", "", "", "", "","", ""}
@@ -157,6 +164,7 @@ theme.taglist_bg_empty = theme.bg_normal
 theme.taglist_fg_empty = theme.nord9
 theme.taglist_bg_urgent = theme.bg_normal
 theme.taglist_fg_urgent = theme.nord11
+
 theme.clocktext_fg = theme.nord9
 
 -- Titlebar buttons
