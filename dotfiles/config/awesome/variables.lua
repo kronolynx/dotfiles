@@ -16,16 +16,16 @@ user = {
   file1 = file_manager,
   music = terminal .. " -e ncmpcpp",
   tmux = terminal .. " -e tmux attach",
-  screen_capture_window = scripts .. "/screen_shot.sh window",
-  screen_capture_area = scripts .. "/screen_shot.sh area",
-  screen_capture_root = scripts .. "/screen_shot.sh root",
+  screen_capture = scripts .. "/screen_shot.sh",
   logmenu = scripts .. "/logmenu.sh",
   lockscreen = scripts .. "/i3lock.sh lock",
   power_menu = rofi .. "bin/powermenu.sh",
   volume_menu = rofi .. "bin/volume.sh",
   battery_menu = rofi .. "bin/menu_battery.sh",
   launcher = rofi .. "launchers/launcher.sh",
-  window_selector = rofi .. "launchers/window.sh"
+  window_selector = rofi .. "launchers/window.sh",
+  volume = scripts .. "volume.sh",
+  brightness = scripts .. "brightness.sh"
 }
 
 screen_width = awful.screen.focused().geometry.width

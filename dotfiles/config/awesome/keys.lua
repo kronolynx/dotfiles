@@ -481,7 +481,7 @@ keys.globalkeys =
     {},
     "XF86AudioMute",
     function()
-      awful.spawn.with_shell("pulsemixer --toggle-mute")
+      awful.spawn.with_shell(user.volume .. " toggle")
     end,
     {description = "mute/unmute volume", group = "controls"}
   ),
@@ -489,7 +489,7 @@ keys.globalkeys =
     {},
     "XF86AudioLowerVolume",
     function()
-      awful.spawn.with_shell("pulsemixer --change-volume -5")
+      awful.spawn.with_shell(user.volume .. " down")
     end,
     {description = "lower volume", group = "controls"}
   ),
@@ -497,7 +497,7 @@ keys.globalkeys =
     {},
     "XF86AudioRaiseVolume",
     function()
-      awful.spawn.with_shell("pulsemixer --change-volume +5")
+      awful.spawn.with_shell(user.volume .. " up")
     end,
     {description = "raise volume", group = "controls"}
   ),
@@ -539,7 +539,7 @@ keys.globalkeys =
     {},
     "XF86MonBrightnessUp",
     function()
-      awful.spawn.with_shell('xbacklight + 3 -time 100 -steps 1 && notify-send "brightness up $(xbacklight -get)"')
+      awful.spawn.with_shell(user.brightness .. " up")
     end,
     {description = "Increase brightness", group = "controls"}
   ),
@@ -547,7 +547,7 @@ keys.globalkeys =
     {},
     "XF86MonBrightnessDown",
     function()
-      awful.spawn.with_shell('xbacklight - 3 -time 100 -steps 1 && notify-send "brightness down $(xbacklight -get)"')
+      awful.spawn.with_shell(user.brightness .. " down")
     end,
     {description = "Decrease brightness", group = "controls"}
   ),
@@ -556,7 +556,7 @@ keys.globalkeys =
     {},
     "Print",
     function()
-      awful.spawn.with_shell(user.screen_capture_root .. " && notify-send 'Desktop captured'")
+      awful.spawn.with_shell(user.screen_capture .. " root")
     end,
     {description = "take a screenshot of entire screen", group = "screenshot"}
   ),
@@ -564,7 +564,7 @@ keys.globalkeys =
     {ctrlkey},
     "Print",
     function()
-      awful.spawn.with_shell(user.screen_capture_window .. " && notify-send 'Focused window captured'")
+      awful.spawn.with_shell(user.screen_capture .. " window")
     end,
     {description = "take a screenshot of focused window", group = "screenshot"}
   ),
@@ -572,9 +572,7 @@ keys.globalkeys =
     {shiftkey},
     "Print",
     function()
-      awful.spawn.with_shell(
-        "notify-send 'Select Area';sleep 0.2;" .. user.screen_capture_area .. " && notify-send 'Area captured'"
-      )
+      awful.spawn.with_shell(user.screen_capture .. " area")
     end,
     {description = "take a screenshot of selected area", group = "screenshot"}
   ),
