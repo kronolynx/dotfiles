@@ -21,7 +21,7 @@ Config {
     , persistent         = False
     , alignSep           = "}{"
     , sepChar            = "%"
-    , template = "%StdinReader% } %mpris2% { %mad% <action=`pavucontrol` button=3><action=`~/.scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
+    , template = "%StdinReader% } %mpris2% { %mad% <action=`pavucontrol` button=3><action=`~/.xmonad/scripts/XMMute.sh` button=1><action=`xdotool key super+Up` button=4><action=`xdotool key super+Down` button=5>%XVol%</action></action></action></action> %battery% %date% %trayerpad%"
     -- plugins
     --   Numbers can be automatically colored according to their value. xmobar
     --   decides color based on a three-tier/two-cutoff system, controlled by
@@ -77,10 +77,10 @@ Config {
         , Run Weather "LEMD" ["-t","<tempC>°C <skyCondition>","-L","16","-H","30","-n","#CEFFAC","-h","#FFB6B0","-l","#96CBFE"] 36000
         , Run Com "sh" ["-c", "mpc | head -n -2 | sed 's,.*/,,' | cut -c-40"] "mpd" 50
         , Run Date "<action=`~/.scripts/calendar.sh` button=1><fc=#FDFDFD> %a %b %d</fc></action><fc=#FDFDFD> %H:%M:%S</fc>" "date" 10
-        , Run Com "/bin/bash" ["-c", "~/.scripts/XMgetvolume.sh"]  "XVol" 10
+        , Run Com "/bin/bash" ["-c", "~/.xmonad/scripts/XMgetvolume.sh"]  "XVol" 10
         , Run Mpris2 "spotify" ["-t", "<artist> - <title>", "-x", ""] 10
-        , Run Com "/bin/bash" ["-c", "~/.scripts/trayerpad.sh"]  "trayerpad" 10
-        , Run Com "/bin/bash" ["-c", "~/.scripts/weather3.sh madrid"] "mad" 36000
+        , Run Com "/bin/bash" ["-c", "~/.xmonad/scripts/trayerpad.sh"]  "trayerpad" 10
+        , Run Com "/bin/bash" ["-c", "~/.xmonad/scripts/weather3.sh madrid"] "mad" 36000
         -- keyboard layout indicator
         -- , Run Kbd            
         --       [ ("us(dvorak)" , "<fc=#FDFDFD>  DV</fc>")

@@ -80,7 +80,10 @@ theme.notification_max_width = dpi(350)
 
 -- System Tray
 theme.bg_systray = theme.bg_normal
-theme.systray_icon_spacing = dpi(5)
+-- theme.systray_icon_spacing = dpi(2)
+
+-- Rounded corners
+theme.border_radius = dpi(6)
 
 -- Titlebars
 -- (Titlebar items can be customized in titlebars.lua)
@@ -90,30 +93,25 @@ theme.titlebar_bg = theme.bg_focus
 theme.titlebar_fg_focus = theme.fg_focus
 theme.titlebar_fg_normal = theme.fg_normal
 
--- -- Notifications
--- -- ============================
--- -- Note: Some of these options are ignored by my custom
--- -- notification widget_template
--- -- ============================
--- -- Position: bottom_left, bottom_right, bottom_middle,
--- --         top_left, top_right, top_middle
--- theme.notification_position = "top_right"
--- theme.notification_border_width = dpi(0)
--- theme.notification_border_radius = theme.border_radius
--- theme.notification_border_color = x.color10
--- theme.notification_bg = x.background
--- -- theme.notification_bg = x.color8
--- theme.notification_fg = x.foreground
--- theme.notification_crit_bg = x.background
--- theme.notification_crit_fg = x.color1
--- theme.notification_icon_size = dpi(60)
--- -- theme.notification_height = dpi(80)
--- -- theme.notification_width = dpi(300)
--- theme.notification_margin = dpi(16)
--- theme.notification_opacity = 1
--- theme.notification_font = "sans 11"
--- theme.notification_padding = theme.screen_margin * 2
--- theme.notification_spacing = theme.screen_margin * 4
+-- Notifications
+-- Position: bottom_left, bottom_right, bottom_middle,
+--         top_left, top_right, top_middle
+theme.notification_position = "top_right" -- BUG: some notifications appear at top_right regardless
+theme.notification_border_width = dpi(0)
+theme.notification_border_radius = theme.border_radius
+theme.notification_border_color = x.color10
+theme.notification_bg = x.background
+theme.notification_fg = x.color7
+theme.notification_crit_bg = urgent_color
+theme.notification_crit_fg = x.color0
+theme.notification_icon_size = dpi(60)
+-- theme.notification_height = dpi(80)
+-- theme.notification_width = dpi(300)
+theme.notification_margin = dpi(15)
+theme.notification_opacity = 1
+theme.notification_font = theme.font
+theme.notification_padding = theme.screen_margin * 2
+theme.notification_spacing = theme.screen_margin * 2
 
 -- Window Gap Distance
 theme.useless_gap = dpi(3)

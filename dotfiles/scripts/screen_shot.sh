@@ -12,14 +12,16 @@ TARGET="$SCREEN_DIR/$(timestamp).png"
 
 case "$1" in
   area)
-    import $TARGET
+   notify-send 'Select Area' # TODO fix message captured by screenshot
+   sleep 0.5
+   import $TARGET && notify-send 'Area captured'
   ;;
   window)
     CURRENT=`xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | awk '{print $NF}'`
-    import -window $CURRENT -screen $TARGET
+    import -window $CURRENT -screen $TARGET && notify-send 'Focused window captured'
   ;;
   root)
-    import -window "root" $TARGET
+    import -window "root" $TARGET && notify-send 'Desktop captured'
   ;;
   *)
     echo "Usage: \n screen_shot.sh area|window|root \n"

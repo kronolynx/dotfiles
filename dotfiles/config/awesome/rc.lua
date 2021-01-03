@@ -52,8 +52,6 @@ end
 
 -- global variable definitions
 require("variables")
--- notification appearance
-require("components.notifications")
 
 -- Themes define colours, icons, font and wallpapers. (must be loaded before widgets)
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), theme))
@@ -68,7 +66,9 @@ icons.init(icon_theme)
 -- -- imports
 helpers = require("helpers")
 
--- >> Elements - Desktop components
+-- >> - Desktop components
+-- notification appearance
+require("components.notifications")
 -- Statusbar(s)
 require("components.bar." .. bar_theme)
 -- Exit screen

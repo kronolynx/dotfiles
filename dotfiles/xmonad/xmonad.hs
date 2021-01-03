@@ -703,7 +703,7 @@ groupByLabel = L.groupBy (\a b -> trd a == trd b) . L.sortBy (\a b -> compare (t
 
 showHelp :: X ()
 showHelp = spawn $ unwords
-    [ "$HOME/.scripts/showHintForKeymap.sh"
+    [ "$HOME/.xmonad/scripts/showHintForKeymap.sh"
     , desc
     , "dzen_xmonad"
     , "22"
@@ -1051,17 +1051,17 @@ myMediaKeys =
       )
   -- Volume
     , ( "<XF86AudioRaiseVolume>"
-      , spawn "$HOME/.scripts/VolControl.sh up"
+      , spawn "$HOME/.scripts/volume.sh up"
       , Media
       , "Volume up"
       )
     , ( "<XF86AudioLowerVolume>"
-      , spawn "$HOME/.scripts/VolControl.sh down"
+      , spawn "$HOME/.scripts/volume.sh down"
       , Media
       , "Volume down"
       )
     , ( "<XF86AudioMute>"
-      , spawn "$HOME/.scripts/XMMute.sh"
+      , spawn "$HOME/.xmonad/scripts/XMMute.sh"
       , Media
       , "Mute"
       )

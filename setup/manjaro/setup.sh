@@ -26,7 +26,6 @@ base=(
   libldac
   pulseaudio-ctl
   playerctl
-  pasystray
   qjackctl
   pulseaudio-support
 
@@ -136,6 +135,7 @@ cli=(
   # font viewer
   gucharmap
 
+  speedtest-cli
 )
 
 cli_media=(
@@ -211,6 +211,9 @@ misc=(
   xcape
   xdotool
   xautolock
+  
+  xsettingsd #Provides settings to X11 applications via the XSETTINGS specification
+  stacer-bin
 )
 
 coding=(
@@ -318,6 +321,7 @@ i3=(
 )
 
 themes=(
+  beautyline
   adapta-gtk-theme
   papirus-icon-theme
   noto-fonts               

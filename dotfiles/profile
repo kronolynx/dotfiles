@@ -2,7 +2,6 @@
 export BROWSER=/usr/bin/firefox
 export EDITOR=/usr/bin/nvim
 export TERMINAL=/usr/bin/termite
-export SETTINGS=/usr/bin/nvim ~/.config/awesome/keys.lua
 export FILE_MANAGER=/usr/bin/nemo
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
@@ -35,12 +34,6 @@ unset TERMCAP
 
 # Man is much better than us at figuring this out
 unset MANPATH
-
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ]; then
-    PATH="$HOME/bin:$PATH"
-fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then

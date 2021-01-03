@@ -39,7 +39,9 @@ alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd
 alias tk="tmux kill-session -t "
 alias tkd="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
 alias tstamp='date "+%F-%H%M"'
-alias untar='tar -sxvf '
+alias untar='tar -zxvf '
+alias wget='wget -c '
+alias speed='speedtest-cli --simple'
 alias v=videodownload
 
 alias vim=nvim
@@ -60,7 +62,14 @@ alias fs="stat -f \"%z bytes\""
 
 # stop ping after 5 requests
 alias ping='ping -c 5'
-alias rm-broken-symlinks="old_find . -xtype l -delete"
+alias rm-broken-symlinks="find . -xtype l -delete"
+alias path='echo -e ${PATH//:/\\n}'
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 
 # dev
 
@@ -80,7 +89,13 @@ if (( $+commands[pacman] )); then
   alias which="pacman -Qo "
   alias downgrade-fix="sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
   alias mirrors="sudo pacman-mirrors --fasttrack"
-
+  alias aup="pamac upgrade --aur"
+  alias grubup="sudo update-grub"
+  alias orphaned="sudo pacman -Rns $(pacman -Qtdq)"
+  alias fixpacman="sudo rm /var/lib/pacman/db.lck"
+  # Set your countries like --country France --country Germany -- or more.
+  alias upd='sudo reflector --latest 5 --age 2 --fastest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist && cat /etc/pacman.d/mirrorlist && sudo pacman -Syu'
+  
 elif (( $+commands[apt-get] )); then
   # Ubuntu
   alias S="apt search "

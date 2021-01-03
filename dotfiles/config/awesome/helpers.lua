@@ -1,6 +1,7 @@
 local beautiful = require("beautiful")
 local gears = require("gears")
 local awful = require("awful")
+local wibox = require("wibox")
 
 local helpers = {}
 
@@ -198,6 +199,21 @@ function helpers.toggle_full(c)
     awful.layout.set(layouts.max)
   end
   c:raise()
+end
+
+
+function helpers.vertical_pad(height)
+    return wibox.widget{
+        forced_height = height,
+        layout = wibox.layout.fixed.vertical
+    }
+end
+
+function helpers.horizontal_pad(width)
+    return wibox.widget{
+        forced_width = width,
+        layout = wibox.layout.fixed.horizontal
+    }
 end
 
 return helpers

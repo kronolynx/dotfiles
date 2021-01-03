@@ -11,7 +11,7 @@ start feh --bg-scale ~/.wallpapers/no-mans-sky.jpg
 start /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 start xfce4-power-management
 start nm-applet
-start pasystray
+start volumeicon
 start xsettingsd # ??? should i remove it ?
 start picom -C -b
 #    xautolock -time 7 -corners -000 -locker lock &
