@@ -1,3 +1,14 @@
+--      ██████╗ ██╗   ██╗██╗     ███████╗███████╗
+--      ██╔══██╗██║   ██║██║     ██╔════╝██╔════╝
+--      ██████╔╝██║   ██║██║     █████╗  ███████╗
+--      ██╔══██╗██║   ██║██║     ██╔══╝  ╚════██║
+--      ██║  ██║╚██████╔╝███████╗███████╗███████║
+--      ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚══════╝╚══════╝
+
+-- ===================================================================
+-- Initialization
+-- ===================================================================
+
 local awful = require("awful")
 local beautiful = require("beautiful")
 local gears = require("gears")
@@ -6,8 +17,11 @@ local gears = require("gears")
 local screen_width = awful.screen.focused().geometry.width
 local screen_height = awful.screen.focused().geometry.height
 
+-- ===================================================================
 -- Rules
 -- ===================================================================
+
+
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
   -- All clients will match this rule.
@@ -170,6 +184,18 @@ awful.rules.rules = {
     callback = function(c)
       decorations.show(c)
     end
+  },
+
+  -- File chooser dialog
+  {
+      rule_any = {role = {"GtkFileChooserDialog"}},
+      properties = {floating = true, width = screen_width * 0.55, height = screen_height * 0.65}
+  },
+
+  -- Pavucontrol & Bluetooth Devices
+  {
+      rule_any = {class = {"Pavucontrol"}, name = {"Bluetooth Devices"}},
+      properties = {floating = true, width = screen_width * 0.55, height = screen_height * 0.45}
   },
   -- Chatting
   {
