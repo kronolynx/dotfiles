@@ -219,28 +219,23 @@ misc=(
 coding=(
   jdk8-openjdk
   coursier
-  # intellij-idea-community-edition-jre
-  # # code documentation
-  # zeal
+  docker
+  docker-compose
   # # code color higlight
-  # highlight
+  highlight
   # # Latex
   # # texlive-most
-  # # Scala interactive build tool
-  # sbt
-  # # re-implementation of the Scala REPL from first principles.
-  # ammonite
-  # meld
+  meld
   # # The Glasgow Haskell Compiler
   # #ghc
   # # The Haskell Tool Stack
   # #stack
   # # git pager
   # git-delta
-  # # connection manager
-  # asbru-cm
-  # #cassandra
-  # cqlsh
+  
+  asbru-cm # connection manager
+  #cassandra
+  cqlsh
 )
 
 install_tmux() {
