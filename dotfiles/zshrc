@@ -115,6 +115,9 @@ ZSH_HIGHLIGHT_STYLES[default]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=cyan'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
+FZF_DEFAULT_OPTS='--layout=reverse'
+#export FORGIT_FZF_DEFAULT_OPTS="--reverse"
+FORGIT_FZF_DEFAULT_OPTS="$FORGIT_FZF_DEFAULT_OPTS --reverse"
 
 bindkey -v
 
