@@ -84,7 +84,7 @@ awful.screen.connect_for_each_screen(
     s.mywibox = awful.wibar({position = "top", screen = s, bg = beautiful.bg_normal})
 
     s.systray = wibox.widget.systray()
-    -- s.systray:set_base_size(21)
+    s.systray:set_base_size(21)
     s.systray.visible = false
 
     -- s.focused_window = ""

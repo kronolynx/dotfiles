@@ -104,20 +104,21 @@ awful.rules.rules = {
     },
     properties = {placement = centered_client_placement}
   },
-  -- Titlebars ON (explicitly)
-  {
-    rule_any = {
-      type = {
-        "dialog"
-      },
-      role = {
-        "conversation"
-      }
-    },
-    callback = function(c)
-      decorations.show(c)
-    end
-  },
+  -- -- Titlebars ON (explicitly)
+  -- {
+  --   rule_any = {
+  --     type = {
+  --       "dialog"
+  --     },
+  --     role = {
+  --       "conversation"
+  --     }
+  --   },
+  --   callback = function(c)
+  --     -- TODO fix me, decoratins doesnt exist
+  --     decorations.show(c)
+  --   end
+  -- },
   -- Fixed terminal geometry for floating terminals
   {
     rule_any = {

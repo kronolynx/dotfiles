@@ -551,12 +551,21 @@ keys.globalkeys =
     end,
     {description = "Decrease brightness", group = "controls"}
   ),
+  awful.key(
+    {},
+    "XF86TouchpadToggle",
+    function()
+      awful.spawn.with_shell(user.touchpad)
+    end,
+    {description = "Touchpad toggle", group = "controls"}
+  ),
   -- Screenshot
   awful.key(
     {},
     "Print",
     function()
-      awful.spawn.with_shell(user.screen_capture .. " root")
+      -- awful.spawn.with_shell(user.screen_capture .. " root")
+      awful.spawn.with_shell("flameshot gui")
     end,
     {description = "take a screenshot of entire screen", group = "screenshot"}
   ),
@@ -572,7 +581,8 @@ keys.globalkeys =
     {shiftkey},
     "Print",
     function()
-      awful.spawn.with_shell(user.screen_capture .. " area")
+      awful.spawn.with_shell("flameshot gui")
+      -- awful.spawn.with_shell(user.screen_capture .. " area")
     end,
     {description = "take a screenshot of selected area", group = "screenshot"}
   ),

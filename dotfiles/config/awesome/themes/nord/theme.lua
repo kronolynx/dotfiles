@@ -116,7 +116,7 @@ theme.notification_spacing = theme.screen_margin * 2
 -- Window Gap Distance
 theme.useless_gap = dpi(3)
 
-theme.border_width = dpi(2)
+theme.border_width = dpi(4)
 theme.border_normal = theme.bg_normal
 theme.border_marked = theme.nord13
 theme.border_focus = theme.fg_urgent
@@ -125,6 +125,7 @@ theme.border_radius = dpi(6)
 
 -- Tasklist
 theme.tasklist_bg_focus = theme.nord0
+theme.tasklist_fg_focus = theme.nord10
 theme.tasklist_icon_size = dpi(6)
 theme.tasklist_plain_task_name = true
 

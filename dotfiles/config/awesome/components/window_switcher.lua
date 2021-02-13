@@ -35,7 +35,7 @@ awful.screen.connect_for_each_screen(
       style = {
         font = beautiful.tasklist_font,
         -- font = "sans 10 medium",
-        bg = x.color0
+        -- fg_focus = x.color10 -- font color for current item set on theme.tasklist_fg_focus
       },
       layout = {
         layout = wibox.layout.fixed.vertical
@@ -105,7 +105,7 @@ awful.screen.connect_for_each_screen(
             margins = window_switcher_margin,
             widget = wibox.container.margin
           },
-          bg = x.color0,
+          bg = x.background, -- window backgrownd
           shape = helpers.rrect(beautiful.border_radius),
           widget = wibox.container.background
         }
