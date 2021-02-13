@@ -17,7 +17,8 @@ alias co="code ."
 alias emc="emacsclient -c -a emacs"
 alias emx="emacsclient -t --alternate-editor='nvim'"
 alias fv='f -e vim'
-alias gs='git status'
+alias g="git"
+alias gis='git status -s'
 alias gtl='git log'
 alias h="htop"
 alias ip="ip -c"
