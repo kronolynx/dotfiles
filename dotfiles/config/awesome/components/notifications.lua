@@ -17,6 +17,8 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local helpers = require("helpers")
 
+local icons = require("icons")
+
 -- Note: This theme does not show image notification icons
 
 -- For antialiasing
@@ -70,6 +72,7 @@ naughty.connect_signal("request::display", function(n)
 
     local icon, title_visible
     local color = urgency_color[n.urgency]
+    -- TODO set urgency for list of apps
     -- Set icon according to app_name
     if app_config[n.app_name] then
         icon = app_config[n.app_name].icon
@@ -177,3 +180,36 @@ naughty.connect_signal("request::display", function(n)
         }
     }
 end)
+
+
+local jump_to_client = naughty.action { name = "Jump to client" }
+
+jump_to_client:connect_signal('invoked', function()
+    -- Search for LoL client and jump to it
+    local matcher = function (c)
+        return awful.rules.match(c, { instance = "slack" })
+    end
+    for c in awful.client.iterate(matcher) do
+        -- c.minimized = false
+        c:jump_to()
+    end
+end)
+
+local slack_notif
+table.insert(awful.rules.rules, {
+    rule = { instance = "slack" },
+    properties = {},
+    callback = function (c)
+        c.urgent_first_time = true
+        c:connect_signal("property::urgent", function()
+            if c.urgent and not c.urgent_first_time then
+                slack_notif = notifications.notify_dwim({ title = "Slack", message = "is desperate for your attention", icon = icons.image.games, timeout = 15, app_name = "Slack", actions = { jump_to_client } }, slack_notif)
+            else
+                if slack_notif then
+                    slack_notif:destroy()
+                end
+                c.urgent_first_time = false
+            end
+        end)
+    end
+})

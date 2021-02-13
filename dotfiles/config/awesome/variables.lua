@@ -25,7 +25,8 @@ user = {
   launcher = rofi .. "launchers/launcher.sh",
   window_selector = rofi .. "launchers/window.sh",
   volume = scripts .. "volume.sh",
-  brightness = scripts .. "brightness.sh"
+  brightness = scripts .. "brightness.sh",
+  touchpad = scripts .. "touchpad.sh",
 }
 
 screen_width = awful.screen.focused().geometry.width

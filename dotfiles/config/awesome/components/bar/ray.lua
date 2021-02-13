@@ -201,7 +201,7 @@ awful.screen.connect_for_each_screen(
 
     s.systray = wibox.widget.systray()
     s.systray.visible = false
-    s.systray:set_base_size(22)
+    s.systray:set_base_size(21)
     -- Add widgets to the wibox
     s.mywibox:setup {
       layout = wibox.layout.align.horizontal,
