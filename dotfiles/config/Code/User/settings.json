@@ -198,6 +198,10 @@
             "commands": [ "workbench.action.showAllSymbols" ]
         },
         {
+            "before": [ "<leader>", "m", "w" ],
+            "commands": [ "workbench.scm.focus" ]
+        },
+        {
             "before": [ "<leader>", "t", "l" ],
             "commands": [ "workbench.action.nextEditorInGroup" ]
         },
@@ -246,7 +250,7 @@
             "commands": [ "metals.toggle-implicit-conversions-and-classes" ]
         },
         {
-            "before": [ "<leader>", "v", "i", "p" ],
+            "before": [ "<leader>", "v", "i", "a" ],
             "commands": [ "metals.toggle-implicit-parameters" ]
         },
         {
@@ -348,5 +352,7 @@
     "workbench.enableExperiments": false,
     "workbench.tips.enabled": false,
     "workbench.editor.showTabs": false,
-    "breadcrumbs.enabled": true
+    "breadcrumbs.enabled": true,
+    "vim.foldfix": true,
+    "metals.javaHome": "/usr/lib/jvm/java-8-openjdk"
 }
