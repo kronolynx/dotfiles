@@ -64,8 +64,12 @@
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
   amendAdd = commit --amend --no-edit -a
   branch-name = "!git rev-parse --abbrev-ref HEAD" # Get the current branch name (not so useful in itself, but used in other aliases)
-  a = add -A
+  # a = add -A
   c = commit
+  s = status -s
+  d = diff
+  dc = diff --cached
+  ds = diff --staged
   ck = checkout
   ckb = checkout -b
   ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f"
@@ -79,7 +83,7 @@
   cam = commit -am
   count = "!git ls-files | xargs wc -l"
   cw = "!f() { git commit -m \"WIP $1\"; }; f" # prepend WIP to commit message
-  d = difftool # example git d HEAD~2 # to diff the current index with 2 commits ago
+  dt = difftool # example git d HEAD~2 # to diff the current index with 2 commits ago
   delb = branch -D #delete specified branch e.g. git del test-branch
   diffc = diff --cached
   diffs = diff --staged
@@ -89,7 +93,8 @@
   ignore = "!f() { git update-index --assume-unchanged $1; }; f" # stop tracking file for changes
   initc = "!git init && git add -A && git commit -m 'Initial commit'" # Init git and add initial commit with all the files, add gitignore first to ignore files
   join = "!git st; git reset --soft HEAD~1 && git commit --amend -a; git pop" # join last head and previous commit
-  l = log --graph --all --decorate --oneline -36
+  l = log --oneline
+  lg = log --graph --all --decorate --oneline -36
   la = "!git config -l | grep alias | cut -c 7-" # list aliases
   ls = branch -v # list branches
   lsr = remote -v # list remotes
@@ -104,6 +109,7 @@
   pdiff = diff @~..@
   pf = push -f
   po = "!git push -u origin $(git branch-name)" # push to origin
+  pof = "!git push -u origin $(git branch-name) -f" # push to origin
   pod = "!git push origin --delete $(git branch-name)" # delete origin
   pom = "!git fetch && git pull origin master"
   pop = stash pop

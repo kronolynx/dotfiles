@@ -1,5 +1,5 @@
 # fix "xdg-open fork-bomb" export your preferred browser from here
-export BROWSER=/usr/bin/firefox
+export BROWSER=/usr/bin/google-chrome-stable
 export EDITOR=/usr/bin/nvim
 export TERMINAL=/usr/bin/termite
 export FILE_MANAGER=/usr/bin/nemo
@@ -10,7 +10,7 @@ export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
 
-export COURSIER_BIN_DIR=~/.local/bin
+export COURSIER_BIN_DIR=~/.local/bin/
 
 if (! pgrep ibus-daemon); then
   ibus-daemon -drx
@@ -39,3 +39,9 @@ unset MANPATH
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+if [ -d "$HOME/.local/share/coursier/bin" ]; then
+    PATH="$PATH:$HOME/.local/share/coursier/bin"
+fi
+
+export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
