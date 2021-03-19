@@ -1,6 +1,6 @@
 #!/bin/bash
 
-setxkbmap -model pc105 -layout us
+setxkbmap -model pc105 -layout us -variant altgr-intl
 # man xkeyboard-config for options
 # caps:backspace ->  Make Caps Lock an additional Backspace 
 # gpr:alt_space_toggle -> alt + space to switch to another layout
@@ -13,6 +13,3 @@ xmodmap -e "clear Lock"
 
 synclient TapButton1=1 TapButton2=3 TapButton3=2
 
-#if (! pgrep fcitx); then
-#  fcitx
-#fi
