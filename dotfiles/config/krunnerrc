@@ -1,0 +1,31 @@
+[PlasmaRunnerManager]
+migrated=true
+
+[Plugins]
+CharacterRunnerEnabled=true
+DictionaryEnabled=true
+Kill RunnerEnabled=true
+PowerDevilEnabled=true
+Spell CheckerEnabled=true
+appstreamEnabled=true
+baloosearchEnabled=false
+bookmarksEnabled=false
+browserhistoryEnabled=false
+browsertabsEnabled=false
+calculatorEnabled=true
+desktopsessionsEnabled=false
+katesessionsEnabled=true
+konsoleprofilesEnabled=false
+kwinEnabled=true
+locationsEnabled=false
+org.kde.activitiesEnabled=true
+org.kde.datetimeEnabled=true
+org.kde.windowedwidgetsEnabled=true
+placesEnabled=false
+plasma-desktopEnabled=true
+recentdocumentsEnabled=false
+servicesEnabled=true
+shellEnabled=true
+unitconverterEnabled=true
+webshortcutsEnabled=true
+windowsEnabled=true
