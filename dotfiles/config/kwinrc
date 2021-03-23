@@ -48,11 +48,15 @@ BorderActivateAll=9
 Meta=
 
 [Plugins]
+forceblurEnabled=true
 kwin-script-tilingEnabled=true
 minimizeallEnabled=false
 slideEnabled=false
 synchronizeskipswitcherEnabled=false
 videowallEnabled=false
+
+[Script-forceblur]
+patterns=urxvt\ntermite\nkitty\nterminator
 
 [Script-kwin-script-tiling]
 floaters=\\0
