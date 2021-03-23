@@ -1,15 +1,58 @@
 [global_config]
-  inactive_color_offset = 1.0
-  tab_position = hidden
-  title_font = 3270Medium Nerd Font Bold 14
-  title_inactive_bg_color = "#00002c"
-  title_inactive_fg_color = "#ff0000"
-  title_receive_bg_color = "#c90047"
-  title_transmit_bg_color = "#00002c"
-  title_transmit_fg_color = "#02ff00"
-  title_use_system_font = False
+  focus = mouse
   window_state = maximise
+  title_transmit_fg_color = "#02ff00"
+  title_transmit_bg_color = "#000000"
+  title_receive_bg_color = "#c90047"
+  title_inactive_fg_color = "#ff0000"
+  title_inactive_bg_color = "#000000"
+  inactive_color_offset = 1.0
+  suppress_multiple_term_dialog = True
+  title_use_system_font = False
+  title_font = 3270Medium Nerd Font Bold 14
 [keybindings]
+  new_tab = <Primary><Shift>t
+  go_up = <Alt>k
+  go_down = <Alt>j
+  go_left = <Alt>h
+  go_right = <Alt>l
+  split_horiz = <Alt><Shift>s
+  split_vert = <Alt><Shift>v
+  close_term = <Shift><Alt>w
+  close_window = <Primary><Shift>q
+  move_tab_right = <Primary><Shift>l
+  move_tab_left = <Primary><Shift>h
+  toggle_zoom = <Shift><Alt>z
+  next_tab = <Shift><Alt>l
+  prev_tab = <Shift><Alt>h
+  switch_to_tab_1 = <Alt>1
+  switch_to_tab_2 = <Alt>2
+  switch_to_tab_3 = <Alt>3
+  switch_to_tab_4 = <Alt>4
+  switch_to_tab_5 = <Alt>5
+  switch_to_tab_6 = <Alt>6
+  switch_to_tab_7 = <Alt>7
+  switch_to_tab_8 = <Alt>8
+  switch_to_tab_9 = <Alt>9
+  switch_to_tab_10 = <Alt>0
+  edit_tab_title = <Shift><Alt>x
+  layout_launcher = <Alt>space
+[profiles]
+  [[default]]
+    visible_bell = True
+    icon_bell = False
+    background_darkness = 0.82
+    background_type = transparent
+    cursor_color = "#dddddd"
+    font = FantasqueSansMono Nerd Font 12.5
+    foreground_color = "#dddddd"
+    show_titlebar = False
+    scrollbar_position = hidden
+    scroll_background = False
+    scrollback_lines = 100000
+    palette = "#000000:#cc0403:#19cb00:#cecb00:#0d73cc:#cb1ed1:#0dcdcd:#dddddd:#555753:#f2201f:#23fd00:#fffd00:#1a8fff:#fd28ff:#14ffff:#ffffff"
+    use_system_font = False
+    bold_is_bright = True
 [layouts]
   [[default]]
     [[[child1]]]
@@ -20,21 +63,3 @@
       parent = ""
       type = Window
 [plugins]
-[profiles]
-  [[default]]
-    background_color = "#00002c"
-    background_darkness = 0.85
-    background_type = transparent
-    cursor_color = "#e9422b"
-    font = SauceCodePro Nerd Font Semi-Bold 14
-    foreground_color = "#57d3e2"
-    icon_bell = False
-    palette = "#000000:#cc0000:#4e9a06:#c4a000:#3465a4:#75507b:#06989a:#d3d7cf:#555753:#ef2929:#8ae234:#fce94f:#729fcf:#ad7fa8:#34e2e2:#eeeeec"
-    scroll_background = False
-    scrollback_infinite = True
-    scrollbar_position = hidden
-    show_titlebar = False
-    use_system_font = False
-    visible_bell = True
-  [[Whatever]]
-    background_type = transparent
