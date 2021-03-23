@@ -55,9 +55,9 @@ _k_friendly_name=Session Management
 [kwin]
 Activate Window Demanding Attention=Meta+U,Ctrl+Alt+A,Activate Window Demanding Attention
 Decrease Opacity=,none,Decrease Opacity of Active Window by 5 %
-Expose=Ctrl+F9,Ctrl+F9,Toggle Present Windows (Current desktop)
+Expose=Meta+W\tCtrl+F9,Ctrl+F9,Toggle Present Windows (Current desktop)
 ExposeAll=Ctrl+F10\tMeta+Shift+W\tLaunch (C),Ctrl+F10\tLaunch (C),Toggle Present Windows (All desktops)
-ExposeClass=Ctrl+F7\tMeta+W,Ctrl+F7,Toggle Present Windows (Window class)
+ExposeClass=Ctrl+F7\tMeta+Ctrl+W,Ctrl+F7,Toggle Present Windows (Window class)
 Increase Opacity=,none,Increase Opacity of Active Window by 5 %
 Invert Screen Colors=,none,Invert Screen Colors
 Kill Window=Ctrl+Alt+Esc,Ctrl+Alt+Esc,Kill Window
@@ -69,7 +69,7 @@ MoveZoomRight=,none,Move Zoomed Area to Right
 MoveZoomUp=,none,Move Zoomed Area Upwards
 Setup Window Shortcut=,none,Setup Window Shortcut
 Show Desktop=,Meta+D,Show Desktop
-ShowDesktopGrid=Ctrl+F8,Ctrl+F8,Show Desktop Grid
+ShowDesktopGrid=Meta+Alt+W\tCtrl+F8,Ctrl+F8,Show Desktop Grid
 Suspend Compositing=Alt+Shift+F12,Alt+Shift+F12,Suspend Compositing
 Switch One Desktop Down=,Meta+Ctrl+Down,Switch One Desktop Down
 Switch One Desktop Up=,Meta+Ctrl+Up,Switch One Desktop Up
@@ -137,7 +137,7 @@ TILING: Swap with previous tile=,none,TILING: Swap with previous tile
 TILING: Tile now=,none,TILING: Tile now
 TILING: Toggle Border for all=,none,TILING: Toggle Border for all
 TILING: Toggle Floating=Meta+Ctrl+Space,none,TILING: Toggle Floating
-TILING: Toggle Tiling=Meta+Shift+F11,none,TILING: Toggle Tiling
+TILING: Toggle Tiling=Meta+Ctrl+Shift+Q\tMeta+Shift+F11,none,TILING: Toggle Tiling
 Toggle Night Color=,none,Toggle Night Color
 Toggle Window Raise/Lower=,none,Toggle Window Raise/Lower
 Walk Through Desktop List=,none,Walk Through Desktop List
@@ -244,7 +244,7 @@ _launch=Meta+Shift+Return,Meta+E,Dolphin
 NewTab=,,Open a New Tab
 NewWindow=,,Open a New Window
 _k_friendly_name=Konsole
-_launch=Meta+Return,,Konsole
+_launch=none,,Konsole
 
 [org.kde.plasma.emojier.desktop]
 _k_friendly_name=Emoji Selector
@@ -312,6 +312,10 @@ kcm_lookandfeel=,,Global Theme
 kcm_users=,,Users
 powerdevilprofilesconfig=,,Energy Saving
 screenlocker=,,Screen Locking
+
+[terminator.desktop]
+_k_friendly_name=Terminator
+_launch=Meta+Return,,Terminator
 
 [termite.desktop]
 _k_friendly_name=Termite

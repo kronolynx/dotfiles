@@ -26,6 +26,7 @@ wmclassmatch=1
 Description=Intellij
 desktop=3
 desktoprule=3
+types=1
 wmclass=jetbrains-idea-*
 wmclassmatch=3
 
