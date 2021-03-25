@@ -59,7 +59,7 @@ videowallEnabled=false
 patterns=urxvt\ntermite\nkitty\nterminator
 
 [Script-kwin-script-tiling]
-floaters=\\0
+floaters=authy desktop
 fullscreenGaps=true
 halfLayoutMasterRatio=60
 placement=2
