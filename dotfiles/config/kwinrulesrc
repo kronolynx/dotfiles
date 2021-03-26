@@ -12,6 +12,7 @@ wmclassmatch=1
 Description=telegram
 desktop=10
 desktoprule=3
+types=1
 wmclass=telegramdesktop
 wmclassmatch=1
 

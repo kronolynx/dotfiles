@@ -38,6 +38,7 @@ set exchange            " Commands: cx, cxx, X, cxc
 set textobj-entire      " Additional text objects: ae, ie
 set easymotion          " Requieres plugins IdeaVim-EasyMotion and AceJump
 set highlightedyank     " 
+set NERDTree            "
 " }}}
 " Ideavim commands {{
 set ideajoin            " 
@@ -171,7 +172,7 @@ vnoremap <leader>vp <Esc>:action ParameterInfo<cr>
 
 " Types vh = view hover
 nnoremap <leader>vh :action Scala.TypeInfo<CR> 
-vnoremap <leader>vh <Esc>:action Scala.TypeInfo<CR>
+vnoremap <leader>vh :action Scala.TypeInfo<CR>
 
 nnoremap <leader>vr :action RecentLocations<cr>
 
@@ -179,7 +180,7 @@ nnoremap <leader>vr :action RecentLocations<cr>
 nnoremap <leader>vq :action QuickImplementations<CR> 
 
 " Undo
-nnoremap <leader>vh :action LocalHistory.ShowHistory<CR>
+nnoremap <leader>mh :action LocalHistory.ShowHistory<CR>
 " }}}
 
 " refactor {{

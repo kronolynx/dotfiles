@@ -5,7 +5,7 @@ font = FantasqueSansMono Nerd Font 12.5
 #font = SauceCodePro Nerd Font Mono 11
 dynamic_title = true
 icon_name = terminal
-browser = firefox
+browser = google-chrome-stable
 scrollback_lines = 1000000
 
 
@@ -15,7 +15,7 @@ foreground      = #dddddd
 foreground_bold = #dddddd
 cursor          = #dddddd
 background      = #000000
-background      = rgba(0, 0, 0, 0.8)
+background      = rgba(0, 0, 0, 0.82)
 
 # black
 color0  = #000000

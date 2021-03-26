@@ -61,4 +61,5 @@ dependency-graph.svg
 
 .in
 .out
+.sdkmanrc
 
