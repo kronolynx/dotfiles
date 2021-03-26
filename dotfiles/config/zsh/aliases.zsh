@@ -44,8 +44,8 @@ alias untar='tar -zxvf '
 alias wget='wget -c '
 alias speed='speedtest-cli --simple'
 alias v=videodownload
+alias dip="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
-alias vim=nvim
 alias vin="vim -u NONE" # vim no config
 alias wget='wget -c '
 

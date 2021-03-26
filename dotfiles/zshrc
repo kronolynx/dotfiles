@@ -76,7 +76,11 @@ setopt pushdminus
 setopt histignorespace           # Ignore command lines with leading spaces
 setopt incappendhistory          
 
-
+# edit in vim command
+# Use ESC v to edit the current command line:
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
 
 # Completion.
 autoload -Uz compinit
@@ -146,3 +150,7 @@ fi
 #     tmux
 #   fi
 # fi
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/johann/.sdkman"
+[[ -s "/home/johann/.sdkman/bin/sdkman-init.sh" ]] && source "/home/johann/.sdkman/bin/sdkman-init.sh"
