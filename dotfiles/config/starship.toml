@@ -18,6 +18,7 @@ disabled = true
 symbol = "🐍 "
 [java]
 symbol = "⚔️  "
+style = "bold green"
 [docker_context]
 format = "via [🐋 $context](blue bold)"
 
