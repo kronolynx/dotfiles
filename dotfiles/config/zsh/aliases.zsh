@@ -16,6 +16,7 @@ alias cm="cmus"
 alias co="code ."
 alias emc="emacsclient -c -a emacs"
 alias emx="emacsclient -t --alternate-editor='nvim'"
+alias emr="emacsclient -e '(kill-emacs)'" # restart server
 alias fv='f -e vim'
 alias g="git"
 alias gis='git status -s'
@@ -46,6 +47,7 @@ alias speed='speedtest-cli --simple'
 alias v=videodownload
 alias dip="docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'"
 
+alias n=nvim
 alias vin="vim -u NONE" # vim no config
 alias wget='wget -c '
 
@@ -96,7 +98,7 @@ if (( $+commands[pacman] )); then
   alias fixpacman="sudo rm /var/lib/pacman/db.lck"
   # Set your countries like --country France --country Germany -- or more.
   alias upd='sudo reflector --latest 5 --age 2 --fastest 5 --protocol https --sort rate --save /etc/pacman.d/mirrorlist && cat /etc/pacman.d/mirrorlist && sudo pacman -Syu'
-  
+
 elif (( $+commands[apt-get] )); then
   # Ubuntu
   alias S="apt search "

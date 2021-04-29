@@ -3,6 +3,7 @@ update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-
 
 [Compositing]
 OpenGLIsUnsafe=false
+WindowsBlockCompositing=false
 
 [Desktops]
 Id_1=811fc59e-06dd-43f2-a1fb-e5fd17da471f
@@ -41,7 +42,6 @@ Number=16
 Rows=4
 
 [Effect-PresentWindows]
-BorderActivate=7
 BorderActivateAll=9
 
 [ModifierOnlyShortcuts]
@@ -77,8 +77,11 @@ LayoutName=org.kde.breeze.desktop
 
 [Windows]
 ActiveMouseScreen=true
-DelayFocusInterval=150
+AutoRaise=true
+DelayFocusInterval=100
 FocusPolicy=FocusFollowsMouse
+FocusStealingPreventionLevel=2
+NextFocusPrefersMouse=true
 
 [org.kde.kdecoration2]
 BorderSizeAuto=false
