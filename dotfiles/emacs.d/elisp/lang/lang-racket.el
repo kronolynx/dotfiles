@@ -1,6 +1,8 @@
 ;; racket-mode
 ;; https://github.com/greghendershott/racket-mode
 (use-package racket-mode
+  :defer t
+  :disabled
   :config
   ;; configure `company-mode' to work with racket
   (defun my-racket-mode-hook ()

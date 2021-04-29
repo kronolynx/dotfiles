@@ -29,8 +29,22 @@
   (general-def 'insert
     "C-o" #'evil-execute-in-normal-state
     "C-r" #'evil-paste-from-register
-    "C-w" #'evil-delete-backward-word)
+    "C-w" #'evil-delete-backward-word
+    ;;"jj" #'evil-normal-state
+    )
   (evil-mode 1)
+  ;;(define-key evil-insert-state-map "jj" 'evil-normal-state)
+  )
+
+(use-package evil-escape
+  :after evil
+  :config
+  (progn
+    (evil-escape-mode)
+    (setq-default evil-escape-key-sequence "jj")
+    (setq-default evil-escape-delay 0.2)
+    (push 'visual evil-escape-excluded-states)
+    )
   )
 
 (use-package evil-collection
@@ -39,38 +53,47 @@
   (evil-collection-init))
 
 (use-package evil-surround
+  :after evil
   :config
   (global-evil-surround-mode))
 
 (use-package evil-embrace
+  :after evil
   :commands (evil-embrace-enable-evil-surround-integration
              evil-embrace-disable-evil-surround-integration))
 
 ;; Press “%” to jump between matched tags
 (use-package evil-matchit
+  :after evil
   :config
   (global-evil-matchit-mode))
 
-(use-package evil-nerd-commenter)
+(use-package evil-nerd-commenter
+  :after evil
+  )
 
 (use-package evil-lion
+  :after evil
   :config
   (evil-lion-mode))
 
 ;; gx operator, like vim-exchange
 (use-package evil-exchange
+  :after evil
   :bind (:map evil-normal-state-map
               ("gx" . evil-exchange)
               ("gX" . evil-exchange-cancel)))
 
 ;; * operator in vusual mode
 (use-package evil-visualstar
+  :after evil
   :bind (:map evil-visual-state-map
               ("*" . evil-visualstar/begin-search-forward)
               ("#" . evil-visualstar/begin-search-backward)))
 
 ;; C-+ C-- to increase/decrease number like Vim's C-a C-x
 (use-package evil-numbers
+  :after evil
   :config
   (progn
     (define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
@@ -78,7 +101,7 @@
 
 (use-package evil-magit
   :requires magit
-  :after (magit)
+  :after (evil magit)
   :init
   (setq evil-magit-state 'normal)
   (setq evil-magit-use-y-for-yank nil)
@@ -89,12 +112,24 @@
               ;; this is the default
               display-line-numbers-current-absolute t)
 
-(use-package evil-indent-textobject)
+(use-package evil-indent-textobject
+  :after evil
+  )
 
 (use-package evil-org
+  :after evil
   :config
   (evil-org-set-key-theme
    '(textobjects insert navigation additional shift todo heading))
   (add-hook 'org-mode-hook (lambda () (evil-org-mode))))
+
+(use-package evil-terminal-cursor-changer
+  :after evil
+  :init
+  (unless (display-graphic-p)
+    (require 'evil-terminal-cursor-changer)
+    (evil-terminal-cursor-changer-activate) ; or (etcc-on)
+    )
+  )
 
 (provide 'base-evil)

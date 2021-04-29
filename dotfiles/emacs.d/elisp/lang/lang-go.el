@@ -1,4 +1,5 @@
 (use-package go-mode
+  :defer t
   :config
   ;; Use goimports instead of go-fmt
   (setq gofmt-command "goimports")
@@ -25,9 +26,12 @@
   ; Godef jump key binding
   ("M-." . godef-jump)))
 
-(use-package flymake-go)
+(use-package flymake-go
+  :after go-mode
+  )
 
 (use-package go-eldoc
+  :after go-mode
   :config
   (add-hook 'go-mode-hook 'go-eldoc-setup))
 

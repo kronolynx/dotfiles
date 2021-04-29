@@ -1,4 +1,5 @@
 (use-package ccls
+  :defer t
   :after projectile
   :custom
   (ccls-args nil)
@@ -9,6 +10,7 @@
   :config (add-to-list 'projectile-globally-ignored-directories ".ccls-cache"))
 
 (use-package google-c-style
+  :defer t
   :hook ((c-mode c++-mode) . google-set-c-style)
   (c-mode-common . google-make-newline-indent))
 

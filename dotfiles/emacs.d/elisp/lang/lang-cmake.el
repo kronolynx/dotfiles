@@ -1,4 +1,5 @@
 (use-package cmake-mode
+  :defer t
   :mode ("CMakeLists\\.txt\\'" "\\.cmake\\'"))
 
 (use-package cmake-font-lock
@@ -6,7 +7,7 @@
   :hook (cmake-mode . cmake-font-lock-activate))
 
 (use-package cmake-ide
-  :after projectile
+  :after (projectile cmake-mode)
   :hook (c++-mode . my/cmake-ide-find-project)
   :preface
   (defun my/cmake-ide-find-project ()

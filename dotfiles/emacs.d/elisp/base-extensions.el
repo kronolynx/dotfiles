@@ -4,19 +4,31 @@
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 ;; copy to clipboard for -nw
 (use-package xclip
+  :defer 1
   :init
   (xclip-mode 1))
 
+(use-package esup
+  :ensure t
+  ;; To use MELPA Stable use ":pin melpa-stable",
+  )
+
+
 ;;  use asynchronous processes wherever possible
 (use-package async
+  :defer 1
   :init (dired-async-mode 1))
 
 (use-package no-littering
+  :defer 1
   :demand t)
 
-(use-package origami)
+(use-package origami
+  :defer t
+  )
 
 (use-package ivy
+  :defer 1
   :delight
   :demand t
   :init
@@ -56,10 +68,12 @@
   :after ivy)
 
 (use-package smex
+  :defer 1
   :config
   (smex-initialize))
 
 (use-package recentf
+  :disabled
   :init
   (recentf-mode 1)
   :custom
@@ -91,17 +105,20 @@
 
 ;; Enable nice rendering of diagnostics like compile errors.
 (use-package flycheck
+  :defer 1
   :delight
   :config
   (global-flycheck-mode))
 
 (use-package ranger
+  :defer t
   :commands (ranger)
   :config
   (setq ranger-cleanup-eagerly t)
   )
 
 (use-package git-gutter
+  :defer 2
   :custom
   (git-gutter:modified-sign "~")
   (git-gutter:added-sign    "+")
@@ -113,13 +130,16 @@
 ;; misc
 ;;----------------------------------------------------------------------------
 (use-package aggressive-indent
+  :defer 1
   :diminish aggressive-indent-mode
   :hook (emacs-lisp-mode . aggressive-indent-mode)
   :config
   (setq aggressive-indent-sit-for-time 0.5))
 
-(use-package google-this)
+(use-package google-this
+  :defer t)
 (use-package google-translate
+  :defer t
   :bind
   ("M-o t" . google-translate-at-point)
   ("M-o T" . google-translate-at-point-reverse)
@@ -127,22 +147,29 @@
   (google-translate-default-source-language "en")
   (google-translate-default-target-language "de"))
 
-(use-package magit)
+(use-package magit
+  :defer 3
+  )
 
 
 ;; Highlighting TODO keywords
 (use-package hl-todo
+  :defer t
   :config (global-hl-todo-mode))
 
 ;; rss feed
-(use-package elfeed-goodies)
-(use-package elfeed-web)
+(use-package elfeed-goodies
+  :disabled)
+(use-package elfeed-web
+  :disabled)
 (use-package elfeed
+  :disabled
   :config
   (setq elfeed-db-directory (expand-file-name "feeds" user-emacs-directory)))
 
 ;; Automatically refreshes the buffer for changes outside of Emacs
 (use-package autorevert
+  :defer 3
   :delight auto-revert-mode
   :hook (after-init . global-auto-revert-mode)
   :config
@@ -161,6 +188,7 @@
 ;;   )
 
 (use-package company                    ; Graphical (auto-)completion
+  :defer 2
   :diminish company-mode
   :custom
   (company-begin-commands '(self-insert-command))
@@ -196,6 +224,7 @@
   :hook (company-mode . company-box-mode))
 
 (use-package projectile
+  :defer 0.1
   :diminish
   :custom
   (projectile-completion-system 'ivy)
@@ -212,6 +241,7 @@
   :config (counsel-projectile-mode 1))
 
 (use-package smartparens
+  :defer 1
   :diminish smartparens-mode
   :config
   (require 'smartparens-config)
@@ -223,11 +253,14 @@
   (sp-pair "$" "$" :actions '(wrap))
   )
 
-(use-package all-the-icons) ;; don't forget to M-x all-the-icons-install-fonts
+(use-package all-the-icons
+  :defer 0.1) ;; don't forget to M-x all-the-icons-install-fonts
 
-(use-package wgrep)
+(use-package wgrep
+  :defer t)
 
 (use-package exec-path-from-shell
+  :defer t
   :config
   ;; Add GOPATH to shell
   (when (memq window-system '(mac ns))
@@ -305,14 +338,17 @@
     (neo-buffer--execute arg 'neo-open-file-hide 'neo-open-dir-change-root))
   )
 
-(use-package docker-tramp)
+(use-package docker-tramp
+  :defer t)
 
 (use-package browse-url
+  :defer t
   :custom
   (browse-url-browser-function 'browse-url-generic)
   (browse-url-generic-program "firefox"))
 
 (use-package engine-mode
+  :defer t
   :config
   (defengine amazon
     "http://www.amazon.es/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=%s"
@@ -365,6 +401,7 @@
 
 
 (use-package savehist
+  :defer t
   :custom
   (history-delete-duplicates t)
   (history-length t)
@@ -374,6 +411,7 @@
   :config (savehist-mode 1))
 
 (use-package aggressive-indent
+  :defer t
   :hook ((css-mode . aggressive-indent-mode)
          (emacs-lisp-mode . aggressive-indent-mode)
          (js-mode . aggressive-indent-mode)
@@ -381,11 +419,12 @@
   :custom (aggressive-indent-comments-too))
 
 (use-package electric-operator
+  :defer t
   :delight
   :hook (python-mode . electric-operator-mode))
 
 (use-package wiki-summary
-  :defer 1
+  :defer t
   :preface
   (defun my/format-summary-in-buffer (summary)
     "Given a summary, sticks it in the *wiki-summary* buffer and displays
@@ -403,6 +442,7 @@
 (use-package webpaste :defer 1)
 
 (use-package undo-tree
+  :defer 1
   :config
   ;; Remember undo history
   (setq
@@ -411,10 +451,12 @@
   (global-undo-tree-mode 1))
 
 (use-package imenu-anywhere
+  :defer 1
   :bind
   ("M-i" . ivy-imenu-anywhere))
 
 (use-package multiple-cursors
+  :defer t
   ;; TODO add to general
   ;; :bind
   ;; ("C-S-c C-S-c" . mc/edit-lines)

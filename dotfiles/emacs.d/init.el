@@ -26,9 +26,9 @@
 	(load (locate-user-emacs-file "init-minimal"))))
 
   (require 'base)
+  (require 'base-theme)
   (require 'base-keys)
   (require 'base-evil) ;; should be loaded before other packages
-  (require 'base-theme)
   (require 'base-extensions)
-  (require 'init-org)
   (require 'init-lang))
+;;(require 'init-org)

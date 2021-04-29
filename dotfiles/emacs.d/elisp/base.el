@@ -8,6 +8,10 @@
 ;;----------------------------------------------------------------------------
 ;; Package
 ;;----------------------------------------------------------------------------
+;; (setq
+;;  ;; avoid checking packages on startup to speed it up
+;;  straight-check-for-modifications '(check-on-save))
+(setq straight-check-for-modifications 'live)
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -22,6 +26,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+
 (straight-use-package 'use-package)
 (setq straight-use-package-by-default t)
 
@@ -29,7 +34,8 @@
 (defconst temp-dir (format "%s/cache" private-dir)
   "Hostname-based elisp temp directories")
 
-
+;; supress warning Package cl is deprecated in Emacs-27
+(setq byte-compile-warnings '(cl-functions))
 ;;----------------------------------------------------------------------------
 ;; Core settings
 ;;----------------------------------------------------------------------------
@@ -147,12 +153,24 @@
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
 
-(add-hook
- 'after-init-hook
- (defun my/set-faces ()
-   (custom-set-faces
-    '(default ((t (:height 110 :family "SauceCodePro Nerd Font" :weight normal)))))
-   ))
+(defun my/set-font-faces ()
+  (message "Setting faces!")
+  (set-face-attribute 'default nil :font "FantasqueSansMono Nerd Font" :height 110)
+
+  ;; Set the fixed pitch face
+  (set-face-attribute 'fixed-pitch nil :font "FantasqueSansMono Nerd Font" :height 110)
+
+  ;; Set the variable pitch face
+  (set-face-attribute 'variable-pitch nil :font "FantasqueSansMono Nerd Font" :height 110 :weight 'regular))
+
+(if (daemonp)
+    (add-hook 'after-make-frame-functions
+              (lambda (frame)
+		;;(setq doom-modeline-icon t)
+                (with-selected-frame frame
+                  (my/set-font-faces))))
+  (my/set-font-faces))
+
 
 (defun stop-using-minibuffer ()
   "kill the minibuffer"

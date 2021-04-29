@@ -1,8 +1,12 @@
+;; Enable scala-mode for highlighting, indentation and motion commands
 (use-package scala-mode
-  :mode "\\.s\\(cala\\|bt\\)$"
-  :config (progn (add-hook 'scala-mode-hook #'yas-minor-mode)))
+  :defer t
+  :interpreter
+  ("scala" . scala-mode))
 
+;; Enable sbt mode for executing sbt commands
 (use-package sbt-mode
+  :after scala-mode
   :commands sbt-start sbt-command
   :config
   ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
@@ -14,5 +18,6 @@
   ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
   (setq sbt:program-options '("-Dsbt.supershell=false"))
   )
+
 
 (provide 'lang-scala)

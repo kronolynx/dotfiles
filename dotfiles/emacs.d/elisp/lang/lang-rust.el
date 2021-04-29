@@ -3,6 +3,7 @@
 ;; rust-mode
 ;; https://github.com/rust-lang/rust-mode
 (use-package rust-mode
+  :defer t
   ;; TODO redefine using general
   ;; :bind ( :map rust-mode-map
   ;; 	(("C-c C-t" . racer-describe)))
