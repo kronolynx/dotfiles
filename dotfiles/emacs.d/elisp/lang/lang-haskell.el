@@ -2,6 +2,7 @@
 ;; ;; https://github.com/haskell/haskell-mode
 
 (use-package haskell-mode
+  :defer t
   :mode "\\.hs\\'"
   :config
   (add-hook 'haskell-mode-hook

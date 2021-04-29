@@ -14,7 +14,7 @@
   )
 
 (use-package doom-modeline
-  :after evil
+  :defer .1
   :custom
   (column-number-mode nil)
   (doom-modeline-buffer-encoding nil)
@@ -38,6 +38,7 @@
   )
 
 (use-package minions
+  :defer .1
   :config (minions-mode 1)
   )
 
@@ -50,6 +51,7 @@
   (doom-modeline-mode . nyan-mode))
 
 (use-package rainbow-delimiters
+  :defer t
   :config
   (progn
     ;; Enable in all programming-related modes
@@ -65,6 +67,7 @@
 ;;  (set-face-foreground 'show-paren-match "#ffffff"))
 
 (use-package emojify
+  :defer t
   :commands emojify-mode
   :custom
   (emojify-emoji-styles '(unicode github))

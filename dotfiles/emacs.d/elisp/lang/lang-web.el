@@ -1,4 +1,5 @@
 (use-package web-mode
+  :defer t
   :mode (("\\.html?\\'" . web-mode))
   :config
   (setq web-mode-markup-indent-offset 2
@@ -14,6 +15,7 @@
         ))
 
 (use-package rjsx-mode
+  :after web-mode
   :disabled
   :mode "\\.js\\'"
   :config (setq js2-basic-offset 2
@@ -22,15 +24,18 @@
                 js2-bounce-indent-p nil))
 
 (use-package typescript-mode
+  :after web-mode
   :disabled
   :config (progn
             (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-mode))))
 
 (use-package sass-mode
+  :after web-mode
   :disabled
   :mode "\\.sass\\'")
 
 (use-package less-css-mode
+  :after web-mode
   :disabled
   :mode "\\.less\\'")
 

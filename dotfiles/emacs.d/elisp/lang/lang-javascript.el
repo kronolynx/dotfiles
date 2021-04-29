@@ -1,6 +1,7 @@
 ;; js2-mode
 ;; https://github.com/mooz/js2-mode
 (use-package js2-mode
+  :defer t
   ;; TODO add bindings with general
   ;; :bind (:map js2-mode-map
   ;;             (("C-x C-e" . js-send-last-sexp)
@@ -21,6 +22,7 @@
   ;; tern :- IDE like features for javascript and completion
   ;; http://ternjs.net/doc/manual.html#emacs
   (use-package tern
+    :after js2-mode
     :config
     (defun my-js-mode-hook ()
       "Hook for `js-mode'."
@@ -33,17 +35,21 @@
 
   ;; company backend for tern
   ;; http://ternjs.net/doc/manual.html#emacs
-  (use-package company-tern)
+  (use-package company-tern
+    :after js2-mode
+    )
 
   ;; Run a JavaScript interpreter in an inferior process window
   ;; https://github.com/redguardtoo/js-comint
   (use-package js-comint
+    :after js2-mode
     :config
     (setq inferior-js-program-command "node"))
 
   ;; js2-refactor :- refactoring options for emacs
   ;; https://github.com/magnars/js2-refactor.el
   (use-package js2-refactor :defer t
+    :after js2-mode
     :diminish js2-refactor-mode
     ;; TODO add to general
     ;; :config
