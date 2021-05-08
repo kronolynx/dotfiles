@@ -1,6 +1,6 @@
 "actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 " :actionlist
-source ~/.vimrc
+" source ~/.vimrc
 
 let mapleader=" "
 
@@ -39,29 +39,39 @@ set textobj-entire      " Additional text objects: ae, ie
 set easymotion          " Requieres plugins IdeaVim-EasyMotion and AceJump
 set highlightedyank     " 
 set NERDTree            "
+set which-key
 " }}}
-" Ideavim commands {{
+" Ideavim commands {{{
 set ideajoin            " 
 set showmode            " message on the status line to show current mode
 set showcmd             " show (partial) command in the status bar
 set wrapscan            " searches wrap around the end of file
 
-" }}
+" }}}
 
 " other {{{
-nnoremap <leader>w :action SaveAll<cr>
-" remove extra whitespace
-nmap <leader>cc :%s/\s\+$<CR><Paste>
-vmap <leader>cc <Esc>:%s/\s\+$<CR><Paste>
-
 
 vnoremap uu <Esc> 
 inoremap jj <Esc> 
 
 " }}}
 
+
+" which key {{{
+" increase the timeoutlen (default: 1000)
+# set timeoutlen = 1
+set notimeout
+let g:WhichKey_ShowVimActions = "true"
+let g:WhichKey_SortOrder = "be_key_prefix_first"
+let g:WhichKey_KeyStyle = "bold"
+let g:WhichKey_KeyColor = "#50fa7b"
+let g:WhichKey_PrefixColor = "#ff79c6"
+let g:WhichKey_CommandColor = "#8be9fd"
+" }}}
+
 " Leader bindings
 " tab {{{
+let g:WhichKeyDesc_tab = "<leader>t tab"
 nnoremap <leader>tc :action CloseContent<cr>
 vnoremap <leader>tc <Esc>:action CloseContent<cr>
 
@@ -90,9 +100,6 @@ vnoremap <leader>tm <Esc>:action MoveEditorToOppositeTabGroup<cr>
 noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
 vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
-noremap <leader>yt :action OpenEditorInOppositeTabGroup<cr>
-vnoremap <leader>yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
-
 " undo (reopen)
 nnoremap <leader>tu :action ReopenClosedTab<cr>
 nnoremap <leader>tu <Esc>:action ReopenClosedTab<cr>
@@ -105,17 +112,20 @@ nnoremap <C-tab> :action PreviousTab<cr>
 "nnoremap <leader-tab> <Esc>:action GoToLastTab<cr>
 
 " Focus last tab
+let g:WhichKeyDesc_last_tab = "<leader><Tab> last tab"
 nnoremap <leader><tab>    :action GoToLastTab<CR>
 vnoremap <leader><tab>    <Esc>:action GoToLastTab<CR>
 
 " }}}
 
-" editor {{{
 
 " yank to end of line
 nnoremap Y y$ 
 
 map <A-h> :action GotoAction<cr>
+
+" editor {{{
+let g:WhichKeyDesc_editor = "<leader>e editor"
 
 nnoremap <leader>ea :action GotoAction<cr>
 
@@ -128,10 +138,8 @@ nnoremap <leader>ec :action CompileProject<cr>
 nnoremap <leader>ee :action EvaluateExpression<CR>
 vnoremap <leader>ee <Esc>:action EvaluateExpression<CR>
 
-
-
 " Insert snippet
-nnoremap <leader>es    :action InsertLiveTemplate<CR>
+nnoremap <leader>es :action InsertLiveTemplate<CR>
 
 
 nnoremap <leader>en :action EditorGutterToggleGlobalLineNumbers<cr>
@@ -144,20 +152,22 @@ nnoremap <leader>eo :action OptimizeImports<CR>
 nnoremap <leader>e= :action ReformatCode<cr>
 
 " multiple cursors
+let g:WhichKeyDesc_multiple_cursors = "<leader>c multiple cursors"
 nnoremap <leader>c <A-N>
-
-
 
 " Show usages for symbol.
 " Ideally this should be FindInPath the current word, but I think that it is
 " not possible.
+let g:WhichKeyDesc_usages = "<leader>* show usages"
 nnoremap <leader>*    :action ShowUsages<CR>
 vnoremap <leader>*    <Esc>:action ShowUsages<CR>
-
 " }}}
+
 " view {{{
+let g:WhichKeyDesc_view = "<leader>v view"
 nnoremap <leader>va :action ShowIntentionActions<CR>
 
+let g:WhichKeyDesc_view_implicits = "<leader>vi implicits"
 nnoremap <leader>via :action Scala.ShowImplicitArguments<CR>
 vnoremap <leader>via <Esc>:action Scala.ShowImplicitArguments<cr>
 
@@ -180,10 +190,12 @@ nnoremap <leader>vr :action RecentLocations<cr>
 nnoremap <leader>vq :action QuickImplementations<CR> 
 
 " Undo
-nnoremap <leader>mh :action LocalHistory.ShowHistory<CR>
+let g:WhichKeyDesc_view_undo = "<leader>vu undo history"
+nnoremap <leader>vu :action LocalHistory.ShowHistory<CR>
 " }}}
 
-" refactor {{
+" refactor {{{
+let g:WhichKeyDesc_refactor = "<leader>r refactor"
 nnoremap <leader>rm :action ExtractMethod<CR>
 nnoremap <leader>rq :action Refactorings.QuickListPopupAction<CR>
 nnoremap <leader>rp :action IntroduceParameter<CR>
@@ -194,15 +206,22 @@ nnoremap <leader>ro :action OverrideMethods<CR>
 
 nnoremap <leader>rr :action RenameElement<cr>
 vnoremap <leader>rr <Esc>:action RenameElement<cr>
-" }}
+
+" remove extra whitespace
+let g:WhichKeyDesc_refactor_white = "<leader>rc remove extra white space"
+nmap <leader>rc :%s/\s\+$<CR><Paste>
+vmap <leader>rc <Esc>:%s/\s\+$<CR><Paste>
+" }}}
 
 " applications {{{
+let g:WhichKeyDesc_app = "<leader>a application"
 nnoremap <leader>ar :action ActivateFileManagerToolWindow<cr>
 nnoremap <leader>at :action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
 nnoremap <leader>aT :action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
 "}}}
 
 " file {{{
+let g:WhichKeyDesc_file = "<leader>f file"
 " Find file
 nnoremap <leader>fe :action <cr>
 
@@ -233,6 +252,7 @@ nnoremap <leader>fy    :action CopyPaths<CR>
 " }}}
 
 " goto {{{
+let g:WhichKeyDesc_goto = "<leader>g goto"
 nnoremap <leader>gg :action ActivateProjectToolWindow<cr>
 
 nnoremap <leader>gd :action GotoTypeDeclaration<cr>
@@ -275,6 +295,7 @@ vnoremap g.    :action JumpToLastChange<CR>
 " }}}
 
 " git (m from magit) {{{
+let g:WhichKeyDesc_git = "<leader>m git"
 nnoremap <leader>ma :action Git.Add<cr>
 
 nnoremap <leader>mm :action Git.Menu<cr>
@@ -298,6 +319,7 @@ nnoremap <leader>ms :action Git.Stash<cr>
 " }}}
 
 " search {{{
+let g:WhichKeyDesc_search = "<leader>s search"
 nnoremap <leader>su :action FindUsages<cr>
 vnoremap <leader>su <Esc>:action FindUsages<cr>
 
@@ -311,8 +333,8 @@ nnoremap <leader>sf :action FindUsagesInFile<cr>
 vnoremap <leader>sf <Esc>:action FindUsagesInFile<cr>
 
 " Highlight current symbol. Do it again to toggle highlight.
-nnoremap <leader>sh    :action HighlightUsagesInFile<CR>
-vnoremap <leader>sh    <Esc>:action HighlightUsagesInFile<CR>
+nnoremap <leader>sh :action HighlightUsagesInFile<CR>
+vnoremap <leader>sh <Esc>:action HighlightUsagesInFile<CR>
 
 nnoremap * :action FindWordAtCaret<cr>
 vnoremap * <Esc>:action FindWordAtCaret<cr>
@@ -320,6 +342,7 @@ vnoremap * <Esc>:action FindWordAtCaret<cr>
 " }}}
 
 " window {{{
+let g:WhichKeyDesc_window = "<leader>w window"
 nnoremap <leader>wc :action CloseContent<cr>
 vnoremap <leader>wc <Esc>:action CloseContent<cr>
 
@@ -354,8 +377,6 @@ vnoremap  <A-z> <Esc>:action HideAllWindows<cr>
 " vnoremap  <A-1> <Esc>:action <cr>
 map  <A-2> :action Switcher<cr>
 
-
-
 nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
@@ -377,23 +398,28 @@ vnoremap <A-S-.> <Esc>:action IncrementWindowHeight<cr>
 
 " other {{{
 " Show key bindings
-nnoremap <leader>hk     :map<CR>
-vnoremap <leader>hk     <Esc>:map<CR>
+let g:WhichKeyDesc_helpkey = "<leader>xk Intellij bindings"
+nnoremap <leader>xk     :map<CR>
+vnoremap <leader>xk     <Esc>:map<CR>
 
+let g:WhichKeyDesc_misc = "<leader>x misc"
 " Show kill ring
+let g:WhichKeyDesc_kill_ring = "<leader>xy show kill ring"
 nnoremap <leader>xy    :action PasteMultiple<CR>
 
 " Transpose characters
-nnoremap <leader>xtc    xhP
-vnoremap <leader>xtc    <Esc>xhP
+let g:WhichKeyDesc_transpose_char = "<leader>xc transpose characters"
+nnoremap <leader>xc    xhP
+vnoremap <leader>xc    <Esc>xhP
 
 " Delete all spaces except one
 nnoremap <leader>xd    wh:action EditorHungryBackSpace<CR>
 vnoremap <leader>xd    <Esc>wh:action EditorHungryBackSpace<CR>
 
 " Transpose lines
-nnoremap <leader>xt    ddkP
-vnoremap <leader>xt    <Esc>ddkP
+let g:WhichKeyDesc_transpose_line = "<leader>xl transpose line"
+nnoremap <leader>xl    ddkP
+vnoremap <leader>xl    <Esc>ddkP
 
 " Toggle Show Whitespaces
 nnoremap <leader>xw    :action EditorToggleShowWhitespaces<CR>
@@ -448,6 +474,7 @@ vnoremap <leader>xc    <Esc>:action ShowColorPicker<CR>
 " }}}
 
 " quit {{{
+let g:WhichKeyDesc_quit = "<leader>q quit"
 " Close project
 nnoremap <leader>qq    :action CloseProject<CR>
 vnoremap <leader>qq    <Esc>:action CloseProject<CR>
@@ -463,4 +490,4 @@ vnoremap <leader>qs    <Esc>:action SaveAll<CR>:action CloseProject<CR>
 
 """ todo 
 " RevealIn    (opens thunar where the current file is located)
-" RevealGroup    (ask what to open where the current file is located)
+" RevealGroup    (ask what to open where the current file is located):
