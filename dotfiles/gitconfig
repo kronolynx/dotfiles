@@ -148,6 +148,6 @@
   wips = commit -am "WIP (save staged changes)"
 #  cleanr = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\///' | xargs -n 1 git push --delete origin"
 [gpg]
-	program = /usr/bin/gpg2
+  program = /usr/bin/gpg2 # to stop asking each time for gpg password
 [init]
-	defaultBranch = main
+  defaultBranch = main
