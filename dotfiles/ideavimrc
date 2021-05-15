@@ -54,6 +54,11 @@ set wrapscan            " searches wrap around the end of file
 vnoremap uu <Esc> 
 inoremap jj <Esc> 
 
+let g:WhichKeyDesc_back = "gb Back"
+nnoremap gb :action Back<cr>
+let g:WhichKeyDesc_forward = "gf Forward"
+nnoremap gf :action Forward<cr>
+
 " }}}
 
 
@@ -118,6 +123,16 @@ vnoremap <leader><tab>    <Esc>:action GoToLastTab<CR>
 
 " }}}
 
+" misc {{{
+" Greatest remap EVER!! 
+" Let me explain, this remap while in visiual mode
+" will delete what is currently highlighted and replace it 
+" with what is in the register BUT it will YANK (delete) it 
+" to a VOID register. Meaning I still have what I originally had
+" when I pasted. I don't loose the previous thing I YANKED!
+let g:WhichKeyDesc_paste = "<leader>p paste replace and keep"
+vnoremap <leader>p "_dP
+" }}}
 
 " yank to end of line
 nnoremap Y y$ 
@@ -213,11 +228,14 @@ nmap <leader>rc :%s/\s\+$<CR><Paste>
 vmap <leader>rc <Esc>:%s/\s\+$<CR><Paste>
 " }}}
 
-" applications {{{
-let g:WhichKeyDesc_app = "<leader>a application"
-nnoremap <leader>ar :action ActivateFileManagerToolWindow<cr>
-nnoremap <leader>at :action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
-nnoremap <leader>aT :action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
+" ide {{{
+let g:WhichKeyDesc_ide = "<leader>i IDE"
+nnoremap <leader>ir :action ActivateFileManagerToolWindow<cr>
+nnoremap <leader>it :action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
+nnoremap <leader>iT :action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
+" Toggle code minimap
+let g:WhichKeyDesc_ide_minimap = "<leader>im Toogle minimap"
+nmap <Leader>im :action CodeGlance.toggle<CR>
 "}}}
 
 " file {{{
