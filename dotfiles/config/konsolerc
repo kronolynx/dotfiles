@@ -1,0 +1,18 @@
+[Desktop Entry]
+DefaultProfile=Krono.profile
+
+[KonsoleWindow]
+ShowMenuBarByDefault=false
+
+[MainWindow]
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAAA0wAAAH4AAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAIAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgAAAAAA/////wAAAAAAAAAAAAAAHABzAGUAcwBzAGkAbwBuAFQAbwBvAGwAYgBhAHIAAAAAAP////8AAAAAAAAAAA==
+StatusBar=Disabled
+ToolBarsMovable=Disabled
+eDP-1 Height 1920x1080=504
+eDP-1 Width 1920x1080=844
+eDP-1 XPosition 1920x1080=1064
+eDP-1 YPosition 1920x1080=564
+
+[Notification Messages]
+CloseAllTabs=true
