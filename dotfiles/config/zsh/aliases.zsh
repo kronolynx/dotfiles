@@ -89,7 +89,7 @@ if (( $+commands[pacman] )); then
   alias Iy="yay -S --noconfirm " # install no confirm
   alias R="sudo pacman -Rs " # remove with dependcies
   alias Rd="sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
-  alias which="pacman -Qo "
+  alias whichp="pacman -Qo "
   alias downgrade-fix="sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
   alias mirrors="sudo pacman-mirrors --fasttrack"
   alias aup="pamac upgrade --aur"

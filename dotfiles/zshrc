@@ -1,6 +1,9 @@
 # If not running interactively, don't do anything
 [[ -o interactive ]] || return
 
+# start ssh agent
+[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)" > /dev/null
+# gpg
 export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
 
