@@ -1,6 +1,7 @@
 [global_config]
   focus = mouse
-  window_state = maximise
+  extra_styling = False
+  title_hide_sizetext = True
   title_transmit_fg_color = "#02ff00"
   title_transmit_bg_color = "#000000"
   title_receive_bg_color = "#c90047"
@@ -9,7 +10,7 @@
   inactive_color_offset = 1.0
   suppress_multiple_term_dialog = True
   title_use_system_font = False
-  title_font = 3270Medium Nerd Font Bold 14
+  title_font = Fantasque Sans Mono 14
 [keybindings]
   new_tab = <Primary><Shift>t
   go_up = <Alt>k
@@ -40,12 +41,11 @@
   layout_launcher = <Alt>space
 [profiles]
   [[default]]
-    visible_bell = True
     icon_bell = False
     background_darkness = 0.82
     background_type = transparent
     cursor_color = "#dddddd"
-    font = FantasqueSansMono Nerd Font 12.5
+    font = FantasqueSansMono Nerd Font Mono 12.5
     foreground_color = "#dddddd"
     show_titlebar = False
     scrollbar_position = hidden
