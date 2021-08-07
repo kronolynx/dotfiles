@@ -1,0 +1,191 @@
+#
+#                       oooo        oooo              .o8  
+#                       `888        `888             "888  
+#   .oooo.o oooo    ooo  888 .oo.    888  oooo   .oooo888  
+#  d88(  "8  `88b..8P'   888P"Y88b   888 .8P'   d88' `888  
+#  `"Y88b.     Y888'     888   888   888888.    888   888  
+#  o.  )88b  .o8"'88b    888   888   888 `88b.  888   888  
+#  8""888P' o88'   888o o888o o888o o888o o888o `Y8bod88P" 
+#
+# Replacing the default keyboard daemon in Plasma
+
+# get keys
+# xev | awk -F'[ )]+' '/^KeyPress/ { a[NR+2] } NR in a { printf "%-3s %s\n", $5, $8 }'
+
+# get kwin shortcut names
+# qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.shortcutNames
+
+# open alacritty, dolphin, yakuake
+super + {_, shift, ctrl} + Return
+	{alacritty, dolphin, yakuake}
+
+# ksysguard duplicate
+ctrl + alt + Escape
+	ksysguard
+
+# Reload plasma shell, sxhkd
+super + {shift, ctrl} + Escape
+	{killall plasmashell && kstart5 plasmashell > /dev/null 2>&1 & , \
+	 pkill -USR1 -x sxhkd && notify-send "[sxhkd] reloaded"}
+
+# Screenshot region, focused, all
+super + ctrl + s ; {r,f,a}
+	{spectacle -r,\
+	spectacle -f,\
+	spectacle -a}
+
+# krunner
+super space
+	krunner
+
+# Kwin shortcuts {{{
+
+super + u
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Activate Window Demanding Attention'
+  
+super + {_, shift, ctrl, alt} + w
+  {qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Expose', \
+   qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'ExposeAll', \
+   qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'ExposeClass', \
+   qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'ShowDesktopGrid'}
+
+ctrl + alt + shift + x
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Kill Window'
+super + shift + m
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'MoveMouseToCenter'
+super + F5
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'MoveMouseToFocus'
+super + d
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Show Desktop'
+alt + shift + F12
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Suspend Compositing'
+super + ctrl + Down
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch One Desktop Down'
+super + ctrl + Up
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch One Desktop Up'
+super + ctrl + Left
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch One Desktop to the Left'
+super + ctrl + Right
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch One Desktop to the Right'
+super + { Down, j }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch Window Down'
+super + { Left, h }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch Window Left'
+super + { Right, l } 
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch Window Right'
+super + { Up, k }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch Window Up'
+
+# TODO find out why this doesn't work
+# super + {1-9, 0, minus, equal, bracketleft, bracketright, semicolon, apostrophe}
+#   qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop {1-9, 10, 11, 12, 13, 14, 15, 16}'
+super + {1-9}
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop {1-9}'
+super + 0
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop 10'
+super + minus
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop 11'
+super + equal
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop 12'
+super + bracketleft
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop 13'
+super + bracketright
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop 14'
+super + semicolon
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop 15'
+super + apostrophe
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Switch to Desktop 16'
+
+super + ctrl + t
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'ToggleCurrentThumbnail'
+{ alt + F4, super + shift + q }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window Close'
+super + {_, shift} f
+  {qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window Maximize', \
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window Fullscreen'}
+super + ctrl + shift + { Down, j }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window One Desktop Down'
+super + ctrl + shift + { Up, k }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window One Desktop Up'
+super + ctrl + shift + { Left, h }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window One Desktop to the Left'
+super + ctrl + shift + { Right, l }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window One Desktop to the Right'
+alt + F3
+
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window Operations Menu'
+super + ctrl {1-9}
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop {1-9}'
+super + ctrl 0
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop 10'
+super + ctrl minus
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop 11'
+super + ctrl equal
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop 12'
+super + ctrl bracketleft
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop 13'
+super + ctrl bracketright
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop 14'
+super + ctrl semicolon
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop 15'
+super + ctrl apostrophe
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Window to Desktop 16'
+
+
+# }}}
+
+
+# Kwin scripts {{{
+
+super + shift + r
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Cycle Rotations'
+super + shift + Escape
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Dump Clients'
+super + shift + { Down, j }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Move Window Down'
+super + shift + { Left, h }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Move Window Left'
+super + shift + { Right, l }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Move Window Right'
+super + shift + { Up, k }
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Move Window Up'
+super  + slash
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Next Tiling Layout'
+super + question
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Previous Tiling Layout'
+super + alt + j
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Resize Active Window To The Bottom'
+super + alt + h
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Resize Active Window To The Left'
+super + alt + l
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Resize Active Window To The Right'
+super + alt + k
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Resize Active Window To The Top'
+super + m
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Swap Window With Master'
+super + shift + space
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Toggle Floating'
+super + shift + F11
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'TILING: Toggle Tiling'
+
+super + ctrl + q
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Close clients in Desktop\s'
+
+super + shift {1-9}
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop {1-9}'
+super + shift 0
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop 10'
+super + shift minus
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop 11'
+super + shift equal
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop 12'
+super + shift bracketleft
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop 13'
+super + shift bracketright
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop 14'
+super + shift semicolon
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop 15'
+super + shift apostrophe
+  qdbus org.kde.kglobalaccel /component/kwin org.kde.kglobalaccel.Component.invokeShortcut 'Extra: Move Window and Switch to Desktop 16'
+
+# }}}
