@@ -1,0 +1,653 @@
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+
+[color]
+;; Active Colors
+;bg = #262940
+;bg = #000000
+fg = #f8f8f2
+fg-alt = #9C9C9C
+
+trans = #00000000
+white = #F8F8F2
+black = #000000
+
+;; Material Colors
+red = #EE4F84
+pink = #F48FB1
+purple = #BD99FF
+deep-purple = #985EFF
+indigo = #3949ab
+blue = #6498EF
+light-blue = #92B6F4
+cyan = #24D1E7
+teal = #87DFEB
+green = #53E2AE
+light-green = #A1EFD3
+lime = #c0ca33
+yellow = #F1FF52
+light-yellow = #F1FA8C
+grey = #3D4C5F
+light-gray = #56687E
+
+[global/wm]
+;https://github.com/jaagr/polybar/wiki/Configuration#global-wm-settings
+margin-top = 0
+margin-bottom = 0
+
+[settings]
+
+;;https://github.com/jaagr/polybar/wiki/Configuration#application-settings
+throttle-output = 5
+throttle-output-for = 10
+
+screenchange-reload = false
+
+compositing-background = source
+compositing-foreground = over
+compositing-overline = over
+compositing-underline = over
+compositing-border = over
+pseudo-transparency = false
+
+################################################################################
+##                             MAINBAR-XMONAD                                 ##
+################################################################################
+
+
+[bar/mainbar-xmonad]
+monitor = ${env:MONITOR}
+;monitor-fallback = HDMI1
+monitor-strict = false
+override-redirect = false
+; wm-restack generic requires polybar git (used for fullscreen)
+; https://github.com/polybar/polybar/pull/2404
+wm-restack = generic
+width = 100%
+height = 25
+;offset-x = 1%
+;offset-y = 1%
+radius = 0.0
+fixed-center = true
+bottom = false
+separator =
+
+
+background = ${color.bg}
+foreground = ${color.fg}
+
+line-size = 2
+line-color = #f00
+
+;border-size = 2
+;border-left-size = 25
+;border-right-size = 25
+;border-top-size = 0
+;border-bottom-size = 25
+border-color = #00000000
+
+padding-left = 1
+padding-right = 0
+
+module-margin-left = 1
+module-margin-right = 1
+
+; Enable support for inter-process messaging
+; See the Messaging wiki page for more details.
+enable-ipc = true
+
+;https://github.com/jaagr/polybar/wiki/Fonts
+font-0 = "Hack:size=9;2"
+font-1 = "FontAwesome:size=12;2"
+font-2 = "Hack bold:size=10;0"
+font-3 = "Noto Sans Mono:size=10;0"
+font-4 = "FontAwesome5Brands:size=13;0"
+
+modules-left = ewmh xwindow
+;modules-center =
+modules-right = date
+
+tray-detached = false
+tray-offset-x = 0
+tray-offset-y = 0
+tray-padding = 6
+tray-maxsize = 20
+tray-scale = 1.0
+tray-position = right
+tray-background = ${color.bg}
+
+################################################################################
+##                                MODULES A-Z                                 ##
+################################################################################
+
+[module/arch-aur-updates]
+type = custom/script
+exec = ~/.config/polybar/scripts/check-all-updates.sh
+interval = 1000
+label = Updates: %output%
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+format-prefix = "  "
+format-prefix-foreground = #FFBB00
+format-underline = #FFBB00
+
+
+[module/aur-updates]
+type = custom/script
+exec = cower -u | wc -l
+interval = 1000
+label = Aur: %output%
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+format-prefix = "  "
+format-prefix-foreground = #FFBB00
+format-underline = #FFBB00
+
+################################################################################
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+format-prefix-foreground = #7D49B6
+format-prefix-underline = #7D49B6
+format-underline = #7D49B6
+################################################################################
+
+[module/backlight]
+;https://github.com/jaagr/polybar/wiki/Module:-backlight
+
+type = internal/backlight
+
+; Use the following command to list available cards:
+; $ ls -1 /sys/class/backlight/
+card = intel_backlight
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+;   <bar>
+format = <label>
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+; Available tokens:
+;   %percentage% (default)
+label = %percentage%%
+
+; Only applies if <ramp> is used
+ramp-0 = 🌕
+ramp-1 = 🌔
+ramp-2 = 🌓
+ramp-3 = 🌒
+ramp-4 = 🌑
+
+; Only applies if <bar> is used
+bar-width = 10
+bar-indicator = |
+bar-fill = ─
+bar-empty = ─
+
+################################################################################
+
+[module/battery]
+;https://github.com/jaagr/polybar/wiki/Module:-battery
+type = internal/battery
+battery = BAT0
+adapter = AC0
+full-at = 100
+
+format-charging = <animation-charging> <label-charging>
+label-charging =  %percentage%%
+format-charging-foreground = ${color.fg}
+format-charging-background = ${color.bg}
+format-charging-underline = #a3c725
+
+format-discharging = <ramp-capacity> <label-discharging>
+label-discharging =  %percentage%%
+format-discharging-underline = #c7ae25
+format-discharging-foreground = ${color.fg}
+format-discharging-background = ${color.bg}
+
+format-full-prefix = " "
+format-full-prefix-foreground = #a3c725
+format-full-underline = #a3c725
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = #c7ae25
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+animation-charging-foreground = #a3c725
+animation-charging-framerate = 750
+
+################################################################################
+
+[module/date]
+type = internal/date
+interval = 1.0
+
+time =  %I:%M %p
+time-alt =  %d/%m/%Y%
+
+format = <label>
+format-background = ${color.bg}
+format-foreground = ${color.fg}
+format-padding = 1
+label = %time%
+format-prefix = " "
+format-prefix-foreground = #ddffa7
+format-underline = #ddffa7
+
+#################################################################
+
+[module/ewmh]
+type = internal/xworkspaces
+
+pin-workspaces = false
+enable-click = true
+enable-scroll = true
+
+icon-0 = 1;
+icon-1 = 2;
+icon-2 = 3;
+icon-3 = 4;
+icon-4 = 5;輸
+icon-5 = 6;
+icon-6 = 7;
+icon-7 = 8;ﮕ
+icon-8 = 9;
+icon-9 = 10;
+icon-10 = 10;
+icon-11 = 10;
+icon-12 = 10;
+icon-13 = 10;
+icon-14 = 10;
+icon-15 = 16;
+icon-default = 輸
+
+; Available tags:
+;   <label-monitor>
+;   <label-state> - gets replaced with <label-(active|urgent|occupied|empty)>
+; Default: <label-state>
+format = <label-state>
+
+; Available tokens:
+;   %name%
+; Default: %name%
+label-monitor = %name%
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon% %name%
+label-active =
+label-active-foreground = ${color.cyan}
+label-active-background = ${color.bg}
+label-active-underline = ${color.cyan}
+label-active-padding = 1
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon% %name%
+label-occupied =
+label-occupied-foreground = ${color.purple}
+;label-occupied-underline = ${color.fg-alt}
+label-occupied-padding = 1
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon% %name%
+label-urgent =
+label-urgent-foreground = ${color.red}
+label-urgent-background = ${color.bg}
+label-urgent-underline = ${color.red}
+label-urgent-padding = 1
+
+; Available tokens:
+;   %name%
+;   %icon%
+;   %index%
+; Default: %icon% %name%
+label-empty =
+label-empty-foreground = #55
+label-empty-padding = 1
+
+################################################################################
+
+[module/load-average]
+type = custom/script
+exec = uptime | grep -ohe 'load average[s:][: ].*' | awk '{ print $3" "$4" "$5"," }' | sed 's/,//g'
+interval = 100
+
+;HOW TO SET IT MINIMAL 10 CHARACTERS - HIDDEN BEHIND SYSTEM ICONS
+;label = %output%
+label = %output:10%
+
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+format-prefix = "  "
+format-prefix-foreground = #62FF00
+format-underline = #62FF00
+
+################################################################################
+
+[module/memory1]
+;https://github.com/jaagr/polybar/wiki/Module:-memory
+type = internal/memory
+interval = 1
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+label = %percentage_used%%
+bar-used-indicator =
+bar-used-width = 10
+bar-used-foreground-0 = #3384d0
+bar-used-fill = 
+bar-used-empty = 
+bar-used-empty-foreground = #ffffff
+
+format = <label> <bar-used>
+format-prefix = "  "
+format-prefix-foreground = #3384d0
+format-underline = #3384d0
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+################################################################################
+
+[module/memory2]
+;https://github.com/jaagr/polybar/wiki/Module:-memory
+type = internal/memory
+interval = 1
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+label = %percentage_used%%
+
+format = Mem <label>
+format-prefix = "  "
+format-prefix-foreground = #9cc4ff
+format-underline = #9cc4ff
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+################################################################################
+
+[module/memory3]
+;https://github.com/jaagr/polybar/wiki/Module:-memory
+type = internal/memory
+interval = 1
+; Available tokens:
+;   %percentage_used% (default)
+;   %percentage_free%
+;   %gb_used%
+;   %gb_free%
+;   %gb_total%
+;   %mb_used%
+;   %mb_free%
+;   %mb_total%
+label = %gb_used%/%gb_free%
+
+format = Mem <label>
+format-prefix = "  "
+format-prefix-foreground = #3384d0
+format-underline = #3384d0
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+################################################################################
+
+[module/mpd]
+;https://github.com/jaagr/polybar/wiki/Module:-mpd
+type = internal/mpd
+;format-online =  "<label-song>   <icon-prev>  <icon-stop>  <toggle>  <icon-next>"
+format-online =  "<label-song>  <bar-progress>"
+;format-online =  "<label-song>  <bar-progress> <icon-prev>  <icon-stop>  <toggle>  <icon-next>"
+icon-prev = 
+icon-stop = 
+icon-play = 
+icon-pause = 
+icon-next = 
+label-song-maxlen = 40
+label-song-ellipsis = true
+bar-progress-width = 10
+bar-progress-indicator = 
+bar-progress-fill = 
+bar-progress-empty = 
+bar-progress-fill-foreground = #ff0
+bar-progress-fill-background = ${color.bg}
+bar-progress-indicator-foreground = ${color.fg}
+format-online-foreground = ${color.fg}
+format-online-background = ${color.bg}
+
+################################################################################
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+
+; Interval for volume increase/decrease (in percent points)
+; Default: 5
+interval = 5
+
+; Available tags:
+;   <label-volume> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-volume = <ramp-volume> <label-volume>
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+;format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels%
+;label-volume = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+;   %decibels%
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
+
+; Right and Middle click
+click-right = pavucontrol
+; click-middle =
+
+################################################################################
+
+[module/sep]
+; alternative separator
+type = custom/text
+content = 
+content-foreground = ${color.fg}
+content-background =  ${color.bg}
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+################################################################################
+
+[module/temperature1]
+;https://github.com/jaagr/polybar/wiki/Module:-temperature
+type = internal/temperature
+; Thermal zone to use
+; To list all the zone types, run
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 0
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input
+
+warn-temperature = 70
+format = <ramp> <label>
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+format-underline = #c72581
+format-warn = <ramp> <label-warn>
+format-warn-underline = #c7254f
+label = %temperature%
+label-warn =  %temperature%
+label-warn-foreground = #c7254f
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+ramp-foreground =${color.fg}
+
+################################################################################
+
+[module/temperature2]
+type = custom/script
+exec = ~/.config/polybar/scripts/tempcores.sh
+interval = 2
+format-padding = 1
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+format-underline = #C1B93E
+format-prefix-foreground = #C1B93E
+label =  %output:0:150:%
+
+
+################################################################################
+
+[module/weather]
+type = custom/script
+interval = 10
+format = <label>
+format-prefix = " "
+format-prefix-foreground = #3EC13F
+format-underline = #3EC13F
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+exec = python -u ~/.config/polybar/scripts/weather.py
+tail = true
+
+################################################################################
+
+[module/xbacklight]
+;https://github.com/jaagr/polybar/wiki/Module:-xbacklight
+type = internal/xbacklight
+format = <label> <bar>
+format-prefix = "   "
+format-prefix-foreground = ${color.fg}
+format-prefix-background = ${color.bg}
+format-prefix-underline = #9f78e1
+format-underline = #9f78e1
+label = %percentage%%
+bar-width = 10
+bar-indicator = 
+bar-indicator-foreground = #fff
+bar-indicator-font = 2
+bar-fill = 
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = 
+bar-empty-font = 2
+bar-empty-foreground = #fff
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+################################################################################
+
+[module/xkeyboard]
+;https://github.com/jaagr/polybar/wiki/Module:-xkeyboard
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${color.fg}
+format-prefix-background = ${color.bg}
+format-prefix-underline = #3ecfb2
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+
+label-layout = %layout%
+label-layout-underline = #3ecfb2
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${color.bg}
+label-indicator-underline = ${color.fg}
+
+################################################################################
+
+[module/xwindow]
+;https://github.com/jaagr/polybar/wiki/Module:-xwindow
+type = internal/xwindow
+
+; Available tags:
+;   <label> (default)
+format = <label>
+format-foreground = ${color.fg}
+format-background = ${color.bg}
+format-padding = 4
+
+; Available tokens:
+;   %title%
+; Default: %title%
+label = %title%
+label-maxlen = 50
+
+; Used instead of label when there is no window title
+; Available tokens:
+;   None
+label-empty =
+label-empty-foreground = #707880
+;label-empty-foreground = ${color.fg}
+
+###############################################################################

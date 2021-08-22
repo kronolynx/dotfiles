@@ -5,100 +5,93 @@
 -- If a type has only one constructor it is imported implicitly with (..)
 --
 --
-import           XMonad                  hiding ( (|||), Layout )
+import           XMonad                        hiding ( (|||), Layout )
 
 -- hooks
-import qualified XMonad.Hooks.DynamicLog       as DL
-import           XMonad.Hooks.EwmhDesktops      ( ewmh )
-import           XMonad.Hooks.FloatNext         ( floatNextHook )
-import qualified XMonad.Hooks.ManageDocks      as ManageDocks
-import qualified XMonad.Hooks.ManageHelpers    as ManageHelpers
-import qualified XMonad.Hooks.UrgencyHook      as UH
+import qualified XMonad.Hooks.DynamicLog             as DL
+import           XMonad.Hooks.EwmhDesktops            ( ewmh )
+import           XMonad.Hooks.FloatNext               ( floatNextHook )
+import qualified XMonad.Hooks.ManageDocks            as ManageDocks
+import qualified XMonad.Hooks.ManageHelpers          as ManageHelpers
+import qualified XMonad.Hooks.UrgencyHook            as UH
+import           XMonad.Hooks.InsertPosition
+
+-- DBus
+import qualified DBus                                as D
+import qualified DBus.Client                         as D
+import qualified Codec.Binary.UTF8.String            as UTF8
 
 -- layouts
-import           XMonad.Layout.Circle           ( Circle(..) )
-import           XMonad.Layout.HintedGrid       ( Grid(GridRatio) )
-import           XMonad.Layout.LayoutCombinators
-                                                ( JumpToLayout(JumpToLayout)
-                                                , (|||)
-                                                )
-import           XMonad.Layout.Mosaic           ( mosaic )
-import           XMonad.Layout.MultiToggle      ( Toggle(..) , mkToggle1 )
-import           XMonad.Layout.MultiToggle.Instances
-                                                ( StdTransformers
-                                                    ( MIRROR
-                                                    , NBFULL
-                                                    )
-                                                )
+import           XMonad.Layout.Circle                ( Circle(..) )
+import           XMonad.Layout.HintedGrid            ( Grid(GridRatio) )
+import           XMonad.Layout.LayoutCombinators     ( JumpToLayout(JumpToLayout) , (|||))
+import           XMonad.Layout.Mosaic                ( mosaic )
+import           XMonad.Layout.MultiToggle           ( Toggle(..) , mkToggle1 )
+import           XMonad.Layout.MultiToggle.Instances ( StdTransformers ( MIRROR , NBFULL))
 
-import           XMonad.Layout.NoBorders        ( noBorders )
-import           XMonad.Layout.OneBig           ( OneBig(OneBig) )
-import           XMonad.Layout.Reflect          ( REFLECTX(..)
-                                                , REFLECTY(..)
-                                                )
-import           XMonad.Layout.Renamed          ( Rename(Replace) , renamed)
-import qualified XMonad.Layout.ResizableTile   as RTile
-import           XMonad.Layout.SimpleDecoration ( shrinkText )
-import           XMonad.Layout.Spacing          ( spacing )
-import           XMonad.Layout.Spiral           ( spiral )
-import qualified XMonad.Layout.Tabbed          as TB
-import           XMonad.Layout.ThreeColumns     ( ThreeCol(ThreeColMid) )
-import qualified XMonad.Layout.WindowNavigation
-                                               as Nav
-
+import           XMonad.Layout.NoBorders             ( noBorders )
+import           XMonad.Layout.OneBig                ( OneBig(OneBig) )
+import           XMonad.Layout.Reflect               ( REFLECTX(..) , REFLECTY(..))
+import           XMonad.Layout.Renamed               ( Rename(Replace) , renamed)
+import qualified XMonad.Layout.ResizableTile         as RTile
+import           XMonad.Layout.SimpleDecoration      ( shrinkText )
+import           XMonad.Layout.Spacing               ( Spacing(..), Border(..), spacingRaw )
+import           XMonad.Layout.Spiral                ( spiral )
+import qualified XMonad.Layout.Tabbed                as TB
+import           XMonad.Layout.ThreeColumns          ( ThreeCol(ThreeColMid) )
+import qualified XMonad.Layout.WindowNavigation      as Nav
+import           XMonad.Layout.LayoutModifier        (ModifiedLayout)
 
 -- utils
-import qualified XMonad.Util.Cursor            as Cursor
-import           XMonad.Util.EZConfig           ( checkKeymap
-                                                , mkKeymap
-                                                )
-import           XMonad.Util.Run                ( spawnPipe )
-import           XMonad.Util.Scratchpad         ( scratchpadFilterOutWorkspace )
-import           XMonad.Util.WorkspaceCompare   ( getSortByIndex )
-import           XMonad.Util.Ungrab             ( unGrab )
+import qualified XMonad.Util.Cursor                  as Cursor
+import           XMonad.Util.EZConfig                ( checkKeymap , mkKeymap )
+import           XMonad.Util.Run                     ( spawnPipe )
+import           XMonad.Util.Scratchpad              ( scratchpadFilterOutWorkspace )
+import           XMonad.Util.WorkspaceCompare        ( getSortByIndex )
+import           XMonad.Util.Ungrab                  ( unGrab )
 
 -- prompt
-import qualified XMonad.Prompt                 as Prompt
-import           XMonad.Prompt.ConfirmPrompt    ( confirmPrompt )
-import           XMonad.Prompt.Input            ( inputPromptWithCompl , (?+))
-import           XMonad.Prompt.Shell            ( shellPrompt )
-import qualified XMonad.Prompt.Window          as WPrompt
+import qualified XMonad.Prompt                       as Prompt
+import           XMonad.Prompt.ConfirmPrompt         ( confirmPrompt )
+import           XMonad.Prompt.Input                 ( inputPromptWithCompl , (?+))
+import           XMonad.Prompt.Shell                 ( shellPrompt )
+import qualified XMonad.Prompt.Window                as WPrompt
 
 -- actions
-import qualified XMonad.Actions.CycleWS        as CycleWS
-import           XMonad.Actions.CycleWindows    ( cycleRecentWindows )
-import qualified XMonad.Actions.GridSelect     as GS
-import           XMonad.Actions.GroupNavigation ( historyHook )
-import           XMonad.Actions.Warp            ( warpToWindow )
-import           XMonad.Actions.WorkspaceNames  ( swapWithCurrent )
-import           XMonad.Actions.Submap          ( submap )
+import qualified XMonad.Actions.CycleWS              as CycleWS
+import           XMonad.Actions.CycleWindows         ( cycleRecentWindows )
+import qualified XMonad.Actions.GridSelect           as GS
+import           XMonad.Actions.GroupNavigation      ( historyHook )
+import           XMonad.Actions.Warp                 ( warpToWindow )
+import           XMonad.Actions.WorkspaceNames       ( swapWithCurrent )
+import           XMonad.Actions.Submap               ( submap )
 
-import           XMonad.Config.Desktop          ( desktopConfig )
-import qualified XMonad.StackSet               as W
+import           XMonad.Config.Desktop               ( desktopConfig )
+import qualified XMonad.StackSet                     as W
 
-import           Control.Monad                  ( liftM2 )
-import qualified Data.List                     as L
-import           Data.List.Split                ( chunksOf )
-import qualified Data.Map                      as M
-import qualified Data.Text                     as T
-import           Data.Char                      ( toLower )
-import           Data.Ratio                     ( (%) )
-import           System.Exit                    ( ExitCode(ExitSuccess)
-                                                , exitWith
-                                                )
-import           System.IO                      ( Handle
-                                                , hPutStrLn
-                                                , hClose
-                                                )
+import           Control.Monad                       ( liftM2 )
+import qualified Data.List                           as L
+import           Data.List.Split                     ( chunksOf )
+import qualified Data.Map                            as M
+import qualified Data.Text                           as T
+import           Data.Char                           ( toLower )
+import           Data.Ratio                          ( (%) )
+import           System.Exit                         ( ExitCode(ExitSuccess) , exitWith)
+import           System.IO                           ( Handle , hPutStrLn , hClose)
 
 ------------------------------------------------------------------------
 -- Main
 --
 main :: IO ()
 main = do
-    xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
+    -- xmproc <- spawnPipe "xmobar ~/.config/xmobar/xmobarrc.hs"
+    dbus <- D.connectSession
+    -- Request access to the DBus name
+    D.requestName dbus (D.busName_ "org.xmonad.Log")
+        [D.nameAllowReplacement, D.nameReplaceExisting, D.nameDoNotQueue]
+
     xmonad $ ewmh $ UH.withUrgencyHook UH.NoUrgencyHook $ myConfig
-        { logHook =  myLogHook xmproc >> historyHook }
+        -- { logHook =  myLogHook xmproc >> historyHook }
 
 ------------------------------------------------------------------------
 -- Config
@@ -124,9 +117,9 @@ myConfig = desktopConfig { borderWidth        = myBorderWidth
 myDzenPP :: Handle -> DL.PP
 myDzenPP h = DL.defaultPP
     { DL.ppOutput  = hPutStrLn h . \s -> " " ++ s
-    , DL.ppCurrent = DL.xmobarColor lightWhite "" . DL.wrap "(" ")"
-    , DL.ppVisible = DL.xmobarColor lightWhite "" . DL.wrap "[" "]"
-    , DL.ppUrgent  = DL.xmobarColor colorRed ""
+    -- , DL.ppCurrent = DL.xmobarColor lightWhite "" . DL.wrap "(" ")"
+    -- , DL.ppVisible = DL.xmobarColor lightWhite "" . DL.wrap "[" "]"
+    -- , DL.ppUrgent  = DL.xmobarColor colorRed ""
     , DL.ppLayout  = myPPLayout
     , DL.ppTitle   = DL.shorten 30 . DL.wrap " " " "
     , DL.ppSort    = fmap (. scratchpadFilterOutWorkspace) getSortByIndex
@@ -135,20 +128,20 @@ myDzenPP h = DL.defaultPP
     }
 
 ------------------------------------------------------------------------
--- xmobar
---
-myXmobarPP :: Handle -> DL.PP
-myXmobarPP h = DL.xmobarPP
-    { DL.ppOutput  = hPutStrLn h . \s -> " " ++ s
-    , DL.ppCurrent = DL.xmobarColor lightWhite "" . DL.wrap "(" ")"
-    , DL.ppVisible = DL.xmobarColor lightWhite "" . DL.wrap "[" "]"
-    , DL.ppUrgent  = DL.xmobarColor colorRed ""
-    , DL.ppLayout  = myPPLayout
-    , DL.ppTitle   = DL.shorten 30 . DL.wrap " " " "
-    , DL.ppSort    = fmap (. scratchpadFilterOutWorkspace) getSortByIndex
-    , DL.ppSep     = " "
-    , DL.ppWsSep   = " "
-    }
+-- -- xmobar
+-- --
+-- myXmobarPP :: Handle -> DL.PP
+-- myXmobarPP h = DL.xmobarPP
+--     { DL.ppOutput  = hPutStrLn h . \s -> " " ++ s
+--     , DL.ppCurrent = DL.xmobarColor lightWhite "" . DL.wrap "(" ")"
+--     , DL.ppVisible = DL.xmobarColor lightWhite "" . DL.wrap "[" "]"
+--     , DL.ppUrgent  = DL.xmobarColor colorRed ""
+--     , DL.ppLayout  = myPPLayout
+--     , DL.ppTitle   = DL.shorten 30 . DL.wrap " " " "
+--     , DL.ppSort    = fmap (. scratchpadFilterOutWorkspace) getSortByIndex
+--     , DL.ppSep     = " "
+--     , DL.ppWsSep   = " "
+--     }
 
 ------------------------------------------------------------------------
 -- Default Apps
@@ -166,12 +159,12 @@ myTmuxTerminal = myTerminal ++ " -e tmux attach"
 
 -- Launcher
 myLauncher :: String
-myLauncher = "rofi -show"
+myLauncher = "rofi -no-lazy-grab -show drun -modi run,drun,window -theme $HOME/.config/rofi/launcher/style -drun-icon-theme \"candy-icons\" "
 
 -- Editor
 myTextEditor :: String
 -- myTextEditor = "emacsclient -c -a emacs"
-myTextEditor = "emacs"
+myTextEditor = "nvim"
 
 -- Browser
 myBrowser :: String
@@ -204,22 +197,25 @@ myPPLayout x = case x of
     _                 -> x
 
 myWorkspaces :: [String]
-myWorkspaces =
-    [ "\xE907" -- 
-    , "\xE905" -- 
-    , "\xE92D" -- 
-    , "\xE948" -- 
-    , "\xE929" -- 
-    , "\xE93E" -- 
-    , "\xE926" -- 
-    , "\xE932" -- 
-    , "\xE97D" -- 
-    , "\xE982" -- 
-    , "\xE922" -- 
-    , "\xE942" -- 
-    ]
+myWorkspaces = [show x | x <- [1..16]]
+    -- [ "\xE907" -- 
+    -- , "\xE905" -- 
+    -- , "\xE92D" -- 
+    -- , "\xE948" -- 
+    -- , "\xE929" -- 
+    -- , "\xE93E" -- 
+    -- , "\xE926" -- 
+    -- , "\xE932" -- 
+    -- , "\xE97D" -- 
+    -- , "\xE982" -- 
+    -- , "\xE922" -- 
+    -- , "\xE942" -- 
+    -- ]
 
 ------------------------------------------------------------------------
+mySpacing :: Integer -> l a -> ModifiedLayout Spacing l a
+mySpacing i = spacingRaw False (Border 0 i 0 i) True (Border i 0 i 0) True
+
 -- Layouts
 --
 -- You can specify and transform your layouts by modifying these values.
@@ -238,7 +234,7 @@ myLayout =
         $   mkToggle1 REFLECTY
         $   mkToggle1 MIRROR
         $   Nav.configurableNavigation (Nav.navigateColor myNormalBorderColor)
-        $   
+        $
   -- Layouts
             name "Tall"       myTile
         ||| name "HintedGrid" myHintedGrid
@@ -249,7 +245,7 @@ myLayout =
         ||| name "ThreeCol"   my3cmi
         ||| name "Spiral"     mySpiral
   where
-    name n = renamed [Replace n] . spacing 2
+    name n = renamed [Replace n] . mySpacing 9
     myTile       = RTile.ResizableTall 1 (3 / 100) (4 / 7) []
     my3cmi       = ThreeColMid 1 (3 / 100) (1 / 2)
     mySpiral     = spiral (6 / 7)
@@ -261,18 +257,42 @@ myLayout =
 ------------------------------------------------------------------------
 -- Manage Hooks
 --
-myLogHook :: Handle -> X ()
-myLogHook b =
-    DL.dynamicLogWithPP (myXmobarPP b) -- >> updatePointer (0.5, 0.5) (0, 0)
+-- myLogHook :: Handle -> X ()
+-- myLogHook b =
+--     DL.dynamicLogWithPP (myXmobarPP b) -- >> updatePointer (0.5, 0.5) (0, 0)
+
+-- Override the PP values as you would otherwise, adding colors etc depending
+-- on  the statusbar used
+-- myLogHook :: D.Client -> PP
+-- myLogHook dbus = def
+--     { ppOutput = dbusOutput dbus
+--     , ppCurrent = wrap ("%{F" ++ blue ++ "} ") " %{F-}"
+--     , ppVisible = wrap ("%{F" ++ gray ++ "} ") " %{F-}"
+--     , ppUrgent = wrap ("%{F" ++ red ++ "} ") " %{F-}"
+--     , ppHidden = wrap ("%{F" ++ gray ++ "} ") " %{F-}"
+--     , ppTitle = wrap ("%{F" ++ gray2 ++ "} ") " %{F-}"
+--     }
+-- -- Emit a DBus signal on log updates
+-- dbusOutput :: D.Client -> String -> IO ()
+-- dbusOutput dbus str = do
+--     let signal = (D.signal objectPath interfaceName memberName) {
+--             D.signalBody = [D.toVariant $ UTF8.decodeString str]
+--         }
+--     D.emit dbus signal
+--   where
+--     objectPath = D.objectPath_ "/org/xmonad/Log"
+--     interfaceName = D.interfaceName_ "org.xmonad.Log"
+--     memberName = D.memberName_ "Update"
 
 myManageHook :: ManageHook
 myManageHook = composeAll
-    [ 
+    [
      ManageDocks.manageDocks
+    , insertPosition End Newer -- open new windows at the end
     , floatNextHook
     , myManageHook'
-    ] 
-    
+    ]
+
 --
 -- https://wiki.haskell.org/Xmonad/Frequently_asked_questions
 -- xprop fields used in manage hook:
@@ -307,15 +327,15 @@ myManageHook' =
     myFullFloats  = []
       -- workspace numbers start at 0
     myShifts =
-        [ ("telegram-desktop"  , 9)
-        , ("TelegramDesktop"   , 9)
+        [ ("telegram-desktop"  , 10)
+        , ("TelegramDesktop"   , 10)
         , ("Slack"             , 9)
         , ("Postman"           , 6)
         , ("DevCenter"         , 6)
         , ("jetbrains-idea-ce" , 2)
         , ("firefox"           , 0)
-        , ("Chromium"          , 11)
-        , ("Joplin"            , 5)
+        , ("Chromium"          , 13)
+        , ("Joplin"            , 6)
         , ("Transmission-gtk"  , 11)
         ]
     myTitleShifts =
@@ -325,8 +345,8 @@ myManageHook' =
 myStartupHook :: X ()
 myStartupHook = do
     checkKeymap myConfig myKeymap
-    Cursor.setDefaultCursor Cursor.xC_left_ptr
-    spawn "$HOME/.xmonad/autorun.sh"
+    -- Cursor.setDefaultCursor Cursor.xC_left_ptr
+    spawn "$HOME/.xmonad/scripts/autostart.sh"
 
 myHandleEventHook =
     ManageDocks.docksEventHook <+> handleEventHook desktopConfig
@@ -634,7 +654,7 @@ fmtDesc name keyMap rows fg hl
 fmtHint :: [(String, a, Label, String)] -> String -> String -> String -> Int -> String
 fmtHint keyMap colorBinding colorDesc colorTitle maxChars =
    "\"\\n" ++ L.intercalate "\\n" listKeyMap ++ "\""
-  where 
+  where
     colSize = charsPerCol maxChars
     emptyColRow = rAlign colSize "" ++ lAlign colSize ""
     sortedKeymap = sortKeymap keyMap
@@ -656,7 +676,7 @@ textAlign fAlign n = T.unpack . fAlign n ' ' . T.pack
 colDesc ::  String -> String -> String -> Int -> [(String, a, Label, String)] -> [String]
 colDesc colorBinding colorDesc colorTitle colSize bindings=
     (colStr colorTitle ++ rAlign colSize (getLabel bindings) ++ lAlign (colSize + 1) "") :
-    [ colStr colorBinding 
+    [ colStr colorBinding
           ++ rAlign colSize key
           ++ " "
           ++ colStr colorDesc
@@ -675,9 +695,9 @@ trd (_, _, c, _) =  c
 
 buildColumns :: [[String]] -> [[String]]
 buildColumns keyGroups = columns
-  where 
+  where
     keyCol = concat keyGroups
-    columnsLength = ceiling (fromIntegral(length keyCol) / 3) 
+    columnsLength = ceiling (fromIntegral(length keyCol) / 3)
     columns = chunksOf columnsLength keyCol
 
 
@@ -688,28 +708,23 @@ buildKeyMap [a,b,c] filler = buildSection a b c filler
 buildKeyMap (a:b:c:xs) filler = buildSection a b c filler ++ buildKeyMap xs filler
 
 buildSection :: [String] -> [String] -> [String] -> String -> [String]
-buildSection a b c filler = zipWith3 (\x y z -> x ++ y ++ z) (fillColumn a)  (fillColumn b)  (fillColumn c) 
+buildSection a b c filler = zipWith3 (\x y z -> x ++ y ++ z) (fillColumn a)  (fillColumn b)  (fillColumn c)
   where rows = max (length a) $ max (length b) (length c)
         fillColumn col = col ++ replicate (rows - length col) filler
 
 sortKeymap :: [(String, a, Label, String)] -> [[(String, a, Label, String)]]
 sortKeymap = map sortByKeyBinding . groupByLabel
 
-sortByKeyBinding :: [(String, a, Label, String)] -> [(String, a , Label, String)] 
+sortByKeyBinding :: [(String, a, Label, String)] -> [(String, a , Label, String)]
 sortByKeyBinding = L.sortBy (\(a, _, _, _) (b, _, _ ,_ ) -> compare a b)
 
-groupByLabel :: [(String, a, Label, String)] -> [[(String, a, Label, String)]] 
+groupByLabel :: [(String, a, Label, String)] -> [[(String, a, Label, String)]]
 groupByLabel = L.groupBy (\a b -> trd a == trd b) . L.sortBy (\a b -> compare (trd a)  (trd b))
 
 showHelp :: X ()
 showHelp = spawn $ unwords
     [ "$HOME/.xmonad/scripts/showHintForKeymap.sh"
     , desc
-    , "dzen_xmonad"
-    , "22"
-    , "0"
-    , show background
-    , "1"
     ]
     where desc = fmtHint myKeymapH lightBlue lightGreen lightRed 220
 
@@ -735,7 +750,7 @@ myFocusFollowsMouse = True
 
 myMouseBindings XConfig { XMonad.modMask = modMask } = M.fromList
     [ ( (modMask, button1)
-      ,  \w -> focus w >> windows W.swapMaster -- 
+      ,  \w -> focus w >> windows W.swapMaster --
       ), -- mod-button1, Raise the window to the top of the stack
       ((modMask .|. controlMask, button1), \w -> focus w >> mouseMoveWindow w
                                           >> windows W.shiftMaster
@@ -759,7 +774,7 @@ myModMask :: KeyMask
 myModMask = mod4Mask
 
 myKeys :: XConfig l -> M.Map (KeyMask, KeySym) (X ())
-myKeys config = mkKeymap config $ myKeymap ++ rmHint myKeymapH 
+myKeys config = mkKeymap config $ myKeymap ++ rmHint myKeymapH
 
 myKeymap :: [(String, X ())]
 myKeymap = myWorkspaceMovementKeys
@@ -794,7 +809,7 @@ myWorkspaceMovementKeys =
     , (key   , ws  ) <- zip keys' myWorkspaces
     ]
   where
-    keys'      = fmap return $ ['1' .. '9'] ++ ['0', '-', '=']
+    keys'      = fmap return $ ['1' .. '9'] ++ ['0', '-', '=', '[', ']', ';' ,'\'']
     viewShift = liftM2 (.) W.greedyView W.shift
 
 myMovementKeys :: [(String, X (), Label, String)]
@@ -899,16 +914,16 @@ myLayoutKeys' =
       , Layout
       , "Increase master"
       ) -- Increase the number of master pane
-    , ( "M-<Space>"
+    , ( "M-\\"
       , sendMessage NextLayout
       , Layout
       , "Next layout"
       ) -- Rotate through the available layout algorithms
-    , ( "M-S-<Space>"
-      , sendMessage FirstLayout
-      , Layout
-      , "First layout"
-      ) 
+    -- , ( "M-S-\\"
+    --   , sendMessage FirstLayout
+    --   , Layout
+    --   , "First layout"
+    --   )
     , ("M-m", windows W.shiftMaster, Client, "Shift with master") -- Shift the focused window to the master window
     ]
 
@@ -972,37 +987,37 @@ myLauncherKeys' =
       , Launcher
       , "File Manager"
       ) -- Launch FileManager
-    , ( "M-' b"
+    , ( "M-, b"
       , spawn myBrowser
       , Launcher
       , "Browser"
       ) -- Launch browser
-    , ( "M-' e"
+    , ( "M-, e"
       , spawn myTextEditor
       , Launcher
       , "Text Editor"
       ) -- Launch text editor
-    , ( "M-' f"
+    , ( "M-, f"
       , spawn myFileManager
       , Launcher
       , "File Manager"
-      ) -- Launch File Manager 
-    , ( "M-' k"
+      ) -- Launch File Manager
+    , ( "M-, k"
       , spawn "xkill"
       , Launcher
       , "Kill Window"
       ) -- Kill window
-    , ( "M-' r"
+    , ( "M-, r"
       , spawn myConsoleFileManager
       , Launcher
       , "Ranger"
       ) -- Launch text editor
-    , ( "M-' t"
+    , ( "M-, t"
       , spawn myTmuxTerminal
       , Launcher
       , "Tmux"
       ) -- Launch tmux terminal
-    , ( "M-' v"
+    , ( "M-, v"
       , spawn "nvim"
       , Launcher
       , "Neovim"
@@ -1029,7 +1044,7 @@ myScreenCaptureKeys =
       , Capture
       , "Take a screenshot (area)"
       )
-    , ( "C-<Print>" -- 
+    , ( "C-<Print>" --
       , spawn
           $  myScreenCapture
           ++ " window && notify-send 'Focused window captured'"
@@ -1139,12 +1154,12 @@ myControlKeys =
       , Misc
       , "Restart"
       ) -- restart xmonad w/o recompiling
-    , ( "M-d"
+    , ( "M-S-<Space>"
       , shellPrompt myPrompt
       , Misc
       , "Shell launcher"
       ) -- launch apps
-    , ( "M1-d"
+    , ( "M-<Space>"
       , spawn myLauncher
       , Misc
       , "Launcher"
@@ -1159,6 +1174,6 @@ myControlKeys =
       , UH.clearUrgents
       , Client
       , "Clear urgent"
-      ) -- clear urgents 
+      ) -- clear urgents
     , ("M-<F1>", unGrab >> showHelp, Misc, "Show help")
     ]

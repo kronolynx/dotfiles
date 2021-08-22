@@ -5,21 +5,27 @@ fish_vi_key_bindings
 ########## Plugins
 ##########################################################
 
-if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install);
-end
+# if not functions -q fisher; eval (curl -sL https://git.io/fisher && fisher install jorgebucaran/fisher);
+# # if not functions -q fisher; eval (curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher);
+# end
 
-fundle plugin 'decors/fish-colored-man'
-fundle plugin 'fisherman/gitignore'
-fundle plugin 'jhillyerd/plugin-git'
-fundle plugin 'oh-my-fish/plugin-config'
-fundle plugin 'oh-my-fish/plugin-extract'
-fundle plugin 'danhper/fish-ssh-agent'
-fundle plugin 'patrickf3139/fzf.fish'
-fundle plugin 'jorgebucaran/replay.fish'
-#fundle plugin 'Gazorby/fish-abbreviation-tips'
-fundle plugin 'jethrokuan/z'
+# if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install);
+# end
 
-fundle init
+# fundle plugin 'decors/fish-colored-man'
+# fundle plugin 'fisherman/gitignore'
+# fundle plugin 'oh-my-fish/plugin-config'
+# fundle plugin 'oh-my-fish/plugin-extract'
+# fundle plugin 'danhper/fish-ssh-agent'
+# fundle plugin 'patrickf3139/fzf.fish'
+# fundle plugin 'jorgebucaran/replay.fish'
+# fundle plugin 'Gazorby/fish-abbreviation-tips'
+# fundle plugin 'jethrokuan/z'
+# fundle plugin 'edc/bass'
+# fundle plugin 'wfxr/forgit'
+# # fundle plugin 'jorgebucaran/nvm.fish'
+
+# fundle init
 
 ##########################################################
 ##########
@@ -29,115 +35,19 @@ set -gx TERM rxvt-256color
 set -gx PATH ~/.local/bin $PATH
 set fish_greeting ''
 
+set -gx GPG_TTY (tty)
+
+set -g FZF_CTRL_T_COMMAND "command find -L \$dir -type f 2> /dev/null | sed '1d; s#^\./##'"
+
+set -g SHELL /usr/bin/fish
+set -g FZF_DEFAULT_OPTS '--layout=reverse'
+set -g FORGIT_FZF_DEFAULT_OPTS "$FORGIT_FZF_DEFAULT_OPTS --reverse"
+set -g FORGIT_LOG_GRAPH_ENABLE false
+
 
 ##########################################################
-##########    Aliases
+##########    Functions
 ##########################################################
-
-#replace system tools
-alias old_cat=bat
-alias cat=bat # replace cat with bat
-alias old_ls=ls
-alias ls=exa # improved ls
-alias old_vim=vim
-alias vim=nvim
-alias old_vi=vi
-alias vi=vim
-alias vin="vim -u NONE" # vim no config
-
-alias CAPS="xdotool key Caps_Lock"
-
-alias emx="emacsclient -t --alternate-editor='nvim'"
-alias emc="emacsclient -c -a emacs"
-alias cm="cmus"
-alias co="code ."
-alias chmox='chmod +x'
-alias fv='f -e vim'
-alias h="htop"
-alias l='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
-alias lp="lsof -i :" # e.g. lp 8080 # which app is using a port
-alias lt='ls --tree'
-alias o='a -e xdg-open'
-alias r='ranger --choosedir=$HOME/.rangerdir; set LASTDIR (cat $HOME/.rangerdir); cd "$LASTDIR"'
-alias rm="rm -i"
-alias tk="tmux kill-session -t "
-alias tkd="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
-alias untar='tar -sxvf '
-alias v="vim"
-alias vi="nvim"
-alias vim="nvim"
-alias wget='wget -c '
-alias gs='git status'
-alias gtl='git log'
-alias chmodrec='old_find . -type f -iname "*.sh" -exec chmod +x {} \;'
-alias bashi='bash -s interactive'
-
-alias tstamp='date "+%F-%H%M"'
-
-
-# to create more alias for different distro operations
-# https://wiki.archlinux.org/index.php/Pacman/Rosetta
-
-## Manjaro
-alias S="yay -Ss " # search
-alias U="sudo pacman -Syu" # update
-alias Ua="yay -Syu" # update including aur packages
-alias Uf="sudo pacman -Syy" # force update
-alias I="yay -S " # install
-alias Iy="yay -S --noconfirm " # install no confirm
-alias R="sudo pacman -Rs " # remove with dependcies
-alias Rd="sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
-alias which="pacman -Qo "
-alias downgrade-fix="sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
-alias mirrors="sudo pacman-mirrors --fasttrack"
-
-## Ubuntu
-# alias S="apt search "
-# alias U="sudo apt update && sudo apt upgrade"
-# alias I="sudo apt install -y"
-# alias R="sudo apt remove "
-# alias dist-upgrade-available="sudo do-release-upgrade -c"
-# alias dist-upgrade="sudo do-release-upgrade"
-# alias hold="sudo apt-mark hold" # mark package as held back which will prevent the package from being autmotically upgraded
-# alias unhold="sudo apt-mark unhold" # cancel previously set hold package
-# alias showhold="apt-mark showhold" # print a list of packages on hold
-
-
-# source and edit
-alias EF="vim ~/.config/fish/config.fish"
-alias EG="vim ~/.gitrc"
-alias ET="vim ~/.tmux.conf"
-alias EV="vim ~/.vimrc"
-alias LF="cat ~/.config/fish/custom/aliases.fish | grep -v '^#' | grep 'alias'"
-alias SF="source ~/.config/fish/config.fish"
-alias SV="source ~/.vimrc"
-alias SX="xrdb ~/.Xresources"
-
-alias screenOff="xset dpms force off"
-
-alias nordc="nordvpn c p2p && nordvpn s killswitch on && nordvpn s autoconnect on"
-alias nordd="nordvpn s killswitch off && nordvpn s autoconnect off && nordvpn d"
-
-# networking. ip address, dig, dns
-alias ipdig="dig +short myip.opendns.com @resolver1.opendns.com"
-alias dig="dig +nocmd any +multiline +noall +answer"
-
-# file size
-alias fs="stat -f \"%z bytes\""
-
-# stop ping after 5 requests
-alias ping='ping -c 5'
-alias rm-broken-symlinks="old_find . -xtype l -delete"
-
-# urxvt clean screen
-alias cls="echo -ne '\033c'"
-
-# json manipulation
-# https://github.com/tomnomnom/gron
-alias norg="gron --ungron"
-alias ungron="gron --ungron"
 
 function jsondiff
   if set -q argv[1] and set -q argv[2]
@@ -145,31 +55,12 @@ function jsondiff
   end
 end
 
-##########################################################
-##########    Functions
-##########################################################
-
 # retry command
 function retry
   $argv
   while [ $status -ne 0 ]
     $argv
   end
-end
-
-# usage
-# news :help
-# news china
-# news trump+huawei
-# news category=technology
-function news
-    curl "us.getnews.tech/$argv"
-end
-function newsfr
-    curl "fr.getnews.tech/$argv"
-end
-function newsde
-    curl "gr.getnews.tech/$argv"
 end
 
 
@@ -228,8 +119,16 @@ end
 ##########################################################
 ##########    Source
 ##########################################################
-if test -e "$HOME/.config/fish/custom/work.fish"
-  source $HOME/.config/fish/custom/work.fish
+if test -e "$HOME/.config/fish/custom/dev.fish"
+  source $HOME/.config/fish/custom/dev.fish
+end
+
+if test -e "$HOME/.config/fish/custom/abbr.fish"
+  source $HOME/.config/fish/custom/abbr.fish
+end
+
+if test -e "$HOME/.config/fish/custom/alias.fish"
+  source $HOME/.config/fish/custom/alias.fish
 end
 
 if test -e "$HOME/.anaconda"
@@ -239,6 +138,23 @@ end
 
 if command -v thefuck >/dev/null 2>&1
   thefuck --alias pls | source
+end
+
+# if test -e "/usr/share/nvm"
+#   source /usr/share/nvm/init-nvm.sh
+# end
+# if test -e "/usr/share/nvm/init-nvm.sh"
+#     bass source /usr/share/nvm/init-nvm.sh --no-use ';' nvm $argv
+# end
+
+if test -e "$HOME/.nvm/nvm.sh"
+  function nvm
+      bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
+  end
+end
+
+if command -v direnv >/dev/null 2>&1
+    direnv hook fish | source
 end
 
 ##########################################################
