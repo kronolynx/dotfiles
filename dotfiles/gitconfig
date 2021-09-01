@@ -57,8 +57,8 @@
   default = current
 [github]
   user = kronolynx
-[interactive]
-  diffFilter = delta --color-only
+# [interactive]
+#   diffFilter = delta --color-only
 [alias]
   amend = commit --amend --no-edit
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
@@ -109,7 +109,8 @@
   pdiff = diff @~..@
   pf = push -f
   po = "!git push -u origin $(git branch-name)" # push to origin
-  pof = "!git push -u origin $(git branch-name) -f" # push to origin
+  pof = "!git push -u origin $(git branch-name) --force-with-lease" # push to origin
+  poff = "!git push -u origin $(git branch-name) -f" # push to origin
   pod = "!git push origin --delete $(git branch-name)" # delete origin
   pom = "!git fetch && git pull origin master"
   pop = stash pop

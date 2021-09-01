@@ -5,10 +5,18 @@
       <args>--fs=yes "{1}"</args>
       <hidexbmc>true</hidexbmc>
     </player>
+    <player name="SMPlayer" type="ExternalPlayer" audio="false" video="true">
+      <filename>/usr/bin/smplayer</filename>
+      <args>--fs=yes "{1}"</args>
+      <hidexbmc>true</hidexbmc>
+    </player>
     <player name="VLC" type="ExternalPlayer" audio="false" video="true">
       <filename>/usr/bin/vlc</filename>
       <args>--fullscreen "{1}"</args>
       <hidexbmc>true</hidexbmc>
     </player>
   </players>
+  <rules action="prepend">
+    <rule vide="true" player="MPV"/>
+  </rules>
 </playercorefactory>

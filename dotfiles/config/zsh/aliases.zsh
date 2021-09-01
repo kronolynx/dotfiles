@@ -9,7 +9,7 @@ alias L='| less'
 alias M='| most'
 alias T='| tail'
 alias c="cmus"
-alias cat=bat # replace cat with bat
+alias cat='bat --paging=never' # replace cat with bat
 alias chmodrec='old_find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias chmox='chmod +x'
 alias cm="cmus"
@@ -20,7 +20,12 @@ alias emr="emacsclient -e '(kill-emacs)'" # restart server
 alias fv='f -e vim'
 alias g="git"
 alias gis='git status -s'
-alias gtl='git log'
+alias gil='git log'
+alias gicm='git commit -m'
+alias gim='git commit -m'
+alias gid='git diff'
+alias gids='git diff --staged'
+alias gidc='git diff --cached'
 alias h="htop"
 alias ip="ip -c"
 alias ipe='curl ipinfo.io/ip'
@@ -35,6 +40,7 @@ alias lt='ls --tree'
 alias m=mp3download
 alias man="man_color"
 alias nv=nvim
+alias vm=vifm
 alias o='a -e xdg-open'
 alias r='ranger --choosedir=$HOME/.rangerdir; LASTDIR=`cat $HOME/.rangerdir`; cd "$LASTDIR"'
 # alias r='ranger --choosedir=$HOME/.rangerdir; set LASTDIR (cat $HOME/.rangerdir); cd "$LASTDIR"'

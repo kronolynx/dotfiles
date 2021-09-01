@@ -45,6 +45,8 @@ Thumbs.db
 .envrc
 .env
 .local.application.conf
+.envapi
+.envdom
 
 # Scala #
 #########
@@ -57,9 +59,12 @@ dependency-graph.svg
 
 # VS Code #
 ###########
-.vscode/settings.json
+.vscode
 
 .in
 .out
 .sdkmanrc
+.env.fish
+.out.fish
+.envrc
 

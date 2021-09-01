@@ -1,14 +1,21 @@
 # fix "xdg-open fork-bomb" export your preferred browser from here
 export BROWSER=/usr/bin/google-chrome-stable
-export EDITOR=/usr/bin/nvim
-export TERMINAL=/usr/bin/termite
-export FILE_MANAGER=/usr/bin/nemo
+export EDITOR=/usr/bin/vim
+export VISUAL=/usr/bin/vim
+export TERMINAL=/usr/bin/alacritty
+export FILE_MANAGER=/usr/bin/thunar
+# export SHELL=/bin/zsh
 
 export QT_QPA_PLATFORMTHEME="qt5ct"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
+#export LANG=en_US.UTF-8
+#export LANGUAGE=en_US.UTF-8
+#export LC_ALL=en_US.UTF-8
+#export LC_ALL=C
+
 
 export COURSIER_BIN_DIR=~/.local/bin/
 
@@ -40,4 +47,9 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
+#export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
+
+# >>> JVM installed by coursier >>>
+#export JAVA_HOME="/home/krono/.cache/coursier/jvm/adopt@1.8.0-292"
+#export PATH="$PATH:/home/krono/.cache/coursier/jvm/adopt@1.8.0-292/bin"
+# <<< JVM installed by coursier <<<

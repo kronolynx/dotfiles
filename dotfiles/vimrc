@@ -221,12 +221,12 @@ nnoremap s "_d
 " Run the current line as if it were a command. Often more convenient than q: when experimenting.
 nnoremap <leader>ee :exe getline(line('.'))<cr>
 "
-" easy clipboard copy/paste {{{
-noremap <leader>y "*y
-noremap <leader>Y "*Y
-noremap <leader>p "*p
-noremap <leader>P "*P
-" }}}
+" " easy clipboard copy/paste {{{  disabled, unnamed already do this
+" noremap <leader>y "*y
+" noremap <leader>Y "*Y
+" noremap <leader>p "*p
+" noremap <leader>P "*P
+" " }}}
 "
 " search {{
 noremap <leader>gf :FZF<CR>
@@ -574,10 +574,11 @@ function! ColorScheme()
     let g:lightline.colorscheme = 'ayu_mirage'
   endif
 
+
 endfunction
 
 " The Defaults
-:call SwitchColorScheme('dracula')
+:call SwitchColorScheme('palenight')
 " }}}
 
 " whichkey {{{
