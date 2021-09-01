@@ -29,9 +29,9 @@
 </action>
 <action>
 	<icon>bash</icon>
-	<name>Open in ranger</name>
+	<name>Open in Vifm</name>
 	<unique-id>1546342636246662-6</unique-id>
-	<command>sh -c &apos;cd %f;$TERMINAL -e ranger&apos;</command>
+	<command>sh -c &apos;cd %f;$TERMINAL -e vifm&apos;</command>
 	<description></description>
 	<patterns>*</patterns>
 	<directories/>

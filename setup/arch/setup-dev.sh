@@ -12,6 +12,8 @@ coding=(
   # # Latex
   # # texlive-most
   meld
+  # a shell extension that manages your environment
+  direnv-bin
   # # The Glasgow Haskell Compiler
   # #ghc
   # # The Haskell Tool Stack
