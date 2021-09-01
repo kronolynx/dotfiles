@@ -19,6 +19,9 @@ base=(
   arandr
   # printing system
   cups
+  # shell
+  fish
+  gparted
   # sound server
   pavucontrol
   pulseaudio-equalizer-ladspa
@@ -56,11 +59,6 @@ base=(
   zsh
 )
 
-display_manager=(
-  lightdm
-  lightdm-slick-greeter
-  lightdm-settings
-)
 
 media=(
   vlc
@@ -71,7 +69,7 @@ media=(
   # Cast Audio/Video to your Google Cast and Sonos Devices
   mkchromecast
   # Free radio streaming software with more than 20,000 radio stations
-  odio-appimage
+  # odio-appimage
   # ebook management
   calibre
 )
@@ -99,7 +97,9 @@ cli=(
   # text based persona organizer
   calcurse
   # vim like file manager
-  ranger
+  vifm
+  # # code color higlight
+  highlight
   w3m
   ffmpegthumbnailer
   # command like trashcan
@@ -113,6 +113,7 @@ cli=(
   # interactively kill process
   fkill
   # terminal info
+  screenfetch
   neofetch
   # fast and user-friendly alternative to find
   fd
@@ -134,8 +135,6 @@ cli=(
   acpi
   # font viewer
   gucharmap
-
-  speedtest-cli
 )
 
 cli_media=(
@@ -147,17 +146,19 @@ cli_media=(
   youtube-dl
   # Simple screen recorder with an easy to use interface (gif)
   peek
+  feh
 )
 
 misc=(
+  anki
+  authy
+
   # yubico U2F (2 factor authentication)
   libu2f-host
   dropbox
-  thunar-dropbox
-  slack-desktop
-  docker
-  docker-compose
-  socat
+  insync
+  # thunar-dropbox
+  # slack-desktop
   # Small commandline tool to configure devices (set elecom buttons)
   # chinese input
   #fcitx
@@ -181,29 +182,29 @@ misc=(
   gvfs-gphoto2
   gvfs-google
   gvfs-goa
-  gnome-keyring
-  # Manage firmware on devices supported by fwupd
-  gnome-firmware
+  # gnome-keyring
+  # # Manage firmware on devices supported by fwupd
+  # gnome-firmware
   # Determine file type, includes mimeopen and mimetype
   perl-file-mimeinfo
   xdg-utils
   xdg-user-dirs
   xdg-desktop-portal
   xdg-desktop-portal-gtk
-  
+
   ####---->> XORG
-  xorg-server
-  xorg-server-xephyr
-  xorg-xwininfo
-  xorg-xhost
-  xorg-xinit
-  xorg-xinput
-  xorg-xrandr
-  xorg-xprop
-  xorg-xkill
-  xorg-xbacklight
-  xorg-xsetroot
-  
+  # xorg-server
+  # xorg-server-xephyr
+  # xorg-xwininfo
+  # xorg-xhost
+  # xorg-xinit
+  # xorg-xinput
+  # xorg-xrandr
+  # xorg-xprop
+  # xorg-xkill
+  # xorg-xbacklight
+  # xorg-xsetroot
+
   ## xorg apps
   wmctrl
   numlockx
@@ -211,148 +212,18 @@ misc=(
   xcape
   xdotool
   xautolock
-  
+
   xsettingsd #Provides settings to X11 applications via the XSETTINGS specification
-  stacer-bin
-)
-
-coding=(
-  jdk8-openjdk
-  coursier
-  docker
-  docker-compose
-  # # code color higlight
-  highlight
-  # # Latex
-  # # texlive-most
-  meld
-  # # The Glasgow Haskell Compiler
-  # #ghc
-  # # The Haskell Tool Stack
-  # #stack
-  # # git pager
-  # git-delta
-  
-  asbru-cm # connection manager
-  #cassandra
-  cqlsh
-)
-
-install_tmux() {
-  $SCRIPTPATH/helpers/install-app.sh tmux
-
-  if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-  fi
-}
-
-tilling_common_apps=(
-  # menu for launching applications (replacement for dmenu)
-  rofi
-  # theme
-  #lxappearance
-  # Customizable and lightweight notifi��,��,cation-daemon
-  dunst
-  # gtk notifications
-  #xfce4-notifyd
-  # power manager
-  xfce4-power-manager
-  # autolock e.g xautolock -time 10 -locker xscreensaver
-  xautolock
-  # Simple command-line screenshot utility for X
-  #scrot
-  # wallpaper
-  #nitrogen
-  # X compositor that may fix tearing issues
-  picom
-  #i3lock
-  # image viewer (set background image)
-  feh
-  # Command-line X11 automation tool 
-  xdotool
-  # GTK+ clipboard manager
-  clipit
-  volumeicon
-  # X11 Display Manager 
-  lxdm-gtk3
-)
-
-awesome=(
-  awesome-git
-)
-
-xmonad=(
-  xmonad
-  xmonad-contrib
-  xmobar
-  trayer
-  # Lightweight GTK+ clipboard manager
-  dzen2
-  # senity fork (used in xmobar calendar)
-  yad
-)
-
-openbox=(
- tint2
- openbox
- obmenu-generator
- obconf
- obkey
-)
-
-i3=(
-  i3-gaps
-  i3-scripts
-  i3-scrot
-  i3exit
-  i3status
-  xss-lock
-  alsa-utils
-  lm_sensors
-  # Lightweight GTK+ clipboard manager
-  clipit
-  # a collection of performance monitoring tools (iostat,isag,mpstat,pidstat,sadf,sar)
-  sysstat
-)
-
-themes=(
-  beautyline
-  adapta-gtk-theme
-  papirus-icon-theme
-  noto-fonts               
-  noto-fonts-emoji         
-  ttf-liberation
-  ttf-opensans
-  noto-fonts-cjk
-  noto-fonts-extra
-  asian-fonts
-  nerd-fonts-noto-sans-mono
-  ttf-iosevka
-  nerd-fonts-complete
-  gtk-engine-murrine
-  qt5ct
-  kvantum-qt5
+  # stacer-bin
 )
 
 
-# set here the name of the window manager (awesome, xmonad or i3)
-#wm="xmonad"
-wm="awesome"
 
-window_manager=$wm[*]
-$SCRIPTPATH/helpers/install-app.sh ${!window_manager}
 
-$COMMON/helpers/pprint.sh "Setting Desktop"
+
+$COMMON/helpers/pprint.sh "Installing apps"
 $SCRIPTPATH/helpers/install-app.sh ${base[*]}
-$SCRIPTPATH/helpers/install-app.sh ${display_manager[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli[*]}
 $SCRIPTPATH/helpers/install-app.sh ${cli_media[*]}
 $SCRIPTPATH/helpers/install-app.sh ${media[*]}
 $SCRIPTPATH/helpers/install-app.sh ${misc[*]}
-$SCRIPTPATH/helpers/install-app.sh ${coding[*]}
-$SCRIPTPATH/helpers/install-app.sh ${tilling_common_apps[*]}
-$SCRIPTPATH/helpers/install-app.sh ${themes[*]}
-
-# install_tmux
-# $SCRIPTPATH/apps/thunar.sh
-$SCRIPTPATH/../common/apps/scala-env.sh

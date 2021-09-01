@@ -1,9 +1,6 @@
 #!/bin/bash
 
 #stack install hlint
+curl -sSL https://get.haskellstack.org/ | sh
 
-(
-git clone https://github.com/haskell/haskell-ide-engine --recursive
-cd haskell-ide-engine && ./install.hs hie
-)
-rm -rf haskell-ide-engine
+# stack install hlint

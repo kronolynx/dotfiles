@@ -11,6 +11,7 @@ apps=(
   xarchiver
   # for thunar thumbnails
   tumbler
+  tumbler-extra-thumbnailers
   # Video thumbnails
   ffmpegthumbnailer
   # PDF thumbnails

@@ -1,8 +1,15 @@
+#
 # If not running interactively, don't do anything
 [[ -o interactive ]] || return
 
 # start ssh agent
-[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)" > /dev/null
+#[ -z "$SSH_AUTH_SOCK" ] && eval "$(ssh-agent -s)" > /dev/null
+
+#if [ -z "$SSH_AUTH_SOCK" ] ; then
+# eval `ssh-agent -s` > /dev/null
+# ssh-add ~/.ssh/id_rsa
+#fi
+
 # gpg
 export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye >/dev/null
@@ -10,6 +17,11 @@ gpg-connect-agent updatestartuptty /bye >/dev/null
 # install plugin manager if not installed
 [ ! -d ~/.zinit ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh)"
 
+if [[ -d $HOME/nvm ]]; then
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
 
 ### Added by Zinit's installer
 if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
@@ -156,3 +168,10 @@ fi
 #     tmux
 #   fi
 # fi
+
+if command -v direnv &> /dev/null; then
+  # export environment variables https://direnv.net/ 
+  eval "$(direnv hook zsh)"
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
