@@ -199,6 +199,13 @@ filextype *.html,*.htm
         \ uzbl-browser %f %i &,
 filetype *.html,*.htm links, lynx
 
+fileviewer *.scala,*.sbt,*.sc,*.sh,*.hs,*.py,*.kt,
+        \ *.java,*.md,*.yaml,*.cpp,*.lua,*.json,*.rs,
+        \ *.toml,*.c,*.h,*.lisp,*.ts,*.el,*.clj,*.fish
+        \ *.org,*.pl,*.rb,*.go,*.dockerfile,
+        \ *.xml,*.html,*.css
+        \ highlight -O xterm256 -s dante %c
+
 " Object
 filetype *.o nm %f | less
 
