@@ -1,3 +1,3 @@
 [submodule "dotfiles/config/xmonad"]
 	path = dotfiles/config/xmonad
-	url = https://github.com/kronolynx/xmonad
+	url = git@github.com:kronolynx/xmonad.git
