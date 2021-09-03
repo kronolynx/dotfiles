@@ -54,8 +54,8 @@ abbr gprum 'git pull --rebase upstream master'
 abbr gpullall 'git submodule update --recursive --remote'
 abbr gpullsub 'git submodule update --recursive'
 abbr gr 'git remote'
-abbr grb 'git rebase'
-abbr grc 'git rebase --continue'
+abbr grbs 'git rebase'
+abbr grbc 'git rebase --continue'
 abbr greom 'git reset --hard origin/master'
 abbr gresetfile 'git checkout HEAD --' # <file-path>  reset file to HEAD
 abbr gri 'git rebase -i' # commit ref to start (not included) or HEAD~# where # is the number of commits to rebase/squash
