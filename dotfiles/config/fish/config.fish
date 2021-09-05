@@ -140,21 +140,16 @@ if command -v thefuck >/dev/null 2>&1
   thefuck --alias pls | source
 end
 
-# if test -e "/usr/share/nvm"
-#   source /usr/share/nvm/init-nvm.sh
-# end
-# if test -e "/usr/share/nvm/init-nvm.sh"
-#     bass source /usr/share/nvm/init-nvm.sh --no-use ';' nvm $argv
-# end
-
-if test -e "$HOME/.nvm/nvm.sh"
-  function nvm
-      bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
-  end
-end
-
 if command -v direnv >/dev/null 2>&1
     direnv hook fish | source
+end
+
+if test -e "$HOME/.asdf/asdf.fish"
+  # completions  should be installed manually
+  # http://asdf-vm.com/guide/getting-started.html#_3-install-asdf
+  # mkdir -p ~/.config/fish/completions; and ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
+
+  source ~/.asdf/asdf.fish
 end
 
 ##########################################################

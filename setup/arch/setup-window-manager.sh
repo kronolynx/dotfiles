@@ -89,7 +89,7 @@ themes=(
   gtk-engine-murrine
   qt5ct
   kvantum-qt5
-  sweet-theme-git
+  sweet-theme-git-dark
 )
 
 # set here the name of the window manager (awesome, xmonad or i3)

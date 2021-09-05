@@ -26,18 +26,19 @@ coding=(
   cqlsh
 )
 
-docker = (
+docker=(
   docker
   docker-compose
   socat # remote
 )
 
-misc = (
+misc=(
   aws-cli
   aws-iam-authenticator-bin
 )
 
 $SCRIPTPATH/helpers/install-app.sh ${coding[*]}
 $SCRIPTPATH/helpers/install-app.sh ${docker[*]}
+$SCRIPTPATH/helpers/install-app.sh ${misc[*]}
 
 $SCRIPTPATH/../common/apps/scala-env.sh
