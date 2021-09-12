@@ -36,7 +36,7 @@ alias v="vim"
 alias vi="nvim"
 alias vim="nvim"
 alias wget='wget -c '
-alias chmodrec='old_find . -type f -iname "*.sh" -exec chmod +x {} \;'
+alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias bashi='bash -s interactive'
 alias vm=vifm
 
@@ -84,7 +84,7 @@ alias fs="stat -f \"%z bytes\""
 
 # stop ping after 5 requests
 alias ping='ping -c 5'
-alias rm-broken-symlinks="old_find . -xtype l -delete"
+alias rm-broken-symlinks="find . -xtype l -delete"
 
 # json manipulation
 # https://github.com/tomnomnom/gron

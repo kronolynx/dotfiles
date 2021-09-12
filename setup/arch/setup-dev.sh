@@ -35,6 +35,7 @@ docker=(
 misc=(
   aws-cli
   aws-iam-authenticator-bin
+  kube-ctl
 )
 
 $SCRIPTPATH/helpers/install-app.sh ${coding[*]}

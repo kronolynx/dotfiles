@@ -88,7 +88,6 @@ themes=(
   asian-fonts
   gtk-engine-murrine
   qt5ct
-  kvantum-qt5
   sweet-theme-git-dark
 )
 
