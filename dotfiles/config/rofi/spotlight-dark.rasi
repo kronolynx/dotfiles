@@ -5,12 +5,13 @@
  *******************************************************************************/
 
 configuration {
-    font            : "Hack 12";
-    display-ssh     : "";
-    display-run     : "";
-    display-drun    : "";
-    display-window  : "";
-    display-combi   : "";
+    font              : "Hack 12";
+    display-ssh       : "";
+    display-run       : "";
+    display-drun      : "";
+    display-window    : "";
+    display-combi     : "";
+    display-clipboard : "";
 
 }
 * {

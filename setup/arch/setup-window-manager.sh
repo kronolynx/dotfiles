@@ -27,12 +27,12 @@ tilling_common_apps=(
   # autolock e.g xautolock -time 10 -locker xscreensaver
   xautolock
   # Simple command-line screenshot utility for X
-  #scrot
+  scrot
   # wallpaper
   #nitrogen
   # X compositor that may fix tearing issues
   picom-jonaburg-git
-  #i3lock
+  i3lock
   # image viewer (set background image)
   feh
   # Command-line X11 automation tool
