@@ -37,6 +37,7 @@ tilling_common_apps=(
   feh
   # Command-line X11 automation tool
   xdotool
+  xsetroot
   # GTK+ clipboard manager
   clipit
   volumeicon
