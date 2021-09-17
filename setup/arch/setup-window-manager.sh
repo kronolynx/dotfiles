@@ -28,6 +28,7 @@ tilling_common_apps=(
   xautolock
   # Simple command-line screenshot utility for X
   scrot
+  xfce4-screenshooter
   # wallpaper
   #nitrogen
   # X compositor that may fix tearing issues
@@ -53,6 +54,7 @@ xmonad=(
   stalonetray
   # senity fork (used in xmobar calendar)
   yad
+  dzen2 # for help menu
 )
 
 openbox=(
