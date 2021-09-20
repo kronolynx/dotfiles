@@ -21,6 +21,9 @@ set hlsearch
 " line numbers
 set nu
 
+" edit word when renaming instead of replacing by default
+set idearefactormode=keep
+
 " If a pattern contains an uppercase letter, searching is case sensitive,
 " otherwise, it is not.
 set ignorecase
@@ -126,6 +129,12 @@ nnoremap <C-tab> :action PreviousTab<cr>
 let g:WhichKeyDesc_last_tab = "<leader><Tab> last tab"
 nnoremap <leader><tab>    :action GoToLastTab<CR>
 vnoremap <leader><tab>    <Esc>:action GoToLastTab<CR>
+
+" Resize split
+map <A-,> :action StretchSplitToLeft<cr>
+map <A-.> :action StretchSplitToRight<cr>
+map <A-s-,> :action StretchSplitToTop<cr>
+map <A-s-.> :action StretchSplitToBottom<cr>
 
 " }}}
 
@@ -410,17 +419,17 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 
-nnoremap <A-,> :action DecrementWindowWidth<cr>
-vnoremap <A-,> <Esc>:action DecrementWindowWidth<cr>
-
-nnoremap <A-.> :action IncrementWindowWidth<cr>
-vnoremap <A-.> <Esc>:action IncrementWindowWidth<cr>
-
-nnoremap <A-S-,> :action DecrementWindowHeight<cr>
-vnoremap <A-S-,> <Esc>:action DecrementWindowHeight<cr>
-
-nnoremap <A-S-.> :action IncrementWindowHeight<cr>
-vnoremap <A-S-.> <Esc>:action IncrementWindowHeight<cr>
+#nnoremap <A-,> :action DecrementWindowWidth<cr>
+#vnoremap <A-,> <Esc>:action DecrementWindowWidth<cr>
+#
+#nnoremap <A-.> :action IncrementWindowWidth<cr>
+#vnoremap <A-.> <Esc>:action IncrementWindowWidth<cr>
+#
+#nnoremap <A-S-,> :action DecrementWindowHeight<cr>
+#vnoremap <A-S-,> <Esc>:action DecrementWindowHeight<cr>
+#
+#nnoremap <A-S-.> :action IncrementWindowHeight<cr>
+#vnoremap <A-S-.> <Esc>:action IncrementWindowHeight<cr>
 
 " }}}
 
@@ -485,8 +494,10 @@ vnoremap <leader>xs <Esc>:action ShowSettings<cr>
 " Increase font size
 nnoremap <leader>x+    :action EditorIncreaseFontSize<CR>
 vnoremap <leader>x+    <Esc>:action EditorIncreaseFontSize<CR>
-nnoremap <leader>x=    :action EditorIncreaseFontSize<CR>
-vnoremap <leader>x=    <Esc>:action EditorIncreaseFontSize<CR>
+
+" Reset font size
+nnoremap <leader>x=    :action EditorResetFontSize<CR>
+vnoremap <leader>x=    <Esc>:action EditorResetFontSize<CR>
 
 " Decrease font size
 nnoremap <leader>x-    :action EditorDecreaseFontSize<CR>
