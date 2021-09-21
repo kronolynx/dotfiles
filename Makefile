@@ -45,7 +45,7 @@ symlink:
 	scripts/symlink.sh
 
 chmod: # set scripts as executable
-	@find scripts -type f -iname "*.sh" -exec chmod +x {} \;
+	@find . -type f -iname "*.sh" -exec chmod +x {} \;
 
 clean-links:
 	@find ~/ -xtype l -delete

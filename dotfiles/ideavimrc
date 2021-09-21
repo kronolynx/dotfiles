@@ -45,7 +45,7 @@ set exchange              " Commands: cx, cxx, X, cxc
 set textobj-entire        " Additional text objects: ae, ie
 set easymotion            " Requieres plugins IdeaVim-EasyMotion and AceJump
 set highlightedyank       " 
-set NERDTree              "
+set NERDTree              " t (tab), i (hori), s (vert), I (show hidden), m (menu), r (refresh) 
 set vim-paragraph-motion  "
 set textobj-indent        " Additional text objects: ai, ii, aI
 set which-key
