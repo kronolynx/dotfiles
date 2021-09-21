@@ -3,14 +3,20 @@
 ##########################################################
 
 #replace system tools
-alias old_cat=bat
-alias cat=bat # replace cat with bat
-alias old_ls=ls
-alias ls=exa # improved ls
-alias old_vim=vim
-alias vim=nvim
-alias old_vi=vi
-alias vi=vim
+
+if command -v bat >/dev/null 2>&1
+  alias old_cat=bat
+  alias cat=bat # replace cat with bat
+end
+if command -v exa >/dev/null 2>&1
+  alias old_ls=ls
+  alias ls=exa # improved ls
+end
+
+if command -v nvim >/dev/null 2>&1
+  alias old_vim=vim
+  alias vim=nvim
+end
 alias vin="vim -u NONE" # vim no config
 
 alias CAPS="xdotool key Caps_Lock"

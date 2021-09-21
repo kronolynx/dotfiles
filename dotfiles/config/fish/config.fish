@@ -5,11 +5,16 @@ fish_vi_key_bindings
 ########## Plugins
 ##########################################################
 
-# if not functions -q fisher; eval (curl -sL https://git.io/fisher && fisher install jorgebucaran/fisher);
-# # if not functions -q fisher; eval (curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher);
-# end
+# install fisher and plugins if not installed
+if not functions -q fisher; 
+  echo "Installing fisher"
+  eval  curl -sLo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
+  source ~/.config/fish/functions/fisher.fish
+  eval fisher update
+end
 
-# if not functions -q fundle; eval (curl -sfL https://git.io/fundle-install);
+# if not functions -q fundle; 
+#   eval (curl -sfL https://git.io/fundle-install);
 # end
 
 # fundle plugin 'decors/fish-colored-man'
@@ -20,10 +25,8 @@ fish_vi_key_bindings
 # fundle plugin 'patrickf3139/fzf.fish'
 # fundle plugin 'jorgebucaran/replay.fish'
 # fundle plugin 'Gazorby/fish-abbreviation-tips'
-# fundle plugin 'jethrokuan/z'
 # fundle plugin 'edc/bass'
 # fundle plugin 'wfxr/forgit'
-# # fundle plugin 'jorgebucaran/nvm.fish'
 
 # fundle init
 
@@ -31,7 +34,7 @@ fish_vi_key_bindings
 ##########
 ##########################################################
 set fish_plugins autojump vi-mode
-set -gx TERM rxvt-256color
+set -gx TERM xterm-256color
 set -gx PATH ~/.local/bin $PATH
 set fish_greeting ''
 
@@ -145,11 +148,18 @@ if command -v direnv >/dev/null 2>&1
 end
 
 if test -e "$HOME/.asdf/asdf.fish"
-  # completions  should be installed manually
   # http://asdf-vm.com/guide/getting-started.html#_3-install-asdf
-  # mkdir -p ~/.config/fish/completions; and ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
+  if not test -e "$HOME/.config/fish/completions/asdf.fish"
+    echo "Coping asdf completions"
+    eval mkdir -p ~/.config/fish/completions
+    eval ln -s ~/.asdf/completions/asdf.fish ~/.config/fish/completions
+  end
 
   source ~/.asdf/asdf.fish
+end
+
+if command -v zoxide >/dev/null 2>&1
+  zoxide init fish | source
 end
 
 ##########################################################
