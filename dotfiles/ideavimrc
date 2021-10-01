@@ -474,9 +474,11 @@ nmap <leader>xv :action Tool_External Tools_gvim<cr>
 nnoremap <leader>xg    :action EditorGutterToggleGlobalSoftWraps<CR>
 vnoremap <leader>xg    <Esc>:action EditorGutterToggleGlobalSoftWraps<CR>
 
-" Toggle distraction free mode
 nnoremap <leader>xf    :action ToggleDistractionFreeMode<CR>
 vnoremap <leader>xf    <Esc>:action ToggleDistractionFreeMode<CR>
+
+nnoremap <leader>xz    :action ToggleZenMode<CR>
+vnoremap <leader>xz    <Esc>:action ToggleZenMode<CR>
 
 " Reload .ideavimrc
 nnoremap <leader>xR    :source ~/.ideavimrc<CR>

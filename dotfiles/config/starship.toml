@@ -19,11 +19,17 @@ fish_style_pwd_dir_length = 1
 
 [python]
 symbol = "🐍 "
+
 [java]
-symbol = "⚔️  "
+symbol = "🗡  "
 style = "bold green"
+
 [docker_context]
 format = "via [🐋 $context](blue bold)"
+
+[scala]
+symbol = "⚔️  "
+format = "via [${symbol}(${version} )]($style)"
 
 [aws]
 disabled = true

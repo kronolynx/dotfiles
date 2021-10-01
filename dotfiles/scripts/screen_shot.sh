@@ -8,19 +8,24 @@ SCREEN_DIR=~/Pictures/screenshots
 
 [ -d $SCREEN_DIR ] || mkdir -p $SCREEN_DIR
 
-TARGET="$SCREEN_DIR/$(timestamp).png"
+NAME="$(timestamp).png"
+TARGET="$SCREEN_DIR/$NAME"
 
 case "$1" in
   area)
-   notify-send 'Select Area' # TODO fix message captured by screenshot
-   sleep 0.5
-   import $TARGET && notify-send 'Area captured'
+   if (command -v flameshot >/dev/null 2>&1); then
+     flameshot gui -p ~/Pictures/screenshots
+   else
+     notify-send 'Select Area' # TODO fix message captured by screenshot
+     sleep 0.5
+     import $TARGET && notify-send 'Area captured'
+   fi
   ;;
   window)
     CURRENT=`xprop -root | grep "_NET_ACTIVE_WINDOW(WINDOW)" | awk '{print $NF}'`
     import -window $CURRENT -screen $TARGET && notify-send 'Focused window captured'
   ;;
-  root)
+  desktop)
     import -window "root" $TARGET && notify-send 'Desktop captured'
   ;;
   *)

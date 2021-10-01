@@ -1,5 +1,5 @@
 #!/bin/bash
-#scrot -o /tmp/screenshot.png
-xfce4-screenshooter -fs /tmp/screenshot.png
+# import and convert require imagemagick
+import -window "root" /tmp/screenshot.png
 convert /tmp/screenshot.png -blur 0x5 /tmp/screenshotblur.png
 i3lock -i /tmp/screenshotblur.png

@@ -1,5 +1,5 @@
 # fix "xdg-open fork-bomb" export your preferred browser from here
-export BROWSER=/usr/bin/google-chrome-stable
+export BROWSER=/usr/bin/brave
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/bin/vim
 export TERMINAL=/usr/bin/alacritty
