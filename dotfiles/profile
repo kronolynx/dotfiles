@@ -43,13 +43,12 @@ unset TERMCAP
 unset MANPATH
 
 # set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.cargo/bin" ]; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-
-#export JAVA_HOME=$(readlink -f /usr/bin/javac | sed "s:/bin/javac::")
-
-# >>> JVM installed by coursier >>>
-#export JAVA_HOME="/home/krono/.cache/coursier/jvm/adopt@1.8.0-292"
-#export PATH="$PATH:/home/krono/.cache/coursier/jvm/adopt@1.8.0-292/bin"
-# <<< JVM installed by coursier <<<
+. "$HOME/.cargo/env"
