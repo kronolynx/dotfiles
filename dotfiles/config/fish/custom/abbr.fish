@@ -86,14 +86,34 @@ abbr gwips 'git commit -am "WIP (save staged changes)"'
 
 abbr v 'vifm'
 abbr h "htop"
-abbr S "yay -Ss " # search
-abbr U "sudo pacman -Syu" # update
-abbr Ua "yay -Syu" # update including aur packages
-abbr Uf "sudo pacman -Syy" # force update
-abbr I "yay -S " # install
-abbr Iy "yay -S --noconfirm " # install no confirm
-abbr R "sudo pacman -Rs " # remove with dependcies
-abbr Rd "sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
-abbr which "pacman -Qo "
-abbr downgrade-fix "sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
-abbr mirrors "sudo pacman-mirrors --fasttrack"
+
+if command -v apt >/dev/null 2>&1
+## Ubuntu
+  alias S="apt search "
+  alias U="sudo apt update && sudo apt upgrade"
+  alias I="sudo apt install"
+  alias Iy="sudo apt install -y"
+  alias R="sudo apt remove "
+  alias dist-upgrade-available="sudo do-release-upgrade -c"
+  alias dist-upgrade="sudo do-release-upgrade"
+  alias hold="sudo apt-mark hold" # mark package as held back which will prevent the package from being autmotically upgraded
+  alias unhold="sudo apt-mark unhold" # cancel previously set hold package
+  alias showhold="apt-mark showhold" # print a list of packages on hold
+end
+
+if command -v yay >/dev/null 2>&1
+  abbr S "yay -Ss " # search
+  abbr Ua "yay -Syu" # update including aur packages
+  abbr I "yay -S " # install
+  abbr Iy "yay -S --noconfirm " # install no confirm
+end
+
+if command -v pacman >/dev/null 2>&1
+  abbr U "sudo pacman -Syu" # update
+  abbr Uf "sudo pacman -Syy" # force update
+  abbr R "sudo pacman -Rs " # remove with dependcies
+  abbr Rd "sudo pacman -R (pacman -Qdtq)" # remove unnecesary dependencies
+  abbr which "pacman -Qo "
+  abbr downgrade-fix "sudo pacman -Suu && sudo pacman -Syyu" # fix for local package is newer than community
+  abbr mirrors "sudo pacman-mirrors --fasttrack"
+end

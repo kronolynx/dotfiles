@@ -52,20 +52,6 @@ alias tstamp='date "+%F-%H%M"'
 # to create more alias for different distro operations
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
 
-## Manjaro
-
-## Ubuntu
-# alias S="apt search "
-# alias U="sudo apt update && sudo apt upgrade"
-# alias I="sudo apt install -y"
-# alias R="sudo apt remove "
-# alias dist-upgrade-available="sudo do-release-upgrade -c"
-# alias dist-upgrade="sudo do-release-upgrade"
-# alias hold="sudo apt-mark hold" # mark package as held back which will prevent the package from being autmotically upgraded
-# alias unhold="sudo apt-mark unhold" # cancel previously set hold package
-# alias showhold="apt-mark showhold" # print a list of packages on hold
-
-
 # source and edit
 alias EF="vim ~/.config/fish/config.fish"
 alias EG="vim ~/.gitrc"

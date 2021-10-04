@@ -2,7 +2,7 @@
 export BROWSER=/usr/bin/brave
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/bin/vim
-export TERMINAL=/usr/bin/alacritty
+export TERMINAL=alacritty
 export FILE_MANAGER=/usr/bin/thunar
 # export SHELL=/bin/zsh
 
