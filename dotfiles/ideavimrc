@@ -419,17 +419,17 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 
-#nnoremap <A-,> :action DecrementWindowWidth<cr>
-#vnoremap <A-,> <Esc>:action DecrementWindowWidth<cr>
-#
-#nnoremap <A-.> :action IncrementWindowWidth<cr>
-#vnoremap <A-.> <Esc>:action IncrementWindowWidth<cr>
-#
-#nnoremap <A-S-,> :action DecrementWindowHeight<cr>
-#vnoremap <A-S-,> <Esc>:action DecrementWindowHeight<cr>
-#
-#nnoremap <A-S-.> :action IncrementWindowHeight<cr>
-#vnoremap <A-S-.> <Esc>:action IncrementWindowHeight<cr>
+"nnoremap <A-,> :action DecrementWindowWidth<cr>
+"vnoremap <A-,> <Esc>:action DecrementWindowWidth<cr>
+"
+"nnoremap <A-.> :action IncrementWindowWidth<cr>
+"vnoremap <A-.> <Esc>:action IncrementWindowWidth<cr>
+"
+"nnoremap <A-S-,> :action DecrementWindowHeight<cr>
+"vnoremap <A-S-,> <Esc>:action DecrementWindowHeight<cr>
+"
+"nnoremap <A-S-.> :action IncrementWindowHeight<cr>
+"vnoremap <A-S-.> <Esc>:action IncrementWindowHeight<cr>
 
 " }}}
 

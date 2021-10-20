@@ -20,7 +20,6 @@ education=(
 graphics=(
   gimp # GNU Image Manipulation Program
   inkscape # vector-based drawing program
-  nomacs # image viewer with capability of syncing multiple instances
 )
 
 internet=(
@@ -28,6 +27,7 @@ internet=(
 )
 
 multimedia=(
+  peek # GIF recorder
   cmus # Terminal music player
   mkchromecast # Cast Audio/Video to your Google Cast and Sonos Devices
   mps-youtube # Terminal based YouTube jukebox with playlist management
@@ -47,8 +47,7 @@ office=(
 other=(
   ansiweather # Weather in your terminal, with ANSI colors and Unicode symbols
   qalc # calculator for the terminal  command (qalc)
-  ranger # console file manager
-  teensy-loader-cli # Ergodox flashing
+  vifm # console file manager
 )
 
 system=(
@@ -83,7 +82,6 @@ system=(
   pulseaudio # sound server
   qt5ct # Qt5 Configuration Utility
   redshift # Adjusts the color temperature of your screen
-  rxvt-unicode # terminal emulator
   sane # scanner graphical frontends
   simple-scan # Simple Scanning Utility
   sysstat # system performance tools for Linux
@@ -110,10 +108,10 @@ COMMON="$(dirname $SCRIPTPATH)/common"
 $COMMON/helpers/pprint.sh "accessories"
 $SCRIPTPATH/helpers/install-app.sh ${accessories[*]}
 
-$COMMON/helpers/pprint.sh "development" 
+$COMMON/helpers/pprint.sh "development"
 $SCRIPTPATH/helpers/install-app.sh ${development[*]}
 
-$COMMON/helpers/pprint.sh "education" 
+$COMMON/helpers/pprint.sh "education"
 $SCRIPTPATH/helpers/install-app.sh ${education[*]}
 
 $COMMON/helpers/pprint.sh "graphics"

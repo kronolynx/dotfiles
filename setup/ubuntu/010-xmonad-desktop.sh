@@ -4,33 +4,33 @@ SCRIPTPATH="$(dirname $(realpath $0))"  # script location directory to fix relat
 COMMON="$(dirname $SCRIPTPATH)/common"
 
 xmonad=(
-  xmonad
-  xmobar
-  libghc-xmonad-contrib-dev 
-  libghc-xmonad-dev
-  libghc-xmonad-extras-dev
+  libx11-dev libxft-dev libxinerama-dev libxrandr-dev libxss-dev
+  libghc-x11-xft-dev libxpm-dev curl git autoconf
 )
 
 apps=(
-  trayer # systray
-  scrot # Simple command-line screenshot utility for X
+  stalonetray # systray
+  #scrot # Simple command-line screenshot utility for X
   rofi # menu for launching applications (replacement for dmenu)
-  nitrogen # wallpaper browser and changing utility for X
+  #nitrogen # wallpaper browser and changing utility for X
   # variety # Wallpaper changer, downloader and manager
-  compton # X compositor that may fix tearing issues
-
+  #compton # X compositor that may fix tearing issues
+  imagemagick
+  flameshot
+  feh
   dunst # Customizable and lightweight notification-daemon
   i3lock # logout, reboot, shutdown, blurlock
   xautolock # autolock e.g xautolock -time 10 -locker xscreensaver
   xbacklight # RandR-based backlight control
   xfce4-notifyd # gtk notifications
   xfce4-power-manager # power manager
+  xdotool
   yad # tool for creating graphical dialogs from shell scripts
   zenity # Display graphical dialog boxes from shell scripts
 )
 
 system=(
-  gnupg # GNU privacy guard - a free PGP replacement    
+  gnupg # GNU privacy guard - a free PGP replacement
   network-manager #  network management framework (daemon and userspace tools)
   build-essential # base devel
   xorg # X.Org X Window System
@@ -53,14 +53,14 @@ file_manager=(
 )
 
 theme() {
-  $SCRIPTPATH/helpers/install-app.sh materia-gtk-theme # theme
+  #$SCRIPTPATH/helpers/install-app.sh materia-gtk-theme # theme
   $SCRIPTPATH/helpers/install-app.sh lxappearance # gtk theme manager
 
   # icons for theme
-  git clone https://github.com/Nitrux/compass-icon-theme.git
-  mkdir -p ~/.local/share/icons
-  cp -r compass-icon-theme/Compass ~/.local/share/icons
-  rm -rf compass-icon-theme
+  # git clone https://github.com/Nitrux/compass-icon-theme.git
+  # mkdir -p ~/.local/share/icons
+  # cp -r compass-icon-theme/Compass ~/.local/share/icons
+  # rm -rf compass-icon-theme
 }
 
 xmonad_session() {
@@ -129,7 +129,7 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
-$COMMON/helpers/pprint.sh "Setting up xmonad" 
+$COMMON/helpers/pprint.sh "Setting up xmonad"
 $SCRIPTPATH/helpers/install-app.sh ${xmonad[*]}
 $SCRIPTPATH/helpers/install-app.sh ${file_manager[*]}
 $SCRIPTPATH/helpers/install-app.sh ${apps[*]}
