@@ -1,12 +1,16 @@
 # fix "xdg-open fork-bomb" export your preferred browser from here
-export BROWSER=/usr/bin/brave
+export BROWSER=/usr/bin/firefox
 export EDITOR=/usr/bin/vim
 export VISUAL=/usr/bin/vim
 export TERMINAL=alacritty
-export FILE_MANAGER=/usr/bin/thunar
-# export SHELL=/bin/zsh
 
-export QT_QPA_PLATFORMTHEME="qt5ct"
+if [ "$DESKTOP_SESSION" == "plasma" ]; then
+    export FILE_MANAGER=/usr/bin/dolphin
+else
+    export FILE_MANAGER=/usr/bin/thunar
+fi
+
+# export QT_QPA_PLATFORMTHEME="qt5ct"
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
@@ -16,7 +20,7 @@ export XMODIFIERS=@im=ibus
 #export LC_ALL=en_US.UTF-8
 #export LC_ALL=C
 
-
+# scala coursier
 export COURSIER_BIN_DIR=~/.local/bin/
 
 if (! pgrep ibus-daemon); then
@@ -47,8 +51,21 @@ if [ -d "$HOME/.cargo/bin" ]; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+if [ -d "$HOME/.cargo/env" ]; then
+  . "$HOME/.cargo/env"
+fi
+
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-. "$HOME/.cargo/env"
+
+
+if [ -d "$HOME/snap/bin" ]; then
+  export PATH=$PATH:/snap/bin
+fi
+
+# >>> JVM installed by coursier >>>
+export JAVA_HOME="/home/jortiz/.cache/coursier/jvm/adopt-openj9@1.8.0-292"
+export PATH="$PATH:/home/jortiz/.cache/coursier/jvm/adopt-openj9@1.8.0-292/bin"
+# <<< JVM installed by coursier <<<
