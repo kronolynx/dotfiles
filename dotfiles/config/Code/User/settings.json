@@ -31,7 +31,6 @@
     "gitlens.currentLine.enabled": false,
     "rest-client.largeResponseBodySizeLimitInMB": 100,
     "markdown-preview-enhanced.automaticallyShowPreviewOfMarkdownBeingEdited": false,
-    "python.languageServer": "Microsoft",
     "zenMode.hideStatusBar": false,
     "zenMode.silentNotifications": false,
     "zenMode.hideLineNumbers": false,
@@ -720,9 +719,8 @@
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
     },
-    "metals.javaHome": "/home/krono/.jabba/jdk/adopt@1.8.0-292",
+    "metals.javaHome": "/home/krono/.cache/coursier/jvm/adopt-openj9@1.8.0-292",
     "security.workspace.trust.untrustedFiles": "open",
-    "python.defaultInterpreterPath": "/usr/bin/python",
     "notebook.cellToolbarLocation": {
         "default": "right",
         "jupyter-notebook": "left"
@@ -735,7 +733,25 @@
         "keycloak",
         "subgrupo"
     ],
-    "workbench.colorTheme": "Palenight Operator",
+    "workbench.colorTheme": "Monokai Pro",
     "metals.scalafmtConfigPath": "~/Tecsisa/kommodo-management/.scalafmt.conf",
-    "window.restoreWindows": "none"
+    "window.restoreWindows": "none",
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.latex.tools": [{
+    "name": "latexmk",
+    "command": "latexmk",
+    "args": [
+        "-xelatex",
+        "-synctex=1",
+        "-interaction=nonstopmode",
+        "-file-line-error",
+        "%DOC%"
+    ]
+}
+],
+"workbench.preferredLightColorTheme": "2d1112ac-04ab-4f78-82c4-22e5e2c1754b",
+"editor.semanticHighlighting.enabled": true,
 }

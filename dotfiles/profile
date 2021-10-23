@@ -60,12 +60,11 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-
 if [ -d "$HOME/snap/bin" ]; then
   export PATH=$PATH:/snap/bin
 fi
 
 # >>> JVM installed by coursier >>>
-export JAVA_HOME="/home/jortiz/.cache/coursier/jvm/adopt-openj9@1.8.0-292"
-export PATH="$PATH:/home/jortiz/.cache/coursier/jvm/adopt-openj9@1.8.0-292/bin"
+export JAVA_HOME="/home/$USER/.cache/coursier/jvm/adopt-openj9@1.8.0-292"
+export PATH="$PATH:/home/$USER/.cache/coursier/jvm/adopt-openj9@1.8.0-292/bin"
 # <<< JVM installed by coursier <<<

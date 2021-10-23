@@ -11,7 +11,6 @@ fi
 sudo apt install fish
 sudo apt install xsel
 sudo apt install wmctrl
-sudo apt install taskwarrior
 
 # install fisherman
 if [ ! -f "$HOME/.config/functions/fisher.fish" ]; then

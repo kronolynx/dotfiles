@@ -1,6 +1,7 @@
 [ActivityManager]
 _k_friendly_name=Activity Manager
 switch-to-activity-4624fcaf-a82e-4f4e-b437-a9bb3baac31a=none,none,Switch to activity "Default"
+switch-to-activity-70b89899-c724-47aa-9010-d1285e49f24e=none,none,Switch to activity "Default"
 switch-to-activity-f987ae56-fc99-4002-bf1a-8899bd8b1f5a=,none,Switch to activity "Default"
 
 [KDE Keyboard Layout Switcher]
@@ -40,17 +41,12 @@ increase_volume=Volume Up,Volume Up,Increase Volume
 mic_mute=Microphone Mute,Microphone Mute,Mute Microphone
 mute=Volume Mute,Volume Mute,Mute
 
-[krunner.desktop]
-RunClipboard=Alt+Shift+F2\tAlt+Shift+D,Alt+Shift+F2,Run command on clipboard contents
-_k_friendly_name=KRunner
-_launch=Alt+F2\tSearch\tAlt+D,Alt+Space\tAlt+F2\tSearch,KRunner
-
 [ksmserver]
-Halt Without Confirmation=Ctrl+Alt+Shift+PgDown,Ctrl+Alt+Shift+PgDown,Halt Without Confirmation
+Halt Without Confirmation=Ctrl+Alt+Shift+PgDown,none,Halt Without Confirmation
 Lock Session=Screensaver\t\tCtrl+Alt+L,Meta+L\tCtrl+Alt+L\tScreensaver,Lock Session
 Log Out=Ctrl+Alt+Del,Ctrl+Alt+Del,Log Out
-Log Out Without Confirmation=Ctrl+Alt+Shift+Del,Ctrl+Alt+Shift+Del,Log Out Without Confirmation
-Reboot Without Confirmation=Ctrl+Alt+Shift+PgUp,Ctrl+Alt+Shift+PgUp,Reboot Without Confirmation
+Log Out Without Confirmation=Ctrl+Alt+Shift+Del,none,Log Out Without Confirmation
+Reboot Without Confirmation=Ctrl+Alt+Shift+PgUp,none,Reboot Without Confirmation
 _k_friendly_name=Session Management
 
 [kwin]
@@ -269,6 +265,11 @@ NewWindow=,,Open a New Window
 _k_friendly_name=Konsole
 _launch=Meta+Return,,Konsole
 
+[org.kde.krunner.desktop]
+RunClipboard=Alt+Shift+F2\tAlt+Shift+D,Alt+Shift+F2,Run command on clipboard contents
+_k_friendly_name=KRunner
+_launch=Alt+F2\tSearch\tAlt+D,Alt+Space\tAlt+F2\tSearch,KRunner
+
 [org.kde.plasma.emojier.desktop]
 _k_friendly_name=Emoji Selector
 _launch=Meta+/,Meta+.,Emoji Selector
@@ -317,14 +318,14 @@ clear-history=,none,Clear Clipboard History
 clipboard_action=Ctrl+Alt+X,Ctrl+Alt+X,Enable Clipboard Actions
 cycleNextAction=,none,Next History Item
 cyclePrevAction=,none,Previous History Item
-edit_clipboard=,none,Edit Contents...
+edit_clipboard=,none,Edit Contents…
 manage activities=,Meta+Q,Show Activity Switcher
 next activity=,Meta+Tab,Walk through activities
 previous activity=,Meta+Shift+Tab,Walk through activities (Reverse)
 repeat_action=Ctrl+Alt+R,Ctrl+Alt+R,Manually Invoke Action on Current Clipboard
 show dashboard=Ctrl+F12,Ctrl+F12,Show Desktop
-show-barcode=,none,Show Barcode...
-show-on-mouse-pos=,none,Open Klipper at Mouse Position
+show-barcode=,none,Show Barcode…
+show-on-mouse-pos=,Meta+V,Open Klipper at Mouse Position
 stop current activity=,Meta+S,Stop Current Activity
 switch to next activity=,none,Switch to Next Activity
 switch to previous activity=,none,Switch to Previous Activity

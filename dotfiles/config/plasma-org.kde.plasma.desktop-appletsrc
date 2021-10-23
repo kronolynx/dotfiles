@@ -80,11 +80,21 @@ immutability=1
 plugin=org.kde.plasma.marginsseparator
 
 [Containments][2][Applets][32][Configuration]
-PreloadWeight=10
+PreloadWeight=0
 
 [Containments][2][Applets][32][Configuration][ConfigDialog]
 DialogHeight=600
 DialogWidth=800
+
+[Containments][2][Applets][37]
+immutability=1
+plugin=org.kde.plasma.kicker
+
+[Containments][2][Applets][37][Configuration]
+PreloadWeight=89
+
+[Containments][2][Applets][37][Configuration][General]
+favoritesPortedToKAstats=true
 
 [Containments][2][Applets][5]
 immutability=1
@@ -109,7 +119,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][2][Applets][7][Configuration]
-PreloadWeight=100
+PreloadWeight=76
 SystrayContainmentId=8
 
 [Containments][2][ConfigDialog]
@@ -120,40 +130,24 @@ DialogWidth=1920
 PreloadWeight=0
 
 [Containments][2][General]
-AppletOrder=30;23;5;7;16;32
+AppletOrder=30;5;7;16;32;37
 
-[Containments][25]
-ItemGeometriesHorizontal=Applet-31:96,128,96,96,0;
-activityId=f987ae56-fc99-4002-bf1a-8899bd8b1f5a
+[Containments][35]
+ItemGeometries-1920x1080=
+ItemGeometriesHorizontal=
+activityId=70b89899-c724-47aa-9010-d1285e49f24e
 formfactor=0
 immutability=1
 lastScreen=0
 location=0
-plugin=org.kde.desktopcontainment
+plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
-[Containments][25][Applets][31]
-immutability=1
-plugin=org.kde.plasma.marginsseparator
-
-[Containments][25][Applets][31][Configuration]
+[Containments][35][Configuration]
 PreloadWeight=10
 
-[Containments][25][ConfigDialog]
-DialogHeight=600
-DialogWidth=800
-
-[Containments][25][Configuration]
-PreloadWeight=0
-
-[Containments][25][General]
-ToolBoxButtonState=topcenter
-ToolBoxButtonX=550
-ToolBoxButtonY=32
-
-[Containments][25][Wallpaper][org.kde.image][General]
-Image=file:///home/johann/Documents/dotfiles/dotfiles/wallpapers/girl-anime.jpg
-SlidePaths=/home/johann/.local/share/wallpapers,/usr/share/wallpapers
+[Containments][35][Wallpaper][org.kde.image][General]
+Image=file:///usr/share/endeavouros/backgrounds/endeavouros-wallpaper.png
 
 [Containments][8]
 activityId=
@@ -176,7 +170,7 @@ immutability=1
 plugin=org.kde.plasma.notifications
 
 [Containments][8][Applets][11][Configuration]
-PreloadWeight=73
+PreloadWeight=33
 
 [Containments][8][Applets][11][Configuration][ConfigDialog]
 DialogHeight=600
@@ -253,6 +247,20 @@ PreloadWeight=0
 DialogHeight=600
 DialogWidth=800
 
+[Containments][8][Applets][33]
+immutability=1
+plugin=org.kde.plasma.manage-inputmethod
+
+[Containments][8][Applets][33][Configuration]
+PreloadWeight=10
+
+[Containments][8][Applets][34]
+immutability=1
+plugin=org.kde.plasma.keyboardlayout
+
+[Containments][8][Applets][34][Configuration]
+PreloadWeight=10
+
 [Containments][8][Applets][9]
 immutability=1
 plugin=org.kde.plasma.clipboard
@@ -268,11 +276,11 @@ DialogWidth=1920
 PreloadWeight=0
 
 [Containments][8][General]
-extraItems=org.kde.plasma.bluetooth,org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.keyboardindicator,org.kde.plasma.nightcolorcontrol,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.vault
+extraItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod
 hiddenItems=redshift,dropbox-client-22107,org.kde.plasma.bluetooth,redshift-gtk,Bluetooth Enabled,blueman,Yakuake,TelegramDesktop
-knownItems=org.kde.plasma.bluetooth,org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.keyboardindicator,org.kde.plasma.nightcolorcontrol,org.kde.plasma.keyboardlayout,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.vault
+knownItems=org.kde.plasma.battery,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.mediacontroller,org.kde.plasma.notifications,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod
 shownItems=ibus-ui-gtk3
 
 [ScreenMapping]
-itemsOnDisabledScreens=0,7,desktop:/realm-export-2021-02-04T10_19_20.838Z.json,desktop:/image.png,desktop:/temp.json,desktop:/image (1).png,desktop:/idsDes.txt,desktop:/pre-fixed-secrets-realm-export-2021-01-20T08_13_01.621Z.json,desktop:/21_03_12_125409.png
-screenMapping=
+itemsOnDisabledScreens=0,8,desktop:/idsDes.txt,desktop:/image (1).png,desktop:/pre-fixed-secrets-realm-export-2021-01-20T08_13_01.621Z.json,desktop:/Cats FP.pdf,desktop:/realm-export-2021-02-04T10_19_20.838Z.json,desktop:/temp.json,desktop:/image.png,desktop:/21_03_12_125409.png
+screenMapping=desktop:/idsDes.txt,0,desktop:/image (1).png,0,desktop:/pre-fixed-secrets-realm-export-2021-01-20T08_13_01.621Z.json,0,desktop:/Cats FP.pdf,0,desktop:/realm-export-2021-02-04T10_19_20.838Z.json,0,desktop:/temp.json,0,desktop:/image.png,0,desktop:/21_03_12_125409.png,0

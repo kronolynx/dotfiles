@@ -1,5 +1,5 @@
 [$Version]
-update_info=kwinrules.upd:replace-placement-string-to-enum
+update_info=kwinrules.upd:replace-placement-string-to-enum,kwinrules.upd:use-virtual-desktop-ids
 
 [1]
 Description=Application settings for kcolorschemeeditor
@@ -54,3 +54,4 @@ wmclassmatch=3
 
 [General]
 count=7
+rules=1,2,3,4,5,6,7

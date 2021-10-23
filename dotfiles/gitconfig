@@ -152,3 +152,6 @@
   program = /usr/bin/gpg2 # to stop asking each time for gpg password
 [init]
   defaultBranch = main
+[user]
+	email = kronolynx@gmail.com
+	name = Johann Og

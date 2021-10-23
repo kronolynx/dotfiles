@@ -12,7 +12,7 @@
 !!!!!!!!!!!!!!!!
 
 Xft.dpi: 102
-!Xft.dpi: 96
+!!Xft.dpi: 96
 Xft.antialias: true
 Xft.hinting: true
 Xft.rgba: rgb
@@ -21,28 +21,28 @@ Xft.hintstyle: hintfull
 Xft.lcdfilter: lcddefault
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!! Color settings 
+!! Color settings
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! light
-!  color0:       black	
-!  color1:       red
-!  color2:       green	
-!  color3:       yellow
-!  color4:       blue
-!  color5:       magenta
-!  color6:       cyan 
-!  color7:       white
+!!  color0:       black
+!!  color1:       red
+!!  color2:       green
+!!  color3:       yellow
+!!  color4:       blue
+!!  color5:       magenta
+!!  color6:       cyan
+!!  color7:       white
 !! dark
-!  color8:       black	
-!  color9:       red
-!  color10:	 green
-!  color11:	 yellow
-!  color12:	 blue
-!  color13:	 magenta
-!  color14:	 cyan
-!  color15:	 white
+!!  color8:       black
+!!  color9:       red
+!!  color10:	 green
+!!  color11:	 yellow
+!!  color12:	 blue
+!!  color13:	 magenta
+!!  color14:	 cyan
+!!  color15:	 white
 
-! =================
+!! =================
 *background:	#1D1F28
 *foreground:	#FDFDFD
 *cursorColor:	#C574DD
@@ -66,14 +66,19 @@ Xft.lcdfilter: lcddefault
 xcursor.theme:            Vanilla-DMZ
 Xcursor.size:   0
 
-!!!!!!!!!!!!!!!!!! 
+!!!!!!!!!!!!!!!!!!
 !! XTerm settings
-!!!!!!!!!!!!!!!!!! 
+!!!!!!!!!!!!!!!!!!
 
 XTerm.termName: xterm-256color
 XTerm.ttyModes: erase ^?
 XTerm.vt100.backarrowKey: false
-XTerm.vt100.faceName: FantasqueSansMono Nerd Font:style=Regular:size=11:antialias=true
+!!XTerm.vt100.faceName: JetBrainsMono Nerd Font:size=11:antialias=true
+XTerm*faceName: xft:Mononoki Nerd Font, \
+                xft:JoyPixels:size=12, \
+                xft:Monospace:style=Medium:size=12   
+XTerm*faceSize: 11
+XTerm*utf8: 2
 XTerm.vt100.font: 7x13
 XTerm.vt100.locale: true
 XTerm.vt100.metaSendsEscape: true
@@ -82,9 +87,12 @@ XTerm.vt100.saveLines: 10000
 XTerm.vt100.scrollBar: false
 XTerm.vt100.selectToClipboard: true
 XTerm*renderFont: true
-! double-click to select whole URLs :D
+!!double-click to select whole URLs :D
 xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
+xterm*VT100.Translations: #override \
+    Ctrl Shift <Key>V:    insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>C:    copy-selection(CLIPBOARD)
 
 !!!! black dark/light
 !!XTerm.vt100.color0:     #000000
@@ -117,9 +125,9 @@ xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 URxvt.font:                       xft:FantasqueSansMono Nerd Font Mono:style=Regular:hinting=true:size=12
 
-! alternative font settings with 'terminus':
-! URxvt.font:      -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1
-! URxvt.bold.font: -xos4-terminus-bold-r-normal--16-160-72-72-c-80-iso10646-1
+!alternative font settings with 'terminus':
+!URxvt.font:      -xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1
+!URxvt.bold.font: -xos4-terminus-bold-r-normal--16-160-72-72-c-80-iso10646-1
 !! terminus names see end of file!
 
 URxvt.depth:                      32
@@ -131,12 +139,12 @@ URxvt*background:                 black
 URxvt*foreground:                 grey
 URxvt*saveLines:                  42000
 
-! for 'fake' transparency (without Compton) uncomment the following three lines
-! URxvt*inheritPixmap:            true
-! URxvt*transparent:              true
-! URxvt*shading:                  138
+!for 'fake' transparency (without Compton) uncomment the following three lines
+!URxvt*inheritPixmap:            true
+!URxvt*transparent:              true
+!URxvt*shading:                  138
 
-! Normal copy-paste keybindings without perls
+!Normal copy-paste keybindings without perls
 URxvt.iso14755:                   false
 URxvt.keysym.Shift-Control-V:     eval:paste_clipboard
 URxvt.keysym.Shift-Control-C:     eval:selection_to_clipboard
