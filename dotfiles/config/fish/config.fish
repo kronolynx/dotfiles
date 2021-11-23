@@ -1,19 +1,21 @@
 fish_vi_key_bindings
 
+set -Ux EDITOR /usr/bin/vim
+set -Ux VISUAL /usr/bin/vim
 
 ##########################################################
 ########## Plugins
 ##########################################################
 
 # install fisher and plugins if not installed
-if not functions -q fisher; 
+if not functions -q fisher;
   echo "Installing fisher"
   eval  curl -sLo ~/.config/fish/functions/fisher.fish --create-dirs git.io/fisher
   source ~/.config/fish/functions/fisher.fish
   eval fisher update
 end
 
-# if not functions -q fundle; 
+# if not functions -q fundle;
 #   eval (curl -sfL https://git.io/fundle-install);
 # end
 
@@ -117,6 +119,11 @@ function decodeJwt
   prettyjson_s (decode64 "$TOKEN[1]=")
   echo "payload:"
   prettyjson_s (decode64 "$TOKEN[2]==")
+end
+
+function agreplace
+  ag -l "$argv[1]"
+  ag -l "$argv[1]" | xargs -I FILE sed -i "s/$argv[1]/$argv[2]/g" FILE
 end
 
 ##########################################################
