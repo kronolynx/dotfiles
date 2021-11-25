@@ -1,17 +1,14 @@
 #!/bin/sh
-#lock() {
-#  i3lock -i ~/.wallpapers/no-mans-sky-lock.png -p default -n &
-#}
 
 case "$1" in
     lock)
-        lock
+        ~/.local/bin/lock
         ;;
     logout)
         i3-msg exit
         ;;
     suspend)
-        lock && systemctl suspend
+        ~/.local/bin/lock && systemctl suspend
         ;;
     hibernate)
         lock && systemctl hibernate

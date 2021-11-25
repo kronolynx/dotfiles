@@ -1,6 +1,10 @@
 .stack-work
 **/.stack*
 *.lock
+heapdump.*
+javacore.*
+core.*
+Snap.*
 
 # Compiled source #
 ###################

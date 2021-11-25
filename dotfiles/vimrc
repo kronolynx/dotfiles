@@ -108,6 +108,9 @@ set nomodeline " Ignore file’s mode lines; use vimrc configurations instead.
 set noswapfile
 set path+=** " Provides tab-completion for all file-related tasks (Search down into subfolders)
 set wildmenu " Enhance command-line completion
+
+" automatically leave insert mode after 'updatetime' milliseconds of inaction
+au CursorHoldI * stopinsert
 " }}}
 
 " ignore {{{
