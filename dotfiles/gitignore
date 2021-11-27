@@ -60,6 +60,7 @@ Thumbs.db
 *.worksheet.sc
 metals.sbt
 dependency-graph.svg
+.bsp/
 
 # VS Code #
 ###########
