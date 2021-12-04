@@ -122,7 +122,8 @@ set wildignore+=*/smarty/*,*/vendor/*,*/.git/*,*/.hg/*,*/.svn/*,*/.sass-cache/*,
 
 if has("nvim") 
   " Realtime preview of substitution
-  set inccommand=nosplit
+  " set inccommand=nosplit
+  set inccommand=split
 endif
 
 command! Vimrc :vs $MYVIMRC
@@ -149,48 +150,32 @@ endif
 
 " Load plugins {{{
 call plug#begin('~/.vim/plugged')
-
-" Languages
-" Plug 'sheerun/vim-polyglot' " language support
-
-" Utility Things
-"Plug 'SirVer/ultisnips'
-" Plug 'janko/vim-test'
-" Plug 'jiangmiao/auto-pairs'
-" Plug 'kana/vim-textobj-user'
-Plug 'machakann/vim-highlightedyank'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'tpope/vim-commentary'
-" Plug 'tpope/vim-dispatch'
-" Plug 'tpope/vim-endwise'
-" Plug 'tpope/vim-projectionist'
-" Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'yuttie/comfortable-motion.vim'
-" Fixers, completion and navigation
+Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim' " fuzzy file finder :CtrlP :CtrlPBuffer :CtrlPMixed
-Plug 'easymotion/vim-easymotion' " <leader><leader>w|b|W|B|e|E
-" Plug 'ervandew/supertab'
+Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " installs fzf
 Plug 'junegunn/fzf.vim' " fuzy finder :FZF :Files :GFiles :Buffers
-" Plug 'liuchengxu/vim-clap'
-" Plug 'liuchengxu/vista.vim'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'neomake/neomake'
-" Plug 'w0rp/ale'
-" Status and UI
-" Plug 'itchyny/calendar.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'itchyny/lightline.vim'
-Plug 'ryanoasis/vim-devicons' " should load after nerdTree and lightline
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'liuchengxu/vim-which-key', { 'on': ['WhichKey', 'WhichKey!'] }
-" Git
-Plug 'airblade/vim-gitgutter'
-Plug 'justinmk/vim-sneak'
+Plug 'neomake/neomake'
 Plug 'rhysd/git-messenger.vim'
+Plug 'ryanoasis/vim-devicons' " should load after nerdTree and lightline
 Plug 'shumphrey/fugitive-gitlab.vim'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tpope/vim-fugitive' " git wrapper :GCommit, :Gpush, :Gpull :Gblame :Gdiff :Git add %
+Plug 'yuttie/comfortable-motion.vim'
+Plug 'kana/vim-textobj-user'" required by kana/vim-textobj-entire
+" shared with intellij
+Plug 'preservim/nerdtree'
+Plug 'easymotion/vim-easymotion' " <leader><leader>w|b|W|B|e|E
+Plug 'kana/vim-textobj-entire' " ae, ie
+Plug 'tpope/vim-surround' " ys, cs, ds , S
+Plug 'terryma/vim-multiple-cursors' " <A-n>, <A-x>, <A-p>, g<A-n>
+Plug 'tpope/vim-commentary' " gcc, gc + motion, v_gc
+Plug 'vim-scripts/ReplaceWithRegister' " gr, grr
+Plug 'vim-scripts/argtextobj.vim' "  aa, ia
+Plug 'tommcdo/vim-exchange' " cx, cxx, X, cxc
+Plug 'machakann/vim-highlightedyank'
+Plug 'dbakker/vim-paragraph-motion'
 "   _____ _
 "  |_   _| |__   ___ _ __ ___   ___  ___
 "    | | | '_ \ / _ \ '_ ` _ \ / _ \/ __|
@@ -211,16 +196,12 @@ Plug 'tomasr/molokai'
 call plug#end()
 " }}}
 
-" coc {{
-let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver']
-" }}
-
 
 " custom keybindings {{{
 " repeat last macro
 nnoremap Q @@ 
 " delete something without clobbering my unnamed register
-nnoremap s "_d
+nnoremap <leader>dd "_d
 " Run the current line as if it were a command. Often more convenient than q: when experimenting.
 nnoremap <leader>ee :exe getline(line('.'))<cr>
 "
@@ -314,14 +295,6 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 
 "
 " Language server {{{
-nmap <leader>ld <Plug>(coc-definition)zz
-nnoremap <leader>lD :call CocAction('jumpDefinition', 'vsplit')<CR>zz
-nmap <leader>la <Plug>(coc-references)
-nmap <leader>lr <Plug>(coc-rename)
-noremap <leader>lh :call CocAction('doHover')<CR>
-noremap <leader>lo :CocList outline<CR>
-nnoremap <leader>lO :Vista<CR>
-noremap <leader>lp :CocList diagnostics<CR>
 
 " Quickfix
 nnoremap <silent> <UP> :cope<CR>
@@ -344,7 +317,9 @@ nnoremap <CR> :noh<CR><CR>
 
 " Terminal {{{
 " set zsh if available
-if executable ('/usr/bin/zsh')
+if executable ('/usr/bin/fish')
+  set shell=/usr/bin/fish
+elseif executable ('/usr/bin/zsh')
   set shell=/usr/bin/zsh
 endif
 " open terminal

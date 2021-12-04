@@ -1,6 +1,6 @@
 "actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 " :actionlist
-" source ~/.vimrc
+source ~/.vimrc
 
 let mapleader=" "
 
@@ -37,17 +37,7 @@ sethandler n:vim i:ide
 nnoremap <CR> :noh<CR><CR>
 
 " Plugins {{{
-set surround              " Commands: ys, cs, ds, S
-set multiple-cursors      " Commands <A-n>, <A-x>, <A-p>, g<A-n>
-set commentary            " Commands: gcc, gc + motion, v_gc
-set ReplaceWithRegister   " Commands: gr, grr
-set exchange              " Commands: cx, cxx, X, cxc
-set textobj-entire        " Additional text objects: ae, ie
-set easymotion            " Requieres plugins IdeaVim-EasyMotion and AceJump
-set highlightedyank       " 
-set NERDTree              " t (tab), i (hori), s (vert), I (show hidden), m (menu), r (refresh) 
-set vim-paragraph-motion  "
-set textobj-indent        " Additional text objects: ai, ii, aI
+" Other plugins are sourced in vimrc
 set which-key
 " }}}
 " Ideavim commands {{{
@@ -113,6 +103,9 @@ vnoremap <leader>tm <Esc>:action MoveEditorToOppositeTabGroup<cr>
 
 noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
 vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
+
+noremap <leader>yt:action OpenEditorInOppositeTabGroup<cr>
+vnoremap <leader>yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
 
 " undo (reopen)
 nnoremap <leader>tu :action ReopenClosedTab<cr>
@@ -346,6 +339,10 @@ nnoremap <leader>mi :action Git.Init<cr>
 nnoremap <leader>ml :action Git.Log<cr>
 
 nnoremap <leader>mu :action Git.Unstash<cr>
+
+
+nnoremap <leader>mh :action Vcs.ShowHistoryForBlock<cr>
+vnoremap <leader>mh :action Vcs.ShowHistoryForBlock<cr>
 
 " Show local changes window (git status)
 nnoremap <leader>mw    :action Vcs.Show.Local.Changes<CR>
