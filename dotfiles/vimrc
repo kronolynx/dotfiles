@@ -56,7 +56,7 @@ set lazyredraw " Don’t update screen during macro and script execution.
 set display+=lastline " Always try to show a paragraph’s last line.
 set encoding=utf-8 nobomb " BOM often causes trouble  BOM( byte order mark)
 set linebreak " Avoid wrapping a line in the middle of a word.
-set scrolloff=1 " The number of screen lines to keep above and below the cursor.
+set scrolloff=7 " The number of screen lines to keep above and below the cursor.
 set sidescrolloff=5 " The number of screen columns to keep to the left and right of the cursor.
 set wrap " Enable line wrapping.
 
@@ -109,8 +109,9 @@ set noswapfile
 set path+=** " Provides tab-completion for all file-related tasks (Search down into subfolders)
 set wildmenu " Enhance command-line completion
 
-" automatically leave insert mode after 'updatetime' milliseconds of inaction
-au CursorHoldI * stopinsert
+" " automatically leave insert mode after 'updatetime' milliseconds of inaction
+" au CursorHoldI * stopinsert
+
 " }}}
 
 " ignore {{{
@@ -202,6 +203,14 @@ call plug#end()
 nnoremap Q @@ 
 " delete something without clobbering my unnamed register
 nnoremap <leader>dd "_d
+
+" Let me explain, this remap while in visual mode
+" will delete what is currently highlighted and replace it
+" with what is in the register BUT it will YANK (delete) it
+" to a VOID register. Meaning I still have what I originally had
+" when I pasted. I don't loose the previous thing I YANKED!
+vnoremap <leader>p "_dP
+
 " Run the current line as if it were a command. Often more convenient than q: when experimenting.
 nnoremap <leader>ee :exe getline(line('.'))<cr>
 "

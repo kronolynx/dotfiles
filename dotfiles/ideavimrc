@@ -9,8 +9,8 @@ set history=1000
 " copy to clipboard
 set clipboard+=unnamedplus
 
-" number of lines above and below the cursor
-set scrolloff=7
+" " number of lines above and below the cursor
+" set scrolloff=7
 
 " Search as characters are entered
 set incsearch
@@ -133,7 +133,7 @@ map <A-s-.> :action StretchSplitToBottom<cr>
 
 " misc {{{
 " Greatest remap EVER!! 
-" Let me explain, this remap while in visiual mode
+" Let me explain, this remap while in visual mode
 " will delete what is currently highlighted and replace it 
 " with what is in the register BUT it will YANK (delete) it 
 " to a VOID register. Meaning I still have what I originally had
