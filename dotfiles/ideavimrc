@@ -211,6 +211,13 @@ vnoremap <leader>vp <Esc>:action ParameterInfo<cr>
 nnoremap <leader>vt :action Scala.TypeInfo<CR> 
 vnoremap <leader>vt :action Scala.TypeInfo<CR>
 
+
+nnoremap <leader>vd :action QuickTypeDefinition<CR> 
+vnoremap <leader>vd :action QuickTypeDefinition<CR>
+
+nnoremap <leader>ve :action QuickPreview<CR> 
+vnoremap <leader>ve :action QuickPreview<CR>
+
 nnoremap <leader>vr :action RecentLocations<cr>
 
 " display variable definition in a popup window

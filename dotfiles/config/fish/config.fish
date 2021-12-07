@@ -126,6 +126,26 @@ function agreplace
   ag -l "$argv[1]" | xargs -I FILE sed -i "s/$argv[1]/$argv[2]/g" FILE
 end
 
+function ymp3
+  if set -q argv[1] and set -q argv[2]
+	  youtube-dl -xi -u $argv[1] --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $argv[2]
+  else if set -q argv[1]
+	  youtube-dl -xi --audio-format mp3 -f bestaudio --prefer-ffmpeg -o "%(title)s.%(ext)s" $argv[1]
+  else
+	  echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
+  end
+end
+
+function yv
+  if set -q argv[1] and set -q argv[2]
+	  youtube-dl -iu "$argv[1]" -o "%(title)s.%(ext)s" $argv[2]
+  else if set -q argv[1]
+	  youtube-dl -i -o "%(title)s.%(ext)s" "$argv[1]"
+  else
+	  echo "Wrong number of arguments:\nvalid arguments\n\nURL\n\nor\n\nemail URL\n\n** URL of a playlist or video"
+  end
+end
+
 ##########################################################
 ##########    Source
 ##########################################################
