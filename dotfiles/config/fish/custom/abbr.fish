@@ -87,6 +87,7 @@ abbr gwips 'git commit -am "WIP (save staged changes)"'
 
 abbr v 'vifm'
 abbr h "htop"
+abbr vimc "vim -u NONE -N" # vim without sourcing the config (clean)
 
 if command -v apt >/dev/null 2>&1
 ## Ubuntu

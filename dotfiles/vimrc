@@ -183,7 +183,6 @@ Plug 'dbakker/vim-paragraph-motion'
 "    | | | | | |  __/ | | | | |  __/\__ \
 "    |_| |_| |_|\___|_| |_| |_|\___||___/
 "
-Plug 'arcticicestudio/nord-vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'challenger-deep-theme/vim'
 Plug 'dracula/vim'
@@ -193,6 +192,11 @@ Plug 'joshdick/onedark.vim'
 Plug 'rakr/vim-two-firewatch'
 Plug 'sainnhe/lightline_foobar.vim'
 Plug 'tomasr/molokai'
+if has("nvim") 
+  Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+else
+  Plug 'ghifarit53/tokyonight-vim'
+endif
 
 call plug#end()
 " }}}
@@ -530,16 +534,6 @@ function! ColorScheme()
     let g:lightline.colorscheme = 'palenight_alter'
   endif
 
-  if g:VIM_COLOR_SCHEME ==# 'nord'
-    " Lazy load theme in
-    let g:nord_underline = 1
-    let g:nord_italic_comments = 1
-    let g:nord_italic = 1
-    let g:nord_cursor_line_number_background = 1
-    colorscheme nord
-    let g:lightline.colorscheme = 'nord'
-  endif
-
   if g:VIM_COLOR_SCHEME ==# 'dracula'
     set background=dark
     colorscheme dracula
@@ -561,11 +555,34 @@ function! ColorScheme()
     let g:lightline.colorscheme = 'ayu_mirage'
   endif
 
+  if g:VIM_COLOR_SCHEME ==# 'ayu-mirage'
+    set background=dark
+    let g:ayucolor="mirage"
+    colorscheme ayu
+
+    let g:lightline.colorscheme = 'ayu_mirage'
+  endif
+
+  if g:VIM_COLOR_SCHEME ==# 'tokyonight'
+    set background=dark
+    let g:tokyonight_style = "night"
+    if has("nvim") 
+      let g:tokyonight_italic_functions = 1
+      let g:tokyonight_transparent = 1
+      let g:tokyonight_transparent_sidebar = 1
+    else
+      let g:tokyonight_transparent_background = 1
+      let g:tokyonight_enable_italic = 1
+    endif
+    let g:lightline.colorscheme = 'tokyonight'
+    colorscheme tokyonight
+  endif
 
 endfunction
 
 " The Defaults
-:call SwitchColorScheme('palenight')
+
+:call SwitchColorScheme('tokyonight')
 " }}}
 
 " whichkey {{{
