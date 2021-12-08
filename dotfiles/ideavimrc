@@ -31,7 +31,7 @@ set smartcase
 
 " use vim handlers in normal mode and IDE handlers in insert mode
 " https://github.com/JetBrains/ideavim/wiki/sethandler
-sethandler n:vim i:ide
+sethandler a:vim
 
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
@@ -423,6 +423,15 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 
+" Increase font size
+nnoremap <C-S-=> :action EditorIncreaseFontSize<CR>
+
+" Reset font size
+nnoremap <C-=> :action EditorResetFontSize<CR>
+
+" Decrease font size
+nnoremap <C--> :action EditorDecreaseFontSize<CR>
+
 "nnoremap <A-,> :action DecrementWindowWidth<cr>
 "vnoremap <A-,> <Esc>:action DecrementWindowWidth<cr>
 "
@@ -496,18 +505,6 @@ vnoremap <leader>xo    <Esc>:action RevealIn<CR>
 " Show settings
 nnoremap <leader>xs :action ShowSettings<cr>
 vnoremap <leader>xs <Esc>:action ShowSettings<cr>
-
-" Increase font size
-nnoremap <leader>x+    :action EditorIncreaseFontSize<CR>
-vnoremap <leader>x+    <Esc>:action EditorIncreaseFontSize<CR>
-
-" Reset font size
-nnoremap <leader>x=    :action EditorResetFontSize<CR>
-vnoremap <leader>x=    <Esc>:action EditorResetFontSize<CR>
-
-" Decrease font size
-nnoremap <leader>x-    :action EditorDecreaseFontSize<CR>
-vnoremap <leader>x-    <Esc>:action EditorDecreaseFontSize<CR>
 
 " Reset font size
 nnoremap <leader>x0    :action EditorResetFontSize<CR>
