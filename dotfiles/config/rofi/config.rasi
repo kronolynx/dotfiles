@@ -2,7 +2,8 @@ configuration {
     font: "JetBrainsMono Nerd Font, Medium 10";
     matching: "normal";
     fixed-num-lines: false;
-    theme: "./spotlight-dark.rasi";
 }
+
+@theme "spotlight-dark"
 
 /* vim:ft=css
