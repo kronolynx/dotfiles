@@ -62,7 +62,7 @@ set wrap " Enable line wrapping.
 
 " interface
 set background=dark " Use colors that suit a dark background.
-set cmdheight=2 " Height of the command bar
+set cmdheight=1 " Height of the command bar
 set colorcolumn=+1 " Make it obvious where 80 characters is
 set cursorline " Highlight current line
 set guifont=FantasqueSansMono\ Nerd\ Font\ 11
@@ -256,6 +256,12 @@ map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
+
+
+map <A-,> :vertical res -5<cr>
+map <A-.> :vertical res +5<cr>
+map <A-lt> :res -5<cr>
+map <A->> :res +5<cr>
 
 " When vimwindow is resized resize splits
 au VimResized * exe "normal! \<c-w>="
@@ -465,24 +471,10 @@ function! Git_branch() abort
   endif
 endfunction
 
-function! StatusDiagnostic() abort
-  let info = get(b:, 'coc_diagnostic_info', {})
-
-  if get(info, 'error', 0)
-    return "\uf46f"
-  endif
-
-  if get(info, 'warning', 0)
-    return info['warning'] . "\uf421"
-  endif
-
-  return "\uf42e "
-endfunction
-
 let g:lightline = {}
 let g:lightline.active = {
       \ 'left': [ ['mode', 'readonly'], ['filename_with_icon', 'modified']],
-      \ 'right': [['lineinfo'], ['testing_status', 'status_diagnostic'] ]
+      \ 'right': [['lineinfo'], ['testing_status'] ]
       \ }
 let g:lightline.separator = { 'left': " ", 'right': " " }
 let g:lightline.tabline_separator = { 'left': " ", 'right': "" }
@@ -620,26 +612,6 @@ let g:SuperTabMappingForward = '<s-tab>'
 let g:SuperTabMappingBackward = '<tab>'
 " }}}
 "
-" vista {{{
-nnoremap <BS> :b#<CR>
-let g:vista_sidebar_width = 45
-let g:vista_disable_statusline = 1
-
-" Ensure you have installed some decent font to show these pretty symbols, then you can enable icon for the kind.
-let g:vista#renderer#enable_icon = 1
-
-let g:vista_icon_indent = ["▸ ", ""]
-
-" The default icons can't be suitable for all the filetypes, you can extend it as you wish.
-let g:vista#renderer#icons = {
-\   "function": "ﬦ",
-\   "module": " ",
-\   "variable": "\ufb18 ",
-\   "constant": ""
-\  }
-
-let g:vista_default_executive = 'coc'
-" }}}
 
 " File management {{{
 "nnoremap <silent><leader>\ :NERDTreeToggle<CR>
