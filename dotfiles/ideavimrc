@@ -36,6 +36,11 @@ sethandler a:vim
 "This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
+sethandler <C-n> a:ide
+sethandler <C-p> a:ide
+" imap <C-n> <ESC>:action HippieCompletion<CR>a
+" imap <C-p> <ESC>:action HippieBackwardCompletion<CR>a
+
 " Plugins {{{
 " Other plugins are sourced in vimrc
 set which-key
@@ -128,6 +133,7 @@ map <A-,> :action StretchSplitToLeft<cr>
 map <A-.> :action StretchSplitToRight<cr>
 map <A-s-,> :action StretchSplitToTop<cr>
 map <A-s-.> :action StretchSplitToBottom<cr>
+map <A-\> :action MaximizeEditorInSplit<cr>
 
 " }}}
 
@@ -208,12 +214,15 @@ nnoremap <leader>vp :action ParameterInfo<cr>
 vnoremap <leader>vp <Esc>:action ParameterInfo<cr>
 
 " Types vh = view hover
-nnoremap <leader>vt :action Scala.TypeInfo<CR> 
+nnoremap <leader>vt :action Scala.TypeInfo<CR>
 vnoremap <leader>vt :action Scala.TypeInfo<CR>
 
 
 nnoremap <leader>vd :action QuickTypeDefinition<CR> 
 vnoremap <leader>vd :action QuickTypeDefinition<CR>
+
+nnoremap <leader>vh :action QuickJavaDoc<CR> 
+vnoremap <leader>vh :action QuickJavaDoc<CR>
 
 nnoremap <leader>ve :action QuickPreview<CR> 
 vnoremap <leader>ve :action QuickPreview<CR>
@@ -528,6 +537,10 @@ vnoremap <leader>qQ    <Esc>:action Exit<CR>
 " Save all and close project
 nnoremap <leader>qs    :action SaveAll<CR>:action CloseProject<CR>
 vnoremap <leader>qs    <Esc>:action SaveAll<CR>:action CloseProject<CR>
+
+
+noremap  <leader>z :action HideAllWindows<cr>
+vnoremap <leader>z <Esc>:action HideAllWindows<cr>
 " }}}
 
 """ todo 
