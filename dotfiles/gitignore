@@ -31,8 +31,6 @@ Snap.*
 # Logs and databases #
 ######################
 *.log
-*.sql
-*.sqlite
 
 # OS generated files #
 ######################
@@ -48,7 +46,6 @@ Thumbs.db
 ###############
 .envrc
 .env
-.local.application.conf
 .envapi
 .envdom
 
@@ -71,5 +68,4 @@ dependency-graph.svg
 .sdkmanrc
 .env.fish
 .out.fish
-.envrc
 
