@@ -316,7 +316,7 @@ label-layout-underline = #166775
 label-indicator-padding = 2
 label-indicator-margin = 2
 label-indicator-background = ${colors.background-mod}
-label-indicator-underline = #166775 ; ${colors.foreground-mod}
+label-indicator-underline = #166775 
 label-indicator-on-capslock = ""
 
 ################################################################################
