@@ -133,6 +133,7 @@ map <A-,> :action StretchSplitToLeft<cr>
 map <A-.> :action StretchSplitToRight<cr>
 map <A-s-,> :action StretchSplitToTop<cr>
 map <A-s-.> :action StretchSplitToBottom<cr>
+" zoom 
 map <A-\> :action MaximizeEditorInSplit<cr>
 
 " }}}
@@ -153,6 +154,14 @@ nnoremap Y y$
 
 map <A-space> :action GotoAction<cr>
 map <A-j> :action GotoAction<cr>
+" run {{{ 
+let g:WhichKeyDesc_editor = "<leader>action run"
+
+nnoremap <leader>af :action RerunFailedTests<cr>
+nnoremap <leader>ac :action RunClass<cr>
+nnoremap <leader>ar :action Run<cr>
+
+" }}}
 
 " editor {{{
 let g:WhichKeyDesc_editor = "<leader>e editor"
@@ -167,6 +176,9 @@ nnoremap <leader>ec :action CompileProject<cr>
 
 nnoremap <leader>ee :action EvaluateExpression<CR>
 vnoremap <leader>ee <Esc>:action EvaluateExpression<CR>
+
+nnoremap <leader>ed :action Scala.Desugar<CR>
+vnoremap <leader>ed <Esc>:action Scala.Desugar<CR> 
 
 " Insert snippet
 nnoremap <leader>es :action InsertLiveTemplate<CR>
@@ -201,11 +213,9 @@ let g:WhichKeyDesc_view_implicits = "<leader>vi implicits"
 nnoremap <leader>via :action Scala.ShowImplicitArguments<CR>
 vnoremap <leader>via <Esc>:action Scala.ShowImplicitArguments<cr>
 
-nnoremap <leader>vip :action Scala.ShowImplicits<cr>
-vnoremap <leader>vip <Esc>:action Scala.ShowImplicits<cr>
+nnoremap <leader>vis :action Scala.ShowImplicits<cr>
+vnoremap <leader>vis <Esc>:action Scala.ShowImplicits<cr>
 
-nnoremap <leader>vih <Action>(ShowErrorDescription) 
-vnoremap <leader>vih <Esc><Action>(ShowErrorDescription) 
 
 nnoremap <leader>vie :action Scala.ExpandImplicits<cr>
 vnoremap <leader>vie <Esc>:action Scala.ExpandImplicits<cr>
@@ -217,20 +227,24 @@ vnoremap <leader>vp <Esc>:action ParameterInfo<cr>
 nnoremap <leader>vt :action Scala.TypeInfo<CR>
 vnoremap <leader>vt :action Scala.TypeInfo<CR>
 
+nnoremap <leader>ve :Action ShowErrorDescription<CR>
+vnoremap <leader>ve <Esc>Action: ShowErrorDescription<CR>
 
-nnoremap <leader>vd :action QuickTypeDefinition<CR> 
-vnoremap <leader>vd :action QuickTypeDefinition<CR>
-
-nnoremap <leader>vh :action QuickJavaDoc<CR> 
-vnoremap <leader>vh :action QuickJavaDoc<CR>
-
-nnoremap <leader>ve :action QuickPreview<CR> 
-vnoremap <leader>ve :action QuickPreview<CR>
 
 nnoremap <leader>vr :action RecentLocations<cr>
 
+let g:WhichKeyDesc_view_implicits = "<leader>vq quick"
+nnoremap <leader>vqt :action QuickTypeDefinition<CR> 
+vnoremap <leader>vqt <Esc>:action QuickTypeDefinition<CR>
+
+nnoremap <leader>vqj :action QuickJavaDoc<CR> 
+vnoremap <leader>vqj <Esc>:action QuickJavaDoc<CR>
+
+nnoremap <leader>vqp :action QuickPreview<CR> 
+vnoremap <leader>vqp <Esc>:action QuickPreview<CR>
 " display variable definition in a popup window
-nnoremap <leader>vq :action QuickImplementations<CR> 
+nnoremap <leader>vqi :action QuickImplementations<CR> 
+vnoremap <leader>vqi <Esc>:action QuickImplementations<CR>
 
 " Undo
 let g:WhichKeyDesc_view_undo = "<leader>vu undo history"

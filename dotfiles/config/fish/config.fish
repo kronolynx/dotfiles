@@ -1,7 +1,16 @@
 fish_vi_key_bindings
 
-set -Ux EDITOR /usr/bin/vim
-set -Ux VISUAL /usr/bin/vim
+
+if command -v nvim >/dev/null 2>&1
+  set -gx EDITOR nvim
+  set -gx VISUAL nvim
+else if command -v vim >/dev/null 2>&1
+  set -gx EDITOR vim
+  set -gx VISUAL vim
+else
+  set -gx EDITOR vi
+  set -gx VISUAL vi
+end
 
 ##########################################################
 ########## Plugins
