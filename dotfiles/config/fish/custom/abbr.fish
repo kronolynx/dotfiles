@@ -2,6 +2,10 @@
 ##########    Abbr
 ##########################################################
 
+abbr k kubectl
+abbr kns kubens
+abbr ktx kubectx
+
 # git
 abbr g 'git'
 abbr gamend = 'git commit --amend --no-edit'
