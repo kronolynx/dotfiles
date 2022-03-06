@@ -58,6 +58,9 @@ set wrapscan              " searches wrap around the end of file
 vnoremap uu <Esc> 
 inoremap jj <Esc> 
 
+nnoremap g; :action JumpToLastChange<Enter>
+nnoremap g, :action JumpToNextChange<Enter>
+
 let g:WhichKeyDesc_back = "gb Back"
 nnoremap gb :action Back<cr>
 let g:WhichKeyDesc_forward = "gf Forward"
@@ -244,7 +247,7 @@ nnoremap <leader>vqp :action QuickPreview<CR>
 vnoremap <leader>vqp <Esc>:action QuickPreview<CR>
 " display variable definition in a popup window
 nnoremap <leader>vqi :action QuickImplementations<CR> 
-vnoremap <leader>vqi <Esc>:action QuickImplementations<CR>
+vnoremap <leader>vqi :action QuickImplementations<CR>
 
 " Undo
 let g:WhichKeyDesc_view_undo = "<leader>vu undo history"
