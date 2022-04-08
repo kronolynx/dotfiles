@@ -7,7 +7,6 @@ declare -A debs=(
   ["jwilm/alacritty"]="Alacritty.*amd64.deb" # terminal
   ["sharkdp/bat"]="bat_.*amd64.deb" # cat replacement
   ["onivim/oni"]="Oni.*amd64-linux.deb" # editor based on neovim
-  ["BoostIO/boost-releases"]="boostnote.*amd64.deb" # markdown note taking app 
   ["altdesktop/playerctl"]="playerctl.*amd64.deb"
 )
 

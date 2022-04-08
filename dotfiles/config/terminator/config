@@ -1,6 +1,5 @@
 [global_config]
   focus = mouse
-  extra_styling = False
   title_hide_sizetext = True
   title_transmit_fg_color = "#02ff00"
   title_transmit_bg_color = "#000000"
@@ -8,6 +7,7 @@
   title_inactive_fg_color = "#ff0000"
   title_inactive_bg_color = "#000000"
   inactive_color_offset = 1.0
+  enabled_plugins = LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler, Logger
   suppress_multiple_term_dialog = True
   title_use_system_font = False
   title_font = Fantasque Sans Mono 14
@@ -23,7 +23,7 @@
   close_window = <Primary><Shift>q
   move_tab_right = <Primary><Shift>l
   move_tab_left = <Primary><Shift>h
-  toggle_zoom = <Shift><Alt>z
+  toggle_zoom = <Alt>z
   next_tab = <Shift><Alt>l
   prev_tab = <Shift><Alt>h
   switch_to_tab_1 = <Alt>1
@@ -42,16 +42,17 @@
 [profiles]
   [[default]]
     icon_bell = False
+    background_color = "#1a1b26"
     background_darkness = 0.82
     background_type = transparent
-    cursor_color = "#dddddd"
-    font = FantasqueSansMono Nerd Font Mono 12.5
-    foreground_color = "#dddddd"
+    cursor_color = "#a9b1d6"
+    font = FantasqueSansMono Nerd Font 12.5
+    foreground_color = "#a9b1d6"
     show_titlebar = False
     scrollbar_position = hidden
     scroll_background = False
     scrollback_lines = 100000
-    palette = "#000000:#cc0403:#19cb00:#cecb00:#0d73cc:#cb1ed1:#0dcdcd:#dddddd:#555753:#f2201f:#23fd00:#fffd00:#1a8fff:#fd28ff:#14ffff:#ffffff"
+    palette = "#1a1b26:#f7768e:#9ece6a:#e0af68:#7aa2f7:#9a7ecc:#4abaaf:#acb0d0:#4e5173:#f7768e:#9ece6a:#e0af68:#7aa2f7:#9a7ecc:#4abaaf:#acb0d0"
     use_system_font = False
     bold_is_bright = True
 [layouts]

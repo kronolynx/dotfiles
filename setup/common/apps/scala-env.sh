@@ -7,7 +7,7 @@ curl -fLo cs https://git.io/coursier-cli-"$(uname | tr LD ld)"
 
 chmod +x cs
 ./cs install cs ammonite bloop giter8 sbt scala scalafmt
-./cs java --jvm adopt-openj9:1.8.0-292 --setup
+./cs java --jvm openjdk@1.11.0-2 --setup
 
 mkdir -p ~/.zsh/completion
 cs --completions zsh > ~/.zsh/completion/cs

@@ -1,5 +1,8 @@
 "actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
 " :actionlist
+" :actionlist [pattern]
+" to find actions with mouse
+" IdeaVim: track action Ids (found in "Search Everywhere" [double shift] 
 source ~/.vimrc
 
 let mapleader=" "
@@ -47,6 +50,8 @@ set which-key
 " }}}
 " Ideavim commands {{{
 set ideajoin              " 
+set ideaput               " enable native IJ insertion in Vim
+set ideamarks             " Sync IJ bookmarks and Vim marks
 set showmode              " message on the status line to show current mode
 set showcmd               " show (partial) command in the status bar
 set wrapscan              " searches wrap around the end of file
@@ -122,6 +127,9 @@ nnoremap <leader>tu <Esc>:action ReopenClosedTab<cr>
 " cycle tabs
 nnoremap <C-s-tab> :action NextTab<cr>
 nnoremap <C-tab> :action PreviousTab<cr>
+
+" open terminal
+nnoremap <C-t> :action ActivateTerminalToolWindow<cr>
 
 "nnoremap <leader-tab> :action GoToLastTab<cr>
 "nnoremap <leader-tab> <Esc>:action GoToLastTab<cr>
@@ -276,6 +284,7 @@ vmap <leader>rc <Esc>:%s/\s\+$<CR><Paste>
 " ide {{{
 let g:WhichKeyDesc_ide = "<leader>i IDE"
 nnoremap <leader>ir :action ActivateFileManagerToolWindow<cr>
+
 nnoremap <leader>it :action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
 nnoremap <leader>iT :action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
 " Toggle code minimap
@@ -360,6 +369,8 @@ vnoremap g.    :action JumpToLastChange<CR>
 " git (m from magit) {{{
 let g:WhichKeyDesc_git = "<leader>m git"
 nnoremap <leader>ma :action Git.Add<cr>
+
+nnoremap <leader>mb :action Git.Branches<cr>
 
 nnoremap <leader>mm :action Git.Menu<cr>
 
@@ -525,6 +536,13 @@ vnoremap <leader>xR    <Esc>:source ~/.ideavimrc<CR>
 " open recent project
 nnoremap <leader>xr    :action RecentProjectListGroup<CR>
 vnoremap <leader>xr    <Esc>:action RecentProjectListGroup<CR>
+
+nnoremap <leader>xp    :action OpenFile<CR>
+vnoremap <leader>xp    <Esc>:action OpenFile<CR>
+
+nnoremap <leader>xm    :action ViewMainMenu<CR>
+vnoremap <leader>xm    <Esc>:action ViewMainMenu<CR>
+
 " open in file manader
 nnoremap <leader>xo    :action RevealIn<CR>
 vnoremap <leader>xo    <Esc>:action RevealIn<CR>
