@@ -1,0 +1,27 @@
+#/bin/bash
+
+# TODO handle multiple monitors
+MONITOR=$(xrandr -q | grep " connected" | cut -f 1 -d " ")
+
+getBrightness() {
+  xrandr --verbose --current | grep ^"$MONITOR" -A5 | tail -n1 | cut -f 2 -d " "
+}
+
+setBrightness() {
+  xrandr --output $MONITOR --brightness "$1"
+}
+
+increaseBrightness() {
+  setBrightness $(echo "$(getBrightness)+0.05"|bc -l)
+}
+
+decreaseBrightness() {
+   setBrightness $(echo "$(getBrightness)-0.05"|bc -l)
+}
+
+case "$1" in
+ up) increaseBrightness;;
+ down) decreaseBrightness;;
+ get) getBrightness;;
+esac
+
