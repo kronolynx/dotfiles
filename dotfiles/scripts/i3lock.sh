@@ -4,6 +4,9 @@ case "$1" in
     lock)
         ~/.local/bin/lock
         ;;
+    screenoff)
+        ~/.local/bin/lock && xset dpms force off
+        ;;
     logout)
         i3-msg exit
         ;;
