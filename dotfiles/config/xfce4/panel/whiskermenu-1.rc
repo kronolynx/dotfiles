@@ -1,7 +1,7 @@
 favorites=firefox.desktop,xfce4-terminal.desktop,org.xfce.Parole.desktop,galculator.desktop,thunar.desktop,xfce4-taskmanager.desktop,xfce-settings-manager.desktop,pavucontrol.desktop,eos-log-tool.desktop,welcome.desktop
-recent=xfce-settings-manager.desktop,firefox.desktop,xfce4-terminal.desktop,slack.desktop,thunar.desktop,xfce4-taskmanager.desktop
+recent=com.microsoft.Teams.desktop,xfce-keyboard-settings.desktop,xfce4-run.desktop,arandr.desktop,joplin.desktop,firefox.desktop
 button-title=
-button-icon=/home/johann/.wallpapers/xmonadCurvy.png
+button-icon=/home/johann/.config/xmonad/src/Theme/xmonadCurvy.png
 button-single-row=false
 show-button-title=true
 show-button-icon=true
@@ -24,9 +24,9 @@ position-categories-horizontal=false
 stay-on-focus-out=false
 profile-shape=0
 confirm-session-command=true
-menu-width=566
-menu-height=427
-menu-opacity=97
+menu-width=536
+menu-height=397
+menu-opacity=90
 command-settings=xfce4-settings-manager
 show-command-settings=true
 command-lockscreen=xflock4
@@ -49,7 +49,7 @@ command-menueditor=menulibre
 show-command-menueditor=false
 command-profile=mugshot
 show-command-profile=true
-search-actions=6
+search-actions=5
 
 [action0]
 name=Man Pages
@@ -80,10 +80,4 @@ name=Open URL
 pattern=^(file|http|https):\\/\\/(.*)$
 command=exo-open \\0
 regex=true
-
-[action5]
-name=EndeavourOS Forum
-pattern=forum
-command=firefox https://forum.endeavouros.com
-regex=false
 
