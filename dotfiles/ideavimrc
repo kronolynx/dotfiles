@@ -1,4 +1,5 @@
-"actions https://gist.github.com/zchee/9c78f91cc5ad771c1f5d
+"
+" Find actions
 " :actionlist
 " :actionlist [pattern]
 " to find actions with mouse
@@ -60,16 +61,18 @@ set wrapscan              " searches wrap around the end of file
 
 " other {{{
 
-vnoremap uu <Esc> 
 inoremap jj <Esc> 
 
-nnoremap g; :action JumpToLastChange<Enter>
-nnoremap g, :action JumpToNextChange<Enter>
+map g; <Action>(JumpToLastChange)
+map g, <Action>(JumpToNextChange)
 
 let g:WhichKeyDesc_back = "gb Back"
-nnoremap gb :action Back<cr>
+map gb <Action>(Back)
 let g:WhichKeyDesc_forward = "gf Forward"
-nnoremap gf :action Forward<cr>
+map gf <Action>(Forward)
+
+map [[ <Action>(MethodUp)
+map ]] <Action>(MethodDown)
 
 " }}}
 
@@ -89,63 +92,48 @@ let g:WhichKey_CommandColor = "#8be9fd"
 " Leader bindings
 " tab {{{
 let g:WhichKeyDesc_tab = "<leader>t tab"
-nnoremap <leader>tc :action CloseContent<cr>
-vnoremap <leader>tc <Esc>:action CloseContent<cr>
+map <leader>tc <Action>(CloseContent)
 
-nnoremap <leader>tf :action FileStructurePopup<cr>
-vnoremap <leader>tf <Esc>:action FileStructurePopup<cr>
+map <leader>tf <Action>(FileStructurePopup)
 
-nnoremap <leader>th :action PreviousTab<cr>
-vnoremap <leader>th <Esc>:action PreviousTab<cr>
+map <leader>th <Action>(PreviousTab)
 
-nnoremap <leader>tl :action NextTab<cr>
-vnoremap <leader>tl <Esc>:action NextTab<cr>
+map <leader>tl <Action>(NextTab)
 
-nnoremap <leader>ts :action Switcher<cr>
-vnoremap <leader>ts <Esc>:action Switcher<cr>
+map <leader>ts <Action>(Switcher)
 
-nnoremap <leader>tr :action RecentFiles<cr>
-vnoremap <leader>tr <Esc>:action RecentFiles<cr>
+map <leader>tr <Action>(RecentFiles)
 
-nnoremap <leader>tt    :action VimFilePrevious<CR>
-vnoremap <leader>tt   <Esc>:action VimFilePrevious<CR>
+map <leader>tt <Action>(VimFilePrevious)
 
 " duplicate tab opossite group (yank)
-nnoremap <leader>tm :action MoveEditorToOppositeTabGroup<cr>
-vnoremap <leader>tm <Esc>:action MoveEditorToOppositeTabGroup<cr>
+map <leader>tm <Action>(MoveEditorToOppositeTabGroup)
 
-noremap <leader>ty :action OpenEditorInOppositeTabGroup<cr>
-vnoremap <leader>ty <Esc>:action OpenEditorInOppositeTabGroup<cr>
+map <leader>ty <Action>(OpenEditorInOppositeTabGroup)
 
-noremap <leader>yt:action OpenEditorInOppositeTabGroup<cr>
-vnoremap <leader>yt <Esc>:action OpenEditorInOppositeTabGroup<cr>
+map <leader>yt<Action>(OpenEditorInOppositeTabGroup)
 
 " undo (reopen)
-nnoremap <leader>tu :action ReopenClosedTab<cr>
-nnoremap <leader>tu <Esc>:action ReopenClosedTab<cr>
+map <leader>tu <Action>(ReopenClosedTab)
 
 " cycle tabs
-nnoremap <C-s-tab> :action NextTab<cr>
-nnoremap <C-tab> :action PreviousTab<cr>
+map <C-s-tab> <Action>(NextTab)
+map <C-tab> <Action>(PreviousTab)
 
 " open terminal
-nnoremap <C-t> :action ActivateTerminalToolWindow<cr>
-
-"nnoremap <leader-tab> :action GoToLastTab<cr>
-"nnoremap <leader-tab> <Esc>:action GoToLastTab<cr>
+map <C-t> <Action>(ActivateTerminalToolWindow)
 
 " Focus last tab
 let g:WhichKeyDesc_last_tab = "<leader><Tab> last tab"
-nnoremap <leader><tab>    :action GoToLastTab<CR>
-vnoremap <leader><tab>    <Esc>:action GoToLastTab<CR>
+map <leader><tab> <Action>(GoToLastTab)
 
 " Resize split
-map <A-,> :action StretchSplitToLeft<cr>
-map <A-.> :action StretchSplitToRight<cr>
-map <A-s-,> :action StretchSplitToTop<cr>
-map <A-s-.> :action StretchSplitToBottom<cr>
+map <A-,> <Action>(StretchSplitToLeft)
+map <A-.> <Action>(StretchSplitToRight)
+map <A-s-,> <Action>(StretchSplitToTop)
+map <A-s-.> <Action>(StretchSplitToBottom)
 " zoom 
-map <A-\> :action MaximizeEditorInSplit<cr>
+map <A-\> <Action>(MaximizeEditorInSplit)
 
 " }}}
 
@@ -157,123 +145,110 @@ map <A-\> :action MaximizeEditorInSplit<cr>
 " to a VOID register. Meaning I still have what I originally had
 " when I pasted. I don't loose the previous thing I YANKED!
 let g:WhichKeyDesc_paste = "<leader>p paste replace and keep"
-vnoremap <leader>p "_dP
 " }}}
 
 " yank to end of line
 nnoremap Y y$ 
 
-map <A-space> :action GotoAction<cr>
-map <A-j> :action GotoAction<cr>
+map <A-space> <Action>(GotoAction)
+map <A-j> <Action>(GotoAction)
 " run {{{ 
 let g:WhichKeyDesc_editor = "<leader>action run"
 
-nnoremap <leader>af :action RerunFailedTests<cr>
-nnoremap <leader>ac :action RunClass<cr>
-nnoremap <leader>ar :action Run<cr>
+map <leader>af <Action>(RerunFailedTests)
+map <leader>ac <Action>(RunClass)
+map <leader>ar <Action>(Run)
 
 " }}}
 
 " editor {{{
 let g:WhichKeyDesc_editor = "<leader>e editor"
 
-nnoremap <leader>ea :action GotoAction<cr>
+map <leader>ea <Action>(GotoAction)
 
-nnoremap <leader>eb :action Back<cr>
+map <leader>eb <Action>(Back)
 
-nnoremap <leader>ef :action Forward<cr>
+map <leader>ef <Action>(Forward)
 
-nnoremap <leader>ec :action CompileProject<cr>
+"map <leader>ec <Action>(CompileProject)
+map <leader>ec <Action>(CompileDirty)
 
-nnoremap <leader>ee :action EvaluateExpression<CR>
-vnoremap <leader>ee <Esc>:action EvaluateExpression<CR>
+map <leader>ee <Action>(EvaluateExpression)
 
-nnoremap <leader>ed :action Scala.Desugar<CR>
-vnoremap <leader>ed <Esc>:action Scala.Desugar<CR> 
+map <leader>ed <Action>(Scala.Desugar)
 
 " Insert snippet
-nnoremap <leader>es :action InsertLiveTemplate<CR>
+map <leader>es <Action>(InsertLiveTemplate)
 
+map <leader>et <Action>(ToggleTypeHints)
 
-nnoremap <leader>en :action EditorGutterToggleGlobalLineNumbers<cr>
+map <leader>en <Action>(EditorGutterToggleGlobalLineNumbers)
 
 " Pasting from yank history
-nnoremap <leader>ey :action PasteMultiple<CR>
+map <leader>ey <Action>(PasteMultiple)
 
-nnoremap <leader>eo :action OptimizeImports<CR>
+map <leader>eo <Action>(OptimizeImports)
 
-nnoremap <leader>e= :action ReformatCode<cr>
+map <leader>e= <Action>(ReformatCode)
 
-" multiple cursors
-let g:WhichKeyDesc_multiple_cursors = "<leader>c multiple cursors"
-nnoremap <leader>c <A-N>
+"" multiple cursors
+"let g:WhichKeyDesc_multiple_cursors = "<leader>c multiple cursors"
+"nnoremap <leader>c <A-N>
 
 " Show usages for symbol.
 " Ideally this should be FindInPath the current word, but I think that it is
 " not possible.
 let g:WhichKeyDesc_usages = "<leader>* show usages"
-nnoremap <leader>*    :action ShowUsages<CR>
-vnoremap <leader>*    <Esc>:action ShowUsages<CR>
+map <leader>* <Action>(ShowUsages)
 " }}}
 
 " view {{{
 let g:WhichKeyDesc_view = "<leader>v view"
-nnoremap <leader>va :action ShowIntentionActions<CR>
+map <leader>va <Action>(ShowIntentionActions)
 
-let g:WhichKeyDesc_view_implicits = "<leader>vi implicits"
-nnoremap <leader>via :action Scala.ShowImplicitArguments<CR>
-vnoremap <leader>via <Esc>:action Scala.ShowImplicitArguments<cr>
+let g:WhichKeyDesc_view = "<leader>vi implicits"
+map <leader>via <Action>(Scala.ShowImplicitArguments)
 
-nnoremap <leader>vis :action Scala.ShowImplicits<cr>
-vnoremap <leader>vis <Esc>:action Scala.ShowImplicits<cr>
+map <leader>vip <Action>(Scala.ShowImplicits)
 
 
-nnoremap <leader>vie :action Scala.ExpandImplicits<cr>
-vnoremap <leader>vie <Esc>:action Scala.ExpandImplicits<cr>
+map <leader>vie <Action>(Scala.ExpandImplicits)
 
-nnoremap <leader>vp :action ParameterInfo<cr>
-vnoremap <leader>vp <Esc>:action ParameterInfo<cr>
+map <leader>vp <Action>(ParameterInfo)
 
-" Types vh = view hover
-nnoremap <leader>vt :action Scala.TypeInfo<CR>
-vnoremap <leader>vt :action Scala.TypeInfo<CR>
+" Types vt = view hover
+map <leader>vt <Action>(Scala.TypeInfo)
 
-nnoremap <leader>ve :Action ShowErrorDescription<CR>
-vnoremap <leader>ve <Esc>Action: ShowErrorDescription<CR>
+map <leader>ve <Action>(ShowErrorDescription)
 
 
-nnoremap <leader>vr :action RecentLocations<cr>
+map <leader>vr <Action>(RecentLocations)
 
 let g:WhichKeyDesc_view_implicits = "<leader>vq quick"
-nnoremap <leader>vqt :action QuickTypeDefinition<CR> 
-vnoremap <leader>vqt <Esc>:action QuickTypeDefinition<CR>
+map <leader>vqt <Action>(QuickTypeDefinition)
 
-nnoremap <leader>vqj :action QuickJavaDoc<CR> 
-vnoremap <leader>vqj <Esc>:action QuickJavaDoc<CR>
+map <leader>vqj <Action>(QuickJavaDoc)
 
-nnoremap <leader>vqp :action QuickPreview<CR> 
-vnoremap <leader>vqp <Esc>:action QuickPreview<CR>
+map <leader>vqp <Action>(QuickPreview)
 " display variable definition in a popup window
-nnoremap <leader>vqi :action QuickImplementations<CR> 
-vnoremap <leader>vqi :action QuickImplementations<CR>
+map <leader>vqi <Action>(QuickImplementations)
 
 " Undo
 let g:WhichKeyDesc_view_undo = "<leader>vu undo history"
-nnoremap <leader>vu :action LocalHistory.ShowHistory<CR>
+map <leader>vu <Action>(LocalHistory.ShowHistory)
 " }}}
 
 " refactor {{{
 let g:WhichKeyDesc_refactor = "<leader>r refactor"
-nnoremap <leader>rm :action ExtractMethod<CR>
-nnoremap <leader>rq :action Refactorings.QuickListPopupAction<CR>
-nnoremap <leader>rp :action IntroduceParameter<CR>
+map <leader>rm <Action>(ExtractMethod)
+map <leader>rq <Action>(Refactorings.QuickListPopupAction)
+map <leader>rp <Action>(IntroduceParameter)
 " inline current variable (opossite of introduce variable)
-nnoremap <leader>ri :action Inline<CR>
-nnoremap <leader>rv :action IntroduceVariable<CR>
-nnoremap <leader>ro :action OverrideMethods<CR>
+map <leader>ri <Action>(Inline)
+map <leader>rv <Action>(IntroduceVariable)
+map <leader>ro <Action>(OverrideMethods)
 
-nnoremap <leader>rr :action RenameElement<cr>
-vnoremap <leader>rr <Esc>:action RenameElement<cr>
+map <leader>rr <Action>(RenameElement)
 
 " remove extra whitespace
 let g:WhichKeyDesc_refactor_white = "<leader>rc remove extra white space"
@@ -283,177 +258,149 @@ vmap <leader>rc <Esc>:%s/\s\+$<CR><Paste>
 
 " ide {{{
 let g:WhichKeyDesc_ide = "<leader>i IDE"
-nnoremap <leader>ir :action ActivateFileManagerToolWindow<cr>
+map <leader>ir <Action>(ActivateFileManagerToolWindow)
 
-nnoremap <leader>it :action com.sburlyaev.cmd.plugin.actions.OpenTerminal<cr>
-nnoremap <leader>iT :action com.sburlyaev.cmd.plugin.actions.OpenInTerminal<cr>
+map <leader>it <Action>(com.sburlyaev.cmd.plugin.actions.OpenTerminal)
+map <leader>iT <Action>(com.sburlyaev.cmd.plugin.actions.OpenInTerminal)
 " Toggle code minimap
 let g:WhichKeyDesc_ide_minimap = "<leader>im Toogle minimap"
-nmap <Leader>im :action CodeGlance.toggle<CR>
+map <Leader>im <Action>(CodeGlance.toggle)
 "}}}
 
 " file {{{
 let g:WhichKeyDesc_file = "<leader>f file"
-" Find file
-nnoremap <leader>fe :action <cr>
 
-nnoremap <leader>fu :action <cr>
+map <leader>fu <Action>(FindUsages)
 
-nnoremap <leader>fl :action Recentfiles<cr>
-vnoremap <leader>fl <Esc>:action Recentfiles<cr>
+map <leader>fl <Action>(Recentfiles)
 
-nnoremap <leader>fc :action RecentChangedFiles<cr>
+map <leader>fc <Action>(RecentChangedFiles)
 
-nnoremap <leader>fo :action OpenFile<cr>
+map <leader>fo <Action>(OpenFile)
 
 " Recent files
-nnoremap <leader>fr    :action RecentFiles<CR>
+map <leader>fr <Action>(RecentFiles)
 
 " find in project window
-nnoremap <leader>ff    :action SelectInProjectView<CR>
+map <leader>ff <Action>(SelectInProjectView)
 
 " Rename file
-nnoremap <leader>fR    :action RenameFile<CR>
+map <leader>fR <Action>(RenameFile)
 
 " New file
-nnoremap <leader>fN :action NewFile<cr>
+map <leader>fN <Action>(NewFile)
 
 " Copy file path
-nnoremap <leader>fy    :action CopyPaths<CR>
+map <leader>fy <Action>(CopyPaths)
 
 " }}}
 
 " goto {{{
 let g:WhichKeyDesc_goto = "<leader>g goto"
-nnoremap <leader>gg :action ActivateProjectToolWindow<cr>
+map <leader>gg <Action>(ActivateProjectToolWindow)
 
-nnoremap <leader>gd :action GotoTypeDeclaration<cr>
-vnoremap <leader>gd <Esc>:action GotoTypeDeclaration<cr>
+map <leader>gd <Action>(GotoTypeDeclaration)
 
-nnoremap <leader>gi :action GotoImplementation<cr>
-vnoremap <leader>gi <Esc>:action GotoImplementation<cr>
+map <leader>gi <Action>(GotoImplementation)
 
-nnoremap <leader>gs :action GotoSuperMethod<cr>
-vnoremap <leader>gs <Esc>:action GotoSuperMethod<cr>
+map <leader>gs <Action>(GotoSuperMethod)
 
-nnoremap <leader>gf :action GotoFile<cr>
+map <leader>gf <Action>(GotoFile)
 
-nnoremap <leader>gc :action GotoClass<cr>
+map <leader>gc <Action>(GotoClass)
 
-nnoremap <leader>ga :action GotoAction<cr>
+map <leader>ga <Action>(GotoAction)
 
-"nnoremap <leader>gt :action GotoTest<cr>
-"vnoremap <leader>gt <Esc>:action GotoTest<cr>
-
-nnoremap <leader>gu :action FindUsages<cr>
-vnoremap <leader>gu <Esc>:action FindUsages<cr>
+map <leader>gu <Action>(FindUsages)
 
 " Go to code block start
-nnoremap <leader>g[    :action EditorCodeBlockStart<CR>
-vnoremap <leader>g[    <Esc>:action EditorCodeBlockStart<CR>
+map <leader>g[ <Action>(EditorCodeBlockStart)
 
 " Go to code block end
-nnoremap <leader>g]    :action EditorCodeBlockEnd<CR>
-vnoremap <leader>g]    <Esc>:action EditorCodeBlockEnd<CR>
+map <leader>g] <Action>(EditorCodeBlockEnd)
 
 " Go to next change
-nnoremap g,    :action JumpToNextChange<CR>
-vnoremap g,    :action JumpToNextChange<CR>
+map g, <Action>(JumpToNextChange)
 
 " Go to last change
-nnoremap g.    :action JumpToLastChange<CR>
-vnoremap g.    :action JumpToLastChange<CR>
+map g. <Action>(JumpToLastChange)
 
 " }}}
 
-" git (m from magit) {{{
-let g:WhichKeyDesc_git = "<leader>m git"
-nnoremap <leader>ma :action Git.Add<cr>
+" git {{{
+let g:WhichKeyDesc_git = "<leader>c git"
+map <leader>ca <Action>(Git.Add)
 
-nnoremap <leader>mb :action Git.Branches<cr>
+map <leader>cb <Action>(Git.Branches)
 
-nnoremap <leader>mm :action Git.Menu<cr>
+map <leader>cm <Action>(Git.Menu)
 
-nnoremap <leader>mp :action Git.Pull<cr>
+map <leader>cp <Action>(Git.Pull)
 
-nnoremap <leader>mf :action Git.Fetch<cr>
+map <leader>cf <Action>(Git.Fetch)
 
-nnoremap <leader>mi :action Git.Init<cr>
+map <leader>ci <Action>(Git.Init)
 
-nnoremap <leader>ml :action Git.Log<cr>
+map <leader>cl <Action>(Git.Log)
 
-nnoremap <leader>mu :action Git.Unstash<cr>
+map <leader>cu <Action>(Git.Unstash)
 
 
-nnoremap <leader>mh :action Vcs.ShowHistoryForBlock<cr>
-vnoremap <leader>mh :action Vcs.ShowHistoryForBlock<cr>
+map <leader>ch <Action>(Vcs.ShowHistoryForBlock)
 
-" Show local changes window (git status)
-nnoremap <leader>mw    :action Vcs.Show.Local.Changes<CR>
-nnoremap <leader>md    :action Vcs.Show.Local.Changes<CR>
+" Show localcchanges window (git status)
+map <leader>cw <Action>(Vcs.Show.Local.Changes)
+map <leader>cd <Action>(Vcs.Show.Local.Changes)
 
-nnoremap <leader>ms :action Git.Stash<cr>
+map <leader>cs <Action>(Git.Stash)
 
 " }}}
 
 " search {{{
 let g:WhichKeyDesc_search = "<leader>s search"
-nnoremap <leader>su :action FindUsages<cr>
-vnoremap <leader>su <Esc>:action FindUsages<cr>
+map <leader>su <Action>(FindUsages)
 
-nnoremap <leader>sp :action FindInPath<cr>
+map <leader>sp <Action>(FindInPath)
 
-nnoremap <leader>se :action SearchEverywhere<cr>
+map <leader>se <Action>(SearchEverywhere)
 
-nnoremap <leader>ss :action Find<cr>
+map <leader>ss <Action>(Find)
 
-nnoremap <leader>sf :action FindUsagesInFile<cr>
-vnoremap <leader>sf <Esc>:action FindUsagesInFile<cr>
+map <leader>sf <Action>(FindUsagesInFile)
 
 " Highlight current symbol. Do it again to toggle highlight.
-nnoremap <leader>sh :action HighlightUsagesInFile<CR>
-vnoremap <leader>sh <Esc>:action HighlightUsagesInFile<CR>
+map <leader>sh <Action>(HighlightUsagesInFile)
 
-nnoremap * :action FindWordAtCaret<cr>
-vnoremap * <Esc>:action FindWordAtCaret<cr>
+map * <Action>(FindWordAtCaret)
 
 " }}}
 
 " window {{{
 let g:WhichKeyDesc_window = "<leader>w window"
-nnoremap <leader>wc :action CloseContent<cr>
-vnoremap <leader>wc <Esc>:action CloseContent<cr>
+map <leader>wc <Action>(CloseContent)
 
-nnoremap <leader>wo :action CloseAllEditorsButActive<cr>
-vnoremap <leader>wo <Esc>:action CloseAllEditorsButActive<cr>
+map <leader>wo <Action>(CloseAllEditorsButActive)
 
-nnoremap <leader>wr :action <cr>
+map <leader>wr <Action>())
 
-nnoremap <leader>wv :action SplitVertically<cr>
-vnoremap <leader>wv <Esc>:action SplitVertically<cr>
+map <leader>wv <Action>(SplitVertically)
 
-nnoremap <leader>ws :action SplitHorizontally<cr>
-vnoremap <leader>ws <Esc>:action SplitHorizontally<cr>
+map <leader>ws <Action>(SplitHorizontally)
 
 " move tab back to main group
-nnoremap <leader>wu :action Unsplit<cr>
-vnoremap <leader>wu <Esc>:action Unsplit<cr>
+map <leader>wu <Action>(Unsplit)
 
 " move all tabs back to main group
-nnoremap <leader>wa :action UnsplitAll<cr>
-vnoremap <leader>wa <Esc>:action UnsplitAll<cr>
+map <leader>wa <Action>(UnsplitAll)
 
 nnoremap <leader>wl <C-w>l
 nnoremap <leader>wh <C-w>h
 nnoremap <leader>wj <C-w>j
 nnoremap <leader>wk <C-w>k
 
-noremap  <A-z> :action HideAllWindows<cr>
-vnoremap  <A-z> <Esc>:action HideAllWindows<cr>
+map <A-z> <Action>(HideAllWindows)
 
-" noremap  <A-1> :action <cr>
-" vnoremap  <A-1> <Esc>:action <cr>
-map  <A-2> :action Switcher<cr>
+map <A-2> <Action>(Switcher)
 
 nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
@@ -461,121 +408,179 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-k> <C-w>k
 
 " Increase font size
-nnoremap <C-S-=> :action EditorIncreaseFontSize<CR>
+map <C-S-=> <Action>(EditorIncreaseFontSize)
 
 " Reset font size
-nnoremap <C-=> :action EditorResetFontSize<CR>
+map <C-=> <Action>(EditorResetFontSize)
 
 " Decrease font size
-nnoremap <C--> :action EditorDecreaseFontSize<CR>
+map <C--> <Action>(EditorDecreaseFontSize)
 
-"nnoremap <A-,> :action DecrementWindowWidth<cr>
-"vnoremap <A-,> <Esc>:action DecrementWindowWidth<cr>
+" }}}
 "
-"nnoremap <A-.> :action IncrementWindowWidth<cr>
-"vnoremap <A-.> <Esc>:action IncrementWindowWidth<cr>
+" bookmarks {{{
 "
-"nnoremap <A-S-,> :action DecrementWindowHeight<cr>
-"vnoremap <A-S-,> <Esc>:action DecrementWindowHeight<cr>
-"
-"nnoremap <A-S-.> :action IncrementWindowHeight<cr>
-"vnoremap <A-S-.> <Esc>:action IncrementWindowHeight<cr>
-
+let g:WhichKeyDesc_mnemonic_show = "<leader>n mnemonic"
+map <leader>nn <Action>(ShowBookmarks)
+map <leader>nf <Action>(GotoNextBookmark)
+map <leader>nb <Action>(GotoPreviousBookmark)
+map m0 <Action>(ToggleBookmark0)
+map m1 <Action>(ToggleBookmark1)
+map m2 <Action>(ToggleBookmark2)
+map m3 <Action>(ToggleBookmark3)
+map m4 <Action>(ToggleBookmark4)
+map m5 <Action>(ToggleBookmark5)
+map m6 <Action>(ToggleBookmark6)
+map m7 <Action>(ToggleBookmark7)
+map m8 <Action>(ToggleBookmark8)
+map m9 <Action>(ToggleBookmark9)
+map ma <Action>(ToggleBookmarkA)
+map mb <Action>(ToggleBookmarkB)
+map mc <Action>(ToggleBookmarkC)
+map md <Action>(ToggleBookmarkD)
+map me <Action>(ToggleBookmarkE)
+map mf <Action>(ToggleBookmarkF)
+map mg <Action>(ToggleBookmarkG)
+map mh <Action>(ToggleBookmarkH)
+map mi <Action>(ToggleBookmarkI)
+map mj <Action>(ToggleBookmarkJ)
+map mk <Action>(ToggleBookmarkK)
+map ml <Action>(ToggleBookmarkL)
+map mm <Action>(ToggleBookmarkM)
+map mn <Action>(ToggleBookmarkN)
+map mo <Action>(ToggleBookmarkO)
+map mp <Action>(ToggleBookmarkP)
+map mq <Action>(ToggleBookmarkQ)
+map mr <Action>(ToggleBookmarkR)
+map ms <Action>(ToggleBookmarkS)
+map mt <Action>(ToggleBookmarkT)
+map mu <Action>(ToggleBookmarkU)
+map mv <Action>(ToggleBookmarkV)
+map mw <Action>(ToggleBookmarkW)
+map mx <Action>(ToggleBookmarkX)
+map my <Action>(ToggleBookmarkY)
+map mz <Action>(ToggleBookmarkZ)
+map '0 <Action>(GotoBookmark0)
+map '1 <Action>(GotoBookmark1)
+map '2 <Action>(GotoBookmark2)
+map '3 <Action>(GotoBookmark3)
+map '4 <Action>(GotoBookmark4)
+map '5 <Action>(GotoBookmark5)
+map '6 <Action>(GotoBookmark6)
+map '7 <Action>(GotoBookmark7)
+map '8 <Action>(GotoBookmark8)
+map '9 <Action>(GotoBookmark9)
+map 'a <Action>(GotoBookmarkA)
+map 'b <Action>(GotoBookmarkB)
+map 'c <Action>(GotoBookmarkC)
+map 'd <Action>(GotoBookmarkD)
+map 'e <Action>(GotoBookmarkE)
+map 'f <Action>(GotoBookmarkF)
+map 'g <Action>(GotoBookmarkG)
+map 'h <Action>(GotoBookmarkH)
+map 'i <Action>(GotoBookmarkI)
+map 'j <Action>(GotoBookmarkJ)
+map 'k <Action>(GotoBookmarkK)
+map 'l <Action>(GotoBookmarkL)
+map 'm <Action>(GotoBookmarkM)
+map 'n <Action>(GotoBookmarkN)
+map 'o <Action>(GotoBookmarkO)
+map 'p <Action>(GotoBookmarkP)
+map 'q <Action>(GotoBookmarkQ)
+map 'r <Action>(GotoBookmarkR)
+map 's <Action>(GotoBookmarkS)
+map 't <Action>(GotoBookmarkT)
+map 'u <Action>(GotoBookmarkU)
+map 'v <Action>(GotoBookmarkV)
+map 'w <Action>(GotoBookmarkW)
+map 'x <Action>(GotoBookmarkX)
+map 'y <Action>(GotoBookmarkY)
+map 'z <Action>(GotoBookmarkZ)
 " }}}
 
 " other {{{
-" Show key bindings
-let g:WhichKeyDesc_helpkey = "<leader>xk Intellij bindings"
-nnoremap <leader>xk     :map<CR>
-vnoremap <leader>xk     <Esc>:map<CR>
 
-let g:WhichKeyDesc_misc = "<leader>x misc"
 " Show kill ring
-let g:WhichKeyDesc_kill_ring = "<leader>xy show kill ring"
-nnoremap <leader>xy    :action PasteMultiple<CR>
+let g:WhichKeyDesc_kill_ring = "<leader>dy show kill ring"
+map <leader>dy <Action>(PasteMultiple)
 
 " Transpose characters
-let g:WhichKeyDesc_transpose_char = "<leader>xc transpose characters"
-nnoremap <leader>xc    xhP
-vnoremap <leader>xc    <Esc>xhP
-
-" Delete all spaces except one
-nnoremap <leader>xd    wh:action EditorHungryBackSpace<CR>
-vnoremap <leader>xd    <Esc>wh:action EditorHungryBackSpace<CR>
+let g:WhichKeyDesc_transpose_char = "<leader>dt transpose characters"
+nnoremap <leader>dt xhP
 
 " Transpose lines
-let g:WhichKeyDesc_transpose_line = "<leader>xl transpose line"
-nnoremap <leader>xl    ddkP
-vnoremap <leader>xl    <Esc>ddkP
+let g:WhichKeyDesc_transpose_line = "<leader>dl transpose line"
+nnoremap <leader>dl ddkP
+
+" Delete all spaces except one
+let g:WhichKeyDesc_delete_spaces = "<leader>ds delete spaces"
+map <leader>ds wh<Action>(EditorHungryBackSpace)
+
+
+
+
+let g:WhichKeyDesc_misc = "<leader>x misc"
 
 " Toggle Show Whitespaces
-nnoremap <leader>xw    :action EditorToggleShowWhitespaces<CR>
-vnoremap <leader>xw    <Esc>:action EditorToggleShowWhitespaces<CR>
+map <leader>xw <Action>(EditorToggleShowWhitespaces)
+" Toggle Show line numbers
+map <leader>xl <Action>(EditorGutterToggleGlobalLineNumbers)
 
 " Toggle show indent guide
-nnoremap <leader>xi    :action EditorToggleShowIndentLines<CR>
-vnoremap <leader>xi    <Esc>:action EditorToggleShowIndentLines<CR>
+map <leader>xi <Action>(EditorToggleShowIndentLines)
 
 
 " External GVim
-nmap <leader>xv :action Tool_External Tools_gvim<cr>
+map <leader>xv <Action>(Tool_External Tools_gvim)
 
 " Toggle view truncate lines
-nnoremap <leader>xg    :action EditorGutterToggleGlobalSoftWraps<CR>
-vnoremap <leader>xg    <Esc>:action EditorGutterToggleGlobalSoftWraps<CR>
+map <leader>xg <Action>(EditorGutterToggleGlobalSoftWraps)
 
-nnoremap <leader>xf    :action ToggleDistractionFreeMode<CR>
-vnoremap <leader>xf    <Esc>:action ToggleDistractionFreeMode<CR>
+map <leader>xf <Action>(ToggleDistractionFreeMode)
 
-nnoremap <leader>xz    :action ToggleZenMode<CR>
-vnoremap <leader>xz    <Esc>:action ToggleZenMode<CR>
+map <leader>xz <Action>(ToggleZenMode)
 
 " Reload .ideavimrc
-nnoremap <leader>xR    :source ~/.ideavimrc<CR>
-vnoremap <leader>xR    <Esc>:source ~/.ideavimrc<CR>
+nnoremap <leader>xR :source ~/.ideavimrc<CR>
 " open recent project
-nnoremap <leader>xr    :action RecentProjectListGroup<CR>
-vnoremap <leader>xr    <Esc>:action RecentProjectListGroup<CR>
+map <leader>xr <Action>(RecentProjectListGroup)
 
-nnoremap <leader>xp    :action OpenFile<CR>
-vnoremap <leader>xp    <Esc>:action OpenFile<CR>
+map <leader>xp <Action>(OpenFile)
 
-nnoremap <leader>xm    :action ViewMainMenu<CR>
-vnoremap <leader>xm    <Esc>:action ViewMainMenu<CR>
+map <leader>xm <Action>(ViewMainMenu)
 
 " open in file manader
-nnoremap <leader>xo    :action RevealIn<CR>
-vnoremap <leader>xo    <Esc>:action RevealIn<CR>
+map <leader>xo <Action>(RevealIn)
 " Show settings
-nnoremap <leader>xs :action ShowSettings<cr>
-vnoremap <leader>xs <Esc>:action ShowSettings<cr>
+map <leader>xs <Action>(ShowSettings)
+
+map <leader>xv <Action>(UIToggleActions)
 
 " Reset font size
-nnoremap <leader>x0    :action EditorResetFontSize<CR>
-vnoremap <leader>x0    <Esc>:action EditorResetFontSize<CR>
+map <leader>x0 <Action>(EditorResetFontSize)
 
+map <leader>xc <Action>(CompileDirty)
 " Show color picker
-nnoremap <leader>xc    :action ShowColorPicker<CR>
-vnoremap <leader>xc    <Esc>:action ShowColorPicker<CR>
+" map <leader>x <Action>(ShowColorPicker)
 " }}}
 
 " quit {{{
 let g:WhichKeyDesc_quit = "<leader>q quit"
 " Close project
-nnoremap <leader>qq    :action CloseProject<CR>
-vnoremap <leader>qq    <Esc>:action CloseProject<CR>
+map <leader>qq <Action>(CloseProject)
 
 " Exit (close all projects)
-nnoremap <leader>qQ    :action Exit<CR>
-vnoremap <leader>qQ    <Esc>:action Exit<CR>
+map <leader>qQ <Action>(Exit)
 
 " Save all and close project
-nnoremap <leader>qs    :action SaveAll<CR>:action CloseProject<CR>
-vnoremap <leader>qs    <Esc>:action SaveAll<CR>:action CloseProject<CR>
+map <leader>qs <Action>(SaveAll)
 
 
-noremap  <leader>z :action HideAllWindows<cr>
-vnoremap <leader>z <Esc>:action HideAllWindows<cr>
+map <leader>z <Action>(HideAllWindows)
+
+" Show key bindings
+let g:WhichKeyDesc_helpkey = "<leader>xk Intellij bindings"
+nnoremap <leader>xk :map<CR>
 " }}}
 
 """ todo 
