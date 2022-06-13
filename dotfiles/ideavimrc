@@ -327,32 +327,34 @@ map g. <Action>(JumpToLastChange)
 
 " }}}
 
-" git {{{
-let g:WhichKeyDesc_git = "<leader>c git"
-map <leader>ca <Action>(Git.Add)
+" git m from magit {{{
+let g:WhichKeyDesc_git = "<leader>m git"
+map <leader>ma <Action>(Git.Add)
 
-map <leader>cb <Action>(Git.Branches)
+map <leader>mb <Action>(Git.Branches)
 
-map <leader>cm <Action>(Git.Menu)
+map <leader>mc <Action>(Git.Commit.Stage)
 
-map <leader>cp <Action>(Git.Pull)
+map <leader>mm <Action>(Git.Menu)
 
-map <leader>cf <Action>(Git.Fetch)
+map <leader>mp <Action>(Git.Pull)
 
-map <leader>ci <Action>(Git.Init)
+map <leader>mf <Action>(Git.Fetch)
 
-map <leader>cl <Action>(Git.Log)
+map <leader>mi <Action>(Git.Init)
 
-map <leader>cu <Action>(Git.Unstash)
+map <leader>ml <Action>(Git.Log)
+
+map <leader>mu <Action>(Git.Unstash)
 
 
-map <leader>ch <Action>(Vcs.ShowHistoryForBlock)
+map <leader>mh <Action>(Vcs.ShowHistoryForBlock)
 
-" Show localcchanges window (git status)
-map <leader>cw <Action>(Vcs.Show.Local.Changes)
-map <leader>cd <Action>(Vcs.Show.Local.Changes)
+" Show localmchanges window (git status)
+map <leader>mw <Action>(Vcs.Show.Local.Changes)
+map <leader>md <Action>(Vcs.Show.Local.Changes)
 
-map <leader>cs <Action>(Git.Stash)
+map <leader>ms <Action>(Git.Stash)
 
 " }}}
 
