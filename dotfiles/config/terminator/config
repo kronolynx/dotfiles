@@ -51,7 +51,8 @@
     show_titlebar = False
     scrollbar_position = hidden
     scroll_background = False
-    scrollback_lines = 100000
+    scrollback_lines = 1000000
+    scrollback_infinite = True
     palette = "#1a1b26:#f7768e:#9ece6a:#e0af68:#7aa2f7:#9a7ecc:#4abaaf:#acb0d0:#4e5173:#f7768e:#9ece6a:#e0af68:#7aa2f7:#9a7ecc:#4abaaf:#acb0d0"
     use_system_font = False
     bold_is_bright = True

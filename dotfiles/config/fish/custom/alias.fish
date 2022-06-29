@@ -13,10 +13,10 @@ if command -v exa >/dev/null 2>&1
   alias ls=exa # improved ls
 end
 
-if command -v nvim >/dev/null 2>&1
-  alias old_vim=vim
-  alias vim=nvim
-end
+# if command -v nvim >/dev/null 2>&1
+#   alias old_vim=vim
+#   alias vim=nvim
+# end
 alias vin="vim -u NONE" # vim no config
 
 alias CAPS="xdotool key Caps_Lock"
@@ -25,6 +25,7 @@ alias emx="emacsclient -t --alternate-editor='nvim'"
 alias emc="emacsclient -c -a emacs"
 alias cm="cmus"
 alias co="code ."
+alias cl="clear && printf '\e[3J'"
 alias chmox='chmod +x'
 alias fv='f -e vim'
 alias l='ls -l'
@@ -43,6 +44,7 @@ alias wget='wget -c '
 alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias bashi='bash -s interactive'
 alias vm=vifm
+alias nv=nvim
 
 alias tstamp='date "+%F-%H%M"'
 

@@ -11,7 +11,6 @@
     "editor.lineNumbers": "on",
     "editor.suggestSelection": "first",
     "cSpell.language": "en,es",
-    "window.zoomLevel": 0,
     "workbench.iconTheme": "material-icon-theme",
     "workbench.activityBar.visible": false,
     "workbench.statusBar.visible": true,
@@ -79,6 +78,14 @@
     "vim.normalModeKeyBindingsNonRecursive": [
         {
             "before": [
+                "<space>"
+            ],
+            "commands": [
+                "whichkey.show"
+            ]
+        },
+        {
+            "before": [
                 "Y"
             ],
             "after": [
@@ -89,7 +96,7 @@
         {
             "before": [
                 "<leader>",
-                "e",
+                "g",
                 "b"
             ],
             "commands": [
@@ -99,7 +106,7 @@
         {
             "before": [
                 "<leader>",
-                "e",
+                "g",
                 "f"
             ],
             "commands": [
@@ -119,7 +126,7 @@
         {
             "before": [
                 "<leader>",
-                "e",
+                "r",
                 "r"
             ],
             "commands": [
@@ -129,7 +136,7 @@
         {
             "before": [
                 "<leader>",
-                "e",
+                "v",
                 "p"
             ],
             "commands": [
@@ -139,7 +146,7 @@
         {
             "before": [
                 "<leader>",
-                "e",
+                "v",
                 "c"
             ],
             "commands": [
@@ -159,8 +166,8 @@
         {
             "before": [
                 "<leader>",
-                "e",
-                "l"
+                "x",
+                "r"
             ],
             "commands": [
                 "workbench.action.openRecent"
@@ -189,7 +196,7 @@
         {
             "before": [
                 "<leader>",
-                "f",
+                "x",
                 "o"
             ],
             "commands": [
@@ -666,6 +673,14 @@
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
         {
+            "before": [
+                "<space>"
+            ],
+            "commands": [
+                "whichkey.show"
+            ]
+        },
+        {
             "before": [ "u", "u" ],
             "after": [ "<Esc>" ]
         },
@@ -754,4 +769,6 @@
 "workbench.preferredLightColorTheme": "2d1112ac-04ab-4f78-82c4-22e5e2c1754b",
 "editor.semanticHighlighting.enabled": true,
 "window.menuBarVisibility": "toggle",
+"haskell.manageHLS": "GHCup",
+"vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
 }

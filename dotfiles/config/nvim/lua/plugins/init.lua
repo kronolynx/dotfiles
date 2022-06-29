@@ -37,7 +37,14 @@ return require("packer").startup({
     "lukas-reineke/indent-blankline.nvim",
     config = get_setup("indent_blankline")
   })
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    run = ':TSUpdate',
+    config = get_setup("treesitter")
+   })
+  use({ "nvim-treesitter/playground" })
   use({ "tpope/vim-surround" })
+  use({ 'mtdl9/vim-log-highlighting'})
   use({ "norcalli/nvim-colorizer.lua" })
   use({
     "nvim-telescope/telescope.nvim",
@@ -60,12 +67,6 @@ return require("packer").startup({
   -- Markdown JSON header highlight plugin
   use({ "elzr/vim-json", ft = { "json", "markdown" } })
 
-  use({
-    "nvim-treesitter/nvim-treesitter",
-    run = ':TSUpdate',
-    config = get_setup("treesitter")
-   })
-  use({ "nvim-treesitter/playground" })
   use({ "tpope/vim-fugitive" })
   use({ "tpope/vim-vinegar" }) -- browse files commands (-)
   use({
@@ -93,14 +94,14 @@ return require("packer").startup({
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-path" },
-      { "hrsh7th/cmp-vsnip" },
+      --{ "hrsh7th/cmp-vsnip" },
       { "hrsh7th/vim-vsnip" },
     },
     config = get_setup("cmp"),
   })
   use({
     'scalameta/nvim-metals',
-    requires = { "nvim-lua/plenary.nvim", "mfussenegger/nvim-dap" }
+    requires = { "nvim-lua/plenary.nvim", "mfussenegger/nvim-dap", "nvim-telescope/telescope.nvim" }
   })
   use({
     "ckipp01/scala-utils.nvim",

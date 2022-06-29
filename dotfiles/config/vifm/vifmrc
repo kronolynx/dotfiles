@@ -2,6 +2,7 @@ command! Tar tar cf %c.tar %c
 command! Tgz tar zcf %c.tgz %c
 command! Mkcd :mkdir! %a | cd %a
 
+set vicmd=nvim
 
 " Selected color scheme
 colorscheme palenight
@@ -134,6 +135,15 @@ command! reload :write | restart
 " You can also add %CLEAR if you want to clear screen before running FUSE
 " program.
 
+fileviewer *.scala,*.sbt,*.sc,*.sh,*.hs,*.py,*.nix,*.json,
+        \*.java,*.md,*.yaml,*.cpp,*.lua,*.json,*.rs,
+        \*.toml,*.c,*.h,*.lisp,*.ts,*.el,*.clj,*.fish,
+        \*.org,*.rb,*.go,*.dockerfile,*.conf,Dockerfile,
+        \*.xml,*.html,*.css highlight -O xterm256 -s molokai %c
+
+" Object
+filetype *.o nm %f | less
+
 " Pdf
 filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
 fileviewer *.pdf
@@ -199,15 +209,6 @@ filextype *.html,*.htm
         \ uzbl-browser %f %i &,
 filetype *.html,*.htm links, lynx
 
-fileviewer *.scala,*.sbt,*.sc,*.sh,*.hs,*.py,*.kt,
-        \ *.java,*.md,*.yaml,*.cpp,*.lua,*.json,*.rs,
-        \ *.toml,*.c,*.h,*.lisp,*.ts,*.el,*.clj,*.fish
-        \ *.org,*.pl,*.rb,*.go,*.dockerfile,
-        \ *.xml,*.html,*.css
-        \ highlight -O xterm256 -s dante %c
-
-" Object
-filetype *.o nm %f | less
 
 " Man page
 filetype *.[1-8] man ./%c

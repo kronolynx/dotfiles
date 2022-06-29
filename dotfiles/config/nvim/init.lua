@@ -96,7 +96,7 @@ opt.directory = {
 }
 
 opt.history = 1000 -- store the last 1000 commands entered
-opt.textwidth = 120 -- after configured number of characters, wrap line
+-- opt.textwidth = 120 -- after configured number of characters, wrap line
 opt.backspace = {"indent", "eol,start"} -- make backspace behave in a sane manner
 opt.clipboard = {"unnamed", "unnamedplus"} -- use the system clipboard
 opt.mouse = "a" -- set mouse mode to all modes

@@ -5,6 +5,7 @@
 abbr k kubectl
 abbr kns kubens
 abbr ktx kubectx
+abbr kcc 'kcat 2>&1 -q -C -f "%T::%t::%p::%o >> %k --- %s,\n" -b'
 
 # git
 abbr g 'git'
@@ -86,6 +87,10 @@ abbr gundo-commit 'git reset --soft HEAD~1'
 abbr gunstage 'git reset HEAD'
 abbr gwipa 'git add -A && git commit -m "WIP (save all changes)"' # commits tracked changes'
 abbr gwips 'git commit -am "WIP (save staged changes)"'
+
+abbr hr 'history delete'
+abbr hrc 'history delete --contains'
+abbr hm 'history merge'
 
 
 
