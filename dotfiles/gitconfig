@@ -60,6 +60,7 @@
 # [interactive]
 #   diffFilter = delta --color-only
 [alias]
+  all = "!f() { ls | xargs -I{} git -C {} $1; }; f" # git all "checkout master" | git all pull
   amend = commit --amend --no-edit
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
   amendAdd = commit --amend --no-edit -a

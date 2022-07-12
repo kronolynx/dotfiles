@@ -111,7 +111,7 @@ map <leader>tm <Action>(MoveEditorToOppositeTabGroup)
 
 map <leader>ty <Action>(OpenEditorInOppositeTabGroup)
 
-map <leader>yt<Action>(OpenEditorInOppositeTabGroup)
+map <leader>yt <Action>(OpenEditorInOppositeTabGroup)
 
 " undo (reopen)
 map <leader>tu <Action>(ReopenClosedTab)
@@ -158,6 +158,9 @@ let g:WhichKeyDesc_editor = "<leader>action run"
 map <leader>af <Action>(RerunFailedTests)
 map <leader>ac <Action>(RunClass)
 map <leader>ar <Action>(Run)
+" ExternalSystem.RefreshProject ???
+map <leader>af  <Action>(ExternalSystem.RefreshAllProjects)
+map <leader>ai  <Action>(InvalidateCaches)
 
 " }}}
 
@@ -209,7 +212,7 @@ map <leader>va <Action>(ShowIntentionActions)
 let g:WhichKeyDesc_view = "<leader>vi implicits"
 map <leader>via <Action>(Scala.ShowImplicitArguments)
 
-map <leader>vip <Action>(Scala.ShowImplicits)
+map <leader>vis <Action>(Scala.ShowImplicits)
 
 
 map <leader>vie <Action>(Scala.ExpandImplicits)
@@ -366,9 +369,17 @@ map <leader>sp <Action>(FindInPath)
 
 map <leader>se <Action>(SearchEverywhere)
 
+map <leader>sm <Action>(FindUsagesMenuGroup)
+
 map <leader>ss <Action>(Find)
 
 map <leader>sf <Action>(FindUsagesInFile)
+
+map <leader>sv <Action>(FindSelectionInPath)
+
+map <leader>sx <Action>(XPathView.Actions.FindByExpression)
+
+map <leader>sw <Action>(ActivateFindToolWindow)
 
 " Highlight current symbol. Do it again to toggle highlight.
 map <leader>sh <Action>(HighlightUsagesInFile)

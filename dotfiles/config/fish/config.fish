@@ -59,6 +59,8 @@ set -g FORGIT_FZF_DEFAULT_OPTS "$FORGIT_FZF_DEFAULT_OPTS --reverse"
 set -g FORGIT_LOG_GRAPH_ENABLE false
 
 
+
+
 ##########################################################
 ##########    Functions
 ##########################################################
@@ -170,6 +172,10 @@ if test -e "$HOME/.config/fish/custom/alias.fish"
   source $HOME/.config/fish/custom/alias.fish
 end
 
+if test -e "$HOME/.config/fish/custom/work.fish"
+  source $HOME/.config/fish/custom/work.fish
+end
+
 if test -e "$HOME/.anaconda"
   set -gx PATH $PATH $HOME/.anaconda/bin
   eval $HOME/.anaconda/bin/conda "shell.fish" "hook" $argv | source
@@ -194,6 +200,9 @@ if test -e "$HOME/.asdf/asdf.fish"
   source ~/.asdf/asdf.fish
 end
 
+if command -v kubectl >/dev/null 2>&1
+    kubectl completion fish | source
+end
 ##########################################################
 ##########    Theme
 ##########################################################

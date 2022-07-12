@@ -7,6 +7,9 @@ abbr kns kubens
 abbr ktx kubectx
 abbr kcc 'kcat 2>&1 -q -C -f "%T::%t::%p::%o >> %k --- %s,\n" -b'
 
+
+abbr chmodrec 'find . -type f -iname "*.sh" -exec chmod +x {} \;'
+
 # git
 abbr g 'git'
 abbr gamend = 'git commit --amend --no-edit'
@@ -36,7 +39,7 @@ abbr gds 'git diff --staged'
 abbr gdt 'git difftool' # example git d HEAD~2 # to diff the current index with 2 commits ago'
 abbr gf 'git fetch'
 abbr gfu 'git fetch upstream'
-abbr ghist = 'git log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --datshort'
+abbr ghist 'git log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --datshort'
 abbr gai 'git add -i'
 abbr gcl 'git clone'
 abbr ginitc "git init && git add -A && git commit -m 'Initial commit'" # Init git and add initial commit with all the files, add gitignore first to ignore files'
@@ -92,6 +95,9 @@ abbr hr 'history delete'
 abbr hrc 'history delete --contains'
 abbr hm 'history merge'
 
+# stop ping after 5 requests
+abbr ping 'ping -c 5'
+abbr rm-broken-symlinks "find . -xtype l -delete"
 
 
 abbr v 'vifm'

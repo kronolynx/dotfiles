@@ -48,3 +48,14 @@ alias amm212="cs launch com.lihaoyi:ammonite_2.12.10:2.0.4 -M ammonite.Main --"
 
 
 # export SBT_OPTS="-Xmx2G -XX:MaxMetaspaceSize=1024m -Dsbt.boot.credentials=$HOME/.sbt/.credentials -Dsbt.override.build.repos=true -Xss2M"
+#
+
+# k8s
+alias k kubectl
+abbr kcontextls 'kubectl config get-contexts'
+abbr kcontext 'kubectl config use-context'
+abbr knamespacels 'kubectl get namespace | grep -Ei' # get namespaces
+abbr knamespace 'kubectl config set-context --current --namespace=' # set namespace for subsecuent commands
+abbr kdeployment 'kubectl get deployments'
+abbr kpods 'kubectl get pods'
+abbr kscale 'kubectl scale deployment' # tab to autocomplete

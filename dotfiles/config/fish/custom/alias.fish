@@ -41,10 +41,10 @@ alias tkd="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 t
 alias untar='tar -sxvf '
 alias v="vim"
 alias wget='wget -c '
-alias chmodrec='find . -type f -iname "*.sh" -exec chmod +x {} \;'
 alias bashi='bash -s interactive'
 alias vm=vifm
 alias nv=nvim
+
 
 alias tstamp='date "+%F-%H%M"'
 
@@ -74,9 +74,6 @@ alias dig="dig +nocmd any +multiline +noall +answer"
 # file size
 alias fs="stat -f \"%z bytes\""
 
-# stop ping after 5 requests
-alias ping='ping -c 5'
-alias rm-broken-symlinks="find . -xtype l -delete"
 
 # json manipulation
 # https://github.com/tomnomnom/gron
