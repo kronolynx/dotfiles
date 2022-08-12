@@ -1,3 +1,5 @@
+"  vim: syntax=vim
+
 command! Tar tar cf %c.tar %c
 command! Tgz tar zcf %c.tgz %c
 command! Mkcd :mkdir! %a | cd %a
@@ -333,6 +335,8 @@ filextype *.pro qtcreator %f &
 filextype */
         \ {View in thunar}
         \ Thunar %f &,
+
+fileviewer */ tree -L 2 -I .git %c
 
 " Syntax highlighting in preview
 "
