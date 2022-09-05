@@ -51,11 +51,25 @@ alias amm212="cs launch com.lihaoyi:ammonite_2.12.10:2.0.4 -M ammonite.Main --"
 #
 
 # k8s
-alias k kubectl
-abbr kcontextls 'kubectl config get-contexts'
-abbr kcontext 'kubectl config use-context'
-abbr knamespacels 'kubectl get namespace | grep -Ei' # get namespaces
-abbr knamespace 'kubectl config set-context --current --namespace=' # set namespace for subsecuent commands
-abbr kdeployment 'kubectl get deployments'
+abbr k kubectl
+abbr ks kubens 
+abbr kx kubectx
+abbr kctxls 'kubectl config get-contexts'
+abbr kctx 'kubectl config use-context'
+abbr knsls 'kubectl get namespace | grep -Ei' # get namespaces
+abbr kns 'kubectl config set-context --current --namespace=' # set namespace for subsecuent commands
+abbr kdp 'kubectl get deployments'
 abbr kpods 'kubectl get pods'
-abbr kscale 'kubectl scale deployment' # tab to autocomplete
+abbr ksc 'kubectl scale deployment' # tab to autocomplete
+abbr kcon 'kubectl -o yaml get configmaps' # tab to get env
+
+abbr gma 'git checkout master'
+
+
+function tstamp #epoch in miliseconds
+  date "+%FT%H:%M:%S.%NZ" -ud @(math "$argv / 1000")
+end
+
+function tstamps #epoch in seconds
+  date "+%FT%H:%M:%S.%NZ" -ud @$argv
+end

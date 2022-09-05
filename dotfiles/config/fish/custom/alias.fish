@@ -45,10 +45,6 @@ alias bashi='bash -s interactive'
 alias vm=vifm
 alias nv=nvim
 
-
-alias tstamp='date "+%F-%H%M"'
-
-
 # to create more alias for different distro operations
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
 
