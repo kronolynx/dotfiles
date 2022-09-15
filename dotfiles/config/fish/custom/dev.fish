@@ -61,7 +61,8 @@ abbr kns 'kubectl config set-context --current --namespace=' # set namespace for
 abbr kdp 'kubectl get deployments'
 abbr kpods 'kubectl get pods'
 abbr ksc 'kubectl scale deployment' # tab to autocomplete
-abbr kcon 'kubectl -o yaml get configmaps' # tab to get env
+abbr kconf 'kubectl -o yaml get configmaps' # tab to get env
+alias kcont "kubectl config view --minify --output 'jsonpath={.current-context}/{..namespace}' 2>/dev/null"
 
 abbr gma 'git checkout master'
 
