@@ -71,6 +71,7 @@ return require("packer").startup({
 
   use({ "tpope/vim-fugitive" })
   use({ "tpope/vim-vinegar" }) -- browse files commands (-)
+  use({ "junegunn/fzf.vim" })
   use({
     "windwp/nvim-autopairs",
     after = "nvim-cmp",

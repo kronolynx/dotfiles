@@ -229,6 +229,13 @@ map("n", "<M-1>", ":NvimTreeToggle<CR>", { noremap = true })
 map("n", "<leader>slc", [[<cmd>lua RELOAD("scala-utils.coursier").complete_from_line()<CR>]])
 map("n", "<leader>sc", [[<cmd>lua RELOAD("scala-utils.coursier").complete_from_input()<CR>]])
 
+-- fzf
+map("", "<leader>gf", ":FZF<CR>")
+map("", "<leader>tr", ":Buffers<CR>")
+map("", "<leader>bs", ":Marks<CR>")
+map("", "<leader>xk", ":Maps<CR>")
+map("", "<leader>fp", ":Ag ") -- find in path
+map("", "<leader>sp", ":Ag ") -- search in path
 
 --================================
 -- COMMANDS ----------------------
