@@ -200,6 +200,8 @@ map("n", "<leader>fc", ":cclose<cr>")
 map("n", "<leader>fn", ":cnext<cr>")
 map("n", "<leader>fp", ":cprevious<cr>")
 
+map("v", "<leader>p", "\"dP")
+
 -- Smart way to move between windows
 map("", "<C-j>", "<C-W>j")
 map("", "<C-k>", "<C-W>k")

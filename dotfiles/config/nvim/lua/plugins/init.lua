@@ -45,7 +45,9 @@ return require("packer").startup({
   use({ "nvim-treesitter/playground" })
   use({ "tpope/vim-surround" })
   use({ 'mtdl9/vim-log-highlighting'})
-  use({ "norcalli/nvim-colorizer.lua" })
+  use({ "norcalli/nvim-colorizer.lua",
+      config = get_setup("colorizer")
+    })
   use({
     "nvim-telescope/telescope.nvim",
     requires = {

@@ -4,34 +4,27 @@
 " :actionlist [pattern]
 " to find actions with mouse
 " IdeaVim: track action Ids (found in "Search Everywhere" [double shift] 
-source ~/.vimrc
+" source ~/.vimrc
 
 let mapleader=" "
 
 set history=1000
-
 " copy to clipboard
 set clipboard+=unnamedplus
-
-" " number of lines above and below the cursor
-" set scrolloff=7
-
-" Search as characters are entered
-set incsearch
-
-" Highlight search results
-set hlsearch
-
-" line numbers
-set nu
+set scrolloff=5 " number of lines above and below the cursor
+set incsearch " Search as characters are entered
+set ignorecase " Ignore case of searches
+set smartcase " no ignore case when pattern is uppercase
+set hlsearch " Highlight search results
+set nu " line numbers
+set showmode " message on the status line to show current mode
+set showcmd " show (partial) command in the status bar
 
 " edit word when renaming instead of replacing by default
 set idearefactormode=keep
+set visualbell " use visual bell instead of beeping
+set wrapscan " searches wrap around the end of file
 
-" If a pattern contains an uppercase letter, searching is case sensitive,
-" otherwise, it is not.
-set ignorecase
-set smartcase
 
 " use vim handlers in normal mode and IDE handlers in insert mode
 " https://github.com/JetBrains/ideavim/wiki/sethandler
@@ -46,17 +39,26 @@ sethandler <C-p> a:ide
 " imap <C-p> <ESC>:action HippieBackwardCompletion<CR>a
 
 " Plugins {{{
-" Other plugins are sourced in vimrc
-set which-key
+" https://github.com/JetBrains/ideavim/wiki/Emulated-plugins
+Plug 'easymotion/vim-easymotion'
+Plug 'preservim/nerdtree'
+Plug 'tpope/vim-surround' " Commands: ys, cs, ds, S
+Plug 'terryma/vim-multiple-cursors' " Commands: <A-n>, <A-x>, <A-p>, g<A-n>
+Plug 'tpope/vim-commentary' " Commands: gcc, gc + motion, v_gc
+Plug 'vim-scripts/ReplaceWithRegister' " Commands: gr, grr
+Plug 'tommcdo/vim-exchange' " Commands: cx, cxx, X, cxc
+Plug 'kana/vim-textobj-entire' " Additional text objects: ae, ie
+Plug 'machakann/vim-highlightedyank'
+let g:highlightedyank_highlight_duration = "300" " highlight duration in milliseconds
+let g:highlightedyank_highlight_color = "rgba(255, 99, 71, 155)"
+
+Plug 'dbakker/vim-paragraph-motion'
+
 " }}}
 " Ideavim commands {{{
 set ideajoin              " 
-set ideaput               " enable native IJ insertion in Vim
 set ideamarks             " Sync IJ bookmarks and Vim marks
-set showmode              " message on the status line to show current mode
-set showcmd               " show (partial) command in the status bar
-set wrapscan              " searches wrap around the end of file
-
+set sneak                 " enable s S to jump to location like f F
 " }}}
 
 " other {{{
@@ -80,6 +82,7 @@ map ]] <Action>(MethodDown)
 " which key {{{
 " increase the timeoutlen (default: 1000)
 # set timeoutlen = 1
+set which-key
 set notimeout
 let g:WhichKey_ShowVimActions = "true"
 let g:WhichKey_SortOrder = "be_key_prefix_first"
@@ -105,6 +108,8 @@ map <leader>ts <Action>(Switcher)
 map <leader>tr <Action>(RecentFiles)
 
 map <leader>tt <Action>(VimFilePrevious)
+
+map <leader>to <Action>(ChangeSplitOrientation)
 
 " duplicate tab opossite group (yank)
 map <leader>tm <Action>(MoveEditorToOppositeTabGroup)
@@ -144,7 +149,8 @@ map <A-\> <Action>(MaximizeEditorInSplit)
 " with what is in the register BUT it will YANK (delete) it 
 " to a VOID register. Meaning I still have what I originally had
 " when I pasted. I don't loose the previous thing I YANKED!
-let g:WhichKeyDesc_paste = "<leader>p paste replace and keep"
+" let g:WhichKeyDesc_paste = "<leader>p paste replace and keep"
+vnoremap <leader>p "_dP
 " }}}
 
 " yank to end of line
@@ -158,10 +164,19 @@ let g:WhichKeyDesc_editor = "<leader>action run"
 map <leader>af <Action>(RerunFailedTests)
 map <leader>ac <Action>(RunClass)
 map <leader>ar <Action>(Run)
-" ExternalSystem.RefreshProject ???
-map <leader>af  <Action>(ExternalSystem.RefreshAllProjects)
 map <leader>ai  <Action>(InvalidateCaches)
+map <leader>ad  <Action>(CompileDirty)
 
+" }}}
+
+" caret {{{
+let g:WhichKeyDesc_k = "<leader>k caret"
+vmap <leader>ka <Action>(EditorAddCaretPerSelectedLine)
+nmap <leader>ka <Action>(EditorCloneCaretBelow)
+let g:WhichKeyDesc_ko = "<leader>ko all occurrences"
+map <leader>ko <Action>(SelectAllOccurrences)
+let g:WhichKeyDesc_kn = "<leader>kn next occurrence"
+map <leader>kn <Action>(SelectNextOccurrence)
 " }}}
 
 " editor {{{
@@ -173,17 +188,22 @@ map <leader>eb <Action>(Back)
 
 map <leader>ef <Action>(Forward)
 
+map <leader>ep <Action>(QuickActions)
+
 "map <leader>ec <Action>(CompileProject)
-map <leader>ec <Action>(CompileDirty)
+"map <leader>ec <Action>(CompileDirty)
 
 map <leader>ee <Action>(EvaluateExpression)
 
+map <leader>et <Action>(ExpressionTypeInfo)
+
 map <leader>ed <Action>(Scala.Desugar)
 
-" Insert snippet
-map <leader>es <Action>(InsertLiveTemplate)
+map <leader>ei <Action>(InvertBoolean)
 
-map <leader>et <Action>(ToggleTypeHints)
+" Insert snippet
+map <leader>el <Action>(InsertLiveTemplate)
+
 
 map <leader>en <Action>(EditorGutterToggleGlobalLineNumbers)
 
@@ -218,6 +238,7 @@ map <leader>vis <Action>(Scala.ShowImplicits)
 map <leader>vie <Action>(Scala.ExpandImplicits)
 
 map <leader>vp <Action>(ParameterInfo)
+map <leader>vu <Action>(ShowUsages)
 
 " Types vt = view hover
 map <leader>vt <Action>(Scala.TypeInfo)
@@ -237,26 +258,31 @@ map <leader>vqp <Action>(QuickPreview)
 map <leader>vqi <Action>(QuickImplementations)
 
 " Undo
-let g:WhichKeyDesc_view_undo = "<leader>vu undo history"
-map <leader>vu <Action>(LocalHistory.ShowHistory)
+let g:WhichKeyDesc_view_undo = "<leader>vh undo history"
+map <leader>vh <Action>(LocalHistory.ShowHistory)
 " }}}
 
 " refactor {{{
 let g:WhichKeyDesc_refactor = "<leader>r refactor"
 map <leader>rm <Action>(ExtractMethod)
+map <leader>rc <Action>(ExtractClass)
+map <leader>rf <Action>(ExtractFunction)
+map <leader>rs <Action>(ExtractFunctionToScope)
+map <leader>rt <Action>(ExtractMethodToolWindow.TreePopup)
 map <leader>rq <Action>(Refactorings.QuickListPopupAction)
 map <leader>rp <Action>(IntroduceParameter)
 " inline current variable (opossite of introduce variable)
 map <leader>ri <Action>(Inline)
 map <leader>rv <Action>(IntroduceVariable)
 map <leader>ro <Action>(OverrideMethods)
+map <leader>rk <Action>(Scala.GenerateCompanionObject)
 
 map <leader>rr <Action>(RenameElement)
 
 " remove extra whitespace
-let g:WhichKeyDesc_refactor_white = "<leader>rc remove extra white space"
-nmap <leader>rc :%s/\s\+$<CR><Paste>
-vmap <leader>rc <Esc>:%s/\s\+$<CR><Paste>
+let g:WhichKeyDesc_refactor_white = "<leader>rw remove extra white space"
+nmap <leader>rw :%s/\s\+$<CR><Paste>
+vmap <leader>rw <Esc>:%s/\s\+$<CR><Paste>
 " }}}
 
 " ide {{{
@@ -308,6 +334,8 @@ map <leader>gi <Action>(GotoImplementation)
 
 map <leader>gs <Action>(GotoSuperMethod)
 
+map <leader>gr <Action>(GotoRelated)
+
 map <leader>gf <Action>(GotoFile)
 
 map <leader>gc <Action>(GotoClass)
@@ -315,6 +343,8 @@ map <leader>gc <Action>(GotoClass)
 map <leader>ga <Action>(GotoAction)
 
 map <leader>gu <Action>(FindUsages)
+
+map <leader>gt <Action>(GotoTest)
 
 " Go to code block start
 map <leader>g[ <Action>(EditorCodeBlockStart)
@@ -510,6 +540,45 @@ map 'x <Action>(GotoBookmarkX)
 map 'y <Action>(GotoBookmarkY)
 map 'z <Action>(GotoBookmarkZ)
 " }}}
+"
+" config {{{
+let g:WhichKeyDesc_config = "<leader>c config"
+map <leader>cb <Action>(EditorBreadcrumbsSettings)
+map <leader>cc <Action>(ChangeColorScheme)
+map <leader>cs <Action>(ChangeScheme)
+" Show settings
+map <leader>cv <Action>(ShowSettings)
+" Toggle Show Whitespaces
+map <leader>cw <Action>(EditorToggleShowWhitespaces)
+" Toggle Show line numbers
+map <leader>cl <Action>(EditorGutterToggleGlobalLineNumbers)
+" Toggle show indent guide
+map <leader>ci <Action>(EditorToggleShowIndentLines)
+
+map <leader>cu <Action>(UIToggleActions)
+
+map <leader>ct <Action>(ToggleTypeHints)
+
+map <leader>ce <Action>(EditorToggleActions)
+
+map <leader>cm <Action>(ViewMainMenu)
+" }}}
+"
+" project {{{
+let g:WhichKeyDesc_project = "<leader>q project"
+" Close project
+map <leader>qq <Action>(CloseProject)
+" open recent project
+map <leader>qr <Action>(RecentProjectListGroup)
+" Exit (close all projects)
+map <leader>qQ <Action>(Exit)
+" Save all and close project
+map <leader>qs <Action>(SaveAll)
+" ExternalSystem.RefreshProject ???
+map <leader>qf  <Action>(ExternalSystem.RefreshAllProjects)
+
+map <leader>qo <Action>(CloseOtherProjects)
+" }}}
 
 " other {{{
 
@@ -530,18 +599,11 @@ let g:WhichKeyDesc_delete_spaces = "<leader>ds delete spaces"
 map <leader>ds wh<Action>(EditorHungryBackSpace)
 
 
-
-
 let g:WhichKeyDesc_misc = "<leader>x misc"
 
-" Toggle Show Whitespaces
-map <leader>xw <Action>(EditorToggleShowWhitespaces)
-" Toggle Show line numbers
-map <leader>xl <Action>(EditorGutterToggleGlobalLineNumbers)
 
-" Toggle show indent guide
-map <leader>xi <Action>(EditorToggleShowIndentLines)
-
+"Repair stuff
+map <leader>xs <Action>(CallSaul) 
 
 " External GVim
 map <leader>xv <Action>(Tool_External Tools_gvim)
@@ -555,39 +617,25 @@ map <leader>xz <Action>(ToggleZenMode)
 
 " Reload .ideavimrc
 nnoremap <leader>xR :source ~/.ideavimrc<CR>
-" open recent project
-map <leader>xr <Action>(RecentProjectListGroup)
 
 map <leader>xp <Action>(OpenFile)
 
-map <leader>xm <Action>(ViewMainMenu)
 
-" open in file manader
+map <leader>xa <Action>(Performance.ActivityMonitor)
+
+" open in file manager
+let g:WhichKeyDesc_xo = "<leader>xo reveal in File Manager"
 map <leader>xo <Action>(RevealIn)
-" Show settings
-map <leader>xs <Action>(ShowSettings)
+" ask what to open where the current file is located
+let g:WhichKeyDesc_xa = "<leader>xa reveal in choose"
+map <leader>xa <Action>(RevealGroup)
 
-map <leader>xv <Action>(UIToggleActions)
 
 " Reset font size
 map <leader>x0 <Action>(EditorResetFontSize)
 
-map <leader>xc <Action>(CompileDirty)
 " Show color picker
 " map <leader>x <Action>(ShowColorPicker)
-" }}}
-
-" quit {{{
-let g:WhichKeyDesc_quit = "<leader>q quit"
-" Close project
-map <leader>qq <Action>(CloseProject)
-
-" Exit (close all projects)
-map <leader>qQ <Action>(Exit)
-
-" Save all and close project
-map <leader>qs <Action>(SaveAll)
-
 
 map <leader>z <Action>(HideAllWindows)
 
@@ -595,7 +643,16 @@ map <leader>z <Action>(HideAllWindows)
 let g:WhichKeyDesc_helpkey = "<leader>xk Intellij bindings"
 nnoremap <leader>xk :map<CR>
 " }}}
+"
+" NerdTree {{{
+map <A-1> :NERDTreeToggle<CR>
+map <leader>nf :NERDTreeFind<CR>
+map <leader>nn :NERDTreeFocus<CR>
+
+" }}}
 
 """ todo 
-" RevealIn    (opens thunar where the current file is located)
-" RevealGroup    (ask what to open where the current file is located):
+" EditorReverseLines " reverse line order
+" Generate  " implement methods, OverrideMethods, test
+" GenerateEquals
+" Scala.GenerateEquals
