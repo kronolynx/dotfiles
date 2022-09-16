@@ -463,10 +463,10 @@ map <C--> <Action>(EditorDecreaseFontSize)
 "
 " bookmarks {{{
 "
-let g:WhichKeyDesc_mnemonic_show = "<leader>n mnemonic"
-map <leader>nn <Action>(ShowBookmarks)
-map <leader>nf <Action>(GotoNextBookmark)
-map <leader>nb <Action>(GotoPreviousBookmark)
+let g:WhichKeyDesc_mnemonic_show = "<leader>b bookmarks"
+map <leader>bs <Action>(ShowBookmarks)
+map <leader>bf <Action>(GotoNextBookmark)
+map <leader>bb <Action>(GotoPreviousBookmark)
 map m0 <Action>(ToggleBookmark0)
 map m1 <Action>(ToggleBookmark1)
 map m2 <Action>(ToggleBookmark2)
@@ -645,7 +645,7 @@ nnoremap <leader>xk :map<CR>
 " }}}
 "
 " NerdTree {{{
-map <A-1> :NERDTreeToggle<CR>
+map <A-1> :NERdTreeToggle<CR>
 map <leader>nf :NERDTreeFind<CR>
 map <leader>nn :NERDTreeFocus<CR>
 
