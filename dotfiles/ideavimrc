@@ -645,7 +645,7 @@ nnoremap <leader>xk :map<CR>
 " }}}
 "
 " NerdTree {{{
-map <A-1> :NERdTreeToggle<CR>
+map <A-1> :NERDTreeToggle<CR>
 map <leader>nf :NERDTreeFind<CR>
 map <leader>nn :NERDTreeFocus<CR>
 
