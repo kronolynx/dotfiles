@@ -33,6 +33,12 @@ return require("packer").startup({
   use({'stevearc/gkeep.nvim', run = ':UpdateRemotePlugins'})
   use({ "kyazdani42/nvim-web-devicons" })
   use({ "liuchengxu/vista.vim" })
+  use({ "airblade/vim-gitgutter" })
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+    ft = { "markdown" },
+  })
   use({
     "lukas-reineke/indent-blankline.nvim",
     config = get_setup("indent_blankline")
