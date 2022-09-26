@@ -49,6 +49,7 @@
   prune = true
 [diff]
   compactionHeuristic = true
+	context = 5
 [difftool]
   prompt = false
 [stash]
@@ -60,7 +61,8 @@
 # [interactive]
 #   diffFilter = delta --color-only
 [alias]
-  all = "!f() { ls | xargs -I{} git -C {} $1; }; f" # git all "checkout master" | git all pull
+  #all = "!f() { ls -d */ | xargs -I{} git -C {} $1; }; f" # git all "checkout master" | git all pull
+  all = "!f() { ls -d */ | xargs -I@ bash -c \"echo -e '\n** @' && git -C @ $1\"; }; f" # git all "checkout master" | git all pull
   amend = commit --amend --no-edit
   amend-stage = commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message
   amendAdd = commit --amend --no-edit -a
@@ -73,8 +75,8 @@
   ds = diff --staged
   ck = checkout
   ckb = checkout -b
-  ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f"
   ckm = checkout master
+  ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f"
   ckre = "!f() { git fetch $2 && git ckb $1 $2/$3; }; f" # checkout remote branch e.g. git ckre new-branch-name remote-name remote-branch-name
   ckup = "!f() { git ckre $1 upstream master; }; f" # checkout new branch from upstream master e.g. git ckup new-branch-name
   cleanloc = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d"  # delete branches merged into master
@@ -94,7 +96,15 @@
   ignore = "!f() { git update-index --assume-unchanged $1; }; f" # stop tracking file for changes
   initc = "!git init && git add -A && git commit -m 'Initial commit'" # Init git and add initial commit with all the files, add gitignore first to ignore files
   join = "!git st; git reset --soft HEAD~1 && git commit --amend -a; git pop" # join last head and previous commit
-  l = log --oneline
+  lo = log --oneline
+  l1 = log -1
+  l2 = log -2
+  l3 = log -3
+  l4 = log -4
+  lo1 = log -1 --oneline
+  lo2 = log -2 --oneline
+  lo3 = log -3 --oneline
+  lo4 = log -4 --oneline
   lg = log --graph --all --decorate --oneline -36
   la = "!git config -l | grep alias | cut -c 7-" # list aliases
   ls = branch -v # list branches
@@ -153,6 +163,5 @@
   program = /usr/bin/gpg2 # to stop asking each time for gpg password
 [init]
   defaultBranch = main
-[user]
-	email = kronolynx@gmail.com
-	name = Johann Og
+[includeIf "gitdir:~/Workspace/Work"]
+  path = ~/Workspace/Work/.gitconfig

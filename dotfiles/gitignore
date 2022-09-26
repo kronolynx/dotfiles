@@ -54,7 +54,7 @@ Thumbs.db
 .bloop/
 .idea/
 .metals/
-*.worksheet.sc
+*worksheet.sc
 metals.sbt
 dependency-graph.svg
 .bsp/
@@ -68,4 +68,5 @@ dependency-graph.svg
 .sdkmanrc
 .env.fish
 .out.fish
+
 
