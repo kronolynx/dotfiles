@@ -79,6 +79,11 @@ function retry
   end
 end
 
+function rmEmptyDir
+  # arg should be a directory
+  find $argv -empty -type d -delete -f -not -path '*/.git/*'
+end
+
 
 # kill any process listening on the port given e.g: kp 8080
 function kp
@@ -206,6 +211,11 @@ end
 ##########################################################
 ##########    Theme
 ##########################################################
-if command -v starship >/dev/null 2>&1
-    starship init fish | source
-end
+#if command -v starship >/dev/null 2>&1
+#    starship init fish | source
+#end
+#
+#set --global kubectl 
+set tide_right_prompt_items status cmd_duration context jobs node virtual_env rustc java chruby go aws time
+
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME ; set -gx PATH $HOME/.cabal/bin $PATH /home/johann/.ghcup/bin # ghcup-env

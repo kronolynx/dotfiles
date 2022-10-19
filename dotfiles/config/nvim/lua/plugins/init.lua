@@ -103,8 +103,9 @@ return require("packer").startup({
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-nvim-lsp" },
       { "hrsh7th/cmp-path" },
-      --{ "hrsh7th/cmp-vsnip" },
+      { "hrsh7th/cmp-vsnip" },
       { "hrsh7th/vim-vsnip" },
+      { "hrsh7th/cmp-nvim-lsp-signature-help" },
     },
     config = get_setup("cmp"),
   })
@@ -128,6 +129,7 @@ return require("packer").startup({
     "andymass/vim-matchup",
     event = "CursorMoved",
   })
+  use({ "terryma/vim-multiple-cursors" })
   use({ "neovim/nvim-lspconfig", config = get_setup("lsp") })
   use({ "williamboman/nvim-lsp-installer", config = get_setup("lsp_installer") })
   use({ "sheerun/vim-polyglot" })

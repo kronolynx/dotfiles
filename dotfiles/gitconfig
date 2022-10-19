@@ -101,10 +101,14 @@
   l2 = log -2
   l3 = log -3
   l4 = log -4
+  l5 = log -5
+  l6 = log -6
   lo1 = log -1 --oneline
   lo2 = log -2 --oneline
   lo3 = log -3 --oneline
   lo4 = log -4 --oneline
+  lo5 = log -5 --oneline
+  lo6 = log -6 --oneline
   lg = log --graph --all --decorate --oneline -36
   la = "!git config -l | grep alias | cut -c 7-" # list aliases
   ls = branch -v # list branches

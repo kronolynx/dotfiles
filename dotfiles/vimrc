@@ -77,7 +77,7 @@ set showcmd " Show the (partial) command as it’s being typed
 set showmatch " Show matching brackets when text indicator is over them
 set t_Co=256 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set tabpagemax=50 " Maximum number of tab pages that can be opened from the command line.
-set textwidth=80 " Make it obvious where 80 characters is
+"set textwidth=80 " Make it obvious where 80 characters is
 set noshowmode " lightline shows the status not vim
 
 " folding

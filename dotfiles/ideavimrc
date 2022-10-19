@@ -143,14 +143,8 @@ map <A-\> <Action>(MaximizeEditorInSplit)
 " }}}
 
 " misc {{{
-" Greatest remap EVER!! 
-" Let me explain, this remap while in visual mode
-" will delete what is currently highlighted and replace it 
-" with what is in the register BUT it will YANK (delete) it 
-" to a VOID register. Meaning I still have what I originally had
-" when I pasted. I don't loose the previous thing I YANKED!
 " let g:WhichKeyDesc_paste = "<leader>p paste replace and keep"
-vnoremap <leader>p "_dP
+vnoremap <leader>p pgvy
 " }}}
 
 " yank to end of line
@@ -159,13 +153,20 @@ nnoremap Y y$
 map <A-space> <Action>(GotoAction)
 map <A-j> <Action>(GotoAction)
 " run {{{ 
-let g:WhichKeyDesc_editor = "<leader>action run"
+"
+let g:WhichKeyDesc_editor = "<leader>a editor action"
 
+let g:WhichKeyDesc_ar = "<leader>ar run"
+map <leader>ar <Action>(RunClass)
+let g:WhichKeyDesc_al = "<leader>al run last"
+map <leader>al <Action>(Run)
+let g:WhichKeyDesc_af = "<leader>af run failed test"
 map <leader>af <Action>(RerunFailedTests)
-map <leader>ac <Action>(RunClass)
-map <leader>ar <Action>(Run)
+let g:WhichKeyDesc_ai = "<leader>ai invalidate caches"
 map <leader>ai  <Action>(InvalidateCaches)
+let g:WhichKeyDesc_ac = "<leader>ac compile dirty"
 map <leader>ad  <Action>(CompileDirty)
+map <leader>an  <Action>(GotoNextError)
 
 " }}}
 
@@ -300,8 +301,6 @@ map <Leader>im <Action>(CodeGlance.toggle)
 let g:WhichKeyDesc_file = "<leader>f file"
 
 map <leader>fu <Action>(FindUsages)
-
-map <leader>fl <Action>(Recentfiles)
 
 map <leader>fc <Action>(RecentChangedFiles)
 
@@ -611,7 +610,7 @@ map <leader>xv <Action>(Tool_External Tools_gvim)
 " Toggle view truncate lines
 map <leader>xg <Action>(EditorGutterToggleGlobalSoftWraps)
 
-map <leader>xf <Action>(ToggleDistractionFreeMode)
+map <leader>xd <Action>(ToggleDistractionFreeMode)
 
 map <leader>xz <Action>(ToggleZenMode)
 
@@ -624,13 +623,14 @@ map <leader>xp <Action>(OpenFile)
 map <leader>xa <Action>(Performance.ActivityMonitor)
 
 " open in file manager
-let g:WhichKeyDesc_xo = "<leader>xo reveal in File Manager"
-map <leader>xo <Action>(RevealIn)
+let g:WhichKeyDesc_xf = "<leader>xo reveal in File Manager"
+map <leader>xf <Action>(RevealIn)
 " ask what to open where the current file is located
-let g:WhichKeyDesc_xa = "<leader>xa reveal in choose"
-map <leader>xa <Action>(RevealGroup)
+let g:WhichKeyDesc_xr = "<leader>xa reveal in choose"
+map <leader>xr <Action>(RevealGroup)
 
 
+map <leader>xn <Action>(MarkNotificationsAsRead)
 " Reset font size
 map <leader>x0 <Action>(EditorResetFontSize)
 
@@ -646,6 +646,7 @@ nnoremap <leader>xk :map<CR>
 "
 " NerdTree {{{
 map <A-1> :NERDTreeToggle<CR>
+imap <A-1> <ESC>:NERDTreeToggle<CR>
 map <leader>nf :NERDTreeFind<CR>
 map <leader>nn :NERDTreeFocus<CR>
 

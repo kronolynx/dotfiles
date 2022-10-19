@@ -1,19 +1,16 @@
 {
-    "editor.fontFamily": "'Victor Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback', 'VictorMono Nerd Font'",
+    "editor.fontFamily": "'Fantasque Sans Mono', 'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback', 'VictorMono Nerd Font'",
     "editor.fontLigatures": true,
-    "editor.fontWeight": "600",
+    "editor.fontWeight": "500",
     "editor.minimap.enabled": false,
     "editor.wordWrap": "wordWrapColumn",
     "editor.wordWrapColumn": 120,
     "editor.tabSize": 2,
-    "editor.fontSize": 15,
+    "editor.fontSize": 15.5,
     "editor.formatOnType": true,
     "editor.lineNumbers": "on",
     "editor.suggestSelection": "first",
     "cSpell.language": "en,es",
-    "workbench.iconTheme": "material-icon-theme",
-    "workbench.activityBar.visible": false,
-    "workbench.statusBar.visible": true,
     "editor.formatOnPaste": true,
     "workbench.editor.highlightModifiedTabs": true,
     "explorer.sortOrder": "type",
@@ -58,8 +55,8 @@
     "[javascript]": {
         "editor.defaultFormatter": "vscode.typescript-language-features"
     },
-    "vim.sneak": false,
-    "vim.camelCaseMotion.enable": false,
+    "vim.sneak": true,
+    "vim.camelCaseMotion.enable": true,
     "vim.easymotion": true,
     "vim.easymotionMarkerBackgroundColor": "purple",
     "vim.leader": "<Space>",
@@ -76,14 +73,14 @@
         }
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "<space>"
-            ],
-            "commands": [
-                "whichkey.show"
-            ]
-        },
+        // {
+        //     "before": [
+        //         "<space>"
+        //     ],
+        //     "commands": [
+        //         //"whichkey.show"
+        //     ]
+        // },
         {
             "before": [
                 "Y"
@@ -91,6 +88,24 @@
             "after": [
                 "y",
                 "$"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "b"
+            ],
+            "commands": [
+                "workbench.action.navigateBack"
+            ]
+        },
+        {
+            "before": [
+                "g",
+                "f"
+            ],
+            "commands": [
+                "workbench.action.navigateForward"
             ]
         },
         {
@@ -231,6 +246,16 @@
             ],
             "commands": [
                 "workbench.action.files.openFile"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "f",
+                "u"
+            ],
+            "commands": [
+                "metals.symbol-search"
             ]
         },
         {
@@ -410,7 +435,11 @@
                 "r"
             ],
             "commands": [
-                "workbench.action.quickOpen"
+                "workbench.action.openPreviousEditorFromHistory" // almost but doesn't allow filter
+                // "workbench.action.openRecent" // project
+                // "workbench.action.showAllEditors"
+                //"workbench.action.quickOpenRecent"
+                //"workbench.action.showAllEditorsByMostRecentlyUsed"
             ]
         },
         {
@@ -481,6 +510,16 @@
             ],
             "commands": [
                 "editor.action.showHover"
+            ]
+        },
+        {
+            "before": [
+                "<leader>",
+                "v",
+                "p"
+            ],
+            "commands": [
+                "editor.action.showDefinitionPreviewHover"
             ]
         },
         {
@@ -672,14 +711,14 @@
         }
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "<space>"
-            ],
-            "commands": [
-                "whichkey.show"
-            ]
-        },
+        // {
+        //     "before": [
+        //         "<space>"
+        //     ],
+        //     "commands": [
+        //         //"whichkey.show"
+        //     ]
+        // },
         {
             "before": [ "u", "u" ],
             "after": [ "<Esc>" ]
@@ -733,7 +772,6 @@
     "workbench.editorAssociations": {
         "*.ipynb": "jupyter-notebook"
     },
-    "metals.javaHome": "/home/johann/.cache/coursier/jvm/openjdk@1.11.0-2/",
     "security.workspace.trust.untrustedFiles": "open",
     "notebook.cellToolbarLocation": {
         "default": "right",
@@ -747,7 +785,7 @@
         "keycloak",
         "subgrupo"
     ],
-    "workbench.colorTheme": "Tokyo Night",
+    "workbench.colorTheme": "GapStyle VS",
     "metals.scalafmtConfigPath": "~/Tecsisa/kommodo-management/.scalafmt.conf",
     "window.restoreWindows": "none",
     "[shellscript]": {
@@ -770,5 +808,19 @@
 "editor.semanticHighlighting.enabled": true,
 "window.menuBarVisibility": "toggle",
 "haskell.manageHLS": "GHCup",
-"vscode-neovim.neovimExecutablePaths.linux": "/usr/bin/nvim",
+"vim.enableNeovim": true,
+"vim.hlsearch": true,
+"vim.inccommand": "append",
+"vim.neovimPath": "/usr/bin/nvim",
+"vim.neovimUseConfigFile": true,
+"vim.showMarksInGutter": true,
+"vim.showmodename": false,
+"editor.linkedEditing": true,
+"workbench.editor.limit.enabled": true,
+"workbench.editor.limit.excludeDirty": true,
+"workbench.activityBar.visible": false,
+"workbench.editor.limit.value": 15,
+"workbench.editor.navigationScope": "editorGroup",
+"breadcrumbs.filePath": "off",
+"workbench.settings.editor": "json",
 }

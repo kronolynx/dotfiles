@@ -51,7 +51,6 @@ g["vim_markdown_conceal_code_blocks"] = 0
 local indent = 2
 
 -- global
-global_opt.shortmess:remove("F"):append("c")
 global_opt.termguicolors = true
 global_opt.hidden = true
 global_opt.showtabline = 1
@@ -140,9 +139,7 @@ o.termguicolors = true
 
 opt.number = true -- show line numbers
 opt.wrap = true -- turn on line wrapping
-opt.wrapmargin = 8 -- wrap lines when coming within n characters from side
 opt.linebreak = true -- set soft wrapping
--- opt.showbreak = "↪"
 opt.ttyfast = true -- faster redrawing
 opt.wildmenu = true -- enhanced command line completion
 opt.hidden = true -- current buffer can be put into background
@@ -234,8 +231,12 @@ map("", "<leader>gf", ":FZF<CR>")
 map("", "<leader>tr", ":Buffers<CR>")
 map("", "<leader>bs", ":Marks<CR>")
 map("", "<leader>xk", ":Maps<CR>")
+map("", "<leader>ml", ":Commits<CR>")
 map("", "<leader>fp", ":Ag ") -- find in path
 map("", "<leader>sp", ":Ag ") -- search in path
+map("", "<M-j>",      ":Commands<CR>") -- TODO fix me
+
+-- TODO :GitGutterPreviewHunk
 
 --================================
 -- COMMANDS ----------------------
@@ -265,6 +266,15 @@ cmd([[
     augroup end
   ]])
 
+-- Format JSON files
+vim.api.nvim_create_autocmd("FileType", 
+  { 
+    pattern = "json", 
+    command = [[nnoremap <buffer><leader>e= :%!jq .<CR>]] 
+    -- command = [[nnoremap <buffer><leader>e= :%!python -m json.tool<CR>]] 
+  }
+)
+
 cmd [[syntax on]]
 cmd [[filetype plugin indent on]]
 -- make the highlighting of tabs and other non-text less annoying
@@ -277,6 +287,7 @@ cmd [[highlight htmlArg cterm=italic term=italic gui=italic]]
 cmd [[highlight xmlAttrib cterm=italic term=italic gui=italic]]
 -- highlight Type cterm=italic term=italic gui=italic
 cmd [[highlight Normal ctermbg=none]]
+
 
 -- --
 -- local wk = require("which-key")
