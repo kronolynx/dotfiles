@@ -84,6 +84,10 @@ function rmEmptyDir
   find $argv -empty -type d -delete -f -not -path '*/.git/*'
 end
 
+function lnBin
+  ln -sf $PWD/$argv ~/.local/bin/
+end
+
 
 # kill any process listening on the port given e.g: kp 8080
 function kp
