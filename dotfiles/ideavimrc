@@ -138,7 +138,7 @@ map <A-.> <Action>(StretchSplitToRight)
 map <A-s-,> <Action>(StretchSplitToTop)
 map <A-s-.> <Action>(StretchSplitToBottom)
 " zoom 
-map <A-\> <Action>(MaximizeEditorInSplit)
+map <A-z> <Action>(MaximizeEditorInSplit)
 
 " }}}
 
@@ -249,8 +249,8 @@ map <leader>ve <Action>(ShowErrorDescription)
 
 map <leader>vr <Action>(RecentLocations)
 
-let g:WhichKeyDesc_view_implicits = "<leader>vq quick"
-map <leader>vqt <Action>(QuickTypeDefinition)
+let g:WhichKeyDesc_view_signature = "<leader>vs signature"
+map <leader>vs <Action>(QuickTypeDefinition)
 
 map <leader>vqj <Action>(QuickJavaDoc)
 
@@ -284,6 +284,12 @@ map <leader>rr <Action>(RenameElement)
 let g:WhichKeyDesc_refactor_white = "<leader>rw remove extra white space"
 nmap <leader>rw :%s/\s\+$<CR><Paste>
 vmap <leader>rw <Esc>:%s/\s\+$<CR><Paste>
+
+let g:WhichKeyDesc_paste_no_new_before= "gP paste no new line before"
+" Paste yanked line without line breaks before/after cursor position
+nnoremap gP i<CR><Esc>PkJxJx
+let g:WhichKeyDesc_paste_no_new_after= "gp paste no new line after"
+nnoremap gp a<CR><Esc>PkJxJx
 " }}}
 
 " ide {{{
@@ -301,6 +307,7 @@ map <Leader>im <Action>(CodeGlance.toggle)
 let g:WhichKeyDesc_file = "<leader>f file"
 
 map <leader>fu <Action>(FindUsages)
+map <leader>gr <Action>(FindUsages)
 
 map <leader>fc <Action>(RecentChangedFiles)
 
@@ -440,7 +447,7 @@ nnoremap <leader>wh <C-w>h
 nnoremap <leader>wj <C-w>j
 nnoremap <leader>wk <C-w>k
 
-map <A-z> <Action>(HideAllWindows)
+map <A-c> <Action>(HideAllWindows)
 
 map <A-2> <Action>(Switcher)
 

@@ -1,18 +1,14 @@
-# Replace the "❯" symbol in the prompt
-[character]      # The name of the module
-success_symbol = "[⮞ ](bold green)"     # The "symbol" segment is being set to "➜"
-error_symbol = "[⮞ ](bold red)"     # The "symbol" segment is being set to "➜"
-vicmd_symbol = "[⮝ ](bold green)"
 [time]
 disabled = false
 style = "bold green"
 time_format = "%T"
 format = "[$time]($style) "
+
 [status]
 style = "blue"
 symbol = "💣"
 format = "[$symbol]($style) "
-disabled = true
+#disabled = true
 
 [directory]
 fish_style_pwd_dir_length = 1
@@ -23,13 +19,18 @@ symbol = "🐍 "
 [java]
 symbol = "🗡  "
 style = "bold green"
+format = "[${symbol}(${version} )]($style)"
 
 [docker_context]
-format = "via [🐋 $context](blue bold)"
+format = "[🐋 $context](blue bold)"
 
 [scala]
 symbol = "⚔️  "
-format = "via [${symbol}(${version} )]($style)"
+format = "[${symbol}(${version} )]($style)"
 
 [aws]
 disabled = true
+
+[nodejs]
+detect_extensions = [ ]
+detect_files = ["package.json", ".node-version"]

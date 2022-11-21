@@ -5,6 +5,7 @@ alias dow="docker-local down"
 alias sbtr="ag -l | entr sbt" # http://eradman.com/entrproject/
 alias reload="ag -l | entr"
 alias rlds="find src/ -name '*.scala' | entr -s " # requires argument e.g 'sbt test'
+abbr fix-internet "sudo modprobe -r r8169 && sleep 10 && sudo modprobe r8169"
 
 abbr ctarget "find -name target | xargs rm -rf"
 abbr sbt-rem "mv ~/.sbt/repositories ~/.sbt/repositories-temp"
@@ -41,6 +42,8 @@ abbr ctesti "sbt -Dsbt.supershell=false clean panic wr-admin-it/compile wr-admin
 abbr ti "sbt testInteractive"
 abbr to "sbt testOnly"
 abbr tst "sbt test"
+alias docker-rm-all "docker rm $(docker ps -aq)"
+
 
 # scala metals log
 alias smlog='tail -f .metals/metals.log'
@@ -65,6 +68,7 @@ abbr kconf 'kubectl -o yaml get configmaps' # tab to get env
 alias kcont "kubectl config view --minify --output 'jsonpath={.current-context}/{..namespace}' 2>/dev/null"
 
 abbr gma 'git checkout master'
+abbr gmd 'git checkout develop'
 
 
 function tstamp #epoch in miliseconds

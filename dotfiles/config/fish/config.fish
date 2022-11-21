@@ -215,9 +215,9 @@ end
 ##########################################################
 ##########    Theme
 ##########################################################
-#if command -v starship >/dev/null 2>&1
-#    starship init fish | source
-#end
+if command -v starship >/dev/null 2>&1
+    starship init fish | source
+end
 #
 #set --global kubectl 
 set tide_right_prompt_items status cmd_duration context jobs node virtual_env rustc java chruby go aws time
