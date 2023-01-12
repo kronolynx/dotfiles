@@ -1,8 +1,0 @@
-<advancedsettings>
-  <seeksteps>3, 7, 15, 30, 60</seeksteps>
-  <video>
-    <playcountminimumpercent>90</playcountminimumpercent>
-    <ignoresecondsatstart>180</ignoresecondsatstart>
-    <ignorepercentatend>8</ignorepercentatend>
-  </video>
-</advancedsettings>
