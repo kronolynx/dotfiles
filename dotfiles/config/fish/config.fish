@@ -58,6 +58,11 @@ set -g FZF_DEFAULT_OPTS '--layout=reverse'
 set -g FORGIT_FZF_DEFAULT_OPTS "$FORGIT_FZF_DEFAULT_OPTS --reverse"
 set -g FORGIT_LOG_GRAPH_ENABLE false
 
+if command -v rg >/dev/null 2>&1
+
+  # use rip grep for search
+  set -gx FZF_DEFAULT_COMMAND  'rg --files --follow'
+end
 
 
 
@@ -89,10 +94,65 @@ function lnBin
 end
 
 
-# kill any process listening on the port given e.g: kp 8080
-function kp
-  kill -9 (lsof -t -i:$argv) 2>/dev/null; and echo "Process on port $argv killed" ;or echo "Nothing listening on port $argv"
+function fp --description "Search path"
+  set -l loc (echo $PATH | tr ' ' '\n' | eval "fzf $FZF_DEFAULT_OPTS --header='[find:path]'")
+
+  if test (count $loc) = 1
+    set -l cmd (rg --files -L $loc | rev | cut -d'/' -f1 | rev | tr ' ' '\n' | eval "fzf $FZF_DEFAULT_OPTS --header='[find:exe] => $loc'")
+    if test (count $cmd) = 1
+      echo $cmd
+    else
+      fp
+    end
+  end
 end
+
+# kill any process listening on the port given e.g: kp 8080
+function kport --description "Kill proccess on port"
+   if test "x$argv[1]" != "x"
+     kill -9 (lsof -t -i:$argv) 2>/dev/null; and echo "Process on port $argv killed" ;or echo "Nothing listening on port $argv"
+   else
+     echo "no port provided"
+  end
+end
+
+function kp --description "Kill processes"
+  set -l __kp__pid (ps -ef | sed 1d | eval "fzf $FZF_DEFAULT_OPTS -m --header='[kill:process]'" | awk '{print $2}')
+  set -l __kp__kc $argv[1]
+
+  if test "x$__kp__pid" != "x"
+    if test "x$argv[1]" != "x"
+      echo $__kp__pid | xargs kill $argv[1]
+    else
+      echo $__kp__pid | xargs kill -9
+    end
+  end
+end
+
+function ks --description "Kill http server processes"
+  set -l __ks__pid (lsof -Pwni tcp | sed 1d | eval "fzf $FZF_DEFAULT_OPTS -m --header='[kill:tcp]'" | awk '{print $2}')
+  set -l __ks__kc $argv[1]
+
+  if test "x$__ks__pid" != "x"
+    if test "x$argv[1]" != "x"
+      echo $__ks__pid | xargs kill $argv[1]
+    else
+      echo $__ks__pid | xargs kill -9
+    end
+    ks
+  end
+end
+
+function bcp --description "Pacman remove app"
+  set -l inst (pacman -Qe | eval "fzf $FZF_DEFAULT_OPTS -m --header='[yay:remove]'" | awk '{print $1}')
+
+  if not test (count $inst) = 0
+    for prog in $inst
+      pacman -Rs "$prog"
+    end
+  end
+end
+
 
 # make a directory and cd into it
 function md

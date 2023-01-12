@@ -21,6 +21,8 @@ alias vin="vim -u NONE" # vim no config
 
 alias CAPS="xdotool key Caps_Lock"
 
+alias rg="rg --follow" # follow symlinks
+
 alias emx="emacsclient -t --alternate-editor='nvim'"
 alias emc="emacsclient -c -a emacs"
 alias cm="cmus"

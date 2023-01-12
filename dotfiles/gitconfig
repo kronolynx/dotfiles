@@ -167,5 +167,6 @@
   program = /usr/bin/gpg2 # to stop asking each time for gpg password
 [init]
   defaultBranch = main
+  templatedir = ~/.git-templates
 [includeIf "gitdir:~/Workspace/Work"]
   path = ~/Workspace/Work/.gitconfig
