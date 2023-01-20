@@ -37,7 +37,7 @@ alias lp="lsof -i :" # e.g. lp 8080 # which app is using a port
 alias lt='ls --tree'
 alias o='a -e xdg-open'
 alias r='ranger --choosedir=$HOME/.rangerdir; set LASTDIR (cat $HOME/.rangerdir); cd "$LASTDIR"'
-alias rm="rm -i"
+#alias rm="rm -i"
 alias tk="tmux kill-session -t "
 alias tkd="tmux list-sessions | grep -v attached | cut -d: -f1 |  xargs -t -n1 tmux kill-session -t"
 alias untar='tar -sxvf '
@@ -46,6 +46,7 @@ alias wget='wget -c '
 alias bashi='bash -s interactive'
 alias vm=vifm
 alias nv=nvim
+alias nvf='nvim (fzf)'
 
 # to create more alias for different distro operations
 # https://wiki.archlinux.org/index.php/Pacman/Rosetta
