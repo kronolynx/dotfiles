@@ -168,5 +168,3 @@
 [init]
   defaultBranch = main
   templatedir = ~/.git-templates
-[includeIf "gitdir:~/Workspace/Work"]
-  path = ~/Workspace/Work/.gitconfig

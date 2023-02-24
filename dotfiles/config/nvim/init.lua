@@ -232,8 +232,8 @@ map("", "<leader>tr", ":Buffers<CR>")
 map("", "<leader>bs", ":Marks<CR>")
 map("", "<leader>xk", ":Maps<CR>")
 map("", "<leader>ml", ":Commits<CR>")
-map("", "<leader>fp", ":Ag ") -- find in path
-map("", "<leader>sp", ":Ag ") -- search in path
+map("", "<leader>fp", ":Rg ") -- find in path
+map("", "<leader>sp", ":Rg ") -- search in path
 map("", "<M-j>",      ":Commands<CR>") -- TODO fix me
 
 -- TODO :GitGutterPreviewHunk

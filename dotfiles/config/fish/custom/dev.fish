@@ -61,14 +61,17 @@ abbr kctxls 'kubectl config get-contexts'
 abbr kctx 'kubectl config use-context'
 abbr knsls 'kubectl get namespace | grep -Ei' # get namespaces
 abbr kns 'kubectl config set-context --current --namespace=' # set namespace for subsecuent commands
-abbr kdp 'kubectl get deployments'
+abbr kdep 'kubectl get deployments'
 abbr kpods 'kubectl get pods'
-abbr ksc 'kubectl scale deployment' # tab to autocomplete
+abbr kscale 'kubectl scale deployment' # tab to autocomplete
+abbr kroll 'kubectl rollout restart deployment'
 abbr kconf 'kubectl -o yaml get configmaps' # tab to get env
 alias kcont "kubectl config view --minify --output 'jsonpath={.current-context}/{..namespace}' 2>/dev/null"
 
-abbr gma 'git checkout master'
-abbr gmd 'git checkout develop'
+abbr kdesc 'kubectl describe pods'
+
+abbr gma 'git checkout master && git pull'
+abbr gmd 'git checkout develop && git pull'
 
 
 function tstamp #epoch in miliseconds
@@ -78,3 +81,4 @@ end
 function tstamps #epoch in seconds
   date "+%FT%H:%M:%S.%NZ" -ud @$argv
 end
+

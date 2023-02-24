@@ -73,6 +73,7 @@ alias dig="dig +nocmd any +multiline +noall +answer"
 # file size
 alias fs="stat -f \"%z bytes\""
 
+alias g='git'
 
 # json manipulation
 # https://github.com/tomnomnom/gron

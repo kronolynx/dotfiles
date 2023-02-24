@@ -11,7 +11,6 @@ abbr kcc 'kcat 2>&1 -q -C -f "%T::%t::%p::%o >> %k --- %s,\n" -b'
 abbr chmodrec 'find . -type f -iname "*.sh" -exec chmod +x {} \;'
 
 # git
-abbr g 'git'
 abbr gamend = 'git commit --amend --no-edit'
 abbr gamend-stage = 'git commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message'
 abbr gamendAdd = 'git commit --amend --no-edit -a'

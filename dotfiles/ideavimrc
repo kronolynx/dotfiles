@@ -167,6 +167,7 @@ map <leader>ai  <Action>(InvalidateCaches)
 let g:WhichKeyDesc_ac = "<leader>ac compile dirty"
 map <leader>ad  <Action>(CompileDirty)
 map <leader>an  <Action>(GotoNextError)
+map <leader>a= <Action>(ReformatCode)
 
 " }}}
 
@@ -563,11 +564,15 @@ map <leader>ci <Action>(EditorToggleShowIndentLines)
 
 map <leader>cu <Action>(UIToggleActions)
 
-map <leader>ct <Action>(ToggleTypeHints)
+map <leader>ch <Action>(ToggleTypeHints)
 
 map <leader>ce <Action>(EditorToggleActions)
 
-map <leader>cm <Action>(ViewMainMenu)
+map <leader>cM <Action>(ViewMainMenu)
+
+map <leader>cm <Action>(ViewMenu)
+
+map <leader>ct <Action>(ViewToolButtons)
 " }}}
 "
 " project {{{
@@ -583,7 +588,9 @@ map <leader>qs <Action>(SaveAll)
 " ExternalSystem.RefreshProject ???
 map <leader>qf  <Action>(ExternalSystem.RefreshAllProjects)
 
-map <leader>qo <Action>(CloseOtherProjects)
+map <leader>qO <Action>(CloseOtherProjects)
+
+map <leader>qo <Action>(OpenFile)
 " }}}
 
 " other {{{
@@ -640,6 +647,29 @@ map <leader>xr <Action>(RevealGroup)
 map <leader>xn <Action>(MarkNotificationsAsRead)
 " Reset font size
 map <leader>x0 <Action>(EditorResetFontSize)
+
+" Todo
+"
+" ActivateBookmarksToolWindow                        <A-2>
+" ActivatebspToolWindow
+" ActivateCommitToolWindow                           <A-0>
+" ActivateDebugToolWindow                            <A-5>
+" ActivateFindToolWindow                             <A-3>
+" ActivateHierarchyToolWindow
+" ActivateNavBar
+" ActivateNotificationsToolWindow
+" ActivateProblemsViewToolWindow                     <A-6>
+" ActivateProjectToolWindow                          <A-1>
+" ActivatePullRequestsToolWindow
+" ActivateRunToolWindow                              <A-4>
+" Activatesbt-shell-toolwindowToolWindow             <C-S-S>
+" ActivatesbtToolWindow
+" Activatescala-trace-log-viewerToolWindow
+" ActivateStructureToolWindow                        <A-7>
+" ActivateTerminalToolWindow                         <A-F12>
+" ActivateTODOToolWindow
+" ActivateToolWindowActions
+" ActivateVersionControlToolWindow                   <A-9>
 
 " Show color picker
 " map <leader>x <Action>(ShowColorPicker)
