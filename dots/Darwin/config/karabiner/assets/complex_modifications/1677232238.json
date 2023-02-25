@@ -1,0 +1,1 @@
+{"title":"Both shifts caps","rules":[{"description":"Enable both shifts caps","manipulators":[{"type":"basic","from":{"modifiers":{"mandatory":["right_shift"]},"key_code":"left_shift"},"to":[{"repeat":true,"key_code":"caps_lock"}]}]}]}

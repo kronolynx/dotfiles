@@ -42,8 +42,10 @@ abbr ctesti "sbt -Dsbt.supershell=false clean panic wr-admin-it/compile wr-admin
 abbr ti "sbt testInteractive"
 abbr to "sbt testOnly"
 abbr tst "sbt test"
-alias docker-rm-all "docker rm $(docker ps -aq)"
 
+function docker-rm-all 
+  docker rm (docker ps -aq)
+end
 
 # scala metals log
 alias smlog='tail -f .metals/metals.log'
