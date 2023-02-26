@@ -44,6 +44,7 @@ alias untar='tar -sxvf '
 alias v="vim"
 alias wget='wget -c '
 alias bashi='bash -s interactive'
+alias zshi='zsh -s interactive'
 alias vm=vifm
 alias nv=nvim
 alias nvf='nvim (fzf)'

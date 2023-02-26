@@ -150,7 +150,7 @@ vnoremap <leader>p pgvy
 " yank to end of line
 nnoremap Y y$ 
 
-map <A-space> <Action>(GotoAction)
+map <C-space> <Action>(GotoAction)
 map <A-j> <Action>(GotoAction)
 " run {{{ 
 "
@@ -450,7 +450,7 @@ nnoremap <leader>wk <C-w>k
 
 map <A-c> <Action>(HideAllWindows)
 
-map <A-2> <Action>(Switcher)
+map <C-2> <Action>(Switcher)
 
 nnoremap <C-l> <C-w>l
 nnoremap <C-j> <C-w>j
@@ -682,8 +682,8 @@ nnoremap <leader>xk :map<CR>
 " }}}
 "
 " NerdTree {{{
-map <A-1> :NERDTreeToggle<CR>
-imap <A-1> <ESC>:NERDTreeToggle<CR>
+nmap <C-1> :NERDTreeToggle<CR>
+imap <C-1> <ESC>:NERDTreeToggle<CR>
 map <leader>nf :NERDTreeFind<CR>
 map <leader>nn :NERDTreeFocus<CR>
 
