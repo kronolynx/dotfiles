@@ -4,10 +4,10 @@
 
 # ===== Rules ==================================
 yabai -m rule --add label="System Preferences" app="^System Preferences$" manage=off
-yabai -m rule --add label="Rofi" app="^choose$" manage=off
-#yabai -m rule --add label="Finder" app="^Finder$" manage=off
 yabai -m rule --add label="System Settings" app="^System Settings$" manage=off
 yabai -m rule --add label="Archive Utility" app="^Archive Utility$" manage=off
+yabai -m rule --add label="Finder" app="^Bin$" manage=off
+yabai -m rule --add label="Digital Colour Meter" app="Digital Colour Meter" manage=off
 
 
 # Some Intellij settings, in case you are using it. float Intellij Preference panes
@@ -15,6 +15,7 @@ yabai -m rule --add app='Intellij IDEA' title='^$' manage=off
 yabai -m rule --add app='Intellij IDEA' title='Project Structure' manage=off
 yabai -m rule --add app='Intellij IDEA' title='Preferences' manage=off
 yabai -m rule --add app='Intellij IDEA' title='Edit configuration' manage=off
+yabai -m rule --add app='Rancher Desktop' title='Preferences' manage=off
 
 yabai -m config layout                       bsp
 
@@ -24,8 +25,16 @@ yabai -m config left_padding   7
 yabai -m config right_padding  7
 yabai -m config window_gap     7
 
+# sketchybar
+yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+yabai -m signal --add event=window_created action="sketchybar --trigger windows_on_spaces"
+yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
+## when window closed focus next
+yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+
 # set focus follows mouse mode (default: off, options: off, autoraise, autofocus)
-yabai -m config focus_follows_mouse autoraise
+yabai -m config focus_follows_mouse off
 # When focusing a window, put the mouse at its center. 
 yabai -m config mouse_follows_focus true
 
@@ -63,9 +72,3 @@ yabai -m config mouse_modifier               ctrl
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 yabai -m config mouse_drop_action            swap
-
-
-# spacebar padding on top screen
-#SPACEBAR_HEIGHT=$(spacebar -m config height)
-#yabai -m config external_bar all:$SPACEBAR_HEIGHT:0
-#

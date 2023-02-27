@@ -95,7 +95,6 @@ shift + ralt - a : yabai -m space --layout $(yabai -m query --spaces --space | j
 #ralt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
 ralt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
 
-
 ralt - w : yabai -m window --close
 # 
 # Resize windows

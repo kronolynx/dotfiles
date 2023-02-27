@@ -73,6 +73,9 @@ map gb <Action>(Back)
 let g:WhichKeyDesc_forward = "gf Forward"
 map gf <Action>(Forward)
 
+map <A-Left> <Action>(Back)
+map <A-Right> <Action>(Forward)
+
 map [[ <Action>(MethodUp)
 map ]] <Action>(MethodDown)
 
