@@ -98,33 +98,33 @@ ralt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
 ralt - w : yabai -m window --close
 # 
 # Resize windows
-ctrl + ralt - h : \
+cmd + ralt - h : \
     yabai -m window --resize left:-100:0 ; \
     yabai -m window --resize right:-100:0
 
-ctrl + ralt - j : \
+cmd + ralt - j : \
     yabai -m window --resize bottom:0:100 ; \
     yabai -m window --resize top:0:100
 
-ctrl + ralt - k : \
+cmd + ralt - k : \
     yabai -m window --resize top:0:-100 ; \
     yabai -m window --resize bottom:0:-100
 
-ctrl + ralt - l : \
+cmd + ralt - l : \
     yabai -m window --resize right:100:0 ; \
     yabai -m window --resize left:100:0
 
 # change layout of desktop
-ralt - e : yabai -m space --layout bsp
-ralt - l : yabai -m space --layout float
-ralt - s : yabai -m space --layout stack
+#ralt - e : yabai -m space --layout bsp
+#ralt - l : yabai -m space --layout float
+#ralt - s : yabai -m space --layout stack
 
 # balance size of windows
-ralt + shift - r : yabai -m space --balance
+ralt + lalt - r : yabai -m space --balance
 # mirror tree y-axis
-alt + shift - y : yabai -m space --mirror y-axis
+ralt + lalt - y : yabai -m space --mirror y-axis
 # mirror tree x-axis
-alt + shift - x : yabai -m space --mirror x-axis
+ralt + lalt - x : yabai -m space --mirror x-axis
 
 # go back to previous workspace  (requires to disable)
 # alt - tab : yabai -m space --focus recent
@@ -135,18 +135,21 @@ cmd + ralt - tab : yabai -m window --focus prev
 ralt - tab : yabai -m window --focus recent
 
 
-# # # send window to monitor and follow focus
-# # ctrl + cmd - x  : yabai -m window --display recent; yabai -m display --focus recent
-# # ctrl + cmd - z  : yabai -m window --display prev; yabai -m display --focus prev
-# # ctrl + cmd - c  : yabai -m window --display next; yabai -m display --focus next
-# # ctrl + cmd - 1  : yabai -m window --display 1; yabai -m display --focus 1
-# # ctrl + cmd - 2  : yabai -m window --display 2; yabai -m display --focus 2
-# # ctrl + cmd - 3  : yabai -m window --display 3; yabai -m display --focus 3
-# 
-# # focus monitor
-# # ctrl + ralt - x  : yabai -m display --focus recent
-# # ctrl + ralt - z  : yabai -m display --focus prev
-# # ctrl + ralt - c  : yabai -m display --focus next
+## send window to monitor and follow focus
+ralt + shift - d  : yabai -m window --display next && yabai -m display --focus next || yabai -m window --display first && yabai -m display --focus first
+
+#ralt + ctrl - l  : yabai -m window --display recent; yabai -m display --focus recent
+#ralt + ctrl - k  : yabai -m window --display prev; yabai -m display --focus prev
+#ralt + ctrl - j  : yabai -m window --display next; yabai -m display --focus next
+#
+## send window to other monitor
+ralt + shift - d  : yabai -m window --display next  || yabai -m window --display first 
+## focus monitor
+ralt - d  : yabai -m display --focus next || yabai -m display --focus first
+
+#ralt + lalt - l  : yabai -m display --focus recent
+#ralt + lalt - k  : yabai -m display --focus prev
+#ralt + lalt - j  : yabai -m display --focus next
 # # ctrl + ralt - 1  : yabai -m display --focus 1
 # # ctrl + ralt - 2  : yabai -m display --focus 2
 # # ctrl + ralt - 3  : yabai -m display --focus 3
