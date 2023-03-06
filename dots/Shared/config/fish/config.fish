@@ -53,10 +53,12 @@ set -gx GPG_TTY (tty)
 
 set -g FZF_CTRL_T_COMMAND "command find -L \$dir -type f 2> /dev/null | sed '1d; s#^\./##'"
 
-set -g SHELL /usr/bin/fish
+set -g SHELL (which fish)
 set -g FZF_DEFAULT_OPTS '--layout=reverse'
-set -g FORGIT_FZF_DEFAULT_OPTS "$FORGIT_FZF_DEFAULT_OPTS --reverse"
+#set -g FORGIT_FZF_DEFAULT_OPTS "$FORGIT_FZF_DEFAULT_OPTS --reverse"
 set -g FORGIT_LOG_GRAPH_ENABLE false
+
+set -g FZF_BASE (which fzf)
 
 if command -v rg >/dev/null 2>&1
 

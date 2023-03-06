@@ -32,6 +32,7 @@ return require("packer").startup({
   use({ "kevinhwang91/nvim-bqf" })
   use({'stevearc/gkeep.nvim', run = ':UpdateRemotePlugins'})
   use({ "kyazdani42/nvim-web-devicons" })
+  use({ "duane9/nvim-rg" })
   use({ "liuchengxu/vista.vim" })
   use({ "airblade/vim-gitgutter" })
   use({
@@ -77,7 +78,8 @@ return require("packer").startup({
 
   use({ "tpope/vim-fugitive" })
   use({ "tpope/vim-vinegar" }) -- browse files commands (-)
-  use({ "junegunn/fzf.vim" })
+  use { 'junegunn/fzf', run = ":call fzf#install()" }
+  -- use({ "junegunn/fzf.vim",  })
   use({
     "windwp/nvim-autopairs",
     after = "nvim-cmp",
