@@ -39,25 +39,25 @@ ralt + shift - 0x29 : yabai -m window --space 15 ; skhd -k "alt - 0x29" # ;
 ralt + shift - 0x27 : yabai -m window --space 16 ; skhd -k "alt - 0x27" # '
 
 ### Send a window to a space ###
-ralt + ctrl - 1 : yabai -m window --space 1
-ralt + ctrl - 2 : yabai -m window --space 2
-ralt + ctrl - 3 : yabai -m window --space 3
-ralt + ctrl - 4 : yabai -m window --space 4
-ralt + ctrl - 5 : yabai -m window --space 5
-ralt + ctrl - 6 : yabai -m window --space 6
-ralt + ctrl - 7 : yabai -m window --space 7
-ralt + ctrl - 8 : yabai -m window --space 8
-ralt + ctrl - 9 : yabai -m window --space 9
-ralt + ctrl - 0 : yabai -m window --space 10
+ralt + cmd - 1 : yabai -m window --space 1
+ralt + cmd - 2 : yabai -m window --space 2
+ralt + cmd - 3 : yabai -m window --space 3
+ralt + cmd - 4 : yabai -m window --space 4
+ralt + cmd - 5 : yabai -m window --space 5
+ralt + cmd - 6 : yabai -m window --space 6
+ralt + cmd - 7 : yabai -m window --space 7
+ralt + cmd - 8 : yabai -m window --space 8
+ralt + cmd - 9 : yabai -m window --space 9
+ralt + cmd - 0 : yabai -m window --space 10
 # to get the keycodes in the terminal run: xkhd --observe
-ralt + ctrl - 0x1B : yabai -m window --space 11 # -
-ralt + ctrl - 0x18 : yabai -m window --space 12 # =
-ralt + ctrl - 0x21 : yabai -m window --space 13 # [
-ralt + ctrl - 0x1E : yabai -m window --space 14 # ]
-ralt + ctrl - 0x29 : yabai -m window --space 15 # ;
-ralt + ctrl - 0x27 : yabai -m window --space 16 # '
-ralt + ctrl - p : yabai -m window --space prev   # Send window to space on the left
-ralt + ctrl - n : yabai -m window --space next  # Send window to space on the right
+ralt + cmd - 0x1B : yabai -m window --space 11 # -
+ralt + cmd - 0x18 : yabai -m window --space 12 # =
+ralt + cmd - 0x21 : yabai -m window --space 13 # [
+ralt + cmd - 0x1E : yabai -m window --space 14 # ]
+ralt + cmd - 0x29 : yabai -m window --space 15 # ;
+ralt + cmd - 0x27 : yabai -m window --space 16 # '
+ralt + cmd - p : yabai -m window --space prev   # Send window to space on the left
+ralt + cmd - n : yabai -m window --space next  # Send window to space on the right
 
 # Moving windows
 shift + ralt - h : yabai -m window --warp west
@@ -71,15 +71,15 @@ shift + ralt - up    : yabai -m window --warp north
 shift + ralt - right : yabai -m window --warp east
 
 # Set insertion point for focused container
-shift + ctrl + ralt - h : yabai -m window --insert west
-shift + ctrl + ralt - j : yabai -m window --insert south
-shift + ctrl + ralt - k : yabai -m window --insert north
-shift + ctrl + ralt - l : yabai -m window --insert east
+shift + cmd + ralt - h : yabai -m window --insert west
+shift + cmd + ralt - j : yabai -m window --insert south
+shift + cmd + ralt - k : yabai -m window --insert north
+shift + cmd + ralt - l : yabai -m window --insert east
 
-shift + ctrl + ralt - left  : yabai -m window --insert west
-shift + ctrl + ralt - down  : yabai -m window --insert south
-shift + ctrl + ralt - up    : yabai -m window --insert north
-shift + ctrl + ralt - right : yabai -m window --insert east
+shift + cmd + ralt - left  : yabai -m window --insert west
+shift + cmd + ralt - down  : yabai -m window --insert south
+shift + cmd + ralt - up    : yabai -m window --insert north
+shift + cmd + ralt - right : yabai -m window --insert east
 # 
 # Float / Unfloat window
 shift + ralt - f : yabai -m window --toggle float
@@ -97,22 +97,24 @@ ralt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
 
 ralt - w : yabai -m window --close
 # 
-# Resize windows
-cmd + ralt - h : \
+# Resize windows  0x2B == comma, 0x2F == dot
+# resize left
+ralt - 0x2B : \
     yabai -m window --resize left:-100:0 ; \
     yabai -m window --resize right:-100:0
-
-cmd + ralt - j : \
+# resize right
+ralt - 0x2F : \
+    yabai -m window --resize right:100:0 ; \
+    yabai -m window --resize left:100:0
+# resize down ,
+shift + ralt - 0x2B : \
     yabai -m window --resize bottom:0:100 ; \
     yabai -m window --resize top:0:100
 
-cmd + ralt - k : \
+# resize up
+shift + ralt - 0x2F : \
     yabai -m window --resize top:0:-100 ; \
     yabai -m window --resize bottom:0:-100
-
-cmd + ralt - l : \
-    yabai -m window --resize right:100:0 ; \
-    yabai -m window --resize left:100:0
 
 # change layout of desktop
 #ralt - e : yabai -m space --layout bsp
