@@ -60,15 +60,25 @@ ralt + cmd - p : yabai -m window --space prev   # Send window to space on the le
 ralt + cmd - n : yabai -m window --space next  # Send window to space on the right
 
 # Moving windows
-shift + ralt - h : yabai -m window --warp west
-shift + ralt - j : yabai -m window --warp south
-shift + ralt - k : yabai -m window --warp north
-shift + ralt - l : yabai -m window --warp east
+shift + ralt - h : yabai -m window --swap west
+shift + ralt - j : yabai -m window --swap south
+shift + ralt - k : yabai -m window --swap north
+shift + ralt - l : yabai -m window --swap east
 
-shift + ralt - left  : yabai -m window --warp west
-shift + ralt - down  : yabai -m window --warp south
-shift + ralt - up    : yabai -m window --warp north
-shift + ralt - right : yabai -m window --warp east
+shift + ralt - left  : yabai -m window --swap west
+shift + ralt - down  : yabai -m window --swap south
+shift + ralt - up    : yabai -m window --swap north
+shift + ralt - right : yabai -m window --swap east
+
+cmd + ralt - h : yabai -m window --warp west
+cmd + ralt - j : yabai -m window --warp south
+cmd + ralt - k : yabai -m window --warp north
+cmd + ralt - l : yabai -m window --warp east
+
+cmd + ralt - left  : yabai -m window --warp west
+cmd + ralt - down  : yabai -m window --warp south
+cmd + ralt - up    : yabai -m window --warp north
+cmd + ralt - right : yabai -m window --warp east
 
 # Set insertion point for focused container
 shift + cmd + ralt - h : yabai -m window --insert west
@@ -120,6 +130,10 @@ shift + ralt - 0x2F : \
 #ralt - e : yabai -m space --layout bsp
 #ralt - l : yabai -m space --layout float
 #ralt - s : yabai -m space --layout stack
+
+# cycle windows in current space
+lalt - tab : yabai -m window --focus next || yabai -m window --focus first
+shift + lalt - tab : yabai -m window --focus prev || yabai -m window --focus last
 
 # balance size of windows
 ralt + lalt - r : yabai -m space --balance
