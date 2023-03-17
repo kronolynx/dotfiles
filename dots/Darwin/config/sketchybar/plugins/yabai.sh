@@ -12,7 +12,7 @@ window_state() {
     LAST=$(yabai -m query --windows --window stack.last | jq '.["stack-index"]')
     args+=(--set $NAME icon=$YABAI_STACK icon.color=$RED label.drawing=on drawing=on label=$(printf "[%s/%s]" "$CURRENT" "$LAST")
           --bar border_color=$RED)
-  else 
+  else
     args+=(--set $NAME label.drawing=off drawing=off)
     case "$(echo "$WINDOW" | jq '.["is-floating"]')" in
       "false")
@@ -41,7 +41,6 @@ window_state() {
 windows_on_spaces () {
   CURRENT_SPACES="$(yabai -m query --displays | jq -r '.[].spaces | @sh')"
 
-  args=(--set spaces_bracket drawing=off --set '/space\..*/' background.drawing=on)
   while read -r line
   do
     for space in $line
@@ -55,8 +54,11 @@ windows_on_spaces () {
             icon_strip+="$app_icon"
           fi
         done <<< "$apps"
+
+        args+=(--set space.$space label="$icon_strip" label.drawing=on)
+      else
+        args+=(--set space.$space label.drawing=off)
       fi
-      args+=(--set space.$space label="$icon_strip" label.drawing=on)
     done
   done <<< "$CURRENT_SPACES"
 
@@ -73,8 +75,9 @@ case "$SENDER" in
   ;;
   "forced") exit 0
   ;;
-  "window_focus") window_state 
-  ;;
+  #"window_focus")
+  #  window_state
+  #;;
   "windows_on_spaces") windows_on_spaces
   ;;
 esac

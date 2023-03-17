@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+
+bold="\033[1m"
+green="\033[32m"
+reset="\033[0m"
+red="\033[31m"
+
+log_info() {
+  echo -e "$bold$green>>> $1 $reset"
+}
+
+log_error() {
+  echo -e "$bold$red>>> $1 $reset"
+}
+
+latest_diff=HEAD~10
+
+scalafmtFlags() {
+  scalafmt -J-Xmx1G -J-Xms1G "$@"
+}
+
+latest() {
+  log_info "Formatting only latest changed files. For more options use './scalafmtFlags' directly"
+  scalafmtFlags --diff-branch $latest_diff
+}
+
+all() {
+  scalafmtFlags
+}
+
+check_latest() {
+  log_info "Checking formatting only for latest changes"
+  scalafmtFlags --diff-branch $latest_diff --list || {
+    log_error "To format listed files use './formatter latest'"
+    exit 1;
+  }
+}
+
+check_all() {
+  log_info "Checking all the files. All misformatted files will be listed below. It may take a long time!!!"
+  scalafmtFlags --list || {
+    log_error "Format with './formatter all' if you want everything to be properly formatted"
+    log_error "It will definitely take a long time!!! Consider formatting only changed code"
+    exit 1;
+  }
+}
+
+"${@:-check_latest}"
+

@@ -8,6 +8,8 @@ ACTIVITY=􀒓
 LOCK=􀒳
 BELL=􀋚
 BELL_DOT=􀝗
+CLOCK=󰅐
+CALENDAR=󰃭
 
 # Git Icons
 GIT_ISSUE=􀍷
@@ -44,3 +46,4 @@ VOLUME_66=􀊧
 VOLUME_33=􀊥
 VOLUME_10=􀊡
 VOLUME_0=􀊣
+

@@ -18,17 +18,18 @@ volume_change() {
     *) ICON=$VOLUME_100
   esac
 
-  sketchybar --set volume_icon label=$ICON
+  sketchybar --set $NAME icon=$ICON
 
   sketchybar --set $NAME slider.percentage=$INFO \
-             --animate tanh 30 --set $NAME slider.width=$WIDTH 
+             --animate tanh 30 --set $NAME slider.width=$WIDTH \
+               label.drawing=on
 
   sleep 2
 
   # Check wether the volume was changed another time while sleeping
   FINAL_PERCENTAGE=$(sketchybar --query $NAME | jq -r ".slider.percentage")
   if [ "$FINAL_PERCENTAGE" -eq "$INFO" ]; then
-    sketchybar --animate tanh 30 --set $NAME slider.width=0
+    sketchybar --animate tanh 30 --set $NAME slider.width=0 label.drawing=off
   fi
 }
 
@@ -37,11 +38,11 @@ mouse_clicked() {
 }
 
 mouse_entered() {
-  sketchybar --set $NAME slider.knob.drawing=on
+  sketchybar --animate tanh 30 --set $NAME slider.width=100 label.drawing=on
 }
 
 mouse_exited() {
-  sketchybar --set $NAME slider.knob.drawing=off
+  sketchybar --animate tanh 30 --set $NAME  slider.width=0 label.drawing=off
 }
 
 case "$SENDER" in

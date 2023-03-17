@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15" "16")
+SPACE_ICONS=("1 " "2 " "3 " "4 " "5 " "6 " "7 " "8 " "9 " "10" "11" "12" "13" "14" "15" "16")
 
 # Destroy space on right click, focus space on left click.
 # New space by left clicking separator (>)
@@ -14,22 +14,31 @@ do
   space=(
     associated_space=$sid
     icon="${SPACE_ICONS[i]}"
-    icon.padding_left=8
-    icon.padding_right=0
-    padding_left=2
-    padding_right=2
-    label.padding_right=10
-    label.padding_left=0
+    icon.font="$FONT:Semibold:12.0"
+    icon.padding_left=5
+    icon.padding_right=5
+    icon.width=25
+    icon.align=center
     icon.color=$WHITE
-    icon.highlight_color=$WHITE
+    icon.highlight_color=$BLACK #$WHITE
+    label.padding_right=12
+    label.font="$ICON_FONT:Regular:12.0"
+    label.padding_left=-7
+    label.align=left
+    label.drawing=off
     label.color=$GREY
-    label.highlight_color=$WHITE
+    label.highlight_color=$DGREY
     label.font="sketchybar-app-font:Regular:12.0"
     label.y_offset=-1
-    background.color=$BACKGROUND_1
-    background.border_color=$BACKGROUND_2
-    background.drawing=off
-    label.drawing=off
+    background.color=$BACKGROUND_SPACE
+    background.border_color=$BACKGROUND_SPACE
+    background.height=23
+    background.drawing=on
+    #background.padding_left=20
+    #background.padding_right=20
+    background.drawing=on
+    padding_left=2
+    padding_right=2
     script="$PLUGIN_DIR/space.sh"
   )
 
@@ -39,9 +48,9 @@ do
 done
 
 spaces_bracket=(
-  background.color=$BACKGROUND_1
-  background.border_color=$BACKGROUND_2
-  background.border_width=2
+  background.color=$BACKGROUND_SPACES
+  background.border_color=$BACKGROUND_SPACES
+  background.border_width=3
 )
 
 separator=(

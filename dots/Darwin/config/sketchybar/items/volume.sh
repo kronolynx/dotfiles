@@ -1,45 +1,37 @@
 #!/bin/bash
 
-volume_slider=(
-  script="$PLUGIN_DIR/volume.sh"
-  updates=on
-  label.drawing=off
-  icon.drawing=off
-  slider.highlight_color=$BLUE
-  slider.background.height=5
-  slider.background.corner_radius=3
-  slider.background.color=$BACKGROUND_2
-  slider.knob=􀀁
-  slider.knob.drawing=off
-)
 
 volume_icon=(
-  click_script="$PLUGIN_DIR/volume_click.sh"
-  padding_left=10
+  script="$PLUGIN_DIR/volume.sh"
+  updates=on
   icon=$VOLUME_100
-  icon.width=0
-  icon.align=left
-  icon.color=$GREY
-  icon.font="$FONT:Regular:14.0"
-  label.width=25
+  icon.width=30
+  icon.padding_left=5
+  icon.padding_right=5
+  icon.align=center
+  icon.color=$BLACK
+  label=""
   label.align=left
-  label.font="$FONT:Regular:14.0"
+  label.padding_left=5
+  label.padding_right=5
+  label.font="$FONT:Regular:13.0"
+  label.drawing=off
+  slider.highlight_color=$WHITE
+  slider.background.height=3
+  slider.background.corner_radius=3
+  slider.background.color=$BACKGROUND_1
+  slider.knob="􀀁"
+  slider.knob.drawing=on
+  background.color=$BLUE
+  background.border_color=$BLUE
+  background.height=23
+  background.drawing=on
 )
 
-status_bracket=(
-  background.color=$BACKGROUND_1
-  background.border_color=$BACKGROUND_2
-)
+sketchybar --add slider volume right         \
+           --set volume "${volume_icon[@]}"  \
+           --subscribe volume volume_change  \
+                              mouse.clicked  \
+                              mouse.entered  \
+                              mouse.exited
 
-sketchybar --add slider volume right            \
-           --set volume "${volume_slider[@]}"   \
-           --subscribe volume volume_change     \
-                              mouse.clicked     \
-                              mouse.entered     \
-                              mouse.exited      \
-                                                \
-           --add item volume_icon right         \
-           --set volume_icon "${volume_icon[@]}"
-
-sketchybar --add bracket status brew github.bell volume_icon \
-           --set status "${status_bracket[@]}"
