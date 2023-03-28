@@ -35,6 +35,7 @@ bar=(
   y_offset=4
   margin=5
   blur_radius=20
+  display=main
 )
 
 sketchybar --bar "${bar[@]}"
@@ -47,7 +48,7 @@ defaults=(
   icon.color=$ICON_COLOR
   icon.padding_left=$PADDINGS
   icon.padding_right=$PADDINGS
-  label.font="$FONT:Semibold:12.0"
+  label.font="$FONT:Semibold:12"
   label.color=$LABEL_COLOR
   label.padding_left=$PADDINGS
   label.padding_right=$PADDINGS

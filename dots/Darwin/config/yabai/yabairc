@@ -7,15 +7,22 @@ yabai -m rule --add label="System Preferences" app="^System Preferences$" manage
 yabai -m rule --add label="System Settings" app="^System Settings$" manage=off
 yabai -m rule --add label="Archive Utility" app="^Archive Utility$" manage=off
 yabai -m rule --add label="Finder" app="^Bin$" manage=off
+yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Digital Colour Meter" app="Digital Colour Meter" manage=off
 
 
 # Some Intellij settings, in case you are using it. float Intellij Preference panes
-yabai -m rule --add app='Intellij IDEA' title='^$' manage=off
-yabai -m rule --add app='Intellij IDEA' title='Project Structure' manage=off
-yabai -m rule --add app='Intellij IDEA' title='Preferences' manage=off
-yabai -m rule --add app='Intellij IDEA' title='Edit configuration' manage=off
-yabai -m rule --add app='Rancher Desktop' title='Preferences' manage=off
+#
+yabai -m rule --add app="Calculator" manage=off
+yabai -m rule --add app="Intellij IDEA" title="^$" manage=off
+yabai -m rule --add app="IntelliJ IDEA" title="Project Structure|Tip of the Day|Settings|Prefences|Configuration" manage=off
+#yabai -m rule --add app='Intellij IDEA' title='Preferences' manage=off
+#yabai -m rule --add app='Intellij IDEA' title='Edit configuration' manage=off
+yabai -m rule --add app="Intellij IDEA" title="^Select" manage=off
+yabai -m rule --add app="GlobalProtect" title="^Settings$" manage=off
+#yabai -m rule --add app='Rancher Desktop' title='Preferences' manage=off
+
+# yabai -m rule --add app="^(Vimac|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|LibreOffice|App Store|Alfred|Activity Monitor)$" manage=off
 
 yabai -m config layout                       bsp
 
@@ -29,6 +36,11 @@ yabai -m config window_gap     7
 yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
 yabai -m signal --add event=window_created action="sketchybar --trigger windows_on_spaces"
 yabai -m signal --add event=window_destroyed action="sketchybar --trigger windows_on_spaces"
+
+# refresh my Übersicht bar when the space changes
+#yabai -m signal --add event=space_changed \
+#    action="osascript -e 'tell application \"Übersicht\" to refresh widget id \"spaces-widget\"'"
+
 ## when window closed focus next
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
