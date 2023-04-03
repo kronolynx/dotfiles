@@ -73,7 +73,6 @@ source "$ITEM_DIR/spaces.sh"
 source "$ITEM_DIR/front_app.sh"
 
 # Center
-#source "$ITEM_DIR/spotify.sh"
 
 # Right
 source "$ITEM_DIR/clock.sh"
@@ -82,6 +81,7 @@ source "$ITEM_DIR/calendar.sh"
 source "$ITEM_DIR/volume.sh"
 source "$ITEM_DIR/battery.sh"
 source "$ITEM_DIR/notifications.sh"
+source "$ITEM_DIR/spotify.sh"
 #source "$ITEM_DIR/cpu.sh"
 
 right_bracket=(
@@ -90,7 +90,7 @@ right_bracket=(
   background.border_width=3
 )
 
-sketchybar --add bracket right_bracket volume battery notifications calendar clock \
+sketchybar --add bracket right_bracket volume battery notifications spotify.anchor calendar clock \
            --set right_bracket "${right_bracket[@]}"
 
 # Forcing all item scripts to run (never do this outside of sketchybarrc)

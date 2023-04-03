@@ -9,6 +9,7 @@ yabai -m rule --add label="Archive Utility" app="^Archive Utility$" manage=off
 yabai -m rule --add label="Finder" app="^Bin$" manage=off
 yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
 yabai -m rule --add label="Digital Colour Meter" app="Digital Colour Meter" manage=off
+yabai -m rule --add app="Authy Desktop" manage=off
 
 
 # Some Intellij settings, in case you are using it. float Intellij Preference panes

@@ -1,4 +1,6 @@
 #!/bin/bash
+#
+source "$HOME/.config/sketchybar/icons.sh"
 
 next ()
 {
@@ -41,39 +43,53 @@ shuffle ()
 
 update ()
 {
-  PLAYING=1
-  if [ "$(echo "$INFO" | jq -r '.["Player State"]')" = "Playing" ]; then
-    PLAYING=0
+  PLAYER_STATE="$(echo "$INFO" | jq -r '.["Player State"]')"
+  args=()
+  if [ $PLAYER_STATE != "Stopped" ]; then
     TRACK="$(echo "$INFO" | jq -r .Name | sed 's/\(.\{20\}\).*/\1.../')"
     ARTIST="$(echo "$INFO" | jq -r .Artist | sed 's/\(.\{20\}\).*/\1.../')"
     ALBUM="$(echo "$INFO" | jq -r .Album | sed 's/\(.\{25\}\).*/\1.../')"
     SHUFFLE=$(osascript -e 'tell application "Spotify" to get shuffling')
     REPEAT=$(osascript -e 'tell application "Spotify" to get repeating')
     COVER=$(osascript -e 'tell application "Spotify" to get artwork url of current track')
-  fi
 
-  args=()
-  if [ $PLAYING -eq 0 ]; then
-    curl -s --max-time 20 "$COVER" -o /tmp/cover.jpg
+    CURRENT=$(echo "$TRACK - $ARTIST" | sed 's/\(.\{30\}\).*/\1.../')
+
+    if [ "$TRACK" != "" ]; then
+      CURRENT=$(echo "$TRACK - $ARTIST" | sed 's/\(.\{30\}\).*/\1.../')
+    else
+      CURRENT=$ALBUM
+    fi
+
+    args+=(--set spotify.title label="$TRACK")
+
     if [ "$ARTIST" == "" ]; then
-      args+=(--set spotify.title label="$TRACK"
-             --set spotify.album label="Podcast"
+      args+=(--set spotify.album label="Podcast"
              --set spotify.artist label="$ALBUM"  )
     else
-      args+=(--set spotify.title label="$TRACK"
-             --set spotify.album label="$ALBUM"
+      args+=(--set spotify.album label="$ALBUM"
              --set spotify.artist label="$ARTIST")
     fi
-    args+=(--set spotify.play icon=􀊆
-           --set spotify.shuffle icon.highlight=$SHUFFLE
-           --set spotify.repeat icon.highlight=$REPEAT
-           --set spotify.cover background.image="/tmp/cover.jpg"
-                               background.color=0x00000000
-           --set spotify.anchor drawing=on                      )
+
+    if [ $PLAYER_STATE == "Playing" ]; then
+      curl -s --max-time 20 "$COVER" -o /tmp/cover.jpg
+      args+=(--set spotify.play icon=$SPOTIFY_PAUSE
+            --set spotify.anchor drawing=on label="$CURRENT" icon=$SPOTIFY_PLAY)
+    else
+      args+=(--set spotify.play icon=$SPOTIFY_PLAY
+            --set spotify.anchor drawing=on label="$CURRENT" icon=$SPOTIFY_PAUSE)
+    fi
+      args+=(--set spotify.shuffle icon.highlight=$SHUFFLE
+            --set spotify.repeat icon.highlight=$REPEAT
+            --set spotify.cover background.image="/tmp/cover.jpg"
+                                background.color=0x00000000
+            )
   else
-    args+=(--set spotify.anchor drawing=off popup.drawing=off
-           --set spotify.play icon=􀊄                         )
+      args=(--set spotify.anchor drawing=off popup.drawing=off
+            --set spotify.play icon=$SPOTIFY_PLAY                         
+          )
   fi
+
   sketchybar -m "${args[@]}"
 }
 
