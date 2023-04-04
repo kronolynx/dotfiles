@@ -22,7 +22,6 @@ do
     icon.color=$WHITE
     icon.highlight_color=$BLACK #$WHITE
     label.padding_right=12
-    label.font="$ICON_FONT:Regular:12.0"
     label.padding_left=-7
     label.align=left
     label.drawing=off

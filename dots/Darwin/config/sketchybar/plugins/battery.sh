@@ -11,6 +11,7 @@ if [ $PERCENTAGE = "" ]; then
 fi
 
 DRAWING=on
+LABEL_DRAWING=on
 COLOR=$BLACK
 case ${PERCENTAGE} in
   9[0-9]|100) ICON=$BATTERY_100;
@@ -29,4 +30,9 @@ if [[ $CHARGING != "" ]]; then
   DRAWING=off
 fi
 
-sketchybar --set $NAME icon="$ICON" icon.color=$COLOR
+if [[ $PERCENTAGE == "100" ]]; then
+  LABEL_DRAWING=off
+fi
+
+
+sketchybar --set $NAME icon="$ICON" icon.color=$COLOR label="${PERCENTAGE}%" label.drawing="$LABEL_DRAWING"
