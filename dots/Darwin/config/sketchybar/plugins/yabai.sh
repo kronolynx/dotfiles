@@ -9,9 +9,9 @@ windows_on_spaces () {
     for space in $line
     do
       icon_strip=" "
-      apps=$(yabai -m query --windows --space $space | jq -r '.[] | {app, "is-sticky"} | join (" ")')
+      apps=$(yabai -m query --windows --space $space | jq -r '.[] | {app, "is-sticky"} | join (",")')
       if [ "$apps" != "" ]; then
-        while IFS=" " read -r app sticky; do
+        while IFS="," read -r app sticky; do
           app_icon=" $($HOME/.config/sketchybar/plugins/icon_map.sh "$app")"
           if [[ "$icon_strip" != *"$app_icon"* ]] && [ "$sticky" == false ]; then
             icon_strip+="$app_icon"
