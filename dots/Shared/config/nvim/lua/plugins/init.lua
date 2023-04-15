@@ -46,7 +46,10 @@ return require("packer").startup({
   })
   use({
     "nvim-treesitter/nvim-treesitter",
-    run = ':TSUpdate',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
     config = get_setup("treesitter")
    })
   use({ "nvim-treesitter/playground" })
@@ -78,8 +81,10 @@ return require("packer").startup({
 
   use({ "tpope/vim-fugitive" })
   use({ "tpope/vim-vinegar" }) -- browse files commands (-)
-  use { 'junegunn/fzf', run = ":call fzf#install()" }
-  -- use({ "junegunn/fzf.vim",  })
+  use {
+    'junegunn/fzf.vim',
+    requires = { 'junegunn/fzf', run = ':call fzf#install()' }
+  }
   use({
     "windwp/nvim-autopairs",
     after = "nvim-cmp",
