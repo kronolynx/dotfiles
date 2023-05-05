@@ -150,9 +150,11 @@ routine() {
 case "$SENDER" in
   "mouse.clicked") mouse_clicked
   ;;
-  "mouse.entered") popup on
+  "mouse.entered")
+    #popup on
   ;;
-  "mouse.exited"|"mouse.exited.global") popup off
+  "mouse.exited"|"mouse.exited.global")
+    #popup off
   ;;
   "routine") routine
   ;;

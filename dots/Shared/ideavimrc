@@ -167,10 +167,20 @@ let g:WhichKeyDesc_af = "<leader>af run failed test"
 map <leader>af <Action>(RerunFailedTests)
 let g:WhichKeyDesc_ai = "<leader>ai invalidate caches"
 map <leader>ai  <Action>(InvalidateCaches)
-let g:WhichKeyDesc_ac = "<leader>ac compile dirty"
-map <leader>ad  <Action>(CompileDirty)
-map <leader>an  <Action>(GotoNextError)
-map <leader>a= <Action>(ReformatCode)
+
+let g:WhichKeyDesc_ac = "<leader>ac compile"
+let g:WhichKeyDesc_acd = "<leader>acd dirty"
+map <leader>acd  <Action>(CompileDirty)
+let g:WhichKeyDesc_acc = "<leader>acc compile"
+map <leader>acc  <Action>(Compile)
+let g:WhichKeyDesc_acp = "<leader>acp project"
+map <leader>acp  <Action>(CompileProject)
+let g:WhichKeyDesc_acf = "<leader>acf file"
+map <leader>acf  <Action>(CompileFile)
+let g:WhichKeyDesc_acn = "<leader>acn next error"
+map <leader>acn  <Action>(GotoNextError)
+
+map <leader>= <Action>(ReformatCode)
 
 " }}}
 
@@ -244,6 +254,9 @@ map <leader>vie <Action>(Scala.ExpandImplicits)
 
 map <leader>vp <Action>(ParameterInfo)
 map <leader>vu <Action>(ShowUsages)
+
+let g:WhichKeyDesc_desugar = "<leader>vd desugar"
+map <leader>vd <Action>(Scala.Desugar)
 
 " Types vt = view hover
 map <leader>vt <Action>(Scala.TypeInfo)
@@ -650,6 +663,7 @@ map <leader>xr <Action>(RevealGroup)
 map <leader>xn <Action>(MarkNotificationsAsRead)
 " Reset font size
 map <leader>x0 <Action>(EditorResetFontSize)
+map <C-1> <Action>(ActivateProjectToolWindow)
 
 " Todo
 "
@@ -685,8 +699,8 @@ nnoremap <leader>xk :map<CR>
 " }}}
 "
 " NerdTree {{{
-nmap <C-1> :NERDTreeToggle<CR>
-imap <C-1> <ESC>:NERDTreeToggle<CR>
+"nmap <C-1> :NERDTreeToggle<CR>
+"imap <C-1> <ESC>:NERDTreeToggle<CR>
 map <leader>nf :NERDTreeFind<CR>
 map <leader>nn :NERDTreeFocus<CR>
 

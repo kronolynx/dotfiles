@@ -6,19 +6,36 @@ ralt - l : yabai -m window --focus east
 
 # security not disabled this ones are done from keyboard config
 ### Switch focus to another destop ###
-# ralt - 1 : yabai -m space --focus 1
-# ralt - 2 : yabai -m space --focus 2
-# ralt - 3 : yabai -m space --focus 3
-# ralt - 4 : yabai -m space --focus 4
-# ralt - 5 : yabai -m space --focus 5
-# ralt - 6 : yabai -m space --focus 6
-# ralt - 7 : yabai -m space --focus 7
-# ralt - 8 : yabai -m space --focus 8
-# ralt - 9 : yabai -m space --focus 9
-# ralt - 0 : yabai -m space --focus 10
-# ralt - l : yabai -m space --focus next
-# ralt - h : yabai -m space --focus prev
-# 
+# fn - 1 : yabai -m space --focus 1
+# fn - 2 : yabai -m space --focus 2
+# fn - 3 : yabai -m space --focus 3
+# fn - 4 : yabai -m space --focus 4
+# fn - 5 : yabai -m space --focus 5
+# fn - 6 : yabai -m space --focus 6
+# fn - 7 : yabai -m space --focus 7
+# fn - 8 : yabai -m space --focus 8
+# fn - 9 : yabai -m space --focus 9
+# fn - 0 : yabai -m space --focus 10
+# fn - l : yabai -m space --focus next
+# fn - h : yabai -m space --focus prev
+
+#fn - 1 : skhd -k "alt - 1"
+#fn - 2 : skhd -k "alt - 2"
+#fn - 3 : skhd -k "alt - 3"
+#fn - 4 : skhd -k "alt - 4"
+#fn - 5 : skhd -k "alt - 5"
+#fn - 6 : skhd -k "alt - 6"
+#fn - 7 : skhd -k "alt - 7"
+#fn - 8 : skhd -k "alt - 8"
+#fn - 9 : skhd -k "alt - 9"
+#fn - 0 : skhd -k "alt - 0"
+#fn + shift - 0x1B : skhd -k "alt - 0x1B" # -
+#fn + shift - 0x18 : skhd -k "alt - 0x18" # =
+#fn + shift - 0x21 : skhd -k "alt - 0x21" # [
+#fn + shift - 0x1E : skhd -k "alt - 0x1E" # ]
+#fn + shift - 0x29 : skhd -k "alt - 0x29" # ;
+#fn + shift - 0x27 : skhd -k "alt - 0x27" # '
+
 ### Send a window to a space and follow ### (uses skhd to emulate the keybinding to move to workspace)
 ralt + shift - 1 : yabai -m window --space 1  ; skhd -k "alt - 1"
 ralt + shift - 2 : yabai -m window --space 2  ; skhd -k "alt - 2"
@@ -37,6 +54,28 @@ ralt + shift - 0x21 : yabai -m window --space 13 ; skhd -k "alt - 0x21" # [
 ralt + shift - 0x1E : yabai -m window --space 14 ; skhd -k "alt - 0x1E" # ]
 ralt + shift - 0x29 : yabai -m window --space 15 ; skhd -k "alt - 0x29" # ;
 ralt + shift - 0x27 : yabai -m window --space 16 ; skhd -k "alt - 0x27" # '
+
+ralt + shift - p : yabai -m window --space prev ; skhd -k "alt - left" # Send window to space on the left
+ralt + shift - n : yabai -m window --space next ; skhd -k "alt - right" # Send window to space on the right
+
+### swap content of current workspace
+ralt + shift + cmd - 1 : "${HOME}"/.config/yabai/swap_workspace.sh 1  ; skhd -k "alt - 1"
+ralt + shift + cmd - 2 : "${HOME}"/.config/yabai/swap_workspace.sh 2  ; skhd -k "alt - 2"
+ralt + shift + cmd - 3 : "${HOME}"/.config/yabai/swap_workspace.sh 3  ; skhd -k "alt - 3"
+ralt + shift + cmd - 4 : "${HOME}"/.config/yabai/swap_workspace.sh 4  ; skhd -k "alt - 4"
+ralt + shift + cmd - 5 : "${HOME}"/.config/yabai/swap_workspace.sh 5  ; skhd -k "alt - 5"
+ralt + shift + cmd - 6 : "${HOME}"/.config/yabai/swap_workspace.sh 6  ; skhd -k "alt - 6"
+ralt + shift + cmd - 7 : "${HOME}"/.config/yabai/swap_workspace.sh 7  ; skhd -k "alt - 7"
+ralt + shift + cmd - 8 : "${HOME}"/.config/yabai/swap_workspace.sh 8  ; skhd -k "alt - 8"
+ralt + shift + cmd - 9 : "${HOME}"/.config/yabai/swap_workspace.sh 9  ; skhd -k "alt - 9"
+ralt + shift + cmd - 0 : "${HOME}"/.config/yabai/swap_workspace.sh 10 ; skhd -k "alt - 0"
+# to get the keycodes in the terminal run: xkhd --observe
+ralt + shift + cmd - 0x1B : "${HOME}"/.config/yabai/swap_workspace.sh 11 ; skhd -k "alt - 0x1B" # -
+ralt + shift + cmd - 0x18 : "${HOME}"/.config/yabai/swap_workspace.sh 12 ; skhd -k "alt - 0x18" # =
+ralt + shift + cmd - 0x21 : "${HOME}"/.config/yabai/swap_workspace.sh 13 ; skhd -k "alt - 0x21" # [
+ralt + shift + cmd - 0x1E : "${HOME}"/.config/yabai/swap_workspace.sh 14 ; skhd -k "alt - 0x1E" # ]
+ralt + shift + cmd - 0x29 : "${HOME}"/.config/yabai/swap_workspace.sh 15 ; skhd -k "alt - 0x29" # ;
+ralt + shift + cmd - 0x27 : "${HOME}"/.config/yabai/swap_workspace.sh 16 ; skhd -k "alt - 0x27" # '
 
 ### Send a window to a space ###
 ralt + cmd - 1 : yabai -m window --space 1
@@ -80,6 +119,9 @@ cmd + ralt - down  : yabai -m window --warp south
 cmd + ralt - up    : yabai -m window --warp north
 cmd + ralt - right : yabai -m window --warp east
 
+ralt - m : yabai -m window --swap first
+shift + ralt - m : yabai -m window --swap last
+
 # Set insertion point for focused container
 shift + cmd + ralt - h : yabai -m window --insert west
 shift + cmd + ralt - j : yabai -m window --insert south
@@ -90,23 +132,25 @@ shift + cmd + ralt - left  : yabai -m window --insert west
 shift + cmd + ralt - down  : yabai -m window --insert south
 shift + cmd + ralt - up    : yabai -m window --insert north
 shift + cmd + ralt - right : yabai -m window --insert east
-# 
+
 # Float / Unfloat window
 shift + ralt - f : yabai -m window --toggle float
 # Float and center window
 shift + ralt - c : yabai -m window --toggle float;\
                 yabai -m window --grid 4:4:1:1:2:2
-# 
+
 # # Make fullscreen
-ralt - a : yabai -m window --toggle zoom-fullscreen
-shift + ralt - a : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')
-# 
+ralt - a : "$HOME"/.config/yabai/scripts/full_screen.sh
+shift + ralt - a : yabai -m window --toggle native-fullscreen
+cmd + ralt - a : yabai -m window --toggle zoom-fullscreen
+cmd + shift + ralt - a : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')
+
 # ralt - return : open -n -a iTerm
 #ralt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
-ralt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
+ralt - return : "$HOME"/.config/yabai/scripts/open_iterm2.sh
 
 ralt - w : yabai -m window --close
-# 
+
 # Resize windows  0x2B == comma, 0x2F == dot
 # resize left
 ralt - 0x2B : \
@@ -131,12 +175,8 @@ shift + ralt - 0x2F : \
 #ralt - l : yabai -m space --layout float
 #ralt - s : yabai -m space --layout stack
 
-# cycle windows in current space
-lalt - tab : yabai -m window --focus next || yabai -m window --focus first
-shift + lalt - tab : yabai -m window --focus prev || yabai -m window --focus last
-
 # balance size of windows
-ralt + lalt - r : yabai -m space --balance
+ralt - r : yabai -m space --balance
 # mirror tree y-axis
 ralt + lalt - y : yabai -m space --mirror y-axis
 # mirror tree x-axis
@@ -145,10 +185,6 @@ ralt + lalt - x : yabai -m space --mirror x-axis
 # go back to previous workspace  (requires to disable)
 # alt - tab : yabai -m space --focus recent
 # focus previous or next window in window tree (options: prev, next)
-shift + ralt - tab : yabai -m window --focus next
-cmd + ralt - tab : yabai -m window --focus prev
-# focus window that was previously focused
-ralt - tab : yabai -m window --focus recent
 
 
 ## send window to monitor and follow focus
@@ -159,20 +195,14 @@ ralt + shift - d  : yabai -m window --display next && yabai -m display --focus n
 #ralt + ctrl - j  : yabai -m window --display next; yabai -m display --focus next
 #
 ## send window to other monitor
-ralt + shift - d  : yabai -m window --display next  || yabai -m window --display first 
+ralt + shift - d  : yabai -m window --display next  || yabai -m window --display first
 ## focus monitor
 ralt - d  : yabai -m display --focus next || yabai -m display --focus first
+## swap display windows
+ralt + cmd - d : ~/.config/yabai/scripts/swap_display.sh
 
-#ralt + lalt - l  : yabai -m display --focus recent
-#ralt + lalt - k  : yabai -m display --focus prev
-#ralt + lalt - j  : yabai -m display --focus next
-# # ctrl + ralt - 1  : yabai -m display --focus 1
-# # ctrl + ralt - 2  : yabai -m display --focus 2
-# # ctrl + ralt - 3  : yabai -m display --focus 3
-# #
-# #
-# # restart Yabi, SpaceBar, and SKHD
-# ralt + shift - r : \
-#     brew services restart yabai; \
-#     skhd --reload
-
+# focus window that was previously focused
+ralt - tab : yabai -m window --focus recent
+# cycle windows in current space
+lalt - tab : yabai -m window --focus next || yabai -m window --focus first
+shift + lalt - tab : yabai -m window --focus prev || yabai -m window --focus last

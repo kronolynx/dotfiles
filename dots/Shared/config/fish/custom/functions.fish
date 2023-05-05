@@ -2,6 +2,22 @@
 ##########    Functions
 ##########################################################
 
+function toHex
+  if set -q argv[1]
+    printf "%x\n" "$argv[1]"
+  else
+    echo "Number from 0 to 255 is expected"
+  end
+end
+
+function rgbToHex
+  if set -q argv[3]
+    printf "#%X%X%X\n" "$argv[1]" "$argv[2]" "$argv[3]"
+  else
+    echo "3 Numbers from 0 to 255 are expected"
+  end
+end
+
 function jsondiff
   if set -q argv[2]
     diff <(gron $argv[1]) <(gron $argv[2])
