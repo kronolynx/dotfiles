@@ -119,17 +119,12 @@ map <leader>tm <Action>(MoveEditorToOppositeTabGroup)
 
 map <leader>ty <Action>(OpenEditorInOppositeTabGroup)
 
-map <leader>yt <Action>(OpenEditorInOppositeTabGroup)
-
 " undo (reopen)
 map <leader>tu <Action>(ReopenClosedTab)
 
 " cycle tabs
 map <C-s-tab> <Action>(NextTab)
 map <C-tab> <Action>(PreviousTab)
-
-" open terminal
-map <C-t> <Action>(ActivateTerminalToolWindow)
 
 " Focus last tab
 let g:WhichKeyDesc_last_tab = "<leader><Tab> last tab"
@@ -146,7 +141,7 @@ map <A-z> <Action>(MaximizeEditorInSplit)
 " }}}
 
 " misc {{{
-" let g:WhichKeyDesc_paste = "<leader>p paste replace and keep"
+let g:WhichKeyDesc_paste_keep = "<leader>p paste replace and keep"
 vnoremap <leader>p pgvy
 " }}}
 
@@ -241,8 +236,13 @@ map <leader>* <Action>(ShowUsages)
 " }}}
 
 " view {{{
-let g:WhichKeyDesc_view = "<leader>v view"
+"
+"
+let g:WhichKeyDesc_view_info = "<leader>v view"
 map <leader>va <Action>(ShowIntentionActions)
+
+let g:WhichKeyDesc_view_blame = "<leader>vb blame"
+map <leader>vb <Action>(Annotate)
 
 let g:WhichKeyDesc_view = "<leader>vi implicits"
 map <leader>via <Action>(Scala.ShowImplicitArguments)
@@ -274,6 +274,10 @@ map <leader>vqj <Action>(QuickJavaDoc)
 map <leader>vqp <Action>(QuickPreview)
 " display variable definition in a popup window
 map <leader>vqi <Action>(QuickImplementations)
+
+
+let g:WhichKeyDesc_view_main_menu = "<leader>vm mainmenu"
+map <leader>vm <Action>(ViewMenu)
 
 " Undo
 let g:WhichKeyDesc_view_undo = "<leader>vh undo history"
@@ -484,12 +488,48 @@ map <C--> <Action>(EditorDecreaseFontSize)
 
 " }}}
 "
+" console {{{
+"
+let g:WhichKeyDesc_console = "<leader>n window tools"
+
+let g:WhichKeyDesc_nocalhost = "<leader>nn nocalhost"
+let g:WhichKeyDesc_nocalhost_tool = "<leader>nnt connections"
+map <leader>nnt <Action>(ActivateNocalhostToolWindow)
+let g:WhichKeyDesc_nocalhost_console = "<leader>nnc console"
+map <leader>nnc <Action>(ActivateNocalhostConsoleToolWindow)
+
+let g:WhichKeyDesc_tool_build = "<leader>nb build"
+map <leader>nb <Action>(ActivateBuildToolWindow)
+let g:WhichKeyDesc_tool_debug = "<leader>nd debug"
+map <leader>nd <Action>(ActivateDebugToolWindow)
+let g:WhichKeyDesc_tool_notifications = "<leader>nN notifications"
+map <leader>nN <Action>(ActivateNotificationsToolWindow)
+let g:WhichKeyDesc_tool_problems = "<leader>np problems"
+map <leader>np <Action>(ActivateProblemsViewToolWindow)
+let g:WhichKeyDesc_tool_run = "<leader>nr run"
+map <leader>nr <Action>(ActivateRunToolWindow)
+
+let g:WhichKeyDesc_tool_sbt = "<leader>ns rbt"
+let g:WhichKeyDesc_tool_sbt_project = "<leader>ns project"
+map <leader>nsp <Action>(ActivatesbtToolWindow)
+let g:WhichKeyDesc_tool_sbt_shell = "<leader>ns shell"
+map <leader>nss <Action>(Activatesbt-shell-toolwindowToolWindow)
+
+let g:WhichKeyDesc_tool_terminal = "<leader>nt terminal"
+map <leader>nt <Action>(ActivateTerminalToolWindow)
+
+let g:WhichKeyDesc_tool_terminal = "<leader>nv view tools"
+map <leader>nv <Action>(ViewToolButtons)
+
+
+" }}}
+"
 " bookmarks {{{
 "
-let g:WhichKeyDesc_mnemonic_show = "<leader>b bookmarks"
-map <leader>bs <Action>(ShowBookmarks)
-map <leader>bf <Action>(GotoNextBookmark)
-map <leader>bb <Action>(GotoPreviousBookmark)
+let g:WhichKeyDesc_mnemonic_show = "<leader>' bookmarks"
+map <leader>'' <Action>(ShowBookmarks)
+map <leader>'f <Action>(GotoNextBookmark)
+map <leader>'b <Action>(GotoPreviousBookmark)
 map m0 <Action>(ToggleBookmark0)
 map m1 <Action>(ToggleBookmark1)
 map m2 <Action>(ToggleBookmark2)
@@ -565,7 +605,7 @@ map 'z <Action>(GotoBookmarkZ)
 " }}}
 "
 " config {{{
-let g:WhichKeyDesc_config = "<leader>c config"
+let g:WhichKeyDesc_config = "<leader>c config appearance"
 map <leader>cb <Action>(EditorBreadcrumbsSettings)
 map <leader>cc <Action>(ChangeColorScheme)
 map <leader>cs <Action>(ChangeScheme)
@@ -585,8 +625,6 @@ map <leader>ch <Action>(ToggleTypeHints)
 map <leader>ce <Action>(EditorToggleActions)
 
 map <leader>cM <Action>(ViewMainMenu)
-
-map <leader>cm <Action>(ViewMenu)
 
 map <leader>ct <Action>(ViewToolButtons)
 " }}}
@@ -612,6 +650,7 @@ map <leader>qo <Action>(OpenFile)
 " other {{{
 
 " Show kill ring
+let g:WhichKeyDesc_transform = "<leader>d delete/transform"
 let g:WhichKeyDesc_kill_ring = "<leader>dy show kill ring"
 map <leader>dy <Action>(PasteMultiple)
 
@@ -701,8 +740,8 @@ nnoremap <leader>xk :map<CR>
 " NerdTree {{{
 "nmap <C-1> :NERDTreeToggle<CR>
 "imap <C-1> <ESC>:NERDTreeToggle<CR>
-map <leader>nf :NERDTreeFind<CR>
-map <leader>nn :NERDTreeFocus<CR>
+"map <leader">nf :NERDTreeFind<CR>
+"map <leader">nn :NERDTreeFocus<CR>
 
 " }}}
 

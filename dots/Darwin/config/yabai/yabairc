@@ -14,7 +14,8 @@ yabai -m rule --add app="Authy Desktop" manage=off
 yabai -m rule --add app="Calendar" manage=off
 yabai -m rule --add app="Installer" manage=off
 yabai -m rule --add app="Okta Verify" manage=off
-
+yabai -m rule --add label="Huddle" app="Slack" title="- Huddle$" manage=off
+yabai -m rule --add app="Skitch" manage=off
 
 # Some Intellij settings, in case you are using it. float Intellij Preference panes
 #
@@ -24,8 +25,9 @@ yabai -m rule --add app="Android Studio" title="^$" manage=off
 yabai -m rule --add app="Android Studio" title="Project Structure|Tip of the Day|Settings|Prefences|Configuration|History for" manage=off
 yabai -m rule --add app="Android Studio" title="^Select" manage=off
 yabai -m rule --add app="Intellij IDEA" title="^$" manage=off
-yabai -m rule --add app="IntelliJ IDEA" title="Project Structure|Tip of the Day|Settings|Prefences|Configuration|History for" manage=off
+yabai -m rule --add app="IntelliJ IDEA" title="Project Structure|Tip of the Day|Settings|Prefences|Configuration|History for|Connect to Cluster|Add Action|Delete" manage=off
 yabai -m rule --add app="Intellij IDEA" title="^Select" manage=off
+
 #yabai -m rule --add app='Intellij IDEA' title='Preferences' manage=off
 #yabai -m rule --add app='Intellij IDEA' title='Edit configuration' manage=off
 yabai -m rule --add app="GlobalProtect" title="^Settings$" manage=off
@@ -55,6 +57,8 @@ yabai -m signal --add event=window_moved action="sketchybar --trigger windows_on
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
+yabai -m signal --add event=window_created action="bash ~/.config/yabai/scripts/window_created.sh"
+
 # set focus follows mouse mode (default: off, options: off, autoraise, autofocus)
 yabai -m config focus_follows_mouse off
 # When focusing a window, put the mouse at its center
@@ -78,6 +82,7 @@ yabai -m config window_origin_display        focused
 # yabai -m config window_placement             second_child
 
 
+yabai -m config window_border_blur off # required to prevent blur on slack share screen
 yabai -m config window_shadow                on
 yabai -m config window_opacity               off
 yabai -m config window_opacity_duration      0.0
