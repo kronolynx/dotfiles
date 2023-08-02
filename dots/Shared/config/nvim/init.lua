@@ -138,7 +138,7 @@ opt.tabpagemax = 50 -- Maximum number of tab pages that can be opened from the c
 o.termguicolors = true
 
 opt.number = true -- show line numbers
-opt.wrap = true -- turn on line wrapping
+opt.wrap = false -- turn on line wrapping
 opt.linebreak = true -- set soft wrapping
 opt.ttyfast = true -- faster redrawing
 opt.wildmenu = true -- enhanced command line completion
@@ -220,14 +220,15 @@ map("n", "#", "#zz", { noremap = true })
 map("n", "<CR>", ":noh<CR><CR>", { noremap = true })
 
 -- nvim tree
-map("n", "<M-1>", ":NvimTreeToggle<CR>", { noremap = true })
+map("n", "<C-1>", ":NvimTreeToggle<CR>", { noremap = true })
 
 -- scala-utils
 map("n", "<leader>slc", [[<cmd>lua RELOAD("scala-utils.coursier").complete_from_line()<CR>]])
 map("n", "<leader>sc", [[<cmd>lua RELOAD("scala-utils.coursier").complete_from_input()<CR>]])
 
 -- fzf
-map("", "<leader>gf", ":FZF<CR>")
+map("", "<leader>gf", ":Files<CR>")
+--map("", "<leader>tr", ":Telescope buffers<CR>")
 map("", "<leader>tr", ":Buffers<CR>")
 map("", "<leader>bs", ":Marks<CR>")
 map("", "<leader>xk", ":Maps<CR>")
@@ -288,6 +289,26 @@ cmd [[highlight xmlAttrib cterm=italic term=italic gui=italic]]
 -- highlight Type cterm=italic term=italic gui=italic
 cmd [[highlight Normal ctermbg=none]]
 
+cmd [[
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=204 guibg=#f7768e
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+]]
+
+-- cursor style
+vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor,a:blinkon100'
+
+function hiCursor()
+  vim.api.nvim_set_hl(0, "Cursor", {fg='#343B4C', bg='#77ffeb'})
+end
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = hiCursor,
+  })
 
 -- --
 -- local wk = require("which-key")
