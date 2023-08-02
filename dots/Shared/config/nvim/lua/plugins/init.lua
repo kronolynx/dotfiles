@@ -35,6 +35,11 @@ return require("packer").startup({
   use({ "duane9/nvim-rg" })
   use({ "liuchengxu/vista.vim" })
   use({ "airblade/vim-gitgutter" })
+  use {
+    "nvim-telescope/telescope-file-browser.nvim",
+    requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = get_setup("telescope_file_browser")
+  }
   use({
     "iamcco/markdown-preview.nvim",
     run = function() vim.fn["mkdp#util#install"]() end,
@@ -54,6 +59,7 @@ return require("packer").startup({
    })
   use({ "nvim-treesitter/playground" })
   use({ "tpope/vim-surround" })
+  use({ "tpope/vim-repeat" })
   use({ 'mtdl9/vim-log-highlighting'})
   use({ "norcalli/nvim-colorizer.lua",
       config = get_setup("colorizer")
@@ -67,7 +73,6 @@ return require("packer").startup({
     },
     config = get_setup("telescope")
   })
-  use({ "nvim-telescope/telescope-file-browser.nvim" })
 
   -- Another markdown plugin
   use({ "plasticboy/vim-markdown", ft = { "markdown" } })
@@ -102,7 +107,7 @@ return require("packer").startup({
       config = get_setup('tree')
   })
   use({ "akinsho/toggleterm.nvim", config = get_setup("toggleterm") })
-  
+
   use({ "ckipp01/nvim-jvmopts" })
   use({
     "hrsh7th/nvim-cmp",

@@ -220,7 +220,10 @@ map("n", "#", "#zz", { noremap = true })
 map("n", "<CR>", ":noh<CR><CR>", { noremap = true })
 
 -- nvim tree
-map("n", "<C-1>", ":NvimTreeToggle<CR>", { noremap = true })
+--map("n", "<C-1>", ":NvimTreeToggle<CR>", { noremap = true })
+-- telescope tree
+map("n", "<C-1>", ":Telescope file_browser<CR>", { noremap = true })
+map("n", "<leader>ff", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
 
 -- scala-utils
 map("n", "<leader>slc", [[<cmd>lua RELOAD("scala-utils.coursier").complete_from_line()<CR>]])
