@@ -58,6 +58,7 @@ yabai -m signal --add event=window_destroyed action="yabai -m query --windows --
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
 yabai -m signal --add event=window_created action="bash ~/.config/yabai/scripts/window_created.sh"
+yabai -m signal --add event=window_moved action="bash ~/.config/yabai/scripts/window_created.sh"
 
 # set focus follows mouse mode (default: off, options: off, autoraise, autofocus)
 yabai -m config focus_follows_mouse off
