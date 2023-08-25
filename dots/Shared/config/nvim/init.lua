@@ -220,9 +220,9 @@ map("n", "#", "#zz", { noremap = true })
 map("n", "<CR>", ":noh<CR><CR>", { noremap = true })
 
 -- nvim tree
---map("n", "<C-1>", ":NvimTreeToggle<CR>", { noremap = true })
+map("", "<C-q>", ":NvimTreeToggle<CR>", { noremap = true })
 -- telescope tree
-map("n", "<C-1>", ":Telescope file_browser<CR>", { noremap = true })
+-- map("", "<C-e>", ":Telescope file_browser<CR>", { noremap = true })
 map("n", "<leader>ff", ":Telescope file_browser path=%:p:h select_buffer=true<CR>", { noremap = true })
 
 -- scala-utils
@@ -241,7 +241,16 @@ map("", "<leader>sp", ":Rg ") -- search in path
 map("", "<M-j>",      ":Commands<CR>") -- TODO fix me
 
 -- TODO :GitGutterPreviewHunk
-
+--  let g:gitgutter_map_keys = 0
+-- map("n", "<leader>mp", ":GitGutterPreviewHunk<CR>")
+-- map("n", "<leader>ms", ":GitGutterStageHunk<CR>")
+-- gitsigns
+map("n", "<leader>mv", ":Gitsigns preview_hunk<CR>")
+map("n", "<leader>ms", ":Gitsigns stage_hunk<CR>")
+map("n", "<leader>mr", ":Gitsigns reset_hunk<CR>")
+map("n", "<leader>mn", ":Gitsigns next_hunk<CR>")
+map("n", "<leader>mp", ":Gitsigns prev_hunk<CR>")
+map("n", "<leader>mb", ":Gitsigns toggle_current_line_blame<CR>")
 --================================
 -- COMMANDS ----------------------
 --================================
@@ -271,11 +280,11 @@ cmd([[
   ]])
 
 -- Format JSON files
-vim.api.nvim_create_autocmd("FileType", 
-  { 
-    pattern = "json", 
-    command = [[nnoremap <buffer><leader>e= :%!jq .<CR>]] 
-    -- command = [[nnoremap <buffer><leader>e= :%!python -m json.tool<CR>]] 
+vim.api.nvim_create_autocmd("FileType",
+  {
+    pattern = "json",
+    command = [[nnoremap <buffer><leader>e= :%!jq .<CR>]]
+    -- command = [[nnoremap <buffer><leader>e= :%!python -m json.tool<CR>]]
   }
 )
 
@@ -313,28 +322,3 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     callback = hiCursor,
   })
 
--- --
--- local wk = require("which-key")
---
--- wk.register({
---     w = {
---       name = "+windows" ,
---       w = { "<C-W>w"     , "other-window" },
---       d = { "<C-W>c"     , "delete-window" },
---       ["-"] = { "<C-W>s"     , "split-window-below" },
---       ["|"] = { "<C-W>v"     , "split-window-right" },
---       ["2"] = { "<C-W>v"     , "layout-double-columns" },
---       h = { "<C-W>h"     , "window-left" },
---       j = { "<C-W>j"     , "window-below" },
---       l = { "<C-W>l"     , "window-right" },
---       k = { "<C-W>k"     , "window-up" },
---       H = { "<C-W>5<"    , "expand-window-left" },
---       J = { "resize +5"  , "expand-window-below" },
---       L = { "<C-W>5>"    , "expand-window-right" },
---       K = { "resize -5"  , "expand-window-up" },
---       ["="] =  { "<C-W>="     , "balance-window" },
---       s = { "<C-W>s"     , "split-window-below" },
---       v = { "<C-W>v"     , "split-window-below" },
---       ["?"] = { "Windows"    , "fzf-window" }
---     }
---   }, { prefix = "<leader>" })

@@ -172,7 +172,7 @@ ins_left {
     end
     return msg
   end,
-  icon = ' LSP:',
+  icon = '󱙝 LSP',
   cond = conditions.hide_in_width,
   color = { fg = '#ffffff', gui = 'bold' },
 }
@@ -200,8 +200,7 @@ ins_right {
 
 ins_right {
   'diff',
-  -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '柳 ', removed = ' ' },
+  symbols = { added = ' ', modified = ' ', removed = ' ' },
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },
