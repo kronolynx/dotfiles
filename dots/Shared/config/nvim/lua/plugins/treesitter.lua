@@ -9,10 +9,10 @@ require("nvim-treesitter.configs").setup({
   -- https://github.com/nvim-treesitter/nvim-treesitter/issues/2293
   ensure_installed = "all",
   ignore_install = { "phpdoc" }, -- List of parsers to ignore installing
-  sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
+  sync_install = false,          -- install languages synchronously (only applied to `ensure_installed`)
   highlight = {
-    enable = true, -- false will disable the whole extension
-    disable = { "" }, -- list of language that will be disabled
+    enable = true,               -- false will disable the whole extension
+    disable = { "" },            -- list of language that will be disabled
   },
   indent = { enable = true, disable = { "yaml" } }
 })

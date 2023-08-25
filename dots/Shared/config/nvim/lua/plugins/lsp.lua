@@ -19,7 +19,7 @@ require('mason-lspconfig').setup({
     'lua_ls',
     'bashls',
     'jsonls',
---    'hls',
+    --    'hls',
     'taplo',
     'yamlls'
   }
@@ -59,7 +59,7 @@ local on_attach = function(client, bufnr)
   map("n", "<leader>gi", [[<cmd>lua vim.lsp.buf.implementation()<CR>]])
   map("n", "<leader>gr", [[<cmd>lua vim.lsp.buf.references()<CR>]])
   -- map("n", "<leader>gd", [[<cmd>lua vim.lsp.buf.definition()<CR>]])
-   map("n", "<leader>gd", [[<cmd>lua vim.lsp.buf.type_definition()<CR>]])
+  map("n", "<leader>gd", [[<cmd>lua vim.lsp.buf.type_definition()<CR>]])
   map("n", "<leader>gu", [[<cmd>lua vim.lsp.buf.incomming_calls()<CR>]])
   map("n", "<leader>go", [[<cmd>lua vim.lsp.buf.outgoing_calls()<CR>]])
   map("n", "<leader>fr", [[<cmd>lua vim.lsp.buf.references()<CR>]])
@@ -68,7 +68,7 @@ local on_attach = function(client, bufnr)
   map("n", "<leader>as", [[<cmd>lua vim.lsp.start_client()<CR>]])
   map("n", "<leader>ah", [[<cmd>lua vim.lsp.stop_client()<CR>]])
 
-  -- TODO 
+  -- TODO
   -- vim.lsp.buf.workspace_symbol()  Lists all symbols in the current workspace in the quickfix window.
   --*vim.lsp.buf.clear_references()* Removes document highlights from current buffer.
   --*vim.lsp.buf.completion()* Retrieves the completion items at the current cursor position. Can only be called in Insert mode.
@@ -179,10 +179,10 @@ metals_config.on_attach = function(client, bufnr)
   map("n", "<leader>dsi", [[<cmd>lua require("dap").step_into()<CR>]])
   map("n", "<leader>drl", [[<cmd>lua require("dap").run_last()<CR>]])
 
- -- dap.listeners.after["event_terminated"]["nvim-metals"] = function(session, body)
- --   --vim.notify("Tests have finished!")
- --   dap.repl.open()
- -- end
+  -- dap.listeners.after["event_terminated"]["nvim-metals"] = function(session, body)
+  --   --vim.notify("Tests have finished!")
+  --   dap.repl.open()
+  -- end
 
   require("metals").setup_dap()
 end
@@ -215,4 +215,3 @@ end
 
 -- Uncomment for trace logs from neovim
 --vim.lsp.set_log_level('trace')
-

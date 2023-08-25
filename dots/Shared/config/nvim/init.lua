@@ -73,10 +73,10 @@ opt.softtabstop = indent
 opt.expandtab = true
 opt.fileformat = "unix"
 
-opt.backup = false -- don't use backup files
+opt.backup = false      -- don't use backup files
 opt.writebackup = false -- don't backup the file while editing
-opt.swapfile = false -- don't create swap files for new buffers
-opt.updatecount = 0 -- don't write swap files after some number of updates
+opt.swapfile = false    -- don't create swap files for new buffers
+opt.updatecount = 0     -- don't write swap files after some number of updates
 
 opt.backupdir = {
   "~/.vim-tmp",
@@ -94,19 +94,19 @@ opt.directory = {
   "/tmp"
 }
 
-opt.history = 1000 -- store the last 1000 commands entered
+opt.history = 1000                         -- store the last 1000 commands entered
 -- opt.textwidth = 120 -- after configured number of characters, wrap line
-opt.backspace = {"indent", "eol,start"} -- make backspace behave in a sane manner
-opt.clipboard = {"unnamed", "unnamedplus"} -- use the system clipboard
-opt.mouse = "a" -- set mouse mode to all modes
+opt.backspace = { "indent", "eol,start" }  -- make backspace behave in a sane manner
+opt.clipboard = { "unnamed", "unnamedplus" } -- use the system clipboard
+opt.mouse = "a"                            -- set mouse mode to all modes
 
 -- searching
-opt.ignorecase = true -- case insensitive searching
-opt.smartcase = true -- case-sensitive if expresson contains a capital letter
-opt.hlsearch = true -- highlight search results
-opt.incsearch = true -- set incremental search, like modern browsers
+opt.ignorecase = true  -- case insensitive searching
+opt.smartcase = true   -- case-sensitive if expresson contains a capital letter
+opt.hlsearch = true    -- highlight search results
+opt.incsearch = true   -- set incremental search, like modern browsers
 opt.lazyredraw = false -- don't redraw while executing macros
-opt.magic = true -- set magic on, for regular expressions
+opt.magic = true       -- set magic on, for regular expressions
 
 -- error bells
 opt.errorbells = false
@@ -117,39 +117,39 @@ opt.timeoutlen = 500
 opt.autoindent = true  -- Keep indentation from previous line
 opt.expandtab = true   -- Expand tabs to spaces
 opt.shiftround = true  -- When shifting lines, round the indentation to the nearest multiple of “shiftwidth.
-opt.smarttab = true -- tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
-opt.tabstop = 2 -- the visible width of tabs
+opt.smarttab = true    -- tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
+opt.tabstop = 2        -- the visible width of tabs
 opt.shiftwidth = 2     -- Indent by 2 spaces when using >>, <<, == etc.
 opt.softtabstop = 2    -- Indent by 2 spaces when pressing <TAB>
 opt.smartindent = true -- Automatically inserts indentation in some cases
 
 -- interface
-opt.laststatus = 2 -- Always show the status line
+opt.laststatus = 2      -- Always show the status line
 opt.background = "dark" -- Use colors that suit a dark background.
-opt.cmdheight = 1 -- Height of the command bar
-opt.cursorline = true -- Highlight current line
+opt.cmdheight = 1       -- Height of the command bar
+opt.cursorline = true   -- Highlight current line
 opt.guifont = "FantasqueSansMono Nerd Font 11"
-opt.laststatus = 2 -- Always show the status line
-opt.ruler = true --Always show current position
-opt.shortmess = "atI" -- Don’t show the intro message when starting Vim
-opt.showcmd = true -- Show the (partial) command as it’s being typed
-opt.showmatch = true -- Show matching brackets when text indicator is over them
-opt.tabpagemax = 50 -- Maximum number of tab pages that can be opened from the command line.
+opt.laststatus = 2      -- Always show the status line
+opt.ruler = true        --Always show current position
+opt.shortmess = "atI"   -- Don’t show the intro message when starting Vim
+opt.showcmd = true      -- Show the (partial) command as it’s being typed
+opt.showmatch = true    -- Show matching brackets when text indicator is over them
+opt.tabpagemax = 50     -- Maximum number of tab pages that can be opened from the command line.
 o.termguicolors = true
 
-opt.number = true -- show line numbers
-opt.wrap = false -- turn on line wrapping
+opt.number = true    -- show line numbers
+opt.wrap = false     -- turn on line wrapping
 opt.linebreak = true -- set soft wrapping
-opt.ttyfast = true -- faster redrawing
-opt.wildmenu = true -- enhanced command line completion
-opt.hidden = true -- current buffer can be put into background
-opt.showcmd = true -- show incomplete commands
-opt.showmode = true -- don't show which mode disabled for PowerLine
+opt.ttyfast = true   -- faster redrawing
+opt.wildmenu = true  -- enhanced command line completion
+opt.hidden = true    -- current buffer can be put into background
+opt.showcmd = true   -- show incomplete commands
+opt.showmode = true  -- don't show which mode disabled for PowerLine
 --opt.wildmode = {"list", "longest"} -- complete files like a shell
 opt.shell = vim.env.SHELL
 opt.cmdheight = 1 -- command bar height
-opt.title = true -- set terminal title
-opt.mat = 2 -- how many tenths of a second to blink
+opt.title = true  -- set terminal title
+opt.mat = 2       -- how many tenths of a second to blink
 opt.updatetime = 300
 opt.signcolumn = "yes"
 opt.shortmess = "atToOFc" -- prompt message options
@@ -158,7 +158,7 @@ opt.shortmess = "atToOFc" -- prompt message options
 cmd [[set foldmethod=expr]] -- use treesitter folding support
 cmd [[set foldexpr=nvim_treesitter#foldexpr()]]
 opt.foldlevelstart = 99
-opt.foldnestmax = 10 -- deepest fold is 10 levels
+opt.foldnestmax = 10   -- deepest fold is 10 levels
 opt.foldenable = false -- don't fold by default
 opt.foldlevel = 1
 
@@ -173,7 +173,7 @@ opt.listchars = {
 }
 
 -- misc
-opt.completeopt = {'menu', 'menuone', 'preview', 'noselect', 'noinsert' }
+opt.completeopt = { 'menu', 'menuone', 'preview', 'noselect', 'noinsert' }
 
 -- MAPPINGS -----------------------
 map("i", "jj", "<ESC>")
@@ -182,7 +182,7 @@ map("v", "uu", "<ESC>")
 -- Yank from cursor to end of line
 map("", "Y", "y$")
 -- save
-map("", "<C-s>", "<esc>:w!<cr>" )
+map("", "<C-s>", "<esc>:w!<cr>")
 
 -- Sudo write
 map("", "<leader>xs", ":w !sudo tee %<CR>", { noremap = true })
@@ -190,7 +190,7 @@ map("", "<leader>xs", ":w !sudo tee %<CR>", { noremap = true })
 map("n", "<leader>fj", ":%! python -m json.tool --indent=2<CR>", { silent = true })
 map("v", "<leader>fj", ":'<,'>! python -m json.tool --indent=2<CR>", { silent = true })
 -- Clear last search (,qs)
-map("", "<BS>", ":nohlsearch<CR>", {silent = true})
+map("", "<BS>", ":nohlsearch<CR>", { silent = true })
 
 map("n", "<leader>fo", ":copen<cr>")
 map("n", "<leader>fc", ":cclose<cr>")
@@ -236,9 +236,9 @@ map("", "<leader>tr", ":Buffers<CR>")
 map("", "<leader>bs", ":Marks<CR>")
 map("", "<leader>xk", ":Maps<CR>")
 map("", "<leader>ml", ":Commits<CR>")
-map("", "<leader>fp", ":Rg ") -- find in path
-map("", "<leader>sp", ":Rg ") -- search in path
-map("", "<M-j>",      ":Commands<CR>") -- TODO fix me
+map("", "<leader>fp", ":Rg ")          -- find in path
+map("", "<leader>sp", ":Rg ")          -- search in path
+map("", "<M-j>", ":Commands<CR>")      -- TODO fix me
 
 -- TODO :GitGutterPreviewHunk
 --  let g:gitgutter_map_keys = 0
@@ -314,11 +314,10 @@ autocmd BufWinLeave * call clearmatches()
 vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor,a:blinkon100'
 
 function hiCursor()
-  vim.api.nvim_set_hl(0, "Cursor", {fg='#343B4C', bg='#77ffeb'})
+  vim.api.nvim_set_hl(0, "Cursor", { fg = '#343B4C', bg = '#77ffeb' })
 end
 
 vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "*",
-    callback = hiCursor,
-  })
-
+  pattern = "*",
+  callback = hiCursor,
+})
