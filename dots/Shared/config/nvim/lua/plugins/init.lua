@@ -27,12 +27,8 @@ end
 return require("packer").startup({
   function(use)
     use({ "wbthomason/packer.nvim" })
-    use({ "kevinhwang91/nvim-bqf" })
-    use({ 'stevearc/gkeep.nvim', run = ':UpdateRemotePlugins' })
-    use({ 'nvim-tree/nvim-web-devicons' })
+    use({ "kevinhwang91/nvim-bqf", ft = 'qf' }) -- TODO review if should keep
     use({ "duane9/nvim-rg" })
-    use({ "liuchengxu/vista.vim" })
-    -- use({ "airblade/vim-gitgutter" })
     use({
       "lewis6991/gitsigns.nvim",
       requires = 'nvim-lua/plenary.nvim',
@@ -69,7 +65,10 @@ return require("packer").startup({
       "norcalli/nvim-colorizer.lua",
       config = get_setup("colorizer")
     })
-    use({ 'rcarriga/nvim-notify' })
+    -- use({ "liuchengxu/vista.vim" })
+    -- use({ 'stevearc/gkeep.nvim', run = ':UpdateRemotePlugins' })
+    -- use({ "airblade/vim-gitgutter" })
+    -- use({ 'rcarriga/nvim-notify' })
     use({ 'vigoux/notifier.nvim' })
     use({ 'stevearc/dressing.nvim' })
     use(
@@ -79,7 +78,7 @@ return require("packer").startup({
           { "nvim-lua/popup.nvim" },
           { "nvim-lua/plenary.nvim" },
           { 'nvim-telescope/telescope-ui-select.nvim' },
-          { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+          -- { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
         },
         config = get_setup("telescope")
       })
@@ -108,7 +107,9 @@ return require("packer").startup({
     use({ "tpope/vim-vinegar" }) -- browse files commands (-)
     use {
       'junegunn/fzf.vim',
-      requires = { 'junegunn/fzf', run = ':call fzf#install()' }
+      run = function()
+        vim.fn['fzf#install']()
+      end
     }
     use({
       "windwp/nvim-autopairs",
@@ -116,9 +117,9 @@ return require("packer").startup({
       config = get_setup("autopairs")
     })
 
-    use({ 'easymotion/vim-easymotion' }) --  <leader><leader>w|b|W|B|e|E
-    -- TOOD replace with nnn https://github.com/luukvbaal/nnn.nvim
+    use({ 'easymotion/vim-easymotion' }) --  <leader><leader>w|b|W|B|e|E|j|k
     use({
+      -- TOOD replace with nnn https://github.com/luukvbaal/nnn.nvim
       'kyazdani42/nvim-tree.lua',
       requires = { "nvim-lua/plenary.nvim" },
       -- event = "BufReadPre",
@@ -194,7 +195,7 @@ return require("packer").startup({
         })
       end
     }
-    use { 'mhartington/formatter.nvim' }
+    -- use { 'mhartington/formatter.nvim' }
 
     use({ "sheerun/vim-polyglot" })
     use({

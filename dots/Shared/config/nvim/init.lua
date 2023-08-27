@@ -142,10 +142,10 @@ opt.wrap = false     -- turn on line wrapping
 opt.linebreak = true -- set soft wrapping
 opt.ttyfast = true   -- faster redrawing
 opt.wildmenu = true  -- enhanced command line completion
+opt.wildmode = {"longest:full", "full"} -- complete files like a shell
 opt.hidden = true    -- current buffer can be put into background
 opt.showcmd = true   -- show incomplete commands
 opt.showmode = true  -- don't show which mode disabled for PowerLine
---opt.wildmode = {"list", "longest"} -- complete files like a shell
 opt.shell = vim.env.SHELL
 opt.cmdheight = 1 -- command bar height
 opt.title = true  -- set terminal title
@@ -230,14 +230,13 @@ map("n", "<leader>slc", [[<cmd>lua RELOAD("scala-utils.coursier").complete_from_
 map("n", "<leader>sc", [[<cmd>lua RELOAD("scala-utils.coursier").complete_from_input()<CR>]])
 
 -- fzf
-map("", "<leader>gf", ":Files<CR>")
---map("", "<leader>tr", ":Telescope buffers<CR>")
-map("", "<leader>tr", ":Buffers<CR>")
-map("", "<leader>bs", ":Marks<CR>")
-map("", "<leader>xk", ":Maps<CR>")
-map("", "<leader>ml", ":Commits<CR>")
-map("", "<leader>fp", ":Rg ")          -- find in path
-map("", "<leader>sp", ":Rg ")          -- search in path
+map("", "<leader>gf", ":Telescope find_files<CR>")
+map("", "<leader>tr", ":Telescope buffers<CR>")
+map("", "<leader>bs", ":Telescope marks<CR>")
+map("", "<leader>xk", ":Telescope keymaps<CR>")
+map("", "<leader>ml", ":Telescope git_commits<CR>")
+map("", "<leader>fp", ":Telescope live_grep<CR>")          -- find in path
+map("", "<leader>sp", ":Telescope live_grep<CR>")          -- search in path
 map("", "<M-j>", ":Commands<CR>")      -- TODO fix me
 
 -- TODO :GitGutterPreviewHunk
