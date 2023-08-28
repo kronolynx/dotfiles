@@ -32,10 +32,10 @@ cmp.setup({
     completeopt = "menu,menuone,noinsert",
   },
   sources = {
-    { name = "nvim_lsp", priority = 10 },
+    { name = "nvim_lsp",               priority = 10 },
     { name = "vsnip" },
     { name = "buffer" },
-    { name = "look", keyword_length = 3, option = { convert_case = true, loud = true } },
+    { name = "look",                   keyword_length = 3, option = { convert_case = true, loud = true } },
     { name = "nvim_lua" },
     { name = "path" },
     { name = "nvim_lsp_signature_help" },

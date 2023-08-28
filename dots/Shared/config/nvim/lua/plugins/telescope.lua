@@ -12,17 +12,18 @@
 local actions = require("telescope.actions")
 require("telescope").setup({
   defaults = {
-    file_ignore_patterns = { "target", "node_modules", "parser.c", "out", "%.min.js" },
+    file_ignore_patterns = { "target", "node_modules", "parser.c", "out", "%.min.js", "build", "logs" },
     prompt_prefix = "❯",
     file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     grep_previewer = require("telescope.previewers").vim_buffer_vimgrep.new,
     mappings = {
       n = {
-        ["f"] = actions.send_to_qflist,
+        -- ["f"] = actions.send_to_qflist,
       },
     },
   },
 })
 
-require("telescope").load_extension("fzf")
+require("telescope").load_extension("ui-select")
+-- require("telescope").load_extension("fzf")
 require("telescope").load_extension("file_browser")

@@ -16,15 +16,46 @@ if fn.empty(fn.glob(install_path)) > 0 then
     "https://github.com/wbthomason/packer.nvim",
     install_path,
   })
+  print "Installing packer close and reopen Neovim..."
+  vim.api.nvim_command("packadd packer.nvim")
 end
-vim.api.nvim_command("packadd packer.nvim")
--- returns the require for use in `config` parameter of packer's use
+--
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]])
+
+-- Use a protected call so we don't error out on first use
+local status_ok, packer = pcall(require, "packer")
+if not status_ok then
+  return
+end
+
+-- Have packer use a popup window
+packer.init {
+  snapshot_path = fn.stdpath "config" .. "/snapshots",
+  max_jobs = 50,
+  display = {
+    open_fn = function()
+      return require("packer.util").float { border = "rounded" }
+    end,
+    prompt_border = "rounded", -- Border style of prompt popups.
+  },
+  profile = {
+    enable = true,
+    threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
+  }
+}
+
 -- expects the name of the config file
 function get_setup(name)
   return string.format('require("plugins/%s")', name)
 end
 
-return require("packer").startup({
+return packer.startup({
   function(use)
     use({ "wbthomason/packer.nvim" })
     use({ "kevinhwang91/nvim-bqf", ft = 'qf' }) -- TODO review if should keep
@@ -32,7 +63,6 @@ return require("packer").startup({
     use({
       "lewis6991/gitsigns.nvim",
       requires = 'nvim-lua/plenary.nvim',
-      -- config = [[require('config.gitsigns')]],
       config = function()
         require('gitsigns').setup()
       end,
@@ -65,12 +95,17 @@ return require("packer").startup({
       "norcalli/nvim-colorizer.lua",
       config = get_setup("colorizer")
     })
-    -- use({ "liuchengxu/vista.vim" })
-    -- use({ 'stevearc/gkeep.nvim', run = ':UpdateRemotePlugins' })
-    -- use({ "airblade/vim-gitgutter" })
-    -- use({ 'rcarriga/nvim-notify' })
-    use({ 'vigoux/notifier.nvim' })
-    use({ 'stevearc/dressing.nvim' })
+    use({
+      'rcarriga/nvim-notify',
+      config = get_setup("notify")
+    })
+    use({
+      'numToStr/Comment.nvim',
+      config = function()
+        require('Comment').setup()
+      end
+    })
+    -- use({ 'Shatur/neovim-session-manager' })
     use(
       {
         "nvim-telescope/telescope.nvim",
@@ -117,7 +152,13 @@ return require("packer").startup({
       config = get_setup("autopairs")
     })
 
-    use({ 'easymotion/vim-easymotion' }) --  <leader><leader>w|b|W|B|e|E|j|k
+    -- use({ 'easymotion/vim-easymotion' }) --  <leader><leader>w|b|W|B|e|E|j|k
+    use({
+      "phaazon/hop.nvim",
+      config = function()
+        require 'hop'.setup()
+      end
+    })
     use({
       -- TOOD replace with nnn https://github.com/luukvbaal/nnn.nvim
       'kyazdani42/nvim-tree.lua',
@@ -134,13 +175,15 @@ return require("packer").startup({
     use({
       "hrsh7th/nvim-cmp",
       requires = {
-        { "hrsh7th/cmp-buffer",                after = "nvim-cmp" },
+        { "hrsh7th/cmp-buffer",                 after = "nvim-cmp" },
         { "hrsh7th/cmp-nvim-lsp" },
-        { "hrsh7th/cmp-path",                  after = "nvim-cmp" },
+        { "hrsh7th/cmp-path",                   after = "nvim-cmp" },
+        { "hrsh7th/cmp-vsnip" },
+        { "hrsh7th/vim-vsnip" },
         { "onsails/lspkind.nvim" },
         { "lukas-reineke/cmp-under-comparator" },
         -- { 'hrsh7th/cmp-nvim-lsp-document-symbol', after = 'nvim-cmp' },
-        -- { "hrsh7th/cmp-nvim-lsp-signature-help" },
+        { "hrsh7th/cmp-nvim-lsp-signature-help" },
       },
       config = get_setup("cmp"),
     })
@@ -170,19 +213,27 @@ return require("packer").startup({
     })
     use({ "terryma/vim-multiple-cursors" })
     use { "williamboman/mason.nvim" }
+    use({ "ntpeters/vim-better-whitespace" })
     use({
       "neovim/nvim-lspconfig",
-      wants = {
-        -- "nvim-lsp-installer",
-        "mason.nvim",
-        "mason-lspconfig.nvim",
-        "mason-tool-installer.nvim",
-      },
       config = get_setup("lsp"),
       requires = {
         "williamboman/mason.nvim",
         "williamboman/mason-lspconfig.nvim",
         "WhoIsSethDaniel/mason-tool-installer.nvim",
+        {
+          "j-hui/fidget.nvim",
+          tag = 'legacy',
+          config = function()
+            require('fidget').setup()
+          end
+        }, -- Useful status updates for LSP
+        {
+          "folke/neodev.nvim",
+          config = function()
+            require('neodev').setup()
+          end
+        }, -- Additional lua configuration
       }
     })
     -- Completion and linting
@@ -195,8 +246,10 @@ return require("packer").startup({
         })
       end
     }
-    -- use { 'mhartington/formatter.nvim' }
-
+    use({
+      'gelguy/wilder.nvim',
+      config = get_setup("wilder")
+    })
     use({ "sheerun/vim-polyglot" })
     use({
       "folke/which-key.nvim",
@@ -228,13 +281,4 @@ return require("packer").startup({
       require("packer").sync()
     end
   end,
-  config = {
-    display = {
-      open_fn = require("packer.util").float,
-    },
-    profile = {
-      enable = true,
-      threshold = 1, -- the amount in ms that a plugins load time must be over for it to be included in the profile
-    }
-  }
 })

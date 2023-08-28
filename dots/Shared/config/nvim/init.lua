@@ -239,6 +239,13 @@ map("", "<leader>fp", ":Telescope live_grep<CR>")          -- find in path
 map("", "<leader>sp", ":Telescope live_grep<CR>")          -- search in path
 map("", "<M-j>", ":Commands<CR>")      -- TODO fix me
 
+-- easymotion (hop)
+map("", "<leader><leader>j", ":HopLineStartAC<CR>")
+map("", "<leader><leader>k", ":HopLineStartBC<CR>")
+map("", "<leader><leader>w", ":HopWordAC<CR>")
+map("", "<leader><leader>b", ":HopWordBC<CR>")
+
+
 -- TODO :GitGutterPreviewHunk
 --  let g:gitgutter_map_keys = 0
 -- map("n", "<leader>mp", ":GitGutterPreviewHunk<CR>")
@@ -300,14 +307,16 @@ cmd [[highlight xmlAttrib cterm=italic term=italic gui=italic]]
 -- highlight Type cterm=italic term=italic gui=italic
 cmd [[highlight Normal ctermbg=none]]
 
-cmd [[
-autocmd ColorScheme * highlight ExtraWhitespace ctermbg=204 guibg=#f7768e
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
-]]
+-- cmd [[
+-- autocmd ColorScheme * highlight ExtraWhitespace ctermbg=204 guibg=#f7768e
+-- match ExtraWhitespace /\s\+$/
+-- autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+-- autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+-- autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+-- autocmd BufWinLeave * call clearmatches()
+-- ]]
+vim.g.better_whitespace_ctermcolor='204'
+vim.g.better_whitespace_guicolor='#f7768e'
 
 -- cursor style
 vim.opt.guicursor = 'n-v-c:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor,a:blinkon100'

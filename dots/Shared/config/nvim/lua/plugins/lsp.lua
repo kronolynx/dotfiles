@@ -26,7 +26,7 @@ require('mason-lspconfig').setup({
 })
 
 local lspconfig = require("lspconfig")
-local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities
+local lsp_capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 require('mason-lspconfig').setup_handlers({
   function(server_name)
@@ -191,6 +191,7 @@ local nvim_metals_group = api.nvim_create_augroup("nvim-metals", { clear = true 
 api.nvim_create_autocmd("FileType", {
   pattern = { "scala", "sbt", "java" },
   callback = function()
+    vim.notify("Metals initialize")
     require("metals").initialize_or_attach(metals_config)
   end,
   group = nvim_metals_group,
