@@ -13,9 +13,10 @@ end
 
 local cmd = vim.cmd
 local g = vim.g
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+g.mapleader = ' '
+g.maplocalleader = ' '
 
--- NOTE do this ASAP since some of the stuff in our basic setup uses leader
-g["mapleader"] = " "
 
 local function map(mode, lhs, rhs, opts)
   local options = { noremap = true }
@@ -71,7 +72,7 @@ opt.tabstop = indent
 opt.shiftwidth = indent
 opt.softtabstop = indent
 opt.expandtab = true
-opt.fileformat = "unix"
+-- opt.fileformat = "unix"
 
 opt.backup = false      -- don't use backup files
 opt.writebackup = false -- don't backup the file while editing
