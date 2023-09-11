@@ -37,22 +37,61 @@ return lazy.setup({
       -- Author: shadmansaleh
       -- Credit: glepnir
       local lualine = require('lualine')
+      local frappe = require("catppuccin.palettes").get_palette "frappe"
 
       -- Color table for highlights
       -- stylua: ignore
+      --      local colors = {
+      --        bg       = '#202328',
+      --        fg       = '#bbc2cf',
+      --        yellow   = '#ECBE7B',
+      --        cyan     = '#008080',
+      --        darkblue = '#081633',
+      --        green    = '#98be65',
+      --        orange   = '#FF8800',
+      --        violet   = '#a9a1e1',
+      --        magenta  = '#c678dd',
+      --        blue     = '#51afef',
+      --        red      = '#ec5f67',
+      -- white    = '#ffffff',
+      --      }
+
+      -- catpuccin
       local colors = {
-        bg       = '#202328',
-        fg       = '#bbc2cf',
-        yellow   = '#ECBE7B',
-        cyan     = '#008080',
-        darkblue = '#081633',
-        green    = '#98be65',
-        orange   = '#FF8800',
-        violet   = '#a9a1e1',
-        magenta  = '#c678dd',
-        blue     = '#51afef',
-        red      = '#ec5f67',
+        bg       = frappe.mantle,
+        fg       = frappe.text,
+        yellow   = frappe.yellow,
+        cyan     = frappe.teal,
+        darkblue = frappe.blue,
+        green    = frappe.green,
+        orange   = frappe.peach,
+        violet   = frappe.mauve,
+        magenta  = frappe.maroon,
+        blue     = frappe.blue,
+        red      = frappe.red,
+        white    = frappe.text
       }
+
+      -- vim.notify("test")
+
+      -- Print contents of `tbl`, with indentation.
+      -- `indent` sets the initial level of indentation.
+      -- function tprint (tbl, indent)
+      --   if not indent then indent = 0 end
+      --   for k, v in pairs(tbl) do
+      --     formatting = string.rep("  ", indent) .. k .. ": "
+      --     if type(v) == "table" then
+      --       vim.notify(formatting)
+      --       tprint(v, indent+1)
+      --     elseif type(v) == 'boolean' then
+      --       vim.notify(formatting .. tostring(v))
+      --     else
+      --       vim.notify(formatting .. v)
+      --     end
+      --   end
+      -- end
+      --
+      -- tprint(frappe, 2)
 
       local conditions = {
         buffer_not_empty = function()
@@ -209,7 +248,7 @@ return lazy.setup({
         end,
         icon = '󱙝 LSP',
         cond = conditions.hide_in_width,
-        color = { fg = '#ffffff', gui = 'bold' },
+        color = { fg = colors.white, gui = 'bold' },
       }
 
       -- Add components to right sections
@@ -256,16 +295,51 @@ return lazy.setup({
       lualine.setup(config)
     end,
     event = "VimEnter",
-    dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true }
+    dependencies = {
+      { 'nvim-tree/nvim-web-devicons', lazy = true },
+      'linrongbin16/lsp-progress.nvim',
+    }
+  },
+  {
+    'linrongbin16/lsp-progress.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('lsp-progress').setup()
+    end
   },
   {
     "folke/tokyonight.nvim",
     lazy = false,
+    enabled = false,
     priority = 1000,
     config = function()
       vim.cmd [[colorscheme tokyonight-storm]]
+    end,
+    dependencies = {
+      {
+        "utilyre/barbecue.nvim",
+        name = "barbecue",
+        version = "*",
+        dependencies = {
+          "SmiteshP/nvim-navic",
+          "nvim-tree/nvim-web-devicons", -- optional dependency
+        },
+        opts = {
+          -- configurations go here
+        }
+      }
+    }
+
+  },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme "catppuccin-frappe"
     end
   },
+
   { "kevinhwang91/nvim-bqf", ft = 'qf' }, -- TODO review if should keep
   { "duane9/nvim-rg" },
   {
@@ -274,11 +348,6 @@ return lazy.setup({
     config = function()
       require('gitsigns').setup()
     end,
-  },
-  {
-    "iamcco/markdown-preview.nvim",
-    build = function() vim.fn["mkdp#util#install"]() end,
-    ft = { "markdown" },
   },
   {
     "lukas-reineke/indent-blankline.nvim",
@@ -319,10 +388,46 @@ return lazy.setup({
       })
     end
   },
+
+  {
+    'nvim-orgmode/orgmode',
+    config = function()
+      require('orgmode').setup {}
+      -- Load custom treesitter grammar for org filetype
+      require('orgmode').setup_ts_grammar()
+      -- Treesitter configuration
+      require('nvim-treesitter.configs').setup {
+        -- If TS highlights are not enabled at all, or disabled via `disable` prop,
+        -- highlighting will fallback to default Vim syntax highlighting
+        highlight = {
+          enable = true,
+          -- Required for spellcheck, some LaTex highlights and
+          -- code block highlights that do not have ts grammar
+          additional_vim_regex_highlighting = { 'org' },
+        },
+        ensure_installed = { 'org' }, -- Or run :TSUpdate org
+      }
+
+      require('orgmode').setup({
+        org_agenda_files = { '~/Dropbox/org/*', '~/my-orgs/**/*' },
+        org_default_notes_file = '~/Dropbox/org/refile.org',
+      })
+
+      require('cmp').setup({
+        sources = {
+          { name = 'orgmode' }
+        }
+      })
+    end
+  },
   { "nvim-treesitter/playground" },
   { "tpope/vim-surround" },
   { "tpope/vim-repeat" },
-  { 'mtdl9/vim-log-highlighting' },
+  {
+    'mtdl9/vim-log-highlighting',
+    lazy = true,
+    ft = "log"
+  },
   {
     "norcalli/nvim-colorizer.lua",
     config = function()
@@ -348,7 +453,8 @@ return lazy.setup({
     'numToStr/Comment.nvim',
     config = function()
       require('Comment').setup()
-    end
+    end,
+    lazy = false,
   },
   -- { 'Shatur/neovim-session-manager' },
   {
@@ -410,26 +516,42 @@ return lazy.setup({
       }
     end
   },
-
   -- Another markdown plugin
-  { "plasticboy/vim-markdown", ft = { "markdown" } },
+  {
+    "plasticboy/vim-markdown",
+    lazy = true,
+    ft = { "markdown" }
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    lazy = true,
+    build = function() vim.fn["mkdp#util#install"]() end,
+    ft = { "markdown" },
+  },
 
 
   -- Vim tabular plugin for manipulate tabular, required by markdown plugins
-  { "godlygeek/tabular",       cmd = { "Tabularize" } },
+  {
+    "godlygeek/tabular",
+    lazy = true,
+    cmd = { "Tabularize" }
+  },
 
   -- Markdown JSON header highlight plugin
-  { "elzr/vim-json",           ft = { "json", "markdown" } },
+  {
+    "elzr/vim-json",
+    lazy = true,
+    ft = { "json", "markdown" }
+  },
 
   { "tpope/vim-fugitive" },
   { "tpope/vim-vinegar" }, -- browse files commands (-)
   {
     'junegunn/fzf.vim',
-    build = function()
-      vim.fn['fzf#install']()
-    end
+    --build = function()
+    --  vim.fn['fzf#install']()
+    --end
   },
-
   {
     "phaazon/hop.nvim",
     config = function()
@@ -441,7 +563,7 @@ return lazy.setup({
     'kyazdani42/nvim-tree.lua',
     -- event = "BufReadPre",
     dependencies = {
-      'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      'nvim-tree/nvim-web-devicons', -- optional, for file icon
       "nvim-lua/plenary.nvim",
     },
     config = function()
@@ -511,18 +633,21 @@ return lazy.setup({
         end
   },
   { "ckipp01/nvim-jvmopts" },
+  { 'Bekaboo/dropbar.nvim',       enabled = false },
+  { 'gennaro-tedesco/nvim-peekup' },
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
+      -- { 'hrsh7th/cmp-nvim-lsp-document-symbol'},
       { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-cmdline" },
       { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-nvim-lsp-signature-help" },
       { "hrsh7th/cmp-path" },
       { "hrsh7th/cmp-vsnip" },
       { "hrsh7th/vim-vsnip" },
-      { "onsails/lspkind.nvim" },
       { "lukas-reineke/cmp-under-comparator" },
-      -- { 'hrsh7th/cmp-nvim-lsp-document-symbol'},
-      { "hrsh7th/cmp-nvim-lsp-signature-help" },
+      { "onsails/lspkind.nvim" },
       {
         "windwp/nvim-autopairs",
         config = function()
@@ -532,12 +657,14 @@ return lazy.setup({
     },
     config = function()
       local cmp = require("cmp")
+      local lspkind = require('lspkind')
 
       cmp.setup({
         snippet = {
           expand = function(args)
             -- Comes from vsnip
             vim.fn["vsnip#anonymous"](args.body)
+            -- require('luasnip').lsp_expand(args.body)
           end,
         },
         mapping = {
@@ -573,6 +700,21 @@ return lazy.setup({
           { name = "path" },
           { name = "nvim_lsp_signature_help" },
         },
+        formatting = {
+          formatting = {
+            format = lspkind.cmp_format({
+              mode = 'symbol',       -- show only symbol annotations
+              maxwidth = 50,         -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+              ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+
+              -- The function below will be called before any actual modifications from lspkind
+              -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+              before = function(entry, vim_item)
+                return vim_item
+              end
+            })
+          }
+        }
       })
     end
   },
@@ -583,7 +725,7 @@ return lazy.setup({
     'scalameta/nvim-metals',
     dependencies = { "nvim-lua/plenary.nvim", "mfussenegger/nvim-dap", "nvim-telescope/telescope.nvim" }
   },
-  { "rcarriga/nvim-dap-ui", dependencies = { "mfussenegger/nvim-dap" } },
+  { "rcarriga/nvim-dap-ui",          dependencies = { "mfussenegger/nvim-dap" } },
   {
     "ckipp01/scala-utils.nvim",
     dependencies = { "nvim-lua/plenary.nvim" }
@@ -599,6 +741,9 @@ return lazy.setup({
   {
     "andymass/vim-matchup",
     event = "CursorMoved",
+    config = function()
+      vim.g.matchup_matchparen_offscreen = { method = "popup" }
+    end
   },
   { "terryma/vim-multiple-cursors" },
   { "williamboman/mason.nvim" },
@@ -653,14 +798,16 @@ return lazy.setup({
 
       local lsp_group = api.nvim_create_augroup("lsp", { clear = true })
 
-      local on_attach = function(client, bufnr)
+      local on_attach = function(_, bufnr)
         -- LSP agnostic mappings
         map("n", "<leader>rr", [[<cmd>lua vim.lsp.buf.rename()<CR>]])
+        -- map("n", "<leader>rr", ":Lspsaga ")
         map("n", "<leader>ca", [[<cmd>lua vim.lsp.buf.code_action()<CR>]])
         map("n", "<leader>cl", [[<cmd>lua vim.lsp.codelens.run()<CR>]])
         map("n", "<leader>=", [[<cmd>lua vim.lsp.buf.format({ async = true })<CR>]])
 
         map("n", "<leader>vt", [[<cmd>lua vim.lsp.buf.hover()<CR>]])
+        -- map("n", "<leader>vd", ":Lspsaga hover_doc")
         map("n", "<leader>vp", [[<cmd>lua vim.lsp.buf.signature_help()<CR>]])
         map("n", "<leader>vs", [[<cmd>lua vim.lsp.buf.document_symbol()<CR>]])
 
@@ -677,6 +824,7 @@ return lazy.setup({
         map("n", "<leader>ah", [[<cmd>lua vim.lsp.stop_client()<CR>]])
 
         -- TODO
+        -- add lspsaga bindings
         -- vim.lsp.buf.workspace_symbol()  Lists all symbols in the current workspace in the quickfix window.
         --*vim.lsp.buf.clear_references()* Removes document highlights from current buffer.
         --*vim.lsp.buf.completion()* Retrieves the completion items at the current cursor position. Can only be called in Insert mode.
@@ -718,6 +866,8 @@ return lazy.setup({
         map("n", "<leader>tt", [[<cmd>lua require("metals.tvp").toggle_tree_view()<CR>]])
         map("n", "<leader>ff", [[<cmd>lua require("metals.tvp").reveal_in_tree()<CR>]])
         map("n", "<leader>vis", [[<cmd>lua require("metals").toggle_setting("showImplicitArguments")<CR>]])
+        map("n", "<leader>am", [[<cmd>lua require("telescope").extensions.metals.commands()<CR>]])
+        map("n", "<leader>at", ":Telescope metals commands<CR>")
 
         -- A lot of the servers I use won't support document_highlight or codelens,
         -- so we juse use them in Metals
@@ -842,19 +992,52 @@ return lazy.setup({
           require('neodev').setup()
         end
       }, -- Additional lua configuration
-    }
+      -- {
+      --   "L3MON4D3/LuaSnip",
+      -- },
+      {
+        'nvimdev/lspsaga.nvim',
+        config = function()
+          require('lspsaga').setup({
+            ui = {
+              border = 'rounded',
+            },
+            symbol_in_winbar = {
+              enable = false
+            },
+            lightbulb = {
+              enable = true
+            },
+            outline = {
+              layout = 'float'
+            },
+            finder = {
+              edit = { "o", "<CR>" },
+              vsplit = "s",
+              split = "i",
+              tabe = "t",
+              quit = { ";", "<ESC>" },
+            },
+          })
+        end,
+      }
+    },
   },
   -- Completion and linting
-  { 'folke/trouble.nvim' },
-  -- { "ray-x/lsp_signature.nvim" },
   {
-    'kosayoda/nvim-lightbulb',
-    config = function()
-      require("nvim-lightbulb").setup({
-        autocmd = { enabled = true }
-      })
-    end
+    'folke/trouble.nvim',
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+
   },
+  -- { "ray-x/lsp_signature.nvim" },
+  -- {
+  --   'kosayoda/nvim-lightbulb', -- replaced with lspsaga
+  --   config = function()
+  --     require("nvim-lightbulb").setup({
+  --       autocmd = { enabled = true }
+  --     })
+  --   end
+  -- },
   {
     'gelguy/wilder.nvim',
     config = function()
@@ -864,12 +1047,13 @@ return lazy.setup({
       wilder.set_option('renderer', wilder.popupmenu_renderer({
         highlighter = wilder.basic_highlighter(),
         max_height = 15,
+        min_width = '100%',
         left = { ' ', wilder.popupmenu_devicons() },
         right = { ' ', wilder.popupmenu_scrollbar() },
-        apply_incsearch_fix = 0,
-        highlights = {
-          accent = wilder.make_hl('WilderAccent', 'Pmenu', { {}, {}, { foreground = '#f4468f' } }),
-        },
+        --apply_incsearch_fix = 0,
+        -- highlights = {
+        --   accent = wilder.make_hl('WilderAccent', 'Pmenu', { {}, {}, { foreground = '#f4468f' } }),
+        -- },
         border = 'rounded',
       }))
     end
@@ -925,10 +1109,8 @@ return lazy.setup({
       })
     end
   },
-
   {
     "luukvbaal/nnn.nvim",
     config = function() require("nnn").setup() end
   },
 })
-

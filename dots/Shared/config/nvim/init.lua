@@ -241,10 +241,10 @@ map("", "<leader>sp", ":Telescope live_grep<CR>")          -- search in path
 map("", "<M-j>", ":Commands<CR>")      -- TODO fix me
 
 -- easymotion (hop)
-map("", "<leader><leader>j", ":HopLineStartAC<CR>")
-map("", "<leader><leader>k", ":HopLineStartBC<CR>")
-map("", "<leader><leader>w", ":HopWordAC<CR>")
-map("", "<leader><leader>b", ":HopWordBC<CR>")
+map("", "<leader><leader>s", ":HopChar1<CR>")
+map("n", "s", ":HopChar1<CR>")
+map("", "<leader><leader>l", ":HopLine<CR>")
+map("", "<leader><leader>w", ":HopWord<CR>")
 
 
 -- TODO :GitGutterPreviewHunk
