@@ -1,0 +1,15 @@
+# $XDG_CONFIG_HOME/k9s/aliases.yml
+aliases:
+  dp: apps/v1/deployments
+  sec: v1/secrets
+  jo: batch/v1/jobs
+  cr: rbac.authorization.k8s.io/v1/clusterroles
+  crb: rbac.authorization.k8s.io/v1/clusterrolebindings
+  ro: rbac.authorization.k8s.io/v1/roles
+  rb: rbac.authorization.k8s.io/v1/rolebindings
+  np: networking.k8s.io/v1/networkpolicies
+  # Use pp as an alias for Pod
+  pd: v1/pods
+  # Use dep as an alias for Deployments
+  dep: apps/v1/deployments
+
