@@ -36,9 +36,6 @@
 [merge]
   tool = opendiff
   renameLimit = 0
-# use separate file for username / github token
-[include]
-  path = ~/.gitconfig.local
 
 [filter "lfs"]
   clean = git-lfs clean %f
@@ -103,12 +100,18 @@
   l4 = log -4
   l5 = log -5
   l6 = log -6
+  l7 = log -7
+  l8 = log -8
+  l9 = log -9
   lo1 = log -1 --oneline
   lo2 = log -2 --oneline
   lo3 = log -3 --oneline
   lo4 = log -4 --oneline
   lo5 = log -5 --oneline
   lo6 = log -6 --oneline
+  lo7 = log -7 --oneline
+  lo8 = log -8 --oneline
+  lo9 = log -9 --oneline
   lg = log --graph --all --decorate --oneline -36
   la = "!git config -l | grep alias | cut -c 7-" # list aliases
   ls = branch -v # list branches
@@ -147,6 +150,7 @@
   spush = push --recurse-submodules=on-demand
   staged = diff --staged
   st = stash
+  stk = stash -k # keep index
   stap = stash apply
   stsa = stash save
   stls = stash list
@@ -159,14 +163,23 @@
   undo = reset HEAD~1 --mixed # undo previous commit but keep all the changes in the working directory
   undo-commit = reset --soft HEAD~1
   unignore = "!f() { git update-index --no-assume-unchanged $1; }; f" # resume tracking file  for changes
-  unstage = reset HEAD
+  unst = restore –-staged # unstage file given
   wipa = !git add -A && git commit -m 'WIP (save all changes)' # commits tracked changes
   wips = commit -am "WIP (save staged changes)"
 #  cleanr = "!git branch -r --merged | grep -v '\\*\\|master\\|develop' | sed 's/origin\///' | xargs -n 1 git push --delete origin"
 #[gpg]
 #  program = /usr/bin/gpg2 # to stop asking each time for gpg password
+
+# use separate file for username / github token
+[include]
+  path = ~/.gitconfig.local
+[includeIf "gitdir:~/Workspace/werk/"]
+	path = .gitconfig-werk
 [init]
   defaultBranch = main
   templatedir = ~/.git-templates
-[gpg]
-	program = /opt/homebrew/bin/gpg
+#[gpg]
+#	program = /opt/homebrew/bin/gpg
+#[user]
+#	name = Johann Ortiz
+#	email = jortiz@evolution.com
