@@ -1,7 +1,7 @@
 #!/bin/bash
 
 notifications_bell=(
-  update_freq=5
+  update_freq=2
   icon=$BELL
   icon.color=$BLACK
   icon.align=center

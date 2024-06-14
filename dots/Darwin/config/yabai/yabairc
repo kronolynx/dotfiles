@@ -14,19 +14,27 @@ yabai -m rule --add app="Authy Desktop" manage=off
 yabai -m rule --add app="Calendar" manage=off
 yabai -m rule --add app="Installer" manage=off
 yabai -m rule --add app="Okta Verify" manage=off
-yabai -m rule --add label="Huddle" app="Slack" title="- Huddle$" manage=off
 yabai -m rule --add app="Skitch" manage=off
+yabai -m rule --add app="iTerm2" manage=on 
+
+yabai -m rule --add label="Huddle" app="Slack" title="- Huddle$" manage=off
+yabai -m rule--add app=^Slack$ subrole!=AXStandardWindow border=off
 
 # Some Intellij settings, in case you are using it. float Intellij Preference panes
 #
 yabai -m rule --add app="Calculator" manage=off
+
+# make JetBrains products popup windows float
+apps='^(IntelliJ IDEA|WebStorm|GoLand|PyCharm)$'
 yabai -m rule --add app="JetBrains Toolbox" manage=off
-yabai -m rule --add app="Android Studio" title="^$" manage=off
-yabai -m rule --add app="Android Studio" title="Project Structure|Tip of the Day|Settings|Prefences|Configuration|History for" manage=off
-yabai -m rule --add app="Android Studio" title="^Select" manage=off
-yabai -m rule --add app="Intellij IDEA" title="^$" manage=off
-yabai -m rule --add app="IntelliJ IDEA" title="Project Structure|Tip of the Day|Settings|Prefences|Configuration|History for|Connect to Cluster|Add Action|Delete" manage=off
-yabai -m rule --add app="Intellij IDEA" title="^Select" manage=off
+yabai -m rule --add app="${apps}" manage=off
+yabai -m rule --add app="${apps}" title="( – )" manage=on
+
+
+#yabai -m rule --add app="JetBrains Toolbox" manage=off
+#yabai -m rule --add app="IntelliJ IDEA" title="^$" manage=off
+#yabai -m rule --add app="IntelliJ IDEA" title="Project Structure|Tip of the Day|Settings|Prefences|Configuration|History for|Connect to Cluster|Add Action|Delete" manage=off
+#yabai -m rule --add app="IntelliJ IDEA" title="^Select" manage=off
 
 #yabai -m rule --add app='Intellij IDEA' title='Preferences' manage=off
 #yabai -m rule --add app='Intellij IDEA' title='Edit configuration' manage=off
@@ -58,7 +66,8 @@ yabai -m signal --add event=window_destroyed action="yabai -m query --windows --
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
 yabai -m signal --add event=window_created action="bash ~/.config/yabai/scripts/window_created.sh"
-yabai -m signal --add event=window_moved action="bash ~/.config/yabai/scripts/window_created.sh"
+#yabai -m signal --add event=window_moved action="bash ~/.config/yabai/scripts/window_moved.sh"
+yabai -m signal --add event=space_changed action="bash ~/.config/yabai/scripts/space_full_screen.sh"
 
 # set focus follows mouse mode (default: off, options: off, autoraise, autofocus)
 yabai -m config focus_follows_mouse off
@@ -72,7 +81,6 @@ yabai -m config mouse_action2                resize
 yabai -m config mouse_drop_action            swap
 
 # floating windows are always on top (default: off)
-yabai -m config window_topmost on
 
 # Specify which display a newly created window should be managed in.
 # default: The display in which the window is created (standard macOS behaviour).

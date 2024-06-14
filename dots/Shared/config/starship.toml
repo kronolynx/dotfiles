@@ -1,8 +1,130 @@
+# https://github.com/spaceship-prompt/spaceship-prompt/issues/558#issuecomment-1890833657
+format = """
+$username\
+$hostname\
+$localip\
+$shlvl\
+$singularity\
+$directory\
+$vcsh\
+$fossil_branch\
+$fossil_metrics\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$pijul_channel\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$direnv\
+$env_var\
+$crystal\
+$custom\
+$sudo\
+$cmd_duration\
+$fill\
+$kubernetes\
+$line_break\
+$time\
+$jobs\
+$battery\
+$status\
+$os\
+$container\
+$shell\
+$character"""
+
+
+palette = "catppuccin_frappe"
+
+[fill]
+symbol = ' '
+
+[git_branch]
+format = 'on [$symbol$branch(:$remote_branch)]($style) '
+style = 'bold teal'
+
+[git_state]
+cherry_pick = '[🍒 PICKING](bold red)'
+style = 'bold peach'
+
+[git_status]
+style = 'bold mauve'
+
+[cmd_duration]
+style = 'bold pink'
+
+[character]
+success_symbol = "[❯](purple)"
+error_symbol = "[❯](red)"
+vimcmd_symbol = "[❮](green)"
+
 [time]
 disabled = false
-style = "bold green"
+style = "bold sapphire"
 time_format = "%T"
 format = "[$time]($style) "
+
+[kubernetes]
+disabled = false
+format = '[$symbol$context( \($namespace\))]($style)'
+symbol = '☸ '
+style = 'surface2'
 
 [status]
 style = "blue"
@@ -12,21 +134,24 @@ format = "[$symbol]($style) "
 
 [directory]
 fish_style_pwd_dir_length = 1
+style = "blue"
 
 [python]
 symbol = "🐍 "
 
 [java]
-symbol = "🗡  "
-style = "bold green"
+#symbol = "🗡  "
+symbol = "⚔️  "
 format = "[${symbol}(${version} )]($style)"
+style = "bold sapphire"
 
 [docker_context]
-format = "[🐋 $context](blue bold)"
+format = "[🐋 $context](surface2 bold)"
 
 [scala]
 symbol = "⚔️  "
 format = "[${symbol}(${version} )]($style)"
+disabled = true
 
 [aws]
 disabled = true
@@ -34,3 +159,33 @@ disabled = true
 [nodejs]
 detect_extensions = [ ]
 detect_files = ["package.json", ".node-version"]
+
+[palettes.catppuccin_frappe]
+rosewater = "#f2d5cf"
+flamingo = "#eebebe"
+pink = "#f4b8e4"
+mauve = "#ca9ee6"
+red = "#e78284"
+maroon = "#ea999c"
+peach = "#ef9f76"
+yellow = "#e5c890"
+green = "#a6d189"
+teal = "#81c8be"
+sky = "#99d1db"
+sapphire = "#85c1dc"
+blue = "#8caaee"
+lavender = "#babbf1"
+text = "#c6d0f5"
+subtext1 = "#b5bfe2"
+subtext0 = "#a5adce"
+overlay2 = "#949cbb"
+overlay1 = "#838ba7"
+overlay0 = "#737994"
+surface2 = "#626880"
+surface1 = "#51576d"
+surface0 = "#414559"
+base = "#303446"
+mantle = "#292c3c"
+crust = "#232634"
+
+

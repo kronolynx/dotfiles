@@ -139,6 +139,8 @@ shift + ralt - f : yabai -m window --toggle float
 shift + ralt - c : yabai -m window --toggle float;\
                 yabai -m window --grid 4:4:1:1:2:2
 
+shift + ralt - s : "$HOME"/.config/yabai/scripts/sink_windows.sh
+
 # # Make fullscreen
 ralt - a : "$HOME"/.config/yabai/scripts/full_screen.sh
 shift + ralt - a : yabai -m window --toggle native-fullscreen
@@ -146,8 +148,14 @@ cmd + ralt - a : yabai -m window --toggle zoom-fullscreen
 cmd + shift + ralt - a : yabai -m space --layout $(yabai -m query --spaces --space | jq -r 'if .type == "bsp" then "stack" else "bsp" end')
 
 # ralt - return : open -n -a iTerm
-#ralt - return : "${HOME}"/.config/yabai/scripts/open_iterm2.sh
-ralt - return : "$HOME"/.config/yabai/scripts/open_iterm2.sh
+# ralt - return : "$HOME"/.config/yabai/scripts/open_wezterm.sh
+#ralt - return : "$HOME"/.config/yabai/scripts/open_iterm2.sh
+# ralt - return : "$HOME"/.config/yabai/scripts/open_alacritty.sh
+# shift + ralt - return : "$HOME"/.config/yabai/scripts/open_wezterm.sh
+# shift + ralt - return : "$HOME"/.config/yabai/scripts/open_iterm2.sh
+ralt - return : "$HOME"/.config/yabai/scripts/open_wezterm.sh
+shift + ralt - return : open -n -a kitty --args --single-instance --instance-group kr
+
 
 ralt - w : yabai -m window --close
 
@@ -194,8 +202,6 @@ ralt + shift - d  : yabai -m window --display next && yabai -m display --focus n
 #ralt + ctrl - k  : yabai -m window --display prev; yabai -m display --focus prev
 #ralt + ctrl - j  : yabai -m window --display next; yabai -m display --focus next
 #
-## send window to other monitor
-ralt + shift - d  : yabai -m window --display next  || yabai -m window --display first
 ## focus monitor
 ralt - d  : yabai -m display --focus next || yabai -m display --focus first
 ## swap display windows

@@ -15,7 +15,7 @@ update() {
 
   RES=$(lsappinfo -all list | grep slack)
 
-  if [[ "$RES" == *"label\"=\"\""* ]]; then
+  if [[ "$RES" == *"label\"=\"\""* ]] || [[ "$RES" == "" ]]; then
     clear
   else
     alert

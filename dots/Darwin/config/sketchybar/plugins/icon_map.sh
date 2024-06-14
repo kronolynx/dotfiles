@@ -155,6 +155,12 @@ case $@ in
 "Firefox Developer Edition" | "Firefox Nightly")
   icon_result=":firefox_developer_edition:"
   ;;
+"Floorp")
+  icon_result=":microsoft_edge:"
+  ;;
+"Waterfox")
+  icon_result=":microsoft_edge:"
+  ;;
 "Trello")
   icon_result=":trello:"
   ;;
