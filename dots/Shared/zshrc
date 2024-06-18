@@ -1,0 +1,197 @@
+# Check if a command exists
+function cm_exists() {
+  command -v "$@" > /dev/null 2>&1
+}
+
+if cm_exists nvim; then
+  export EDITOR=nvim
+  alias nn="nvim"
+fi
+
+## Plugin manager :)
+# https://github.com/mattmc3/zsh_unplugged?tab=readme-ov-file#jigsaw-the-humble-plugin-load-function
+function plugin-load {
+  local repo plugdir initfile initfiles=()
+  : ${ZPLUGINDIR:=${ZDOTDIR:-~/.config/zsh}/plugins}
+  for repo in $@; do
+    plugdir=$ZPLUGINDIR/${repo:t}
+    initfile=$plugdir/${repo:t}.plugin.zsh
+    if [[ ! -d $plugdir ]]; then
+      echo "Cloning $repo..."
+      git clone -q --depth 1 --recursive --shallow-submodules \
+        https://github.com/$repo $plugdir
+    fi
+    if [[ ! -e $initfile ]]; then
+      initfiles=($plugdir/*.{plugin.zsh,zsh-theme,zsh,sh}(N))
+      (( $#initfiles )) || { echo >&2 "No init file '$repo'." && continue }
+      ln -sf $initfiles[1] $initfile
+    fi
+    fpath+=$plugdir
+    (( $+functions[zsh-defer] )) && zsh-defer . $initfile || . $initfile
+  done
+}
+
+## TODO add update function for plugins
+
+ZPLUGINDIR=$HOME/.zsh/plugins
+
+
+plugins=(
+  mattmc3/zman
+  jeffreytse/zsh-vi-mode
+
+  # deferred
+  romkatv/zsh-defer
+  olets/zsh-abbr
+  zsh-users/zsh-history-substring-search
+  zsh-users/zsh-autosuggestions
+  zdharma-continuum/fast-syntax-highlighting
+)
+
+if [ ! -d "$HOME/.config/fsh" ]; then
+  # install catppuccin-frappe theme
+  git clone https://github.com/catppuccin/zsh-fsh.git /tmp/zsh-fsh-catppuccin && \
+  mkdir -p ~/.config/fsh && \
+  cp -v /tmp/zsh-fsh-catppuccin/themes/catppuccin-frappe.ini ~/.config/fsh/ && \
+  rm -rf /tmp/zsh-fsh-catppuccin
+fi
+
+
+## Options section
+setopt correct                                                  # Auto correct mistakes
+setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
+setopt nocaseglob                                               # Case insensitive globbing
+setopt rcexpandparam                                            # Array expension with parameters
+setopt nocheckjobs                                              # Don't warn about running processes when exiting
+setopt numericglobsort                                          # Sort filenames numerically when it makes sense
+setopt nobeep                                                   # No beep
+setopt appendhistory                                            # Immediately append history instead of overwriting
+setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
+setopt autocd                                                   # if only directory path is entered, cd there.
+setopt auto_pushd
+setopt pushd_ignore_dups
+setopt pushdminus
+setopt histignorespace                                         # Ignore command lines with leading spaces
+setopt incappendhistory
+
+# Completion.
+autoload -Uz compinit && compinit
+
+# TODO check if all this completion stuff is needed
+zstyle ':completion:*:*:*:*:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # case insensitive tab completion
+
+# Speed up autocomplete, force prefix mapping
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
+
+# zstyle ':completion:*' menu select matcher-list 'm:{a-z}={A-Za-z}'
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
+# zstyle ':completion:*' rehash true                              # automatically find new executables in path 
+# # zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"         # Colored completion (different colors for dirs/files/etc)
+# zstyle ':completion:*' completer _expand _complete _ignored _approximate
+# zstyle ':completion:*' menu select=2
+# zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
+# zstyle ':completion:*:descriptions' format '%U%F{cyan}%d%f%u'
+
+# # partial completion suggestions
+# zstyle ':completion:*' list-suffixeszstyle ':completion:*' expand prefix suffix
+#
+# # color partial completion
+# zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)(?)*==34=00}:${(s.:.)LS_COLORS}")';
+
+# # Speed up completions
+# zstyle ':completion:*' accept-exact '*(N)'
+# zstyle ':completion:*' use-cache on
+# zstyle ':completion:*' cache-path ~/.cache/zcache
+#
+# zstyle ':autocomplete:tab:*' insert-unambiguous yes
+# zstyle ':autocomplete:tab:*' widget-style menu-complete
+# zstyle ':autocomplete:*:no-matches-at-all' message 't'
+
+typeset -A ZSH_HIGHLIGHT_STYLES
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[function]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[command]='fg=blue'
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan,underline'
+ZSH_HIGHLIGHT_STYLES[default]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=cyan'
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+plugin-load $plugins
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jj
+ZVM_VI_SURROUND_BINDKEY=s-prefix
+
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd '^O' edit-command-line # edit current command with ctrl-o
+bindkey -M vicmd '^[v' edit-command-line # edit current command with alt-v
+
+bindkey '^[[1;5D' backward-word # ctrl+left
+bindkey '^[[1;5C' forward-word # ctrl+right
+
+# https://github.com/zdharma-continuum/fast-syntax-highlighting?tab=readme-ov-file#themes 
+# set theme : fast-theme XDG:catppuccin-frappe
+# list themes : fast-theme -l
+# show theme : fast-theme -t catppuccin-frappe
+
+ABBR_USER_ABBREVIATIONS_FILE=$HOME/.zsh/abbr.txt
+
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[C' history-substring-search-down
+bindkey "$terminfo[kcuu1]" history-substring-search-up
+bindkey "$terminfo[kcud1]" history-substring-search-down
+bindkey '^P' history-substring-search-up
+bindkey '^N' history-substring-search-down
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export PATH="$HOME/.local/bin:$PATH"
+export KUBECONFIG="$HOME/.kube/config"
+export PATH="$GOPATH/bin:$PATH"
+
+## Alias
+alias chmox='chmod +x'
+alias nf='nvim $(fzf)'
+alias nov='neovide --frame=none'
+alias g='git'
+
+## functions
+function yy() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
+## stuff
+
+if cm_exists eza; then
+  alias ls="eza --icons --group-directories-first --color=auto"
+fi
+
+if cm_exists fzf; then
+  # Set up fzf key bindings and fuzzy completion
+  source <(fzf --zsh)
+fi
+
+if cm_exists carapace; then
+  export CARAPACE_BRIDGES='zsh,bash' # optional
+  zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+  zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+  source <(carapace _carapace)
+fi
+
+if cm_exists zoxide; then
+  eval "$(zoxide init zsh)"
+fi
+
+if cm_exists  starship; then
+  eval "$(starship init zsh)"
+fi

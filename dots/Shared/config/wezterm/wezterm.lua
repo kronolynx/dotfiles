@@ -9,20 +9,43 @@ local config = wezterm.config_builder()
 
 -- For example, changing the color scheme:
 config.color_scheme = 'Catppuccin Frappe'
-
-config.font = wezterm.font 'Fantasque Sans Mono'
+-- wezterm ls-fonts --list-system
+-- config.font = wezterm.font 'Fantasque Sans Mono'
+-- config.font = wezterm.font 'Cascadia Code NF'
+-- config.font = wezterm.font 'Rec Mono Duotone'
+-- config.font = wezterm.font("Iosevka", { weight = "Medium" })
+-- config.font = wezterm.font("FiraCodeGG Nerd Font", { weight = "Medium" })
+-- config.font = wezterm.font("Iosevka GG", { stretch = "Expanded", weight = "Medium" })
+-- config.font = wezterm.font({ family = "VictorMono Nerd Font", weight = 500, harfbuzz_features = { "ss01=off" } })
+config.font = wezterm.font({ family = "Victor Mono", weight = 600, harfbuzz_features = {} })
+-- config.font = wezterm.font("Maple Mono", { weight = "Medium" })
+-- config.font = wezterm.font({ family = "Rec Mono Duotone", weight = "Medium" })
+-- config.font = wezterm.font({ family = "CaskaydiaCove Nerd Font", weight = "Medium" })
+-- config.font = wezterm.font({ family = "Dank Mono" })
+-- config.font = wezterm.font({ family = "Fantasque Sans Mono" })
+-- config.font = wezterm.font({ family = "CommitMono-GG" })
+-- config.font = wezterm.font({ family = "Mononoki" })
+config.font_size = 12.5
+ -- config.font = wezterm.font('Victor Mono', { weight = 'SemiBold' })
+config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.window_decorations = "RESIZE | MACOS_FORCE_DISABLE_SHADOW"
 config.window_background_opacity = 0.91
 config.macos_window_background_blur = 10
 config.scrollback_lines = 50000
-config.font_size = 14.5
 config.adjust_window_size_when_changing_font_size = false
 config.use_resize_increments = false
 config.allow_square_glyphs_to_overflow_width = 'Always'
 config.front_end = 'WebGpu'
 config.webgpu_power_preference = 'HighPerformance'
 config.window_close_confirmation = 'NeverPrompt'
+
+config.window_padding = {
+  left = 5,
+  right = 5,
+  top = 5,
+  bottom = 1,
+}
 
 local act = wezterm.action
 -- timeout_milliseconds defaults to 1000 and can be omitted
@@ -31,7 +54,7 @@ config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
     { key = 'Tab', mods = 'CTRL', action = act.ActivateTabRelative(1) },
     { key = 'Tab', mods = 'SHIFT|CTRL', action = act.ActivateTabRelative(-1) },
-    { key = 'Enter', mods = 'ALT', action = act.ToggleFullScreen },
+    { key = 'Enter', mods = 'ALT', action = act.DisableDefaultAssignment }, --, action = act.ToggleFullScreen },
     { key = '!', mods = 'CTRL', action = act.ActivateTab(0) },
     { key = '!', mods = 'SHIFT|CTRL', action = act.ActivateTab(0) },
     { key = '\"', mods = 'ALT|CTRL', action = act.SplitVertical{ domain =  'CurrentPaneDomain' } },
@@ -128,11 +151,14 @@ config.keys = {
     { key = 'c', mods = 'SUPER', action = act.CopyTo 'Clipboard' },
     { key = 'f', mods = 'SHIFT|CTRL', action = act.Search 'CurrentSelectionOrEmptyString' },
     { key = 'f', mods = 'SUPER', action = act.Search 'CurrentSelectionOrEmptyString' },
-    { key = 'h', mods = 'SHIFT|CTRL', action = act.HideApplication },
+    -- { key = 'h', mods = 'SHIFT|CTRL', action = act.HideApplication },
+    { key = 'h', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
     { key = 'h', mods = 'SUPER', action = act.HideApplication },
-    { key = 'k', mods = 'SHIFT|CTRL', action = act.ClearScrollback 'ScrollbackOnly' },
+    -- { key = 'k', mods = 'SHIFT|CTRL', action = act.ClearScrollback 'ScrollbackOnly' },
+    { key = 'k', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
     { key = 'k', mods = 'SUPER', action = act.ClearScrollback 'ScrollbackOnly' },
-    { key = 'l', mods = 'SHIFT|CTRL', action = act.ShowDebugOverlay },
+    -- { key = 'l', mods = 'SHIFT|CTRL', action = act.ShowDebugOverlay },
+    { key = 'l', mods = 'SHIFT|CTRL', action = act.DisableDefaultAssignment },
     { key = 'm', mods = 'SHIFT|CTRL', action = act.Hide },
     { key = 'm', mods = 'SUPER', action = act.Hide },
     { key = 'n', mods = 'SHIFT|CTRL', action = act.SpawnWindow },
@@ -254,6 +280,18 @@ config.key_tables = {
       { key = 'DownArrow', mods = 'NONE', action = act.CopyMode 'NextMatch' },
     },
   }
+
+wezterm.on('format-tab-title', function(tab)
+    -- Get the process name.
+    local process = string.gsub(tab.active_pane.foreground_process_name, '(.*[/\\])(.*)', '%2')
+
+    -- Current working directory.
+    local cwd = tab.active_pane.current_working_dir
+    cwd = cwd and string.format('%s ', cwd.file_path:gsub(os.getenv 'HOME', '~')) or ''
+
+    -- Format and return the title.
+    return string.format('(%d %s) %s', tab.tab_index + 1, process, cwd)
+end)
 
 -- and finally, return the configuration to wezterm
 return config
