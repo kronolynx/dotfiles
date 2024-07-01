@@ -5,7 +5,8 @@ function cm_exists() {
 
 if cm_exists nvim; then
   export EDITOR=nvim
-  alias nn="nvim"
+  alias nn=nvim
+  alias no="LSP_ENABLED=false nvim"
 fi
 
 ## Plugin manager :)
@@ -37,11 +38,11 @@ ZPLUGINDIR=$HOME/.zsh/plugins
 
 
 plugins=(
-  mattmc3/zman
-  wfxr/forgit
-
   # deferred
   romkatv/zsh-defer
+  mattmc3/zman
+  wfxr/forgit
+  paulirish/git-open
   olets/zsh-abbr
   zsh-users/zsh-history-substring-search
   zsh-users/zsh-autosuggestions
@@ -124,6 +125,9 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 plugin-load $plugins
 
 bindkey -v # enable vi-mode
+# required to delete using backspace
+bindkey "^H" backward-delete-char
+bindkey "^?" backward-delete-char
 
 # vi cursor
 function zle-keymap-select zle-line-init zle-line-finish {
@@ -142,9 +146,9 @@ autoload edit-command-line
 zle -N edit-command-line
 bindkey -M vicmd '^O' edit-command-line # edit current command with ctrl-o
 bindkey -M vicmd '^[v' edit-command-line # edit current command with alt-v
-
-bindkey '^[[1;5D' backward-word # ctrl+left
-bindkey '^[[1;5C' forward-word # ctrl+right
+#
+## bindkey '^[[1;5D' backward-word # ctrl+left
+## bindkey '^[[1;5C' forward-word # ctrl+right
 
 # https://github.com/zdharma-continuum/fast-syntax-highlighting?tab=readme-ov-file#themes 
 # set theme : fast-theme XDG:catppuccin-frappe
@@ -153,8 +157,11 @@ bindkey '^[[1;5C' forward-word # ctrl+right
 
 ABBR_USER_ABBREVIATIONS_FILE=$HOME/.zsh/abbr.txt
 
+bindkey '^[[A' up-line-or-search
+bindkey '^[[B' down-line-or-search
+
 bindkey '^[[A' history-substring-search-up
-# bindkey '^[[C' history-substring-search-down # TODO fix down arrow
+bindkey '^[[B' history-substring-search-down
 bindkey '^P' history-substring-search-up
 bindkey '^N' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
@@ -163,6 +170,11 @@ bindkey -M vicmd 'j' history-substring-search-down
 # Bind right-arrow key to accept an autosuggestion.
 bindkey '^[[C' autosuggest-accept
 
+if [ -d "/opt/homebrew/bin" ]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+fi
+
+export LC_ALL=en_US.UTF-8
 export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/.local/bin:$PATH"
 export KUBECONFIG="$HOME/.kube/config"
@@ -174,11 +186,11 @@ if cm_exists fzf; then
   source <(fzf --zsh)
   # --- setup fzf theme ---
   export FZF_DEFAULT_OPTS="\
-    --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
+    --color=bg+:#414559,spinner:#f2d5cf,hl:#e78284 \
     --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
     --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
-
-  export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --bind shift-up:preview-up,shift-down:preview-down,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down"
+  
+  # export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --bind shift-up:preview-up,shift-down:preview-down,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down"
   export FZF_DEFAULT_COMMAND="command find -L \$dir -type f 2> /dev/null | sed '1d; s#^\./##'"
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   # -- Use fd instead of fzf --
@@ -211,6 +223,8 @@ alias nf='nvim $(fzf)'
 alias nov='neovide --frame=none'
 alias g='git'
 alias l='lazygit'
+
+alias SZ='source ~/.zshrc'
 
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -257,3 +271,5 @@ function rmh() {
     sed -i '$d' ~/.zhistory # removes current commad
   fi
 }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
