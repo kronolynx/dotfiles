@@ -217,6 +217,12 @@ if cm_exists  starship; then
   eval "$(starship init zsh)"
 fi
 
+if cm_exists tmux && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+   # Start TMUX first; try to reattach a session
+   ATTACH_OPT=$(tmux ls | grep -vq attached && echo "attach -d")
+   exec eval "tmux $ATTACH_OPT"
+fi
+
 ## Alias
 alias chmox='chmod +x'
 alias nf='nvim $(fzf)'
