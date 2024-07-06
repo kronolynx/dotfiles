@@ -34,10 +34,10 @@ function plugin-load {
 
 ## TODO add update function for plugins
 
-ZPLUGINDIR=$HOME/.zsh/plugins
-
+ZPLUGINDIR=$HOME/.config/zsh/plugins
 
 plugins=(
+  spaceship-prompt/spaceship-prompt
   # deferred
   romkatv/zsh-defer
   mattmc3/zman
@@ -123,11 +123,14 @@ ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=cyan'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 
 plugin-load $plugins
-
+# Remove mode switching delay.
+KEYTIMEOUT=5
 bindkey -v # enable vi-mode
 # required to delete using backspace
 bindkey "^H" backward-delete-char
 bindkey "^?" backward-delete-char
+
+# run `cat` to see the codes for key pressed
 
 # vi cursor
 function zle-keymap-select zle-line-init zle-line-finish {
@@ -155,7 +158,7 @@ bindkey -M vicmd '^[v' edit-command-line # edit current command with alt-v
 # list themes : fast-theme -l
 # show theme : fast-theme -t catppuccin-frappe
 
-ABBR_USER_ABBREVIATIONS_FILE=$HOME/.zsh/abbr.txt
+ABBR_USER_ABBREVIATIONS_FILE=$HOME/.config/zsh/abbr.txt
 
 bindkey '^[[A' up-line-or-search
 bindkey '^[[B' down-line-or-search
@@ -167,8 +170,8 @@ bindkey '^N' history-substring-search-down
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 
-# Bind right-arrow key to accept an autosuggestion.
-bindkey '^[[C' autosuggest-accept
+# # Bind Ctrl+Space key to accept an autosuggestion.
+# bindkey '^@' autosuggest-accept
 
 if [ -d "/opt/homebrew/bin" ]; then
   export PATH="/opt/homebrew/bin:$PATH"
@@ -213,9 +216,9 @@ if cm_exists zoxide; then
   eval "$(zoxide init zsh)"
 fi
 
-if cm_exists  starship; then
-  eval "$(starship init zsh)"
-fi
+# if cm_exists  starship; then
+#   eval "$(starship init zsh)"
+# fi
 
 if cm_exists tmux && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
    # Start TMUX first; try to reattach a session
