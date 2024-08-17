@@ -72,6 +72,7 @@ sketchybar --default "${defaults[@]}"
 #source "$ITEM_DIR/apple.sh"
 source "$ITEM_DIR/spaces.sh"
 source "$ITEM_DIR/front_app.sh"
+source "$ITEM_DIR/test.sh"
 
 # Center
 
@@ -94,7 +95,8 @@ right_bracket=(
 sketchybar --add bracket right_bracket volume battery notifications spotify.anchor calendar clock \
            --set right_bracket "${right_bracket[@]}"
 
+sketchybar --hotload on
 # Forcing all item scripts to run (never do this outside of sketchybarrc)
 sketchybar --update
 
-echo "sketchybar configuation loaded.."
+echo "sketchybar configuration loaded.."

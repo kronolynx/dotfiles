@@ -2,24 +2,16 @@
 
 update() {
   source "$HOME/.config/sketchybar/colors.sh"
-  COLOR=$BACKGROUND_SPACE
-  if [ "$SELECTED" = "true" ]; then
-    COLOR=$WHITE
+  
+  if [ "$(aerospace list-windows --workspace $AEROSPACE_PREV_WORKSPACE)" != "" ]; then
+    sketchybar --set space.$AEROSPACE_PREV_WORKSPACE  background.border_color=$BACKGROUND_SPACE background.color=$BACKGROUND_SPACE icon.color=$ICON_COLOR
+  else
+    sketchybar --set space.$AEROSPACE_PREV_WORKSPACE display=0
   fi
-  sketchybar --set $NAME icon.highlight=$SELECTED label.highlight=$SELECTED background.border_color=$COLOR background.color=$COLOR
+
+  sketchybar --set space.$AEROSPACE_FOCUSED_WORKSPACE  background.border_color=$ICON_COLOR background.color=$ICON_COLOR icon.color=$ICON_HIGHLIGHT_COLOR display=1
 }
 
-mouse_clicked() {
-  yabai -m space --focus $SID 2>/dev/null
-}
-
-case "$SENDER" in
-  "mouse.entered") mouse_entered
-  ;;
-  "mouse.exited") mouse_exited
-  ;;
-  "mouse.clicked") mouse_clicked
-  ;;
-  *) update
-  ;;
-esac
+if [ "$SENDER" == "aerospace_workspace_change" ]; then
+  update
+fi
