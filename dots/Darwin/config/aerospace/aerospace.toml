@@ -13,8 +13,7 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  # 'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
-  # 'exec-and-forget sketchybar'
+  'exec-and-forget borders active_color=0xffdc8a78 inactive_color=0xff494d64 width=5.0',
   'exec-and-forget sketchybar --reload'
 ]
 
@@ -140,24 +139,26 @@ alt-quote = 'workspace 15'
 alt-slash = 'workspace 16'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-1 = 'move-node-to-workspace 1'
-alt-shift-2 = 'move-node-to-workspace 2'
-alt-shift-3 = 'move-node-to-workspace 3'
-alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-5 = 'move-node-to-workspace 5'
-alt-shift-6 = 'move-node-to-workspace 6'
-alt-shift-7 = 'move-node-to-workspace 7'
-alt-shift-8 = 'move-node-to-workspace 8'
-alt-shift-9 = 'move-node-to-workspace 9'
-alt-shift-0 = 'move-node-to-workspace 10'
-alt-shift-minus = 'move-node-to-workspace 11'
-alt-shift-equal = 'move-node-to-workspace 12'
-alt-shift-leftSquareBracket = 'move-node-to-workspace 13'
-alt-shift-rightSquareBracket = 'move-node-to-workspace 14'
-alt-shift-quote = 'move-node-to-workspace 15'
-alt-shift-slash = 'move-node-to-workspace 16'
+# TODO calling exec-and-forget here is a hack and should be removed when a better solution is found
+alt-shift-1 = ['move-node-to-workspace 1', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-2 = ['move-node-to-workspace 2', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-3 = ['move-node-to-workspace 3', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-4 = ['move-node-to-workspace 4', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-5 = ['move-node-to-workspace 5', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-6 = ['move-node-to-workspace 6', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-7 = ['move-node-to-workspace 7', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-8 = ['move-node-to-workspace 8', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-9 = ['move-node-to-workspace 9', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-0 = ['move-node-to-workspace 10', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-minus = ['move-node-to-workspace 11', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-equal = ['move-node-to-workspace 12', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-leftSquareBracket = ['move-node-to-workspace 13', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-rightSquareBracket = ['move-node-to-workspace 14', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-quote = ['move-node-to-workspace 15', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-slash = ['move-node-to-workspace 16', 'exec-and-forget sketchybar --trigger space_windows_change']
 
-alt-shift-a = 'fullscreen'
+alt-shift-f = 'fullscreen'
+alt-shift-a = 'layout tiles accordion'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'

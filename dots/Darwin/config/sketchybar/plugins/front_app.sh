@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# TODO find out how to detect when a window is moved to another workspace
-
 reload_workspace_icon() {
   apps=$(aerospace list-windows --workspace "$1" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
 
@@ -31,8 +29,8 @@ reload_workspace_icon() {
 }
 
 if [ "$SENDER" = "space_windows_change" ]; then
-  # Couldn't find a way to detect on which workspaces a window is destroyed so have to reload all workspaces
   FOCUSED=$(aerospace list-workspaces --focused)
+  # Couldn't find a way to detect on which workspaces a window is destroyed so have to reload all workspaces
   WORKSPACES=$(aerospace list-workspaces --all)
   for i in $WORKSPACES; do
     reload_workspace_icon $i $FOCUSED
