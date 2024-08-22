@@ -104,7 +104,7 @@ cmd-alt-h = [] # Disable "hide others"
 ## todo the following two don't play nice with enable-normalization-flatten-containers
 # alt-shift-s = 'split horizontal'
 # alt-shift-v = 'split vertical'
-alt-shift-enter = 'exec-and-forget "$HOME"/.config/yabai/scripts/open_wezterm.sh'
+alt-shift-enter = 'exec-and-forget "$HOME"/.config/aerospace/scripts/open_wezterm.sh'
 alt-shift-q = 'close'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
