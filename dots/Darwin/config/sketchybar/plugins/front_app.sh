@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# TODO find out how to detect when a window is moved to another workspace
+
 reload_workspace_icon() {
   apps=$(aerospace list-windows --workspace "$1" | awk -F'|' '{gsub(/^ *| *$/, "", $2); print $2}')
+  args=()
 
   icon_strip=""
   if [ "${apps}" != "" ]; then
@@ -16,10 +19,18 @@ reload_workspace_icon() {
           fi
     done <<< "${apps}"
 
-    args+=(--animate sin 10 --set space.$1 label="$icon_strip" label.drawing=on display=1)
+    args+=(--animate sin 10 --set "space.$1" label="$icon_strip" label.drawing=on display=1)
+
+    if [ "$1" == "$2" ]; then
+      args+=(background.border_color=$ICON_COLOR background.color=$ICON_COLOR icon.color=$ICON_HIGHLIGHT_COLOR)
+    else
+      args+=(background.border_color=$BACKGROUND_SPACE background.color=$BACKGROUND_SPACE icon.color=$ICON_COLOR)
+    fi
   else
-    args+=(--set space.$1 label.drawing=off)
-    if [ "$1" != "$2" ]; then
+    args+=(--set "space.$1" label.drawing=off)
+    if [ "$1" == "$2" ]; then
+      args+=(background.border_color=$ICON_COLOR background.color=$ICON_COLOR icon.color=$ICON_HIGHLIGHT_COLOR display=1)
+    else 
       # hide empty workspace if not focused
       args+=(display=0)
     fi
@@ -29,10 +40,11 @@ reload_workspace_icon() {
 }
 
 if [ "$SENDER" = "space_windows_change" ]; then
-  FOCUSED=$(aerospace list-workspaces --focused)
+  source "$HOME/.config/sketchybar/colors.sh"
   # Couldn't find a way to detect on which workspaces a window is destroyed so have to reload all workspaces
+  FOCUSED=$(aerospace list-workspaces --focused)
   WORKSPACES=$(aerospace list-workspaces --all)
   for i in $WORKSPACES; do
-    reload_workspace_icon $i $FOCUSED
+    reload_workspace_icon $i $FOCUSED 
   done
 fi

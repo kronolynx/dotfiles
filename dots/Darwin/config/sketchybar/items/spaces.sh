@@ -9,7 +9,7 @@ for sid in $WORKSPACES; do
   icon=$((sid-1))
 
   space=(
-    associated_space=$sid
+    # associated_space=$sid # NOTE for aerospace this brakes config as we can't associate with mission control spaces
     icon="${SPACE_ICONS[icon]}"
     icon.font="$FONT:Semibold:12.0"
     icon.padding_left=5
@@ -37,7 +37,7 @@ for sid in $WORKSPACES; do
     script="$PLUGIN_DIR/space.sh"
   )
 
-  sketchybar --add space space.$sid left    \
+  sketchybar --add item space.$sid left    \
              --set space.$sid "${space[@]}" \
              --subscribe space.$sid aerospace_workspace_change
 done
