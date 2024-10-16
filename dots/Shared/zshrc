@@ -44,7 +44,9 @@ plugins=(
   wfxr/forgit
   paulirish/git-open
   olets/zsh-abbr
+  zsh-users/zsh-completions
   zsh-users/zsh-history-substring-search
+  olets/zsh-autosuggestions-abbreviations-strategy
   zsh-users/zsh-autosuggestions
   zdharma-continuum/fast-syntax-highlighting
 )
@@ -62,18 +64,20 @@ fi
 setopt correct                                                  # Auto correct mistakes
 setopt extendedglob                                             # Extended globbing. Allows using regular expressions with *
 setopt nocaseglob                                               # Case insensitive globbing
-setopt rcexpandparam                                            # Array expension with parameters
+setopt rcexpandparam                                            # Array expansion with parameters
 setopt nocheckjobs                                              # Don't warn about running processes when exiting
 setopt numericglobsort                                          # Sort filenames numerically when it makes sense
 setopt nobeep                                                   # No beep
 setopt appendhistory                                            # Immediately append history instead of overwriting
-setopt histignorealldups                                        # If a new command is a duplicate, remove the older one
-setopt autocd                                                   # if only directory path is entered, cd there.
-setopt auto_pushd
-setopt pushd_ignore_dups
-setopt pushdminus
-setopt histignorespace                                         # Ignore command lines with leading spaces
-setopt incappendhistory
+setopt hist_ignore_space                                        # Ignore commands that start with a space in history
+setopt hist_ignore_all_dups                                     # If a new command is a duplicate, remove the older one
+setopt hist_find_no_dups                                        # Do not display duplicates in history search
+setopt autocd                                                   # If only directory path is entered, cd there
+setopt auto_pushd                                               # Automatically push directories onto the directory stack
+setopt pushd_ignore_dups                                        # Do not store duplicate directories in the stack
+setopt pushdminus                                               # Use `pushd -n` behavior by default
+setopt histignorespace                                          # Ignore command lines with leading spaces
+setopt incappendhistory                                         # Incrementally append to the history file
 
 # Completion.
 autoload -Uz compinit && compinit
@@ -112,6 +116,9 @@ zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:
 # zstyle ':autocomplete:tab:*' widget-style menu-complete
 # zstyle ':autocomplete:*:no-matches-at-all' message 't'
 
+# https://github.com/olets/zsh-autosuggestions-abbreviations-strategy?tab=readme-ov-file#usage
+ZSH_AUTOSUGGEST_STRATEGY=( abbreviations $ZSH_AUTOSUGGEST_STRATEGY )
+
 typeset -A ZSH_HIGHLIGHT_STYLES
 ZSH_HIGHLIGHT_STYLES[builtin]='fg=blue'
 ZSH_HIGHLIGHT_STYLES[alias]='fg=blue'
@@ -121,6 +128,12 @@ ZSH_HIGHLIGHT_STYLES[path]='fg=cyan,underline'
 ZSH_HIGHLIGHT_STYLES[default]='fg=cyan'
 ZSH_HIGHLIGHT_STYLES[autodirectory]='fg=cyan'
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+
+# Set the color for the matched substring
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='fg=white,bold,bg=#1d3b58'
+
+# Set the color for the not found substring
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='fg=magenta,bold'
 
 plugin-load $plugins
 # Remove mode switching delay.
