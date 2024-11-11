@@ -38,14 +38,14 @@ ZPLUGINDIR=$HOME/.config/zsh/plugins
 
 plugins=(
   spaceship-prompt/spaceship-prompt
+  Aloxaf/fzf-tab
   # deferred
   romkatv/zsh-defer
   mattmc3/zman
-  wfxr/forgit
-  paulirish/git-open
+  # wfxr/forgit
   olets/zsh-abbr
   zsh-users/zsh-completions
-  zsh-users/zsh-history-substring-search
+  # zsh-users/zsh-history-substring-search
   olets/zsh-autosuggestions-abbreviations-strategy
   zsh-users/zsh-autosuggestions
   zdharma-continuum/fast-syntax-highlighting
@@ -91,6 +91,30 @@ zstyle ':completion:*' accept-exact '*(N)'
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 zstyle -e ':completion:*:default' list-colors 'reply=("${PREFIX:+=(#bi)($PREFIX:t)*==34=34}:${(s.:.)LS_COLORS}")';
+
+### FZF-TAB {{
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# apply to all command
+zstyle ':fzf-tab:*' popup-min-size 80 12
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+
+if [[ -n "$TMUX" ]]; then
+  # use fzf-tab to complete tmux popup
+  zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+else
+  # switch group using `<` and `>`
+  zstyle ':fzf-tab:*' switch-group '<' '>'
+fi
+### }}
 
 # zstyle ':completion:*' menu select matcher-list 'm:{a-z}={A-Za-z}'
 # zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'       # Case insensitive tab completion
@@ -173,15 +197,23 @@ bindkey -M vicmd '^[v' edit-command-line # edit current command with alt-v
 
 ABBR_USER_ABBREVIATIONS_FILE=$HOME/.config/zsh/abbr.txt
 
-bindkey '^[[A' up-line-or-search
-bindkey '^[[B' down-line-or-search
+# bindkey '^[[A' up-line-or-search
+# bindkey '^[[B' down-line-or-search
 
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
+# # HISTORY SUBSTRING SEARCHING (use atuin)
+# bindkey '^[[A' history-substring-search-up
+# bindkey '^[[B' history-substring-search-down
+# bindkey '^P' history-substring-search-up
+# bindkey '^N' history-substring-search-down
+# bindkey -M vicmd 'k' history-substring-search-up
+# bindkey -M vicmd 'j' history-substring-search-down
+
+# bindkey '^[[A' history-search-backward
+# bindkey '^[[B' history-search-forward
+# bindkey '^P' history-search-backward
+# bindkey '^N' history-search-forward
+# bindkey -M vicmd 'k' history-search-backward
+# bindkey -M vicmd 'j' history-search-forward
 
 # # Bind Ctrl+Space key to accept an autosuggestion.
 # bindkey '^@' autosuggest-accept
@@ -194,7 +226,6 @@ export LC_ALL=en_US.UTF-8
 export XDG_CONFIG_HOME="$HOME/.config"
 export PATH="$HOME/.local/bin:$PATH"
 export KUBECONFIG="$HOME/.kube/config"
-export PATH="$GOPATH/bin:$PATH"
 
 
 if cm_exists fzf; then
@@ -218,15 +249,22 @@ fi
 export FORGIT_FZF_DEFAULT_OPTS="$FORGIT_FZF_DEFAULT_OPTS --reverse"
 export FORGIT_LOG_GRAPH_ENABLE=false
 
-if cm_exists carapace; then
-  export CARAPACE_BRIDGES='zsh,bash' # optional
-  zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
-  zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
-  source <(carapace _carapace)
-fi
+# if cm_exists carapace; then
+#   export CARAPACE_BRIDGES='zsh,bash' # optional
+#   zstyle ':completion:*' format $'\e[2;37mCompleting %d\e[m'
+#   zstyle ':completion:*:git:*' group-order 'main commands' 'alias commands' 'external commands'
+#   source <(carapace _carapace)
+# fi
 
+# export SPACESHIP_CONFIG="$HOME/.config/zsh/spaceship.zsh"
+# eval "$(oh-my-posh init zsh --config ~/.config/oh-my-posh/theme.json)"
 if cm_exists zoxide; then
   eval "$(zoxide init zsh)"
+fi
+
+if cm_exists atuin; then
+  # bindkey '^R' _atuin_search_widget
+  eval "$(atuin init zsh)"
 fi
 
 # if cm_exists  starship; then
@@ -262,12 +300,12 @@ fi
 
 # yazi 
 function yy() {
-  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-  yazi "$@" --cwd-file="$tmp"
-  if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-    cd -- "$cwd"
-  fi
-  rm -f -- "$tmp"
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
 
 # make dir and cd
