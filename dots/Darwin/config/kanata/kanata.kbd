@@ -8,7 +8,8 @@
   f1   f2   f3   f4   f5   f6   f7   f8   f9   f10   f11   f12
   nubs
   caps a s d f h j k l ;
-  fn
+  v
+  fn lmet
 )
 (defvar
   tap-time 150
@@ -19,7 +20,7 @@
 ;; lalt -> option
 
 (defalias
-  escctrl (tap-hold 100 100 esc lctl)
+  esclmet (tap-hold 100 100 esc lmet)
   met_a (tap-hold $tap-time $hold-time a lmet)
   alt_s (tap-hold $tap-time $hold-time s lalt)
   ctl_d (tap-hold $tap-time $hold-time d lctl)
@@ -29,13 +30,15 @@
   alt_l (tap-hold $tap-time $hold-time l ralt)
   met_; (tap-hold $tap-time $hold-time ; rmet)
   fnl (tap-hold 200 200 fn (layer-toggle fn))
+  vl (tap-hold 200 200 v (layer-toggle arrows))
 )
 
 (deflayer base
   _ _ _ _ _ _ _ _ _ _ _ _
   grv
   bspc @met_a @alt_s @ctl_d @sft_f _ @sft_j @ctl_k @alt_l @met_;
-  @fnl
+  @vl
+  @fnl @esclmet
 )
 
 ;; TODO add the other mac buttons
@@ -43,5 +46,14 @@
   brdn  brup  _    _    _    _   prev  pp  next  mute  vold  volu
   _
   _ _ _ _ _ left down up rght _
-  fn
+  _
+  fn _
+)
+
+(deflayer arrows
+  _ _ _ _ _ _ _ _ _ _ _ _
+  _
+  _ _ _ _ _ left down up rght _
+  v
+  _ _
 )
