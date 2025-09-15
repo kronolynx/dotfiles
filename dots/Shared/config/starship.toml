@@ -141,7 +141,7 @@ symbol = "🐍 "
 
 [java]
 #symbol = "🗡  "
-symbol = "⚔️  "
+symbol = "⚔️ "
 format = "[${symbol}(${version} )]($style)"
 style = "bold sapphire"
 
@@ -149,7 +149,7 @@ style = "bold sapphire"
 format = "[🐋 $context](surface2 bold)"
 
 [scala]
-symbol = "⚔️  "
+symbol = "⚔️ "
 format = "[${symbol}(${version} )]($style)"
 disabled = true
 
