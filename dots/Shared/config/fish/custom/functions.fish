@@ -2,6 +2,29 @@
 ##########    Functions
 ##########################################################
 
+# https://yazi-rs.github.io/docs/quick-start/#shell-wrapper
+function yy
+	set tmp (mktemp -t "yazi-cwd.XXXXXX")
+	yazi $argv --cwd-file="$tmp"
+	if read -z cwd < "$tmp"; and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+		builtin cd -- "$cwd"
+	end
+	rm -f -- "$tmp"
+end
+
+# run bash command
+function b -d "Run bash command"
+  set -l cmd (string join " " $argv)
+  bash -c "$cmd"
+end
+
+function s -d "Set Fish variables directly from Bash-style variable definitions"
+    set -l var_def $argv
+    set -l var_name (string split "=" -- $var_def | head -n 1)
+    set -l var_value (string split "=" -- $var_def | tail -n 1)
+    set -gx $var_name $var_value
+end
+
 function toHex
   if set -q argv[1]
     printf "%x\n" "$argv[1]"
