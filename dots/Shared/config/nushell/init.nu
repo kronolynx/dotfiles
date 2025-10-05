@@ -13,7 +13,10 @@ source ($nu.default-config-dir | path join "functions.nu")
   source ~/.cache/nushell/atuin/init.nu
 # }
 
-load-env (open ~/.config/.shared_tokens.sh | capture-foreign-env)
+
+if ("~/.config/.shared_tokens.sh" | path exists) {
+  load-env (open ~/.config/.shared_tokens.sh | capture-foreign-env)
+}
 
 # Attach to tmux on start if not nested session or inside nvim, vscode or intellij
 if (which tmux | is-not-empty) and not ($env.TERM | str contains 'screen') and not ($env.TERM | str contains 'tmux') and ($env.TMUX? | is-empty) and ($env.TERM_PROGRAM? != 'vscode') and ($env.TERM_PROGRAM? != 'JetBrains') and ($env.NVIM? | is-empty) {
