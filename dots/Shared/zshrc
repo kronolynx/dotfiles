@@ -1,3 +1,14 @@
+# # Launch nu shell for interactive sessions if available, unless skipped
+if [[ $- == *i* ]] && command -v nu > /dev/null && [ "$1" != "interactive" ]; then
+    exec nu
+fi
+#
+#
+if [ ! -d "$HOME/.config/shared_env.sh" ]; then
+  source ~/.config/shared_env.sh
+fi
+
+# zmodload zsh/zprof # uncomment and add at the last line zprof in order to benchmark startup
 # Check if a command exists
 function cm_exists() {
   command -v "$@" > /dev/null 2>&1
@@ -107,7 +118,7 @@ zstyle ':fzf-tab:*' popup-min-size 80 12
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 
-if [[ -n "$TMUX" ]]; then
+if [[ -n "$TMUX" ]] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ] && [ "$TERM_PROGRAM" != "vscode" ] && [ "$TERM_PROGRAM" != "JetBrains" ]; then
   # use fzf-tab to complete tmux popup
   zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
 else
@@ -299,14 +310,13 @@ fi
 ## functions
 
 # yazi 
-function yy() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
+  function yy() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+  }
 
 # make dir and cd
 function md() {
