@@ -155,6 +155,19 @@ let catpuccin_theme = {
   shape_custom: {attr: b}
 }
 
+let fish_completer = {|spans|
+    fish --command $"complete '--do-complete=($spans | str replace --all "'" "\\'" | str join ' ')'"
+    | from tsv --flexible --noheaders --no-infer
+    | rename value description
+    | update value {|row|
+      let value = $row.value
+      let need_quote = ['\' ',' '[' ']' '(' ')' ' ' '\t' "'" '"' "`"] | any {$in in $value}
+      if ($need_quote and ($value | path exists)) {
+        let expanded_path = if ($value starts-with ~) {$value | path expand --no-symlink} else {$value}
+        $'"($expanded_path | str replace --all "\"" "\\\"")"'
+      } else {$value}
+    }
+}
 
 # The default config record. This is where much of your global configuration is setup.
 $env.config = {
@@ -213,8 +226,8 @@ $env.config = {
     history: {
         max_size: 100_000 # Session has to be reloaded for this to take effect
         sync_on_enter: true # Enable to share history between multiple sessions, else you have to close the session to write history to file
-        file_format: "sqlite" # "sqlite" or "plaintext"
-        isolation: true # only available with sqlite file_format. true enables history isolation, false disables it. true will allow the history to be isolated to the current session using up/down arrows. false will allow the history to be shared across all sessions.
+        file_format: "plaintext" # "sqlite" or "plaintext"
+        isolation: false # only available with sqlite file_format. true enables history isolation, false disables it. true will allow the history to be isolated to the current session using up/down arrows. false will allow the history to be shared across all sessions.
     }
 
     completions: {
@@ -225,14 +238,9 @@ $env.config = {
         external: {
             enable: true # set to false to prevent nushell looking into $env.PATH to find more suggestions, `false` recommended for WSL users as this look up may be very slow
             max_results: 100 # setting it lower can improve completion performance at the cost of omitting some options
-            completer: null # check 'carapace_completer' above as an example
+            completer: $fish_completer # check 'carapace_completer' above as an example
         }
         use_ls_colors: true # set this to true to enable file/path/directory completions using LS_COLORS
-    }
-
-    filesize: {
-        metric: false # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
-        format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, auto
     }
 
     cursor_shape: {
@@ -242,8 +250,7 @@ $env.config = {
     }
 
     color_config: $catpuccin_theme # if you want a more interesting theme, you can replace the empty record with `$dark_theme`, `$light_theme` or another custom record
-    use_grid_icons: true
-    footer_mode: "25" # always, never, number_of_rows, auto
+    footer_mode: 25 # always, never, number_of_rows, auto
     float_precision: 2 # the precision for displaying floats in tables
     buffer_editor: "" # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.EDITOR and $env.VISUAL
     use_ansi_coloring: true
@@ -398,6 +405,13 @@ $env.config = {
     ]
 
     keybindings: [
+       {
+            name: delete_one_word_backward
+            modifier: alt
+            keycode: backspace
+            mode: [emacs, vi_normal, vi_insert]
+            event: {edit: backspaceword}
+        }
         {
             name: completion_menu
             modifier: none
@@ -907,16 +921,4 @@ $env.config = {
     ]
 }
 
-
-
-alias nn = nvim
-alias g = git
-
-#if (which zoxide | is-not-empty) {
-#  echo "inside"
-#  source ~/.cache/zoxide/init.nu
-#}
-
-source ~/.cache/zoxide/init.nu
-source ~/.cache/carapace/init.nu
-use ~/.cache/starship/init.nu
+source ($nu.default-config-dir | path join "init.nu")
