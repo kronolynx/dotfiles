@@ -52,16 +52,19 @@ if ("~/.kube/config" | path exists) {
   path add "~/.kube/config"
 }
 
-if ("~/.appps/nvim/bin/" | path exists ) {
-  path add "~/.appps/nvim/bin:$PATH"
+if ("/opt/homebrew/bin" | path exists) {
+  path add "/opt/homebrew/bin"
 }
 
 if ( "~/.local/bin" | path exists) {
   path add "~/.local/bin"
+
+  # scala coursier
+  $env.COURSIER_BIN_DIR = ("~/.local/bin" | path expand)
 }
 
-if ("/opt/homebrew/bin" | path exists) {
-  path add "/opt/homebrew/bin"
+if ("~/.appps/nvim/bin/" | path exists ) {
+  path add "~/.appps/nvim/bin"
 }
 
 if (which nvim | is-not-empty) {
