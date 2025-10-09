@@ -2,7 +2,7 @@
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
 "$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
 
-[manager]
+[mgr]
 
 keymap = [
 	{ on = [ "<Esc>" ], run = "escape",             desc = "Exit visual mode, clear selected, or cancel search" },
@@ -48,8 +48,8 @@ keymap = [
 	{ on = [ "<Left>" ],  run = "leave",    desc = "Go back to the parent directory" },
 	{ on = [ "<Right>" ], run = "enter",    desc = "Enter the child directory" },
 
-	{ on = [ "g", "g" ], run = "arrow -99999999", desc = "Move cursor to the top" },
-	{ on = [ "G" ],      run = "arrow 99999999",  desc = "Move cursor to the bottom" },
+	{ on = [ "g", "g" ], run = "arrow top", desc = "Move cursor to the top" },
+	{ on = [ "G" ],      run = "arrow bottom",  desc = "Move cursor to the bottom" },
 
 	# Selection
 	{ on = [ "<Space>" ], run = [ "select --state=none", "arrow 1" ], desc = "Toggle the current selection state" },
@@ -75,8 +75,8 @@ keymap = [
 	{ on = [ "D" ],         run = "remove --permanently",       desc = "Permanently delete the files" },
 	{ on = [ "a" ],         run = "create",                     desc = "Create a file or directory (ends with / for directories)" },
 	{ on = [ "r" ],         run = "rename --cursor=before_ext", desc = "Rename a file or directory" },
-	{ on = [ ";" ],         run = "shell",                      desc = "Run a shell command" },
-	{ on = [ ":" ],         run = "shell --block",              desc = "Run a shell command (block the UI until the command finishes)" },
+	{ on = [ ";" ],         run = "shell --interactive",        desc = "Run a shell command" },
+	# { on = [ ":" ],         run = "shell --block",              desc = "Run a shell command (block the UI until the command finishes)" },
 	{ on = [ "." ],         run = "hidden toggle",              desc = "Toggle the visibility of hidden files" },
 	{ on = [ "s" ],         run = "search fd",                  desc = "Search files by name using fd" },
 	{ on = [ "S" ],         run = "search rg",                  desc = "Search files by content using ripgrep" },

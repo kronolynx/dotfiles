@@ -3,7 +3,7 @@
 # : Manager {{{
 # https://github.com/catppuccin/yazi/blob/main/themes/frappe.toml
 # catpuccin-frappe
-[manager]
+[mgr]
 cwd = { fg = "#81c8be" }
 
 # Hovered
