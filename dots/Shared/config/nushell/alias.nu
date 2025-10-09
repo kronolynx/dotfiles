@@ -8,16 +8,19 @@ alias gp = git pull
 alias gpm = git pull origin master
 alias gpom = git pull origin master
 alias grmrf = git clean -fxd
+alias gs = git status -s
 alias gsc = git stash clear
 alias gsd = git stash drop
 alias gsp = git stash pop
 alias glogjson = git log --pretty=format:'{"commit": "%H", "author": "%an <%ae>", "date": "%ad", "message": "%f"},' --date=iso
 
+alias l = lazygit
+alias e = code . # e like editor
+
 alias ez = eza --color=always --long --icons=always --no-filesize --no-time --no-permissions --no-user
 
 alias cat = bat
 
-alias l = ls --all
 alias c = clear
 alias ll = ls -l
 alias lt = eza --tree --level=2 --long --icons --git

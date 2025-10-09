@@ -26,7 +26,7 @@ def grhead [] {
 }
 
 # Git add all and stash
-def gs [] {
+def gas [] {
   git add --all
   git stash
 }
