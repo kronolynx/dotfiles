@@ -74,7 +74,7 @@ if (which nvim | is-not-empty) {
 
 if (which atuin | is-not-empty) {
   mkdir ~/.cache/nushell/atuin
-  atuin init nu | save -f ~/.cache/nushell/atuin/init.nu
+  atuin init nu --disable-up-arrow | save -f ~/.cache/nushell/atuin/init.nu
 }
 
 if (which starship | is-not-empty) {
