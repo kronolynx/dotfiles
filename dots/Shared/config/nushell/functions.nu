@@ -92,3 +92,10 @@ def capture-foreign-env [
     | transpose --header-row --as-record
     | if $in == [] { {} } else { $in }
 }
+
+# open shell in 
+def kush [
+  pod_name:string
+] {
+   kubectl exec -it $pod_name -c app -- /bin/bash
+}

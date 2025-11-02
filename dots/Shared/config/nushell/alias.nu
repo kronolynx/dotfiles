@@ -42,6 +42,8 @@ alias kdesc = kubectl describe pods
 alias gma = git cma and git pull
 alias gst = git stash
 alias gcl = git clone
+alias y = yazi
+alias asr = atuin script run
 
 alias bashi = bash -s interactive
 alias zshi = zsh -s interactive
