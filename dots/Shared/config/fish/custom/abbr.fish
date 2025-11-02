@@ -10,6 +10,26 @@ abbr kcc 'kcat 2>&1 -q -C -f "%T::%t::%p::%o >> %k --- %s,\n" -b'
 
 abbr chmodrec 'find . -type f -iname "*.sh" -exec chmod +x {} \;'
 
+# Neovim.
+abbr -a nv nvim
+abbr -a nz --set-cursor "z % && nvim" # run z and then nvim
+abbr -a nvp nvim +Man!
+
+# Git abbreviations.
+abbr -a g git
+#abbr -a ga git add
+abbr -a gb git branch
+abbr -a gc git commit --verbose
+abbr -a gco git checkout
+abbr -a gf git fetch
+abbr -a gl lazygit
+abbr -a gm git merge
+abbr -a gp git push
+abbr -a gst git status
+
+
+abbr -a bsp find . -type f -path "*/.bsp/sbt.json" -delete #  remove -delete for dry run
+
 # git
 abbr gamend = 'git commit --amend --no-edit'
 abbr gamend-stage = 'git commit --amend -C HEAD # quick amend: Amend my staged changes to the last commit, keeping the same commit message'
@@ -43,7 +63,6 @@ abbr gai 'git add -i'
 abbr gcl 'git clone'
 abbr ginitc "git init && git add -A && git commit -m 'Initial commit'" # Init git and add initial commit with all the files, add gitignore first to ignore files'
 abbr gjoin "git st; git reset --soft HEAD~1 && git commit --amend -a; git pop" # join last head and previous commit'
-abbr gl 'git log --oneline'
 abbr glg 'git log --graph --all --decorate --oneline -36'
 abbr gls 'git branch -v' # list branches'
 abbr glsr 'git remote -v' # list remotes'

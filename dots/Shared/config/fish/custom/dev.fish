@@ -5,9 +5,8 @@ alias dow="docker-local down"
 alias sbtr="ag -l | entr sbt" # http://eradman.com/entrproject/
 alias reload="ag -l | entr"
 alias rlds="find src/ -name '*.scala' | entr -s " # requires argument e.g 'sbt test'
-abbr fix-internet "sudo modprobe -r r8169 && sleep 10 && sudo modprobe r8169"
 
-abbr ctarget "find -name target | xargs rm -rf"
+abbr ctarget "find . -name target | xargs rm -rf"
 abbr sbt-rem "mv ~/.sbt/repositories ~/.sbt/repositories-temp"
 abbr sbt-res "mv ~/.sbt/repositories-temp ~/.sbt/repositories"
 abbr publ "sbt compile publishLocal && notify-send 'Published publ' || notify-send 'Failed publ' && false"
@@ -43,7 +42,7 @@ abbr ti "sbt testInteractive"
 abbr to "sbt testOnly"
 abbr tst "sbt test"
 
-function docker-rm-all 
+function docker-rm-all
   docker rm (docker ps -aq)
 end
 
@@ -51,18 +50,21 @@ end
 alias smlog='tail -f .metals/metals.log'
 alias amm212="cs launch com.lihaoyi:ammonite_2.12.10:2.0.4 -M ammonite.Main --"
 
+abbr l "lazygit"
 
 # export SBT_OPTS="-Xmx2G -XX:MaxMetaspaceSize=1024m -Dsbt.boot.credentials=$HOME/.sbt/.credentials -Dsbt.override.build.repos=true -Xss2M"
 #
 
 # k8s
 abbr k kubectl
-abbr ks kubens 
-abbr kx kubectx
+abbr ks kubens
+abbr ctx kubectx
+abbr ktx kubectx
 abbr kctxls 'kubectl config get-contexts'
 abbr kctx 'kubectl config use-context'
 abbr knsls 'kubectl get namespace | grep -Ei' # get namespaces
 abbr kns 'kubectl config set-context --current --namespace=' # set namespace for subsecuent commands
+abbr ns kubens
 abbr kdep 'kubectl get deployments'
 abbr kpods 'kubectl get pods'
 abbr kscale 'kubectl scale deployment' # tab to autocomplete
@@ -72,9 +74,49 @@ alias kcont "kubectl config view --minify --output 'jsonpath={.current-context}/
 
 abbr kdesc 'kubectl describe pods'
 
-abbr gma 'git checkout master && git pull'
-abbr gmd 'git checkout develop && git pull'
+abbr gma 'git cma && git pull'
+abbr gro 'git rebase --onto origin/'
+abbr gunst 'git restore --staged'
+abbr gst 'git stash'
+abbr gstp 'git stash pop'
+abbr gstk 'git stash -k'
+abbr gcl 'git clone'
 
+function ktoken --argument knamespace --description "Get k8s token"
+  if set -q argv[1]
+    set token (dex-login -u "$USER" -e "$knamespace" -k keychain) 
+    echo "dex-login -u "$USER" -e "$knamespace" -k keychain"
+    echo "$token"
+    echo "$token" | pbcopy
+    echo "Copied to clipboard"
+  else
+    echo "Environment is required"
+  end
+end
+
+function yprop
+  if set -q argv[1]
+    yabai -m query --windows --space $argv[1] | jq ".[] | { id, app, title, display, space }"
+  else
+    yabai -m query --windows --space | jq ".[] | { id, app, title, display, space }"
+  end
+end
+
+function glo --argument lines --description "git log one line"
+  if set -q argv[1]
+    git log -"$lines" --oneline 
+  else
+    git log --oneline 
+  end
+end
+
+function gl --argument lines --description "git log "
+  if set -q argv[1]
+    git log -"$lines"
+  else
+    git log
+  end
+end
 
 function tstamp #epoch in miliseconds
   date "+%FT%H:%M:%S.%NZ" -ud @(math "$argv / 1000")
@@ -84,3 +126,16 @@ function tstamps #epoch in seconds
   date "+%FT%H:%M:%S.%NZ" -ud @$argv
 end
 
+function dexall 
+  for ctx in (kubectl config get-contexts -o name)
+    kubectl config set-context $ctx --user dex-login-auto-user
+  end
+end
+
+#alias in 'open -a "IntelliJ IDEA CE"'
+alias in 'open -a "IntelliJ IDEA Ultimate"'
+
+abbr kcatcit "kcat 2>&1 -q -C -b kafka1-c1 -f '%T offest=%o %k ===> %s\n'  -t"
+abbr kcatpre "kcat 2>&1 -q -C -b rix3-kafka1-pp -f '%T offest=%o %k ===> %s\n'  -t"
+abbr kcatl1 "kcat 2>&1 -q -C -b fra1-kafka1-pr -f '%T offest=%o %k ===> %s\n'  -t"
+abbr kcatf "kcat 2>&1 -q -C -f '%T offest=%o %k ===> %s\n' -b"
