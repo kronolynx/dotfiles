@@ -13,7 +13,7 @@ after-login-command = []
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffdc8a78 inactive_color=0xff494d64 width=5.0',
+  # 'exec-and-forget borders active_color=0xffdc8a78 inactive_color=0xff494d64 width=5.0',
   'exec-and-forget sketchybar --reload'
 ]
 
@@ -24,6 +24,11 @@ after-startup-command = [
 exec-on-workspace-change = ['/bin/bash', '-c',
     'sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
 ]
+
+# TODO can this help when window moved to a different workspace ? trigger different event
+# on-focus-changed = [
+#     'exec-and-forget sketchybar --trigger aerospace_workspace_change FOCUS_CHANGE=true'
+# ]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -68,7 +73,7 @@ inner.horizontal = 8
 inner.vertical =   8
 outer.left =       8
 outer.bottom =     8
-outer.top =        8
+outer.top =        [ { monitor."Built-in" = 6 }, 37 ]
 outer.right =      8
 
 # 'main' binding mode declaration
@@ -104,7 +109,10 @@ cmd-alt-h = [] # Disable "hide others"
 ## todo the following two don't play nice with enable-normalization-flatten-containers
 # alt-shift-s = 'split horizontal'
 # alt-shift-v = 'split vertical'
-alt-shift-enter = 'exec-and-forget "$HOME"/.config/aerospace/scripts/open_wezterm.sh'
+# alt-shift-enter = 'exec-and-forget "$HOME"/.config/aerospace/scripts/open_wezterm.sh'
+alt-shift-enter = 'exec-and-forget alacritty msg create-window'
+# alt-shift-enter = 'exec-and-forget "$HOME"/.config/aerospace/scripts/open_ghostty.sh'
+# alt-shift-enter = 'exec-and-forget "kitty --single-instance"'
 alt-shift-q = 'close'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#focus
@@ -121,22 +129,22 @@ alt-shift-l = 'move right'
 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-alt-1 = 'workspace 1'
-alt-2 = 'workspace 2'
-alt-3 = 'workspace 3'
-alt-4 = 'workspace 4'
-alt-5 = 'workspace 5'
-alt-6 = 'workspace 6'
-alt-7 = 'workspace 7'
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
-alt-0 = 'workspace 10'
-alt-minus = 'workspace 11'
-alt-equal = 'workspace 12'
-alt-leftSquareBracket = 'workspace 13'
-alt-rightSquareBracket = 'workspace 14'
-alt-quote = 'workspace 15'
-alt-slash = 'workspace 16'
+alt-1 = 'summon-workspace 1'
+alt-2 = 'summon-workspace 2'
+alt-3 = 'summon-workspace 3'
+alt-4 = 'summon-workspace 4'
+alt-5 = 'summon-workspace 5'
+alt-6 = 'summon-workspace 6'
+alt-7 = 'summon-workspace 7'
+alt-8 = 'summon-workspace 8'
+alt-9 = 'summon-workspace 9'
+alt-0 = 'summon-workspace 10'
+alt-minus = 'summon-workspace 11'
+alt-equal = 'summon-workspace 12'
+alt-leftSquareBracket = 'summon-workspace 13'
+alt-rightSquareBracket = 'summon-workspace 14'
+alt-quote = 'summon-workspace 15'
+alt-slash = 'summon-workspace 16'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 # TODO calling exec-and-forget here is a hack and should be removed when a better solution is found
@@ -158,7 +166,16 @@ alt-shift-quote = ['move-node-to-workspace 15', 'exec-and-forget sketchybar --tr
 alt-shift-slash = ['move-node-to-workspace 16', 'exec-and-forget sketchybar --trigger space_windows_change']
 
 alt-shift-f = 'fullscreen'
+alt-ctrl-f = 'layout floating tiling'
 alt-shift-a = 'layout tiles accordion'
+
+alt-shift-left = 'join-with left'
+alt-shift-down = 'join-with down'
+alt-shift-up = 'join-with up'
+alt-shift-right = 'join-with right'
+
+alt-left = 'workspace --wrap-around prev'
+alt-right = 'workspace --wrap-around next'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
@@ -170,7 +187,6 @@ alt-shift-d = 'move-workspace-to-monitor --wrap-around next'
 alt-shift-semicolon = 'mode service'
 
 alt-shift-r = 'mode resize'
-
 
 [mode.resize.binding]
 h = 'resize width -50'
@@ -191,7 +207,6 @@ esc = 'mode main'
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 [mode.service.binding]
 esc = ['reload-config', 'mode main']
-r = ['flatten-workspace-tree', 'mode main'] # reset layout
 #s = ['layout sticky tiling', 'mode main'] # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
 f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
 backspace = ['close-all-windows-but-current', 'mode main']
@@ -200,11 +215,20 @@ backspace = ['close-all-windows-but-current', 'mode main']
 slash = 'layout tiles horizontal vertical'
 comma = 'layout accordion horizontal vertical'
 
-alt-shift-h = ['join-with left', 'mode main']
-alt-shift-j = ['join-with down', 'mode main']
-alt-shift-k = ['join-with up', 'mode main']
-alt-shift-l = ['join-with right', 'mode main']
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
 
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = "move-node-to-workspace 10"
+
+[[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= "layout tiling"
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'mail'
+run = "move-node-to-workspace 9"
