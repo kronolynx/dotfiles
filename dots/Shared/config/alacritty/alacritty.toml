@@ -9,7 +9,7 @@ history = 100000
 
 [window]
 decorations = "buttonless"
-opacity = 0.85
+opacity = 0.93
 option_as_alt = "Both"
 
 [window.padding]
