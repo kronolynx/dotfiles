@@ -30,6 +30,24 @@ draw_bold_text_with_bright_colors = true
 background = "#303446"
 foreground = "#c6d0f5"
 
+[colors.normal]
+red     = '#E88988'
+green   = '#B2D99E'
+yellow  = '#EBCB8B'
+blue    = '#8CAAEE'
+magenta = '#F4B8E4'
+cyan    = '#81C8BE'
+white   = '#B5BFE2'
+
+[colors.bright]
+red     = '#F38BA8'
+green   = '#B4E3A4'
+yellow  = '#F2CF91'
+blue    = '#A0BFFF'
+magenta = '#FFBDF0'
+cyan    = '#9BE2D3'
+white   = '#C8D0F0'
+
 [colors.vi_mode_cursor]
 text = "#303446"
 cursor = "#babbf1"
