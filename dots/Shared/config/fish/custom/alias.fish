@@ -72,5 +72,3 @@ alias g='git'
 
 alias jv17="set -x JAVA_HOME (/usr/libexec/java_home -v17)"
 alias jv21="set -x JAVA_HOME (/usr/libexec/java_home -v21)"
-
-fnm env --use-on-cd --shell fish | source
