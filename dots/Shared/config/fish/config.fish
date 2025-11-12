@@ -7,7 +7,6 @@ end
 set -l os (uname)
 
 fish_add_path "/Users/jortiz/.nvim/bin"
-set -x JAVA_HOME (/usr/libexec/java_home -v21)
 
 if command -q -v nvim
     set -gx EDITOR nvim
@@ -37,6 +36,8 @@ end
 ##########################################################
 # Add completions from stuff installed with Homebrew.
 if test "$os" = Darwin && command -q -v brew
+    set -x JAVA_HOME (/usr/libexec/java_home -v21)
+
     if test -d (brew --prefix)"/share/fish/completions"
         set -p fish_complete_path (brew --prefix)/share/fish/completions
     end
