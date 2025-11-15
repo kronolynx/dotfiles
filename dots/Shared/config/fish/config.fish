@@ -3,6 +3,7 @@ if not status is-interactive
     return 0
 end
 
+set -x GITHUB_ENTERPRISE_URL "https://evolution-github-copilot.ghe.com"
 # Figure out which operating system we're in.
 set -l os (uname)
 
@@ -106,9 +107,9 @@ if test -e "$HOME/.config/fish/custom/work.fish"
     source $HOME/.config/fish/custom/work.fish
 end
 
-if command -q -v direnv
-    direnv hook fish | source
-end
+# if command -q -v direnv
+#     direnv hook fish | source
+# end
 
 if command -q -v zoxide
     zoxide init fish | source
@@ -118,9 +119,9 @@ if command -q -v fnm
     fnm env --use-on-cd --shell fish | source
 end
 
-if command -q -v kubectl
-    kubectl completion fish | source
-end
+# if command -q -v kubectl
+#     kubectl completion fish | source
+# end
 
 if command -q -v atuin
     atuin init fish --disable-up-arrow | source
@@ -133,9 +134,9 @@ end
 
 # # Attach to tmux on start if not nested session or inside nvim, vscode or intellij
 if command -q -v tmux
-  and not set -q TMUX
-  and not string match -r "vscode|JetBrains" $TERM_PROGRAM
-  and not set -q NVIM
+    and not set -q TMUX
+    and not string match -r "vscode|JetBrains" $TERM_PROGRAM
+    and not set -q NVIM
     tmux new-session -As dev
 end
 
