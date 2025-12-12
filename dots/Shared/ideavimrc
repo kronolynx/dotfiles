@@ -282,112 +282,22 @@ let g:WhichKeyDesc_diagnostics_workspace = "<leader>dw workspace"
 nmap <leader>dw <Action>(ActivateProblemsViewToolWindow)
 
 " ═══════════════════════════════════════════════════════════════════════════
-"" Which-Key Group Definitions
+"" Goto Actions (<leader>g)
 " ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_editor = "<leader>e +editor"
-let g:WhichKeyDesc_file = "<leader>f +file"
+
+nmap gd <Action>(GotoDeclaration)
+nmap gD <Action>(GotoDeclaration)
+nmap gI <Action>(GotoImplementation)
+nmap gy <Action>(GotoTypeDeclaration)
+nmap gr <Action>(FindUsages)
+
 let g:WhichKeyDesc_goto = "<leader>g +goto"
-let g:WhichKeyDesc_http = "<leader>h +harpoon"
-let g:WhichKeyDesc_caret = "<leader>k +caret/multicursor"
-let g:WhichKeyDesc_lsp = "<leader>l +lsp/scala"
-let g:WhichKeyDesc_lsp_compile = "<leader>lc +compile"
-let g:WhichKeyDesc_lsp_debug = "<leader>ld +debug/run"
-let g:WhichKeyDesc_lsp_extract = "<leader>le +extract"
-let g:WhichKeyDesc_lsp_generate = "<leader>lg +generate"
-let g:WhichKeyDesc_lsp_new = "<leader>ln +new"
-let g:WhichKeyDesc_lsp_refactor = "<leader>lr +refactor"
-let g:WhichKeyDesc_lsp_show = "<leader>ls +show"
-let g:WhichKeyDesc_lsp_toggle = "<leader>lt +toggle"
-let g:WhichKeyDesc_lsp_view = "<leader>lv +view"
-let g:WhichKeyDesc_git = "<leader>m +git"
-let g:WhichKeyDesc_git_hunk = "<leader>mh +hunk"
-let g:WhichKeyDesc_git_buffer = "<leader>mb +buffer"
-let g:WhichKeyDesc_notifications = "<leader>n +notifications/tools"
-let g:WhichKeyDesc_project = "<leader>q +project/quicklist"
-let g:WhichKeyDesc_refactor = "<leader>r +refactor"
-let g:WhichKeyDesc_search = "<leader>s +search"
-let g:WhichKeyDesc_tabs = "<leader>t +tabs"
-let g:WhichKeyDesc_utilities = "<leader>u +utilities"
-let g:WhichKeyDesc_view = "<leader>v +view"
-let g:WhichKeyDesc_view_implicits = "<leader>vi +implicits"
-let g:WhichKeyDesc_view_quick = "<leader>vq +quick"
-let g:WhichKeyDesc_window = "<leader>w +window"
-let g:WhichKeyDesc_misc = "<leader>x +misc"
-let g:WhichKeyDesc_bookmarks = "<leader>' +bookmarks"
 
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Diagnostics/Debug Actions
-" ═══════════════════════════════════════════════════════════════════════════
-
-
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Editor Actions (<leader>e)
-" ═══════════════════════════════════════════════════════════════════════════
-
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Editor Actions (<leader>e)
-" ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_file_explorer = "<leader>e file explorer"
-nmap <leader>e <Action>(SelectInProjectView)
-nmap <C-1> <Action>(SelectInProjectView)
-nmap <C-e> <Action>(ActivateProjectToolWindow)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" TODO
-" ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_editor_eval = "<leader>ee evaluate"
-map <leader>ee <Action>(EvaluateExpression)
-
-let g:WhichKeyDesc_editor_snippet = "<leader>el live template"
-map <leader>el <Action>(InsertLiveTemplate)
-
-let g:WhichKeyDesc_editor_type = "<leader>et expression type"
-map <leader>et <Action>(ExpressionTypeInfo)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" File Actions (<leader>f)
-" ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_file_recent_changes = "<leader>fc recent changes"
-map <leader>fc <Action>(RecentChangedFiles)
-
-let g:WhichKeyDesc_file_find = "<leader>ff fuzzy find"
-map <leader>ff <Action>(GotoFile)
-
-let g:WhichKeyDesc_file_new = "<leader>fN new file"
-map <leader>fN <Action>(NewFile)
-
-let g:WhichKeyDesc_file_open = "<leader>fo open file"
-map <leader>fo <Action>(OpenFile)
-
-let g:WhichKeyDesc_file_recent = "<leader>fr recent files"
-map <leader>fr <Action>(RecentFiles)
-
-let g:WhichKeyDesc_file_rename = "<leader>fR rename"
-map <leader>fR <Action>(RenameFile)
-
-let g:WhichKeyDesc_file_usages = "<leader>fu usages"
-map <leader>fu <Action>(FindUsages)
-
-let g:WhichKeyDesc_file_copy_path = "<leader>fy copy path"
-map <leader>fy <Action>(CopyPaths)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Goto Actions (<leader>g)
-" ═══════════════════════════════════════════════════════════════════════════
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Goto Actions (<leader>g)
-" ═══════════════════════════════════════════════════════════════════════════
 let g:WhichKeyDesc_goto_block_start = "<leader>g[ block start"
 map <leader>g[ <Action>(EditorCodeBlockStart)
 
 let g:WhichKeyDesc_goto_block_end = "<leader>g] block end"
 map <leader>g] <Action>(EditorCodeBlockEnd)
-
-" Call Hierarchy (NEW - see all callers/callees)
 
 let g:WhichKeyDesc_goto_action = "<leader>ga action"
 nmap <leader>ga <Action>(GotoAction)
@@ -398,13 +308,8 @@ nmap <leader>gc <Action>(GotoClass)
 let g:WhichKeyDesc_goto_call_hierarchy = "<leader>gC call hierarchy"
 nmap <leader>gC <Action>(CallHierarchy)
 
-" Type Hierarchy (NEW - navigate class/trait hierarchies)
-
 let g:WhichKeyDesc_goto_definition = "<leader>gd definition"
 nmap <leader>gd <Action>(GotoDeclaration)
-
-let g:WhichKeyDesc_goto_Declaration = "<leader>gD declaration"
-nmap <leader>gD <Action>(GotoDeclaration)
 
 let g:WhichKeyDesc_goto_files = "<leader>gf find files"
 map <leader>gf <Action>(GotoFile)
@@ -412,29 +317,18 @@ map <leader>gf <Action>(GotoFile)
 let g:WhichKeyDesc_goto_project_view = "<leader>gg project view"
 nmap <leader>gg <Action>(SelectInProjectView)
 
-let g:WhichKeyDesc_goto_help = "<leader>gh help"
-nmap <leader>gh <Action>(SearchEverywhere)
-
 let g:WhichKeyDesc_goto_type_hierarchy = "<leader>gH type hierarchy"
 nmap <leader>gH <Action>(TypeHierarchy)
 
-let g:WhichKeyDesc_view_signature = "<leader>gq quick signature"
-map <leader>gq <Action>(QuickTypeDefinition)
-
-
-" Standard vim goto mappings
-nmap gd <Action>(GotoDeclaration)
-nmap gD <Action>(GotoDeclaration)
-nmap gI <Action>(GotoImplementation)
-nmap gy <Action>(GotoTypeDeclaration)
-nmap gr <Action>(FindUsages)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" GOTO
-" ═══════════════════════════════════════════════════════════════════════════
-
 let g:WhichKeyDesc_goto_implementation = "<leader>gi implementation"
 nmap <leader>gi <Action>(GotoImplementation)
+
+let g:WhichKeyDesc_goto_quick_implementation = "<leader>gI quick implementations"
+nmap <leader>gI <Action>(QuickImplementations)
+
+
+let g:WhichKeyDesc_view_signature = "<leader>gq quick signature"
+map <leader>gq <Action>(QuickTypeDefinition)
 
 let g:WhichKeyDesc_goto_recent_locations_popup = "<leader>gl recent locations"
 nmap <leader>gl <Action>(RecentLocations)
@@ -442,12 +336,11 @@ nmap <leader>gl <Action>(RecentLocations)
 let g:WhichKeyDesc_goto_marks = "<leader>gm marks"
 nmap <leader>gm <Action>(ShowBookmarks)
 
-let g:WhichKeyDesc_goto_references = "<leader>gR references"
-nmap <leader>gR <Action>(FindUsages)
-
-" TODO go to references ???
 let g:WhichKeyDesc_goto_usages_popup = "<leader>gr usages popup"
 nmap <leader>gr <Action>(ShowUsages)
+
+let g:WhichKeyDesc_goto_references = "<leader>gR references"
+nmap <leader>gR <Action>(FindUsages)
 
 let g:WhichKeyDesc_goto_symbol = "<leader>gs symbol"
 nmap <leader>gs <Action>(GotoSymbol)
@@ -455,11 +348,11 @@ nmap <leader>gs <Action>(GotoSymbol)
 let g:WhichKeyDesc_goto_super = "<leader>gS super method"
 nmap <leader>gS <Action>(GotoSuperMethod)
 
-let g:WhichKeyDesc_goto_type_definition = "<leader>gT type definition"
-nmap <leader>gT <Action>(GotoTypeDeclaration)
+let g:WhichKeyDesc_goto_type_definition = "<leader>gt type definition"
+nmap <leader>gt <Action>(GotoTypeDeclaration)
 
-let g:WhichKeyDesc_goto_test = "<leader>gt test"
-nmap <leader>gt <Action>(GotoTest)
+let g:WhichKeyDesc_goto_test = "<leader>gT test"
+nmap <leader>gT <Action>(GotoTest)
 
 let g:WhichKeyDesc_goto_usages = "<leader>gu usages"
 nmap <leader>gu <Action>(FindUsages)
@@ -472,27 +365,115 @@ nmap <leader>gx <Action>(GotoRelated)
 
 
 " ═══════════════════════════════════════════════════════════════════════════
+" Harpoon
+" ═══════════════════════════════════════════════════════════════════════════
+let g:WhichKeyDesc_bookmarks = "<leader>h +harpoon"
+let g:WhichKeyDesc_bookmarks_show = "<leader>hh show"
+map <leader>hh <Action>(ShowBookmarks)
+let g:WhichKeyDesc_bookmarks_show = "<leader>ht show tool window"
+map <leader>ht <Action>(ActivateBookmarksToolWindow)
+
+map <leader>hr <Action>(EditBookmark)
+map <leader>hc <Action>(ToggleBookmarkWithMnemonic)
+map <leader>hd <Action>(ToggleBookmark)
+
+let g:WhichKeyDesc_bookmarks_next = "<leader>'f next bookmark"
+map <leader>hf <Action>(GotoNextBookmark)
+
+let g:WhichKeyDesc_bookmarks_prev = "<leader>'b prev bookmark"
+map <leader>hb <Action>(GotoPreviousBookmark)
+
+" Mnemonic bookmarks (m0-m9, ma-mz to toggle, '0-'9, 'a-'z to goto)
+map m0 <Action>(ToggleBookmark0)
+map m1 <Action>(ToggleBookmark1)
+map m2 <Action>(ToggleBookmark2)
+map m3 <Action>(ToggleBookmark3)
+map m4 <Action>(ToggleBookmark4)
+map m5 <Action>(ToggleBookmark5)
+map m6 <Action>(ToggleBookmark6)
+map m7 <Action>(ToggleBookmark7)
+map m8 <Action>(ToggleBookmark8)
+map m9 <Action>(ToggleBookmark9)
+map ma <Action>(ToggleBookmarkA)
+map mb <Action>(ToggleBookmarkB)
+map mc <Action>(ToggleBookmarkC)
+map md <Action>(ToggleBookmarkD)
+map me <Action>(ToggleBookmarkE)
+map mf <Action>(ToggleBookmarkF)
+map mg <Action>(ToggleBookmarkG)
+map mh <Action>(ToggleBookmarkH)
+map mi <Action>(ToggleBookmarkI)
+map mj <Action>(ToggleBookmarkJ)
+map mk <Action>(ToggleBookmarkK)
+map ml <Action>(ToggleBookmarkL)
+map mm <Action>(ToggleBookmarkM)
+map mn <Action>(ToggleBookmarkN)
+map mo <Action>(ToggleBookmarkO)
+map mp <Action>(ToggleBookmarkP)
+map mq <Action>(ToggleBookmarkQ)
+map mr <Action>(ToggleBookmarkR)
+map ms <Action>(ToggleBookmarkS)
+map mt <Action>(ToggleBookmarkT)
+map mu <Action>(ToggleBookmarkU)
+map mv <Action>(ToggleBookmarkV)
+map mw <Action>(ToggleBookmarkW)
+map mx <Action>(ToggleBookmarkX)
+map my <Action>(ToggleBookmarkY)
+map mz <Action>(ToggleBookmarkZ)
+map '0 <Action>(GotoBookmark0)
+map '1 <Action>(GotoBookmark1)
+map '2 <Action>(GotoBookmark2)
+map '3 <Action>(GotoBookmark3)
+map '4 <Action>(GotoBookmark4)
+map '5 <Action>(GotoBookmark5)
+map '6 <Action>(GotoBookmark6)
+map '7 <Action>(GotoBookmark7)
+map '8 <Action>(GotoBookmark8)
+map '9 <Action>(GotoBookmark9)
+map 'a <Action>(GotoBookmarkA)
+map 'b <Action>(GotoBookmarkB)
+map 'c <Action>(GotoBookmarkC)
+map 'd <Action>(GotoBookmarkD)
+map 'e <Action>(GotoBookmarkE)
+map 'f <Action>(GotoBookmarkF)
+map 'g <Action>(GotoBookmarkG)
+map 'h <Action>(GotoBookmarkH)
+map 'i <Action>(GotoBookmarkI)
+map 'j <Action>(GotoBookmarkJ)
+map 'k <Action>(GotoBookmarkK)
+map 'l <Action>(GotoBookmarkL)
+map 'm <Action>(GotoBookmarkM)
+map 'n <Action>(GotoBookmarkN)
+map 'o <Action>(GotoBookmarkO)
+map 'p <Action>(GotoBookmarkP)
+map 'q <Action>(GotoBookmarkQ)
+map 'r <Action>(GotoBookmarkR)
+map 's <Action>(GotoBookmarkS)
+map 't <Action>(GotoBookmarkT)
+map 'u <Action>(GotoBookmarkU)
+map 'v <Action>(GotoBookmarkV)
+map 'w <Action>(GotoBookmarkW)
+map 'x <Action>(GotoBookmarkX)
+map 'y <Action>(GotoBookmarkY)
+map 'z <Action>(GotoBookmarkZ)
+
+" ═══════════════════════════════════════════════════════════════════════════
 "" Caret/Multi-cursor
 " ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_caret_add = "<leader>ka add caret"
+let g:WhichKeyDesc_caret = "<leader>k +caret/multicursor"
+
+let g:WhichKeyDesc_caret_add = "<leader>ka add"
 vmap <leader>ka <Action>(EditorAddCaretPerSelectedLine)
 nmap <leader>ka <Action>(EditorCloneCaretBelow)
 
 let g:WhichKeyDesc_caret_next = "<leader>kn next occurrence"
 map <leader>kn <Action>(SelectNextOccurrence)
 
-" Unselect Occurrence (NEW - undo multi-cursor selection)
-
 let g:WhichKeyDesc_caret_all = "<leader>ko all occurrences"
 map <leader>ko <Action>(SelectAllOccurrences)
 
 let g:WhichKeyDesc_caret_unselect = "<leader>ku unselect occurrence"
 map <leader>ku <Action>(UnselectPreviousOccurrence)
-
-" ═══════════════════════════════════════════════════════════════════════════
-" GitHub Copilot
-" ═══════════════════════════════════════════════════════════════════════════
-
 
 " ═══════════════════════════════════════════════════════════════════════════
 " LSP
@@ -540,6 +521,9 @@ map <leader>lcp <Action>(CompileProject)
 " Debug/Run
 let g:WhichKeyDesc_lsp_diagnostics = "<leader>ld +debug"
 
+let g:WhichKeyDesc_run_debug = "<leader>rd debug"
+nmap <leader>rd <Action>(Debug)
+
 let g:WhichKeyDesc_lsp_debug_failed = "<leader>ldf run failed tests"
 map <leader>ldf <Action>(RerunFailedTests)
 
@@ -579,7 +563,7 @@ map <leader>lmc <Action>(Scala.ConfigureTypeHints)
 let g:WhichKeyDesc_show_desugar = "<leader>lmd desugar"
 map <leader>lmd <Action>(Scala.Desugar)
 
-let g:WhichKeyDesc_lsp_make_explicit = "<leader>lm make explicit"
+let g:WhichKeyDesc_lsp_make_explicit = "<leader>lme make explicit"
 map <leader>lme <Action>(Scala.MakeExplicit)
 
 let g:WhichKeyDesc_toggle_exclusive = "<leader>lmE toggle exclusive hint"
@@ -603,6 +587,10 @@ nmap <leader>lmt <Action>(Scala.Sbt.RunTask)
 let g:WhichKeyDesc_lsp_sbt_show_task = "<leader>lmT sbt show task"
 nmap <leader>lmT <Action>(Scala.Sbt.ShowTask)
 
+let g:WhichKeyDesc_tests = "<leader>lt tests"
+
+let g:WhichKeyDesc_run_recent_tests = "<leader>ltr recent tests"
+nmap <leader>ltr <Action>(ShowRecentTests)
 
 " implicits
 let g:WhichKeyDesc_view_implicit = "<leader>lmi +implicits"
@@ -626,98 +614,108 @@ nmap <leader>lmw <Action>(Scala.RunWorksheet)
 " ═══════════════════════════════════════════════════════════════════════════
 " Refactorings
 " ═══════════════════════════════════════════════════════════════════════════
+"
+let g:WhichKeyDesc_extract = "<leader>r +refactor"
+
+let g:WhichKeyDesc_refactor_delete = "<leader>rD safe delete"
+nmap <leader>rD <Action>(SafeDelete)
+
+let g:WhichKeyDesc_refactor_inline = "<leader>ri inline"
+map <leader>ri <Action>(Inline)
+
+let g:WhichKeyDesc_refactor_java_scala = "<leader>rj rename java to scala"
+map <leader>rj <Action>(Scala.RenameJavaToScala)
+
+let g:WhichKeyDesc_refactor_overide = "<leader>rro override methods"
+map <leader>ro <Action>(OverrideMethods)
+
+let g:WhichKeyDesc_refactor_parameter = "<leader>rp introduce parameter"
+map <leader>rp <Action>(IntroduceParameter)
+
+let g:WhichKeyDesc_refactor_quicklist = "<leader>rq refactor menu"
+map <leader>rq <Action>(Refactorings.QuickListPopupAction)
+
+let g:WhichKeyDesc_refactor_rename = "<leader>rr rename"
+map <leader>rr <Action>(RenameElement)
+
+let g:WhichKeyDesc_refactor_signature = "<leader>rS change signature"
+nmap <leader>rs <Action>(ChangeSignature)
+
+let g:WhichKeyDesc_refactor_variable = "<leader>rv introduce variable"
+map <leader>rv <Action>(IntroduceVariable)
+
+let g:WhichKeyDesc_refactor_whitespace = "<leader>rw remove whitespace"
+nmap <leader>rw :%s/\s\+$<CR>
+vmap <leader>rw <Esc>:%s/\s\+$<CR>
+
 
 " =================================
 " Extract
 " =================================
-let g:WhichKeyDesc_extract = "<leader>le +extract"
+let g:WhichKeyDesc_extract = "<leader>re +extract"
 
-let g:WhichKeyDesc_extract_class = "<leader>lec class"
-map <leader>lec <Action>(ExtractClass)
+let g:WhichKeyDesc_extract_class = "<leader>rec class"
+map <leader>rec <Action>(ExtractClass)
 
-let g:WhichKeyDesc_extract_function = "<leader>lef function"
-map <leader>lef <Action>(ExtractFunction)
+let g:WhichKeyDesc_extract_function = "<leader>ref function"
+map <leader>ref <Action>(ExtractFunction)
 
-let g:WhichKeyDesc_extract_interface = "<leader>lei interface"
-nmap <leader>lei <Action>(ExtractInterface)
+let g:WhichKeyDesc_extract_interface = "<leader>rei interface"
+nmap <leader>rei <Action>(ExtractInterface)
 
-let g:WhichKeyDesc_extract_method = "<leader>lem method"
-map <leader>lem <Action>(ExtractMethod)
+let g:WhichKeyDesc_extract_method = "<leader>rem method"
+map <leader>rem <Action>(ExtractMethod)
 
-let g:WhichKeyDesc_extract_scope = "<leader>les to scope"
-map <leader>les <Action>(ExtractFunctionToScope)
+let g:WhichKeyDesc_extract_scope = "<leader>res to scope"
+map <leader>res <Action>(ExtractFunctionToScope)
 
-let g:WhichKeyDesc_extract_trait = "<leader>let trait"
-map <leader>let <Action>(Scala.ExtractTrait)
+let g:WhichKeyDesc_extract_trait = "<leader>ret trait"
+map <leader>ret <Action>(Scala.ExtractTrait)
 
-let g:WhichKeyDesc_extract_superclass = "<leader>leu superclass"
-nmap <leader>leu <Action>(ExtractSuperclass)
+let g:WhichKeyDesc_extract_superclass = "<leader>reu superclass"
+nmap <leader>reu <Action>(ExtractSuperclass)
 
-let g:WhichKeyDesc_extract_window = "<leader>lew extract window"
-map <leader>lew <Action>(ExtractMethodToolWindow.TreePopup)
+let g:WhichKeyDesc_extract_window = "<leader>rew extract window"
+map <leader>rew <Action>(ExtractMethodToolWindow.TreePopup)
 
 " =================================
 " Generate
 " =================================
-let g:WhichKeyDesc_generate = "<leader>lg +generate"
+let g:WhichKeyDesc_generate = "<leader>rg +generate"
 
-let g:WhichKeyDesc_generate_companion = "<leader>lgc companion object"
-map <leader>lgc <Action>(Scala.GenerateCompanionObject)
+let g:WhichKeyDesc_generate_companion = "<leader>rgc companion object"
+map <leader>rgc <Action>(Scala.GenerateCompanionObject)
 
-let g:WhichKeyDesc_generate_doc = "<leader>lgd scaladoc"
-map <leader>lgd <Action>(Scala.GenerateScaladoc)
+let g:WhichKeyDesc_generate_doc = "<leader>rgd scaladoc"
+map <leader>rgd <Action>(Scala.GenerateScaladoc)
 
-let g:WhichKeyDesc_new_doc = "<leader>lgD new doc stub"
-map <leader>lgD <Action>(Scala.CreateScalaDocStub)
+let g:WhichKeyDesc_new_doc = "<leader>rgD new doc stub"
+map <leader>rgD <Action>(Scala.CreateScalaDocStub)
 
-let g:WhichKeyDesc_generate_equals = "<leader>lge equals"
-map <leader>lge <Action>(Scala.GenerateEquals)
+let g:WhichKeyDesc_generate_equals = "<leader>rge equals"
+map <leader>rge <Action>(Scala.GenerateEquals)
 
-let g:WhichKeyDesc_code_generate = "<leader>lgg generate"
-map <leader>lgg <Action>(Generate)
+let g:WhichKeyDesc_code_generate = "<leader>rgg generate"
+map <leader>rgg <Action>(Generate)
 
-let g:WhichKeyDesc_generate_property = "<leader>lgp property"
-map <leader>lgp <Action>(Scala.GenerateProperty)
+let g:WhichKeyDesc_generate_property = "<leader>rgp property"
+map <leader>rgp <Action>(Scala.GenerateProperty)
 
-let g:WhichKeyDesc_new_package = "<leader>lgP package object"
-map <leader>lgP <Action>(Scala.NewPackageObject)
+let g:WhichKeyDesc_new_package = "<leader>rgP package object"
+map <leader>rgP <Action>(Scala.NewPackageObject)
 
-let g:WhichKeyDesc_generate_tostring = "<leader>lgs toString"
-map <leader>lgs <Action>(Scala.GenerateToString)
+let g:WhichKeyDesc_generate_tostring = "<leader>rgs toString"
+map <leader>rgs <Action>(Scala.GenerateToString)
 
-let g:WhichKeyDesc_new_class = "<leader>lgn new class"
-map <leader>lgn <Action>(Scala.NewClass)
+let g:WhichKeyDesc_new_class = "<leader>rgn new class"
+map <leader>rgn <Action>(Scala.NewClass)
 
-let g:WhichKeyDesc_lsp_create_worksheet = "<leader>lgw light worksheet"
-map <leader>lgw <Action>(Scala.CreateLightWorksheetAction)
+let g:WhichKeyDesc_lsp_create_worksheet = "<leader>rgw light worksheet"
+map <leader>rgw <Action>(Scala.CreateLightWorksheetAction)
 
-let g:WhichKeyDesc_new_worksheet = "<leader>lgW worksheet"
-map <leader>lgW <Action>(Scala.NewScalaWorksheet)
+let g:WhichKeyDesc_new_worksheet = "<leader>rgW worksheet"
+map <leader>rgW <Action>(Scala.NewScalaWorksheet)
 
-
-" Refactor
-let g:WhichKeyDesc_refactor = "<leader>lr +refactor"
-
-let g:WhichKeyDesc_refactor_inline = "<leader>lri inline"
-map <leader>lri <Action>(Inline)
-
-let g:WhichKeyDesc_refactor_java_scala = "<leader>lrj rename java to scala"
-map <leader>lrj <Action>(Scala.RenameJavaToScala)
-
-let g:WhichKeyDesc_refactor_override = "<leader>lro override methods"
-map <leader>lro <Action>(OverrideMethods)
-
-let g:WhichKeyDesc_refactor_parameter = "<leader>lrp introduce parameter"
-map <leader>lrp <Action>(IntroduceParameter)
-
-let g:WhichKeyDesc_refactor_quicklist = "<leader>lrq refactor menu"
-map <leader>lrq <Action>(Refactorings.QuickListPopupAction)
-
-let g:WhichKeyDesc_refactor_rename = "<leader>lrr rename"
-map <leader>lrr <Action>(RenameElement)
-
-let g:WhichKeyDesc_refactor_variable = "<leader>lrv introduce variable"
-map <leader>lrv <Action>(IntroduceVariable)
 
 " ═══════════════════════════════════════════════════════════════════════════
 "" Git / Changes
@@ -732,75 +730,20 @@ nmap ]g <Action>(VcsShowNextChangeMarker)
 nmap [g <Action>(VcsShowPrevChangeMarker)
 
 let g:WhichKeyDesc_git = "<leader>m +git"
-nmap <leader>ma <Action>(Git.Add)
 
-nmap <leader>mb <Action>(Git.Branches)
-
-let g:WhichKeyDesc_git_hunk = "<leader>mh hunk"
-nmap <leader>mhv <Action>(VcsShowCurrentChangeMarker)
-nmap <leader>mhn <Action>(VcsShowNextChangeMarker)
-nmap <leader>mhp <Action>(VcsShowPrevChangeMarker)
-nmap <leader>mhR <Action>(Vcs.RollbackChangedLines)
-
-nmap <leader>mc <Action>(Git.Commit.Stage)
-
-nmap <leader>my <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.CopyAction)
-vmap <leader>my <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.CopyAction)
-nmap <leader>mo <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.BrowserAction)
-vmap <leader>mo <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.BrowserAction)
-
-"" TODO  blue this line
-
-
-
-" View actions
-
-
-let g:WhichKeyDesc_view_hints = "<leader>lvh toggle inlay hints"
-map <leader>lvs <Action>(FileStructurePopup)
-map <leader>lvh <Action>(ToggleInlayHintsGloballyAction)
-
-" Hover and signature help (like Neovim)
-nmap K <Action>(QuickJavaDoc)
-nmap H <Action>(ParameterInfo)
-inoremap <M-h> <C-o><Action>(ParameterInfo)
-inoremap <C-k> <C-o><Action>(ParameterInfo)
-map <A-k> <Action>(Scala.TypeInfo)
-map <A-h> <Action>(ShowHoverInfo)
-
-" SBT Integration (NEW - run SBT tasks)
-
-let g:WhichKeyDesc_lsp_view_hints = "<leader>lvh toggle inlay hints"
-map <leader>lvh <Action>(ToggleInlayHintsGloballyAction)
-
-let g:WhichKeyDesc_view_symbols = "<leader>lvs symbols"
-
-let g:WhichKeyDesc_lsp_scala_worksheet = "<leader>lW run worksheet"
-nmap <leader>lW <Action>(Scala.RunWorksheet)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Git Actions (<leader>m)
-" ═══════════════════════════════════════════════════════════════════════════
 let g:WhichKeyDesc_git_add = "<leader>ma add"
-map <leader>ma <Action>(Git.Add)
+"nmap <leader>ma <Action>(Git.Add)
+nmap <leader>mha <Action>(Git.Stage.Add)
+"nmap <leader>ma <Action>(ChangesView.AddUnversioned)
 
 let g:WhichKeyDesc_git_branches = "<leader>mB branches"
-map <leader>mB <Action>(Git.Branches)
-
-let g:WhichKeyDesc_git_buffer_commits = "<leader>mbc buffer commits"
-map <leader>mbc <Action>(Vcs.ShowTabbedFileHistory)
-
-" Git hunk navigation
+nmap <leader>mb <Action>(Git.Branches)
 
 let g:WhichKeyDesc_git_commit = "<leader>mc commit"
 map <leader>mc <Action>(Git.Commit.Stage)
 
 let g:WhichKeyDesc_git_compare_branch = "<leader>mC compare with branch"
 nmap <leader>mC <Action>(Git.CompareWithBranch)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Notifications/Tools (<leader>n)
-" ═══════════════════════════════════════════════════════════════════════════
 
 let g:WhichKeyDesc_git_diff = "<leader>md diff/status"
 map <leader>md <Action>(Vcs.Show.Local.Changes)
@@ -811,33 +754,33 @@ map <leader>mf <Action>(Git.Fetch)
 let g:WhichKeyDesc_git_fuzzy_files = "<leader>mg fuzzy git files"
 map <leader>mg <Action>(Vcs.QuickListPopupAction)
 
-let g:WhichKeyDesc_git_history = "<leader>mh history"
-map <leader>mh <Action>(Vcs.ShowHistoryForBlock)
+let g:WhichKeyDesc_git_buffer_commits = "<leader>mH buffer commits"
+map <leader>mH <Action>(Vcs.ShowTabbedFileHistory)
+
+"let g:WhichKeyDesc_git_history = "<leader>mh history"
+"map <leader>mh <Action>(Vcs.ShowHistoryForBlock)
+
+let g:WhichKeyDesc_git_hunk = "<leader>mh hunk"
 
 let g:WhichKeyDesc_git_hunk_next = "<leader>mhn next hunk"
-map <leader>mhn <Action>(VcsShowNextChangeMarker)
+nmap <leader>mhn <Action>(VcsShowNextChangeMarker)
 
 let g:WhichKeyDesc_git_hunk_prev = "<leader>mhp prev hunk"
-map <leader>mhp <Action>(VcsShowPrevChangeMarker)
-
-" Show Hunk (NEW - try ShowErrorDescription on a change marker)
+nmap <leader>mhp <Action>(VcsShowPrevChangeMarker)
 
 let g:WhichKeyDesc_git_hunk_rollback = "<leader>mhR rollback hunk"
 map <leader>mhR <Action>(Vcs.RollbackChangedLines)
 
-" Compare with Branch (NEW - see diff with any branch)
-
 let g:WhichKeyDesc_git_hunk_preview = "<leader>mhv preview hunk"
-map <leader>mhv <Action>(ShowErrorDescription)
+nmap <leader>mhv <Action>(VcsShowCurrentChangeMarker)
 
-let g:WhichKeyDesc_git_init = "<leader>mi init"
-map <leader>mi <Action>(Git.Init)
+let g:WhichKeyDesc_git_menu = "<leader>mm menu"
+map <leader>mm <Action>(Git.Menu)
 
 let g:WhichKeyDesc_git_log = "<leader>ml log"
 map <leader>ml <Action>(Git.Log)
 
-let g:WhichKeyDesc_git_menu = "<leader>mm menu"
-map <leader>mm <Action>(Git.Menu)
+map <leader>mo <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.BrowserAction)
 
 let g:WhichKeyDesc_git_pull = "<leader>mp pull"
 map <leader>mp <Action>(Git.Pull)
@@ -854,144 +797,27 @@ map <leader>mu <Action>(Git.Unstash)
 let g:WhichKeyDesc_git_blame = "<leader>mv blame"
 map <leader>mv <Action>(Annotate)
 
-" Git buffer commits (from Neovim)
-
 let g:WhichKeyDesc_git_workspace = "<leader>mw workspace changes"
 map <leader>mw <Action>(Vcs.Show.Local.Changes)
 
-" ═══════════════════════════════════════════════════════════════════════════
-"" Notifications/Tools Actions (<leader>n)
-" ═══════════════════════════════════════════════════════════════════════════
-
-" Nocalhost
+map <leader>my <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.CopyAction)
 
 " ═══════════════════════════════════════════════════════════════════════════
-"" Project/Quickfix Actions (<leader>q)
-" ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_quickfix_close = "<leader>qc close"
-map <leader>qc <Action>(HideActiveWindow)
-
-let g:WhichKeyDesc_project_refresh = "<leader>qf refresh"
-map <leader>qf <Action>(ExternalSystem.RefreshAllProjects)
-
-let g:WhichKeyDesc_quickfix_next = "<leader>qn next"
-nmap <leader>qn <Action>(GotoNextError)
-
-let g:WhichKeyDesc_quickfix_open = "<leader>qo open"
-map <leader>qo <Action>(ActivateProblemsViewToolWindow)
-
-let g:WhichKeyDesc_project_close_other = "<leader>qO close other"
-map <leader>qO <Action>(CloseOtherProjects)
-
-let g:WhichKeyDesc_project_open = "<leader>qo open file"
-map <leader>qo <Action>(OpenFile)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Refactor (<leader>r)
+"" Search
 " ═══════════════════════════════════════════════════════════════════════════
 
-let g:WhichKeyDesc_quickfix_previous = "<leader>qp previous"
-nmap <leader>qp <Action>(GotoPreviousError)
+map * <Action>(FindWordAtCaret)
 
-" Project actions
+let g:WhichKeyDesc_search = "<leader>s +search"
 
-let g:WhichKeyDesc_project_close = "<leader>qq close project"
-map <leader>qq <Action>(CloseProject)
-
-let g:WhichKeyDesc_project_exit = "<leader>qQ exit"
-map <leader>qQ <Action>(Exit)
-
-let g:WhichKeyDesc_project_recent = "<leader>qr recent projects"
-map <leader>qr <Action>(RecentProjectListGroup)
-
-let g:WhichKeyDesc_project_save = "<leader>qs save all"
-map <leader>qs <Action>(SaveAll)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Run/Refactor Actions (<leader>r)
-" ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_run_class = "<leader>rc run class"
-nmap <leader>rc <Action>(RunClass)
-
-let g:WhichKeyDesc_run_class = "<leader>rc run class"
-nmap <leader>rc <Action>(RunClass)
-
-let g:WhichKeyDesc_run_debug = "<leader>rd debug"
-nmap <leader>rd <Action>(Debug)
-
-let g:WhichKeyDesc_refactor_delete = "<leader>rD safe delete"
-nmap <leader>rD <Action>(SafeDelete)
-
-" Change Signature (NEW - refactor method parameters)
-
-let g:WhichKeyDesc_run_debug = "<leader>rd debug"
-nmap <leader>rd <Action>(Debug)
-
-let g:WhichKeyDesc_run_failed_tests = "<leader>rf rerun failed tests"
-nmap <leader>rf <Action>(RerunFailedTests)
-
-" Show Recent Tests (NEW - quick test access)
-
-let g:WhichKeyDesc_refactor_inline = "<leader>ri inline"
-nmap <leader>ri <Action>(Inline)
-vnoremap <leader>ri <Action>(Inline)
-
-" Safe Delete (NEW - delete with usage checking)
-
-let g:WhichKeyDesc_run_run = "<leader>rr run"
-nmap <leader>rr <Action>(Run)
-
-let g:WhichKeyDesc_run_rerun = "<leader>rr run"
-nmap <leader>rr <Action>(Run)
-
-let g:WhichKeyDesc_run_stop = "<leader>rs stop"
-nmap <leader>rs <Action>(Stop)
-
-" Extract refactorings
-
-let g:WhichKeyDesc_refactor_signature = "<leader>rS change signature"
-nmap <leader>rS <Action>(ChangeSignature)
-
-" Run shortcuts (from Neovim)
-
-let g:WhichKeyDesc_run_stop = "<leader>rs stop"
-nmap <leader>rs <Action>(Stop)
-
-" Paste without newlines
-
-let g:WhichKeyDesc_run_tests = "<leader>rt rerun tests"
-nmap <leader>rt <Action>(RerunTests)
-
-let g:WhichKeyDesc_run_tests = "<leader>rt rerun tests"
-nmap <leader>rt <Action>(RerunTests)
-
-" Rerun Failed Tests (NEW - TDD workflow)
-
-let g:WhichKeyDesc_run_recent_tests = "<leader>rT recent tests"
-nmap <leader>rT <Action>(ShowRecentTests)
-
-let g:WhichKeyDesc_refactor_whitespace = "<leader>rw remove whitespace"
-nmap <leader>rw :%s/\s\+$<CR>
-vmap <leader>rw <Esc>:%s/\s\+$<CR>
-
-" Inline Refactoring (NEW - inline variables/methods)
-
-" ═══════════════════════════════════════════════════════════════════════════
-"" Search Actions (<leader>s)
-" ═══════════════════════════════════════════════════════════════════════════
 let g:WhichKeyDesc_search_continue = "<leader>sc continue"
 map <leader>sc <Action>(FindInPath)
 
 let g:WhichKeyDesc_search_fuzzy_files = "<leader>sf fuzzy files"
 map <leader>sf <Action>(GotoFile)
 
-" Find Usages in File (NEW - usages in current file only)
-
 let g:WhichKeyDesc_search_file_usages = "<leader>sF usages in file"
 nmap <leader>sF <Action>(FindUsagesInFile)
-
-let g:WhichKeyDesc_search_fuzzy_grep = "<leader>sg fuzzy grep"
-map <leader>sg <Action>(FindInPath)
 
 let g:WhichKeyDesc_search_highlight = "<leader>sh highlight"
 map <leader>sh <Action>(HighlightUsagesInFile)
@@ -1002,9 +828,8 @@ map <leader>sm <Action>(FindUsagesMenuGroup)
 let g:WhichKeyDesc_search_path = "<leader>sp find in path"
 map <leader>sp <Action>(FindInPath)
 
-let g:WhichKeyDesc_search_grep = "<leader>ss live grep"
+let g:WhichKeyDesc_search_grep = "<leader>ss search"
 map <leader>ss <Action>(FindInPath)
-vnoremap <leader>ss <Action>(FindInPath)
 
 let g:WhichKeyDesc_search_find = "<leader>sS find"
 map <leader>sS <Action>(Find)
@@ -1018,16 +843,14 @@ map <leader>sv <Action>(FindSelectionInPath)
 let g:WhichKeyDesc_search_window = "<leader>sw find window"
 map <leader>sw <Action>(ActivateFindToolWindow)
 
-let g:WhichKeyDesc_search_word = "<leader>sW grep word"
-map <leader>sW <Action>(FindInPath)
-
-map * <Action>(FindWordAtCaret)
 
 " ═══════════════════════════════════════════════════════════════════════════
 " Tab Management
 " ═══════════════════════════════════════════════════════════════════════════
 map <C-s-tab> <Action>(NextTab)
 map <C-tab> <Action>(PreviousTab)
+
+let g:WhichKeyDesc_tabs = "<leader>t +tabs"
 
 let g:WhichKeyDesc_tab_changes = "<leader>tc recent changes"
 map <leader>tc <Action>(RecentChangedFiles)
@@ -1079,20 +902,50 @@ map <leader>ty <Action>(OpenEditorInOppositeTabGroup)
 let g:WhichKeyDesc_last_tab = "<leader><Tab> last tab"
 nmap <leader><tab> <Action>(GoToLastTab)
 
-" ═══════════════════════════════════════════════════════════════════════════
-"" Utilities Actions (<leader>u)
-" ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_utilities_zen = "<leader>uz zen mode"
-nmap <leader>uz <Action>(ToggleDistractionFreeMode)
 
 " ═══════════════════════════════════════════════════════════════════════════
-"" View Actions (<leader>v)
+"" TODO
 " ═══════════════════════════════════════════════════════════════════════════
+let g:WhichKeyDesc_editor_eval = "<leader>ee evaluate"
+map <leader>ee <Action>(EvaluateExpression)
 
-" ═══════════════════════════════════════════════════════════════════════════
-"" View Actions (<leader>v)
-" ═══════════════════════════════════════════════════════════════════════════
+let g:WhichKeyDesc_editor_snippet = "<leader>el live template"
+map <leader>el <Action>(InsertLiveTemplate)
 
+let g:WhichKeyDesc_editor_type = "<leader>et expression type"
+map <leader>et <Action>(ExpressionTypeInfo)
+
+let g:WhichKeyDesc_file_new = "<leader>fN new file"
+map <leader>fN <Action>(NewFile)
+
+let g:WhichKeyDesc_file_rename = "<leader>fR rename"
+map <leader>fR <Action>(RenameFile)
+
+let g:WhichKeyDesc_file_copy_path = "<leader>fy copy path"
+map <leader>fy <Action>(CopyPaths)
+
+let g:WhichKeyDesc_goto_help = "<leader>gh help"
+nmap <leader>gh <Action>(SearchEverywhere)
+
+
+let g:WhichKeyDesc_view_hints = "<leader>lvh toggle inlay hints"
+map <leader>lvs <Action>(FileStructurePopup)
+
+let g:WhichKeyDesc_view_hints = "<leader>lvh toggle inlay hints"
+map <leader>lvh <Action>(ToggleInlayHintsGloballyAction)
+
+
+let g:WhichKeyDesc_project_close = "<leader>qq close project"
+map <leader>qq <Action>(CloseProject)
+
+let g:WhichKeyDesc_project_exit = "<leader>qQ exit"
+map <leader>qQ <Action>(Exit)
+
+let g:WhichKeyDesc_project_close_other = "<leader>qO close other"
+map <leader>qO <Action>(CloseOtherProjects)
+
+let g:WhichKeyDesc_project_recent = "<leader>qr recent projects"
+map <leader>qr <Action>(RecentProjectListGroup)
 
 let g:WhichKeyDesc_config_hints = "<leader>vh type hints"
 map <leader>vh <Action>(ToggleTypeHints)
@@ -1105,6 +958,9 @@ map <leader>vs <Action>(ShowSettings)
 
 let g:WhichKeyDesc_config_ui = "<leader>vu ui toggle"
 map <leader>vu <Action>(UIToggleActions)
+
+" Hover and signature help (like Neovim)
+map <A-h> <Action>(ShowHoverInfo)
 
 
 " ═══════════════════════════════════════════════════════════════════════════
@@ -1202,94 +1058,5 @@ map <leader>xz <Action>(ToggleZenMode)
 " ═══════════════════════════════════════════════════════════════════════════
 "" Bookmarks
 " ═══════════════════════════════════════════════════════════════════════════
-let g:WhichKeyDesc_bookmarks = "<leader>h +bookmarks"
-let g:WhichKeyDesc_bookmarks_show = "<leader>hh show"
-map <leader>hh <Action>(ShowBookmarks)
-let g:WhichKeyDesc_bookmarks_show = "<leader>ht show tool window"
-map <leader>ht <Action>(ActivateBookmarksToolWindow)
-
-map <leader>hr <Action>(EditBookmark)
-map <leader>hc <Action>(ToggleBookmarkWithMnemonic)
-map <leader>hd <Action>(ToggleBookmark)
-
-let g:WhichKeyDesc_bookmarks_next = "<leader>'f next bookmark"
-map <leader>hf <Action>(GotoNextBookmark)
-
-let g:WhichKeyDesc_bookmarks_prev = "<leader>'b prev bookmark"
-map <leader>hb <Action>(GotoPreviousBookmark)
-
-" Mnemonic bookmarks (m0-m9, ma-mz to toggle, '0-'9, 'a-'z to goto)
-map m0 <Action>(ToggleBookmark0)
-map m1 <Action>(ToggleBookmark1)
-map m2 <Action>(ToggleBookmark2)
-map m3 <Action>(ToggleBookmark3)
-map m4 <Action>(ToggleBookmark4)
-map m5 <Action>(ToggleBookmark5)
-map m6 <Action>(ToggleBookmark6)
-map m7 <Action>(ToggleBookmark7)
-map m8 <Action>(ToggleBookmark8)
-map m9 <Action>(ToggleBookmark9)
-map ma <Action>(ToggleBookmarkA)
-map mb <Action>(ToggleBookmarkB)
-map mc <Action>(ToggleBookmarkC)
-map md <Action>(ToggleBookmarkD)
-map me <Action>(ToggleBookmarkE)
-map mf <Action>(ToggleBookmarkF)
-map mg <Action>(ToggleBookmarkG)
-map mh <Action>(ToggleBookmarkH)
-map mi <Action>(ToggleBookmarkI)
-map mj <Action>(ToggleBookmarkJ)
-map mk <Action>(ToggleBookmarkK)
-map ml <Action>(ToggleBookmarkL)
-map mm <Action>(ToggleBookmarkM)
-map mn <Action>(ToggleBookmarkN)
-map mo <Action>(ToggleBookmarkO)
-map mp <Action>(ToggleBookmarkP)
-map mq <Action>(ToggleBookmarkQ)
-map mr <Action>(ToggleBookmarkR)
-map ms <Action>(ToggleBookmarkS)
-map mt <Action>(ToggleBookmarkT)
-map mu <Action>(ToggleBookmarkU)
-map mv <Action>(ToggleBookmarkV)
-map mw <Action>(ToggleBookmarkW)
-map mx <Action>(ToggleBookmarkX)
-map my <Action>(ToggleBookmarkY)
-map mz <Action>(ToggleBookmarkZ)
-map '0 <Action>(GotoBookmark0)
-map '1 <Action>(GotoBookmark1)
-map '2 <Action>(GotoBookmark2)
-map '3 <Action>(GotoBookmark3)
-map '4 <Action>(GotoBookmark4)
-map '5 <Action>(GotoBookmark5)
-map '6 <Action>(GotoBookmark6)
-map '7 <Action>(GotoBookmark7)
-map '8 <Action>(GotoBookmark8)
-map '9 <Action>(GotoBookmark9)
-map 'a <Action>(GotoBookmarkA)
-map 'b <Action>(GotoBookmarkB)
-map 'c <Action>(GotoBookmarkC)
-map 'd <Action>(GotoBookmarkD)
-map 'e <Action>(GotoBookmarkE)
-map 'f <Action>(GotoBookmarkF)
-map 'g <Action>(GotoBookmarkG)
-map 'h <Action>(GotoBookmarkH)
-map 'i <Action>(GotoBookmarkI)
-map 'j <Action>(GotoBookmarkJ)
-map 'k <Action>(GotoBookmarkK)
-map 'l <Action>(GotoBookmarkL)
-map 'm <Action>(GotoBookmarkM)
-map 'n <Action>(GotoBookmarkN)
-map 'o <Action>(GotoBookmarkO)
-map 'p <Action>(GotoBookmarkP)
-map 'q <Action>(GotoBookmarkQ)
-map 'r <Action>(GotoBookmarkR)
-map 's <Action>(GotoBookmarkS)
-map 't <Action>(GotoBookmarkT)
-map 'u <Action>(GotoBookmarkU)
-map 'v <Action>(GotoBookmarkV)
-map 'w <Action>(GotoBookmarkW)
-map 'x <Action>(GotoBookmarkX)
-map 'y <Action>(GotoBookmarkY)
-map 'z <Action>(GotoBookmarkZ)
 
 
