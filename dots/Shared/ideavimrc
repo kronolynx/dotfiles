@@ -518,6 +518,9 @@ map <leader>lcf <Action>(CompileFile)
 let g:WhichKeyDesc_lsp_compile_project = "<leader>lcp compile project"
 map <leader>lcp <Action>(CompileProject)
 
+let g:WhichKeyDesc_lsp_compile_refresh = "<leader>lcr refresh"
+map <leader>lcr <Action>(ExternalSystem.ProjectRefreshAction)
+
 " Debug/Run
 let g:WhichKeyDesc_lsp_diagnostics = "<leader>ld +debug"
 
@@ -801,6 +804,24 @@ let g:WhichKeyDesc_git_workspace = "<leader>mw workspace changes"
 map <leader>mw <Action>(Vcs.Show.Local.Changes)
 
 map <leader>my <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.CopyAction)
+
+" ═══════════════════════════════════════════════════════════════════════════
+"" Project
+" ═══════════════════════════════════════════════════════════════════════════
+
+let g:WhichKeyDesc_project = "<leader>p +project"
+
+let g:WhichKeyDesc_project_close = "<leader>pq close project"
+map <leader>pq <Action>(CloseProject)
+
+let g:WhichKeyDesc_project_exit = "<leader>pQ exit"
+map <leader>pQ <Action>(Exit)
+
+let g:WhichKeyDesc_project_close_other = "<leader>pO close other"
+map <leader>pO <Action>(CloseOtherProjects)
+
+let g:WhichKeyDesc_project_recent = "<leader>pr recent projects"
+map <leader>pr <Action>(RecentProjectListGroup)
 
 " ═══════════════════════════════════════════════════════════════════════════
 "" Search
