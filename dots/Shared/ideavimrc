@@ -14,7 +14,7 @@ let maplocalleader = " "
 "" Core Vim Settings
 " ═══════════════════════════════════════════════════════════════════════════
 set number                      " Show line numbers
-set norelativenumber              " Show relative line numbers """" instead of doing it here in idea set hybrid
+"set norelativenumber              " Show relative line numbers """" instead of doing it here, in idea set hybrid
 set ignorecase                  " Ignore case when searching
 set smartcase                   " Override ignorecase if search has uppercase
 set hlsearch                    " Highlight search results
@@ -24,16 +24,16 @@ set clipboard=unnamedplus,unnamed,ideaput  " Use system clipboard
 set showmode                    " Show current mode
 set showcmd                     " Show command in status line
 set visualbell                  " Use visual bell instead of beeping
-set noerrorbells                " No error bells
+"set noerrorbells                " No error bells
 set history=1000                " Command history size
 set wrapscan                    " Searches wrap around end of file
 
 " Indentation
-set expandtab
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set smartindent
+"set expandtab
+"set tabstop=2
+"set shiftwidth=2
+"set softtabstop=2
+"set smartindent
 
 " Virtual edit in block mode
 set virtualedit=block
@@ -44,6 +44,9 @@ set ideajoin                    " Smart join
 set ideamarks                   " Sync IJ bookmarks and Vim marks
 set ideastatusicon=disabled     " Status icon (enabled, disabled, gray)
 
+" black hole register
+"vmap <backspace> "_d
+"vmap <del> "_d
 
 "" Choosing handlers in conflicting IDE/IdeaVim keymaps =======
 sethandler <c-i> n-v-i:vim
@@ -69,12 +72,16 @@ set exchange                    " text exchange: cx, cxx, X, cxc
 set highlightedyank             " highlight yanked text
 set multiple-cursors            " multiple cursors: <A-n>, <A-x>, <A-p>
 set which-key                   " which-key popup
-set easymotion                  " easymotion navigation
+"set easymotion                  " easymotion navigation
 set NERDTree                    " NERDTree file explorer
 set matchit                     " extended % matching
 
 set peekaboo                    " https://plugins.jetbrains.com/plugin/25776-vim-peekaboo
 set dial                        " https://plugins.jetbrains.com/plugin/28237-vim-dial
+
+"" Attaman
+"nnoremap <Space> :action LeaderAction<cr>
+"vnoremap <Space> :action LeaderAction<cr>
 
 " Which-key configuration
 set notimeout
@@ -185,7 +192,7 @@ inoremap <C-s> <Esc>:w<CR>
 vnoremap <C-s> <Esc>:w<CR>
 
 " Clear search highlighting
-nmap <C-c> :nohlsearch<CR>
+nmap <C-S-c> :nohlsearch<CR>
 nmap ; :nohlsearch<CR>
 
 " Disable F1
@@ -203,7 +210,7 @@ vnoremap K :m '<-2<CR>gv=gv
 
 
 " Exit terminal mode
-tnoremap <Esc><Esc> <C-\><C-n>
+"tnoremap <Esc><Esc> <C-\><C-n>
 
 " Quick actions
 map <C-space> <Action>(QuickActions)
@@ -221,9 +228,11 @@ vnoremap p pgvy
 "" Navigation and Window Management
 " ═══════════════════════════════════════════════════════════════════════════
 
-" Navigate back/forward
+" Navigate /forward
 map gb <Action>(Back)
 map gf <Action>(Forward)
+nmap <C-o> <Action>(Back)
+nmap <C-i> <Action>(Forward)
 map <A-Left> <Action>(Back)
 map <A-Right> <Action>(Forward)
 
@@ -374,8 +383,10 @@ let g:WhichKeyDesc_bookmarks_show = "<leader>ht show tool window"
 map <leader>ht <Action>(ActivateBookmarksToolWindow)
 
 map <leader>hr <Action>(EditBookmark)
-map <leader>hc <Action>(ToggleBookmarkWithMnemonic)
-map <leader>hd <Action>(ToggleBookmark)
+let g:WhichKeyDesc_bookmarks_labeled = "<leader>hl toggle labeled"
+map <leader>hl <Action>(ToggleBookmarkWithMnemonic)
+map <leader>ht <Action>(ToggleBookmark)
+map <leader>ha <Action>(ToggleBookmark)
 
 let g:WhichKeyDesc_bookmarks_next = "<leader>'f next bookmark"
 map <leader>hf <Action>(GotoNextBookmark)
@@ -485,7 +496,8 @@ map ]] <Action>(MethodDown)
 
 let g:WhichKeyDesc_l = "<leader>l +LSP"
 let g:WhichKeyDesc_lsp_format = "<leader>= format"
-map <leader>= <Action>(ReformatCode)
+nmap <leader>= <Action>(ReformatCode)
+"nmap <leader>= <Action>(ReformatCode)
 
 " K for type/hover info in visual mode
 vnoremap K <Action>(Scala.TypeInfo)
@@ -539,11 +551,14 @@ map <leader>ldr <Action>(RunClass)
 let g:WhichKeyDesc_buffer_breakpoint = "<leader>ldb toggle breakpoint"
 nmap <leader>ldb <Action>(ToggleLineBreakpoint)
 
+let g:WhichKeyDesc_lsp_debug_viewbreakpoints = "<leader>ldv view breakpoints"
+nmap <leader>ldv <Action>(ViewBreakpoints)
+
 let g:WhichKeyDesc_buffer_eval = "<leader>le evaluate expression"
 nmap <leader>le <Action>(EvaluateExpression)
 
-let g:WhichKeyDesc_lsp_debug_viewbreakpoints = "<leader>ldv view breakpoints"
-nmap <leader>ldv <Action>(ViewBreakpoints)
+let g:WhichKeyDesc_lsp_reformat_code = "<leader>lf reformat code"
+map <leader>lf <Action>(ReformatCode)
 
 let g:WhichKeyDesc_lsp_hierarchy = "<leader>lh hierarchy"
 nmap <leader>lh <Action>(TypeHierarchy)
@@ -803,7 +818,7 @@ map <leader>mv <Action>(Annotate)
 let g:WhichKeyDesc_git_workspace = "<leader>mw workspace changes"
 map <leader>mw <Action>(Vcs.Show.Local.Changes)
 
-map <leader>my <Action>(uk.co.ben_gibson.git.link.ui.actions.menu.CopyAction)
+map <leader>my <Action>(GitLab.Open.In.Browser)
 
 " ═══════════════════════════════════════════════════════════════════════════
 "" Project
@@ -823,6 +838,8 @@ map <leader>pO <Action>(CloseOtherProjects)
 let g:WhichKeyDesc_project_recent = "<leader>pr recent projects"
 map <leader>pr <Action>(RecentProjectListGroup)
 
+let g:WhichKeyDesc_project_import = "<leader>pi import project"
+map <leader>pi <Action>(ImportProject)
 " ═══════════════════════════════════════════════════════════════════════════
 "" Search
 " ═══════════════════════════════════════════════════════════════════════════
@@ -956,17 +973,6 @@ let g:WhichKeyDesc_view_hints = "<leader>lvh toggle inlay hints"
 map <leader>lvh <Action>(ToggleInlayHintsGloballyAction)
 
 
-let g:WhichKeyDesc_project_close = "<leader>qq close project"
-map <leader>qq <Action>(CloseProject)
-
-let g:WhichKeyDesc_project_exit = "<leader>qQ exit"
-map <leader>qQ <Action>(Exit)
-
-let g:WhichKeyDesc_project_close_other = "<leader>qO close other"
-map <leader>qO <Action>(CloseOtherProjects)
-
-let g:WhichKeyDesc_project_recent = "<leader>qr recent projects"
-map <leader>qr <Action>(RecentProjectListGroup)
 
 let g:WhichKeyDesc_config_hints = "<leader>vh type hints"
 map <leader>vh <Action>(ToggleTypeHints)
@@ -982,6 +988,7 @@ map <leader>vu <Action>(UIToggleActions)
 
 " Hover and signature help (like Neovim)
 map <A-h> <Action>(ShowHoverInfo)
+
 
 
 " ═══════════════════════════════════════════════════════════════════════════
@@ -1058,8 +1065,11 @@ nmap <leader>xn :call NumberToggle()<cr>
 let g:WhichKeyDesc_misc_notifications = "<leader>xN mark notifications read"
 map <leader>xN <Action>(MarkNotificationsAsRead)
 
-let g:WhichKeyDesc_misc_open = "<leader>xp open file"
-map <leader>xp <Action>(OpenFile)
+"let g:WhichKeyDesc_misc_open = "<leader>xp open file"
+"map <leader>xp <Action>(OpenFile)
+
+let g:WhichKeyDesc_project_presentation = "<leader>xp presentation mode"
+map <leader>xp <Action>(TogglePresentationMode)
 
 let g:WhichKeyDesc_misc_reveal_choose = "<leader>xr reveal choose"
 map <leader>xr <Action>(RevealGroup)
