@@ -4,6 +4,7 @@
   editor = $EDITOR
   pager = less
   excludesfile = ~/.gitignore
+	compression = 0
 [status]
   submoduleSummary = true
 [diff]
@@ -45,10 +46,15 @@
 [fetch]
   prune = true
 [diff]
+  tool = difftastic
   compactionHeuristic = true
 	context = 5
 [difftool]
   prompt = false
+[difftool "difftastic"]
+  cmd = difft "$LOCAL" "$REMOTE"
+[pager]
+  difftool = true
 [stash]
   showPatch = true
 [push]
@@ -58,6 +64,8 @@
 # [interactive]
 #   diffFilter = delta --color-only
 [alias]
+  dft = difftool
+  dlog = "-c diff.external=difft log -p --ext-diff"
   #all = "!f() { ls -d */ | xargs -I{} git -C {} $1; }; f" # git all "checkout master" | git all pull
   all = "!f() { ls -d */ | xargs -I@ bash -c \"echo -e '\n** @' && git -C @ $1\"; }; f" # git all "checkout master" | git all pull
   amend = commit --amend --no-edit
@@ -72,7 +80,7 @@
   ds = diff --staged
   ck = checkout
   ckb = checkout -b
-  ckm = checkout master
+  cma = "!f() { git checkout $(git branch-main); }; f"
   ckdel = "!f() { curBranch=$(git branch-name); git cku $1 && git del ${curBranch}; }; f"
   ckre = "!f() { git fetch $2 && git ckb $1 $2/$3; }; f" # checkout remote branch e.g. git ckre new-branch-name remote-name remote-branch-name
   ckup = "!f() { git ckre $1 upstream master; }; f" # checkout new branch from upstream master e.g. git ckup new-branch-name
@@ -82,6 +90,7 @@
   cm = commit -m
   cam = commit -am
   count = "!git ls-files | xargs wc -l"
+  co = "!f() { git branch | grep -v \"^\\*\" | fzf --height=20% --info=inline | xargs git checkout; }; f"
   cw = "!f() { git commit -m \"WIP $1\"; }; f" # prepend WIP to commit message
   dt = difftool # example git d HEAD~2 # to diff the current index with 2 commits ago
   delb = branch -D #delete specified branch e.g. git del test-branch
@@ -183,3 +192,10 @@
 #[user]
 #	name = Johann Ortiz
 #	email = jortiz@evolution.com
+
+# Teach git about scala
+# Requires also the following:
+# mkdir -p ~/.config/git
+# printf '*.scala diff=scala\n' >> ~/.config/git/attributes
+[diff "scala"]
+  xfuncname = "^[[:space:]]*((((private|protected)[[:space:]]+)?(implicit[[:space:]]+)?(override[[:space:]]+)?(final[[:space:]]+)?(abstract[[:space:]]+)?(sealed[[:space:]]+)?(case[[:space:]]+)?(class|object|trait|def|val|var)[[:space:]]+[^[:space:](={:]+).*)$"
