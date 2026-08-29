@@ -124,7 +124,12 @@ end
 # end
 
 if command -q -v atuin
-    atuin init fish --disable-up-arrow | source
+    # disable history when using atuin
+    function fish_should_add_to_history
+      return 1
+    end
+    # atuin init fish --disable-up-arrow | source
+    atuin init fish | source
 end
 
 if command -q -v carapace
@@ -135,7 +140,8 @@ end
 # # Attach to tmux on start if not nested session or inside nvim, vscode or intellij
 if command -q -v tmux
     and not set -q TMUX
-    and not string match -r "vscode|JetBrains" $TERM_PROGRAM
+    and not string match -r "vscode" $TERM_PROGRAM
+    and not set -q JETBRAINS_INTELLIJ_ZSH_DIR
     and not set -q NVIM
     tmux new-session -As dev
 end

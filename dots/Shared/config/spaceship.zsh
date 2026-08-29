@@ -58,7 +58,14 @@ SPACESHIP_GIT_BRANCH_COLOR="$teal"
 SPACESHIP_SCALA_SYMBOL="⚔️ "
 SPACESHIP_SCALA_COLOR="$sapphire"
 SPACESHIP_SCALA_PREFIX=""
+SPACESHIP_SCALA_SHOW=true
 
+SPACESHIP_JAVA_SYMBOL="⚔️ "
+SPACESHIP_JAVA_COLOR="$sapphire"
+SPACESHIP_JAVA_PREFIX=""
+SPACESHIP_JAVA_SHOW=true
+
+SPACESHIP_KUBECTL_VERSION_SHOW=false
 SPACESHIP_KUBECTL_SHOW=true
 SPACESHIP_KUBECTL_SYMBOL=""
 SPACESHIP_KUBECTL_CONTEXT_SHOW=true
@@ -107,13 +114,13 @@ SPACESHIP_PROMPT_ORDER=(
   package        # Package version
   node           # Node.js section
   # bun            # Bun section
-  deno           # Deno section
-  ruby           # Ruby section
+  # deno           # Deno section
+  # ruby           # Ruby section
   python         # Python section
-  elm            # Elm section
+  # elm            # Elm section
   elixir         # Elixir section
-  xcode          # Xcode section
-  swift          # Swift section
+  # xcode          # Xcode section
+  # swift          # Swift section
   golang         # Go section
   perl           # Perl section
   # php            # PHP section
@@ -123,7 +130,7 @@ SPACESHIP_PROMPT_ORDER=(
   kotlin         # Kotlin section
   java           # Java section
   lua            # Lua section
-  dart           # Dart section
+  # dart           # Dart section
   # julia          # Julia section
   # crystal        # Crystal section
   docker         # Docker section
