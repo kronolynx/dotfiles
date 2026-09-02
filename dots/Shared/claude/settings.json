@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sbt:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)"
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline.sh"
+  },
+  "theme": "dark-ansi",
+  "editorMode": "vim",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "permission_prompt|worker_permission_prompt|idle_prompt|agent_needs_input",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/notify-waiting.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}
