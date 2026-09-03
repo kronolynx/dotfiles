@@ -1,0 +1,237 @@
+/*
+ * Notification styling, in the same palette as the quickshell bar and the Mac's
+ * sketchybar (dots/Darwin/config/sketchybar/colors.sh).
+ *
+ * This is plain CSS on purpose. The old style.scss could never load: swaync
+ * reads style.css from its config dir, the file used SCSS features (variables,
+ * @mixin, nesting) that need a compiler, and no sass compiler is installed --
+ * so swaync silently fell back to its packaged /etc/xdg/swaync/style.css, which
+ * is the shapeless grey box. Its font, 'Cartograph CF', is not installed either.
+ *
+ * Selectors below are the ones swaync's own stylesheet uses.
+ */
+
+/* BLACK #151A22  WHITE #FAFAFA  GREY #8991A2  DGREY #3F4965
+   RED #DF6E6F  GREEN #7EBDAC  BLUE #5CA4C3  YELLOW #FECC71
+   ORANGE #FEA361  MAGENTA #9B6BBF  CYAN #6ED7D6 */
+
+* {
+    font-family: "Inter", "Noto Sans", sans-serif;
+}
+
+/* The popup layer itself must stay transparent, or the rounded corners of the
+   notifications sit on a grey slab -- that is the "shapeless" part. */
+.floating-notifications.background,
+.blank-window {
+    background: transparent;
+}
+
+/* Clears the 33px bar plus its 4px gap. */
+.floating-notifications.background .notification-row {
+    margin: 8px 10px 0 0;
+}
+
+.floating-notifications.background .notification-row .notification-background {
+    background: transparent;
+}
+
+.notification-row .notification-background .notification,
+.control-center .notification-background .notification {
+    border-radius: 12px;
+    border: 1px solid #3F4965;
+    background-color: #151A22;
+    padding: 0;
+    margin: 4px;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.55);
+}
+
+.notification-background .notification.critical {
+    border: 1px solid #DF6E6F;
+    box-shadow: 0 4px 12px 0 rgba(223, 110, 111, 0.30);
+}
+
+.notification-background .notification.low {
+    border: 1px solid #3F4965;
+}
+
+.notification-background .notification .notification-default-action {
+    border-radius: 12px;
+    padding: 12px 14px;
+    background: transparent;
+}
+
+.notification-background .notification .notification-default-action:hover {
+    background-color: #1B2029;
+}
+
+.notification-content {
+    background: transparent;
+    padding: 0;
+}
+
+.summary {
+    color: #FAFAFA;
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 2px;
+}
+
+.body {
+    color: #8991A2;
+    font-size: 13px;
+}
+
+.time {
+    color: #8991A2;
+    font-size: 11px;
+    margin-right: 22px;
+}
+
+.app-icon {
+    color: #6ED7D6;
+    margin-right: 8px;
+}
+
+.image {
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+/* Round X in the corner rather than a square grey button. */
+.close-button {
+    background: transparent;
+    color: #8991A2;
+    border-radius: 50%;
+    margin: 6px;
+    padding: 0;
+    min-width: 22px;
+    min-height: 22px;
+}
+
+.close-button:hover {
+    background-color: #DF6E6F;
+    color: #151A22;
+}
+
+/* Action buttons under a notification */
+.notification-action {
+    color: #FAFAFA;
+    background-color: #3F4965;
+    border: none;
+    border-radius: 8px;
+    margin: 6px 4px 8px 4px;
+    padding: 6px 10px;
+    font-size: 12px;
+}
+
+.notification-action:hover {
+    background-color: #5CA4C3;
+    color: #151A22;
+}
+
+.inline-reply {
+    margin-top: 6px;
+}
+
+.inline-reply-entry {
+    background: #151A22;
+    color: #FAFAFA;
+    border: 1px solid #3F4965;
+    border-radius: 8px;
+}
+
+.inline-reply-button {
+    background-color: #3F4965;
+    color: #FAFAFA;
+    border: none;
+    border-radius: 8px;
+    margin-left: 6px;
+}
+
+/* ---- Control centre (the panel that opens from the bar's bell) ---- */
+
+.control-center {
+    background-color: #151A22;
+    border: 1px solid #3F4965;
+    border-radius: 14px;
+    padding: 12px;
+    margin: 8px 10px 0 0;
+    box-shadow: 0 6px 18px 0 rgba(0, 0, 0, 0.55);
+}
+
+.control-center .notification-row .notification-background .notification {
+    background-color: #1B2029;
+}
+
+.widget-title {
+    color: #FAFAFA;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 4px 4px 10px 4px;
+}
+
+.widget-title > button {
+    color: #FAFAFA;
+    background-color: #3F4965;
+    border: none;
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+.widget-title > button:hover {
+    background-color: #DF6E6F;
+    color: #151A22;
+}
+
+.widget-dnd {
+    color: #FAFAFA;
+    font-size: 13px;
+    margin: 4px;
+}
+
+.widget-dnd > switch {
+    border-radius: 12px;
+    background-color: #3F4965;
+    border: none;
+}
+
+.widget-dnd > switch:checked {
+    background-color: #6ED7D6;
+}
+
+.widget-dnd > switch slider {
+    border-radius: 12px;
+    background-color: #FAFAFA;
+    border: none;
+}
+
+.widget-volume {
+    color: #FAFAFA;
+    background-color: #1B2029;
+    border-radius: 10px;
+    padding: 8px;
+    margin: 4px;
+    font-size: 13px;
+}
+
+.widget-volume trough {
+    background-color: #3F4965;
+    border-radius: 8px;
+}
+
+.widget-volume highlight {
+    background-color: #5CA4C3;
+    border-radius: 8px;
+}
+
+.widget-volume slider {
+    background-color: #FAFAFA;
+    border-radius: 50%;
+}
+
+.notification-group-headers {
+    color: #8991A2;
+    font-size: 12px;
+    margin: 2px 6px;
+}

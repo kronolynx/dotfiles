@@ -1,0 +1,48 @@
+{
+    "$schema": "/etc/xdg/swaync/configSchema.json",
+
+    "positionX": "right",
+    "positionY": "top",
+
+    "layer": "overlay",
+    "layer-shell": true,
+    "control-center-layer": "top",
+
+    "notification-window-width": 400,
+    "notification-icon-size": 48,
+    "notification-body-image-height": 120,
+    "notification-body-image-width": 220,
+
+    "timeout": 8,
+    "timeout-low": 5,
+    "timeout-critical": 0,
+
+    "control-center-width": 420,
+    "control-center-height": 620,
+    "control-center-margin-top": 0,
+    "control-center-margin-right": 0,
+    "control-center-margin-bottom": 0,
+    "control-center-margin-left": 0,
+
+    "widgets": [
+        "title",
+        "dnd",
+        "volume",
+        "notifications"
+    ],
+
+    "widget-config": {
+        "title": {
+            "text": "Notifications",
+            "clear-all-button": true,
+            "button-text": "Clear all"
+        },
+        "dnd": {
+            "text": "Do not disturb"
+        },
+        "volume": {
+            "label": "Volume",
+            "show-per-app": false
+        }
+    }
+}

@@ -1,5 +1,5 @@
 require("keybinds")
--- require("animations")
+require("animations")
 
 local terminal = "kitty"
 
@@ -151,7 +151,6 @@ hl.permission("/usr/(bin|local/bin)/hyprlock", "screencopy", "allow")
 -- Uncomment to stop screenshots and screen sharing being blocked by the same
 -- mechanism -- the portal rule covers browsers, OBS and any screenshot tool
 -- that goes through xdg-desktop-portal, the grim rule covers grim/slurp
--- directly (hypr/scripts/screenshot.sh uses those, neither is installed yet).
 -- hl.permission("/usr/(bin|local/bin)/grim", "screencopy", "allow")
 -- hl.permission("/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland", "screencopy", "allow")
 -- hl.permission("/usr/(bin|local/bin)/hyprpm", "plugin", "allow")
