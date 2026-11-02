@@ -12,6 +12,8 @@ export MAGENTA=0xFF9B6BBF #9B6BBF
 export GREY=0xFF8991A2    #8991A2
 export DGREY=0xFF3F4965     #2C364B #   0xFF2C364B   #2C364B
 export CYAN=0xFF6ED7D6    #6ED7D6
+export PINK=0xFFF4B8E4  #f4b8e4
+export FLAMINGO=0xFFEEBEBE #eebebe
 
 # Color Palette
 #export BLACK=0xff181926
