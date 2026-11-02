@@ -1,0 +1,15 @@
+[dotfile_groups.linux]
+root = "Linux"
+exclude = [".DS_Store"]
+
+[dotfile_groups.linux.entries]
+"~/.bash_profile" = { source = "bash_profile" }
+"~/.bashrc" = { source = "bashrc" }
+"~/.config" = { source = "config" }
+"~/.local" = { source = "local" }
+"~/.profile" = { source = "profile" }
+"~/.scripts" = { source = "scripts" }
+"~/.Xclients" = { source = "Xclients" }
+"~/.xinitrc" = { source = "xinitrc" }
+"~/.Xresources" = { source = "Xresources" }
+"~/.xsession" = { source = "xsession" }

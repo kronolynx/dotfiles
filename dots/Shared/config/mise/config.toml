@@ -1,0 +1,174 @@
+[settings]
+idiomatic_version_file_enable_tools = ["java", "node"]
+
+[settings.java]
+shorthand_vendor = "jetbrains"
+
+[tools]
+java = ["jetbrains-21", "jetbrains-17", "jetbrains-25"]
+node = "24"
+sbt = "latest"
+
+[bootstrap.packages]
+# shell and navigation
+"brew:atuin" = { os = "macos" }
+"pacman:atuin" = { os = "linux" }
+"brew:fd" = { os = "macos" }
+"pacman:fd" = { os = "linux" }
+"brew:fzf" = { os = "macos" }
+"pacman:fzf" = { os = "linux" }
+"brew:ripgrep" = { os = "macos" }
+"pacman:ripgrep" = { os = "linux" }
+"brew:starship" = { os = "macos" }
+"pacman:starship" = { os = "linux" }
+"brew:yazi" = { os = "macos" }
+"pacman:yazi" = { os = "linux" }
+"brew:zoxide" = { os = "macos" }
+"pacman:zoxide" = { os = "linux" }
+
+# files and text
+"brew:bat" = { os = "macos" }
+"pacman:bat" = { os = "linux" }
+"brew:eza" = { os = "macos" }
+"pacman:eza" = { os = "linux" }
+"brew:fx" = { os = "macos" }
+"pacman:fx" = { os = "linux" }
+"brew:glow" = { os = "macos" }
+"pacman:glow" = { os = "linux" }
+"brew:jq" = { os = "macos" }
+"pacman:jq" = { os = "linux" }
+"brew:yq" = { os = "macos" }
+"pacman:go-yq" = { os = "linux" }
+
+# git
+"brew:git-delta" = { os = "macos" }
+"pacman:git-delta" = { os = "linux" }
+"brew:difftastic" = { os = "macos" }
+"pacman:difftastic" = { os = "linux" }
+"brew:glab" = { os = "macos" }
+"pacman:glab" = { os = "linux" }
+"brew:lazygit" = { os = "macos" }
+"pacman:lazygit" = { os = "linux" }
+
+# kubernetes and containers
+"brew:dive" = { os = "macos" }
+"pacman:dive" = { os = "linux" }
+"brew:helm" = { os = "macos" }
+"pacman:helm" = { os = "linux" }
+"brew:k9s" = { os = "macos" }
+"pacman:k9s" = { os = "linux" }
+"brew:kubecolor" = { os = "macos" }
+"aur:kubecolor" = { os = "linux" }
+"brew:kubectx" = { os = "macos" }
+"pacman:kubectx" = { os = "linux" }
+"brew:lazydocker" = { os = "macos" }
+"pacman:lazydocker" = { os = "linux" }
+"brew:stern" = { os = "macos" }
+"pacman:stern" = { os = "linux" }
+
+# system and benchmarking
+"brew:btop" = { os = "macos" }
+"pacman:btop" = { os = "linux" }
+"brew:dust" = { os = "macos" }
+"pacman:dust" = { os = "linux" }
+"brew:tokei" = { os = "macos" }
+"pacman:tokei" = { os = "linux" }
+"brew:hyperfine" = { os = "macos" }
+"pacman:hyperfine" = { os = "linux" }
+"brew:xh" = { os = "macos" }
+"pacman:xh" = { os = "linux" }
+"brew:just" = { os = "macos" }
+"pacman:just" = { os = "linux" }
+"brew:watchexec" = { os = "macos" }
+"pacman:watchexec" = { os = "linux" }
+
+# shell and terminal
+"brew:fish" = { os = "macos" }
+"pacman:fish" = { os = "linux" }
+"brew:tmux" = { os = "macos" }
+"pacman:tmux" = { os = "linux" }
+"brew:neovim" = { os = "macos" }
+"pacman:neovim" = { os = "linux" }
+"brew:zellij" = { os = "macos" }
+"pacman:zellij" = { os = "linux" }
+"brew:nushell" = { os = "macos" }
+"pacman:nushell" = { os = "linux" }
+"brew:television" = { os = "macos" }
+"pacman:television" = { os = "linux" }
+"brew-cask:ghostty" = { os = "macos" }
+"pacman:ghostty" = { os = "linux" }
+"brew-cask:wezterm" = { os = "macos" }
+"pacman:wezterm" = { os = "linux" }
+"brew-cask:kitty" = { os = "macos" }
+"pacman:kitty" = { os = "linux" }
+
+# git and network
+"brew:git" = { os = "macos" }
+"pacman:git" = { os = "linux" }
+"brew:git-lfs" = { os = "macos" }
+"pacman:git-lfs" = { os = "linux" }
+"brew:httpie" = { os = "macos" }
+"pacman:httpie" = { os = "linux" }
+"brew:hurl" = { os = "macos" }
+"pacman:hurl" = { os = "linux" }
+"brew:kcat" = { os = "macos" }
+"aur:kcat" = { os = "linux" }
+"brew:nmap" = { os = "macos" }
+"pacman:nmap" = { os = "linux" }
+"brew:wget" = { os = "macos" }
+"pacman:wget" = { os = "linux" }
+"brew:docker-compose" = { os = "macos" }
+"pacman:docker-compose" = { os = "linux" }
+
+# system and files
+"brew:htop" = { os = "macos" }
+"pacman:htop" = { os = "linux" }
+"brew:ncdu" = { os = "macos" }
+"pacman:ncdu" = { os = "linux" }
+"brew:tree" = { os = "macos" }
+"pacman:tree" = { os = "linux" }
+"brew:entr" = { os = "macos" }
+"pacman:entr" = { os = "linux" }
+"brew:tealdeer" = { os = "macos" }
+"pacman:tealdeer" = { os = "linux" }
+"brew:mpv" = { os = "macos" }
+"pacman:mpv" = { os = "linux" }
+
+# yazi previews
+"brew:ffmpegthumbnailer" = { os = "macos" }
+"pacman:ffmpegthumbnailer" = { os = "linux" }
+"brew:poppler" = { os = "macos" }
+"pacman:poppler" = { os = "linux" }
+"brew:librsvg" = { os = "macos" }
+"pacman:librsvg" = { os = "linux" }
+"brew:jpeg-xl" = { os = "macos" }
+"pacman:libjxl" = { os = "linux" }
+"brew:unar" = { os = "macos" }
+"pacman:unarchiver" = { os = "linux" }
+
+# keyboard
+"brew:kanata" = { os = "macos" }
+"aur:kanata" = { os = "linux" }
+"brew-cask:karabiner-elements" = { os = "macos" }
+
+# dotfiles.root (the repo's dots/ directory) is set per machine in config.local.toml;
+# the per-OS groups live in config.macos.toml and config.linux.toml, loaded through auto_env in miserc.toml.
+# Every top-level name needs an entry: anything the walk reaches without one is linked without a leading dot.
+[dotfile_groups.shared]
+root = "Shared"
+exclude = [".DS_Store"]
+
+[dotfile_groups.shared.entries]
+"~/.claude" = { source = "claude" }
+"~/.config" = { source = "config" }
+"~/.emacs.d" = { source = "emacs.d" }
+"~/.formatter" = { source = "formatter" }
+"~/.ghci" = { source = "ghci" }
+"~/.git-templates" = { source = "git-templates" }
+"~/.gvimrc" = { source = "gvimrc" }
+"~/.local" = { source = "local" }
+"~/.ssh" = { source = "ssh" }
+"~/.vim" = { source = "vim" }
+"~/.vimrc" = { source = "vimrc" }
+"~/.wallpapers" = { source = "wallpapers" }
+"~/.zshrc" = { source = "zshrc" }

@@ -1,0 +1,8 @@
+[dotfile_groups.darwin]
+root = "Darwin"
+exclude = [".DS_Store"]
+
+[dotfile_groups.darwin.entries]
+"~/.config" = { source = "config", exclude = [".DS_Store", "iterm2/AppSupport"] }
+"~/.local" = { source = "local" }
+"~/.zprofile" = { source = "zprofile" }
