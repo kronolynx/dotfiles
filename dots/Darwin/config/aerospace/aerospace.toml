@@ -109,8 +109,11 @@ cmd-alt-h = [] # Disable "hide others"
 ## todo the following two don't play nice with enable-normalization-flatten-containers
 # alt-shift-s = 'split horizontal'
 # alt-shift-v = 'split vertical'
+# alt-shift-enter = 'exec-and-forget "$HOME"/.config/aerospace/scripts/open_ghostty.sh'
+alt-shift-enter = 'exec-and-forget open -na Ghostty'
 # alt-shift-enter = 'exec-and-forget "$HOME"/.config/aerospace/scripts/open_wezterm.sh'
-alt-shift-enter = 'exec-and-forget alacritty msg create-window'
+# alt-shift-t = 'exec-and-forget "$HOME"/.config/aerospace/scripts/quake.sh com.mitchellh.ghostty Ghostty'
+# alt-shift-enter = 'exec-and-forget alacritty msg create-window'
 # alt-shift-enter = 'exec-and-forget "$HOME"/.config/aerospace/scripts/open_ghostty.sh'
 # alt-shift-enter = 'exec-and-forget "kitty --single-instance"'
 alt-shift-q = 'close'
@@ -144,7 +147,7 @@ alt-equal = 'summon-workspace 12'
 alt-leftSquareBracket = 'summon-workspace 13'
 alt-rightSquareBracket = 'summon-workspace 14'
 alt-quote = 'summon-workspace 15'
-alt-slash = 'summon-workspace 16'
+alt-backslash = 'summon-workspace 16'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 # TODO calling exec-and-forget here is a hack and should be removed when a better solution is found
@@ -163,11 +166,11 @@ alt-shift-equal = ['move-node-to-workspace 12', 'exec-and-forget sketchybar --tr
 alt-shift-leftSquareBracket = ['move-node-to-workspace 13', 'exec-and-forget sketchybar --trigger space_windows_change']
 alt-shift-rightSquareBracket = ['move-node-to-workspace 14', 'exec-and-forget sketchybar --trigger space_windows_change']
 alt-shift-quote = ['move-node-to-workspace 15', 'exec-and-forget sketchybar --trigger space_windows_change']
-alt-shift-slash = ['move-node-to-workspace 16', 'exec-and-forget sketchybar --trigger space_windows_change']
+alt-shift-backslash = ['move-node-to-workspace 16', 'exec-and-forget sketchybar --trigger space_windows_change']
 
-alt-shift-f = 'fullscreen'
-alt-ctrl-f = 'layout floating tiling'
-alt-shift-a = 'layout tiles accordion'
+alt-f = 'fullscreen'
+alt-shift-f = 'layout floating tiling'
+alt-a = 'layout tiles accordion'
 
 alt-shift-left = 'join-with left'
 alt-shift-down = 'join-with down'
@@ -182,6 +185,8 @@ alt-tab = 'workspace-back-and-forth'
 alt-d = 'focus-monitor --wrap-around next'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
 alt-shift-d = 'move-workspace-to-monitor --wrap-around next'
+
+alt-slash = 'exec-and-forget "$HOME"/.config/aerospace/scripts/search_keys.sh'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 alt-shift-semicolon = 'mode service'
